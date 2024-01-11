@@ -1,0 +1,17 @@
+{
+  "index": "Getting Started",
+  "models": "Available Models",
+  "usingllms": "Using LLMs",
+  "input": "Process LLM Input",
+  "output": "Validating LLM Output",
+  "compliance": "Compliance",
+  "guides": "Guides",
+  "reference": "Reference",
+  "support": "Support",
+  "contact": {
+    "title": "Sign Up ↗",
+    "type": "page",
+    "href": "https://predictionguard.com/",
+    "newWindow": true
+  }
+}
