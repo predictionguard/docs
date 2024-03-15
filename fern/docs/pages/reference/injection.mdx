@@ -1,4 +1,6 @@
-# Prompt Injections
+---
+title: Prompt Injections
+---
 
 You can check for Prompt Injections from the `/injection` or `Injection` class in the Python client. This endpoint/Class takes two parameters:
 
@@ -9,11 +11,11 @@ The output will include a score from 0.0 to 1.0. The higher the score, the highe
 
 ## Check for Prompt Injection
 
-import { Tab, Tabs } from 'nextra-theme-docs'
+To check for prompt injections, you can use the following code examples. Depending on your preference or requirements, select the appropriate method for your application.
 
-<Tabs items={['Python', 'cURL']}  defaultIndex="0">
-  <Tab>
-    ```python filename="main.py" copy
+<CodeBlocks>
+    <CodeBlock title="Python">
+    ```python filename="main.py"
     import os
     import json
 
@@ -34,9 +36,9 @@ import { Tab, Tabs } from 'nextra-theme-docs'
         separators=(',', ': ')
     ))
     ```
-  </Tab>
-  <Tab>
-    ```bash copy
+    </CodeBlock>
+    <CodeBlock title="cURL">
+    ```bash
     $ curl --location --request POST 'https://api.predictionguard.com/injection' \
     --header 'Content-Type: application/json' \
     --header 'x-api-key: <your access token>' \
@@ -45,5 +47,8 @@ import { Tab, Tabs } from 'nextra-theme-docs'
         "detect": true
     }'
     ```
-  </Tab>
-</Tabs>
+    </CodeBlock>
+
+</CodeBlocks>
+
+This approach provides a straightforward way for readers to choose and apply the code example that best suits their needs for checking prompt injections using either Python or cURL.

@@ -1,33 +1,114 @@
 instances:
   - url: pg-guard.docs.buildwithfern.com
+    custom-domain: docs.predictionguard.com
 
-title: Your Organization | Docs
+title: Prediction Guard | Docs
+
+tabs:
+  help:
+    display-name: Docs
+    icon: home
+  api:
+    display-name: API Reference
+    icon: puzzle
 
 navigation:
-  - section: Getting started
-    contents: 
-      - page: Welcome 
-        path: ./docs/pages/welcome.mdx
-      - page: SDKs
-        path: ./docs/pages/sdks.mdx
-  - api: API Reference
+  - tab: help
+    layout:
+      - section: Getting started
+        contents:
+          - page: Welcome
+            path: ./docs/pages/welcome.mdx
+          - page: Quick Start
+            path: ./docs/pages/gettingstarted.mdx
+          - page: SDKs
+            path: ./docs/pages/sdks.mdx
+      - section: Models
+        contents:
+          - page: Available Models
+            path: ./docs/pages/models/details.mdx
+          - page: Prompts
+            path: ./docs/pages/models/prompts.mdx
+      - section: Using LLMs
+        contents:
+          - page: Accessing LLMs
+            path: ./docs/pages/usingllms/accessing.mdx
+          - page: Basic Prompting
+            path: ./docs/pages/usingllms/prompting.mdx
+          - page: Prompt Engineering
+            path: ./docs/pages/usingllms/engineering.mdx
+          - page: Chat Completions
+            path: ./docs/pages/usingllms/chat.mdx
+          - page: Chaining and Retrieval
+            path: ./docs/pages/usingllms/augmentation.mdx
+          - page: Agents
+            path: ./docs/pages/usingllms/agents.mdx
+      - section: Process LLM Input
+        contents:
+          - page: PII
+            path: ./docs/pages/input/PII.mdx
+          - page: Injection
+            path: ./docs/pages/input/injection.mdx
+      - section: Validating LLM Output
+        contents:
+          - page: Consistency
+            path: ./docs/pages/output/consistency.mdx
+          - page: Factuality
+            path: ./docs/pages/output/factuality.mdx
+          - page: Toxicity
+            path: ./docs/pages/output/toxicity.mdx
+      - section: Guides
+        contents:
+          - page: Custom Output Structuring in LLMs
+            path: ./docs/pages/guides/output.mdx
+          - page: Data Chat with LLMs
+            path: ./docs/pages/guides/ada.mdx
+          - page: Data extraction + factuality checks
+            path: ./docs/pages/guides/data-extraction.mdx
+          - page: LangChain LLM Wrapper
+            path: ./docs/pages/guides/langchainllm.mdx
+          - page: Many Chat with LLMs
+            path: ./docs/pages/guides/ManyChat.mdx
+      - section: Reference
+        contents:
+          - page: Chat
+            path: ./docs/pages/reference/chat.mdx
+          - page: Completions
+            path: ./docs/pages/reference/completions.mdx
+          - page: Factuality
+            path: ./docs/pages/reference/factuality.mdx
+          - page: Injection
+            path: ./docs/pages/reference/injection.mdx
+          - page: PII
+            path: ./docs/pages/reference/PII.mdx
+          - page: Toxicity
+            path: ./docs/pages/reference/toxicity.mdx
+          - page: Translate
+            path: ./docs/pages/reference/translate.mdx
+      - section: Support
+        contents:
+          - page: Contact Us
+            path: ./docs/pages/support.mdx
+  - tab: api
+    layout:
+      - api: API Reference
 
-navbar-links: 
+navbar-links:
   - type: secondary
     text: Contact us
-    url: "mailto:support@buildwithfern.com"
+    url: "mailto:contact@predictionguard.com"
   - type: primary
-    text: Join the Discord
-    url: https://discord.com/invite/JkkXumPzcG
+    text: Join our Slack
+    url: https://join.slack.com/t/prediction-guard/shared_invite/zt-1pwck5pgg-bctLNmqk~CjK3GmJc23UHg
 
 colors:
   accentPrimary:
-    dark: "#adff8c"
+    dark: "#212121"
     light: "#376d20"
 
 logo:
-  dark: ./docs/assets/logo_dark_mode.png
-  light: ./docs/assets/logo_light_mode.png
-  height: 30
+  dark: ./docs/assets/logo_pg_dark.png
+  light: ./docs/assets/logo_pg_light.png
+  height: 85
 
-favicon: ./docs/assets/favicon.ico
+favicon: ./docs/assets/favicon.png

@@ -1,14 +1,16 @@
-# Completions
+---
+title: Completions
+---
 
 You can get privacy-conserving text completions from any of the [available models](../models) using a call to the `/completions` REST API endpoint or the `Completion` class in the Python client.
 
 ## Generate a text completion
 
-import { Tab, Tabs } from 'nextra-theme-docs'
+To generate a text completion, you can use the following code examples. Depending on your preference or requirements, select the appropriate method for your application.
 
-<Tabs items={['Python', 'cURL']}  defaultIndex="0">
-  <Tab>
-    ```python filename="main.py" copy
+<CodeBlocks>
+    <CodeBlock title="Python">
+    ```python filename="main.py"
     import os
     import json
 
@@ -29,9 +31,9 @@ import { Tab, Tabs } from 'nextra-theme-docs'
         separators=(',', ': ')
     ))
     ```
-  </Tab>
-  <Tab>
-    ```bash copy
+    </CodeBlock>
+    <CodeBlock title="cURL">
+    ```bash
     $ curl --location --request POST 'https://api.predictionguard.com/completions' \
     --header 'Content-Type: application/json' \
     --header 'x-api-key: <your access token>' \
@@ -40,5 +42,8 @@ import { Tab, Tabs } from 'nextra-theme-docs'
         "prompt": "The best joke I know is: "
     }'
     ```
-  </Tab>
-</Tabs>
+    </CodeBlock>
+
+</CodeBlocks>
+
+This approach presents a straightforward way for readers to choose and apply the code example that best suits their needs for generating text completions using either Python or cURL.

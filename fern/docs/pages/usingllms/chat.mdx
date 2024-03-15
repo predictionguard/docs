@@ -3,8 +3,6 @@ title: Chat Completions
 description: Prediction Guard in action
 ---
 
-# Chat Completions
-
 (Run this example in Google Colab [here](https://drive.google.com/file/d/15EBnc9aSC_KWeL677b_QHEOO7hIWDn1e/view?usp=sharing))
 
 We briefly introduced few shot chat prompts in the basic prompting tutorial. However, chat is a special scenario when it comes to LLMs because: (1) it is a very frequently occuring use case; (2) there are many models fine-tuned specifically for chat; and (3) the handling of message threads, context, and instructions in chat prompts is always the same.
@@ -63,7 +61,7 @@ messages = [
 ]
 
 result = pg.Chat.create(
-    model="Notus-7B",
+    model="Neural-Chat-7B",
     messages=messages
 )
 
@@ -83,23 +81,25 @@ Here we will show the chat functionality with the most simple of chat UI, which 
 print('Welcome to the Chatbot! Let me know how can I help you')
 
 while True:
-  print('')
-  request = input('User' + ': ')
-  if request=="Stop" or request=='stop':
-      print('Bot: Bye!')
-      break
-  else:
-      messages.append({
-          "role": "user",
-          "content": request
-      })
-      response = pg.Chat.create(
-          model="Notus-7B",
-          messages=messages
-      )['choices'][0]['message']['content'].split('\n')[0].strip()
-      messages.append({
-          "role": "assistant",
-          "content": response
-      })
-      print('Bot: ', response)
+    print('')
+    request = input('User' + ': ')
+    if request=="Stop" or request=='stop':
+        print('Bot: Bye!')
+        break
+    else:
+        messages.append({
+            "role": "user",
+            "content": request
+        })
+        
+        response = pg.Chat.create(
+            model="Neural-Chat-7B",
+            messages=messages
+        )['choices'][0]['message']['content'].split('\n')[0].strip()
+        
+        messages.append({
+            "role": "assistant",
+            "content": response
+        })
+        print('Bot: ', response)
 ```

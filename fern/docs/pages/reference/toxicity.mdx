@@ -1,14 +1,16 @@
-# Toxicity
+---
+title: Toxicity
+---
 
 You can get toxicity scores from the `/toxicity` endpoint or `Toxicity` class in the Python client. This endpoint/Class takes a single `text` parameter, which should include the candidate text to be scored for toxicity. The output will include a `score` that ranges from 0.0 to 1.0. The higher the score, the more toxic the `text`.
 
 ## Generate a toxicity score
 
-import { Tab, Tabs } from 'nextra-theme-docs'
+To generate a toxicity score, you can use the following code examples. Depending on your preference or requirements, select the appropriate method for your application.
 
-<Tabs items={['Python', 'cURL']}  defaultIndex="0">
-  <Tab>
-    ```python filename="main.py" copy
+<CodeBlocks>
+    <CodeBlock title="Python">
+    ```python filename="main.py"
     import os
     import json
     import predictionguard as pg
@@ -28,32 +30,33 @@ import { Tab, Tabs } from 'nextra-theme-docs'
         separators=(',', ': ')
     ))
     ```
-  </Tab>
-  <Tab>
-    ```bash copy
-    $  curl --location --request POST 'https://api.predictionguard.com/toxicity' \
+    </CodeBlock>
+    <CodeBlock title="cURL">
+    ```bash
+    $ curl --location --request POST 'https://api.predictionguard.com/toxicity' \
     --header 'x-api-key: <your access token>' \
     --header 'Content-Type: application/json' \
     --data-raw '{
         "text": "This is a perfectly fine statement"
     }'
     ```
-  </Tab>
-</Tabs>
+    </CodeBlock>
+
+</CodeBlocks>
 
 The output will look something like:
 
-```
+```json
 {
-    "checks": [
-        {
-            "index": 0,
-            "score": 0.00036882987478747964,
-            "status": "success"
-        }
-    ],
-    "created": 1701721860,
-    "id": "toxi-REU4ZqFADGAiU6xJmN9PgtlgBO6x9",
-    "object": "toxicity_check"
+  "checks": [
+    {
+      "index": 0,
+      "score": 0.00036882987478747964,
+      "status": "success"
+    }
+  ],
+  "created": 1701721860,
+  "id": "toxi-REU4ZqFADGAiU6xJmN9PgtlgBO6x9",
+  "object": "toxicity_check"
 }
 ```

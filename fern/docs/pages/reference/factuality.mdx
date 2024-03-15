@@ -1,4 +1,6 @@
-# Factuality
+---
+title: Factuality
+---
 
 You can get factuality scores (or rather factual consistency scores) from the `/factuality` endpoint or `Factuality` class in the Python client. This endpoint/Class takes two parameters:
 
@@ -9,11 +11,11 @@ The output will include a `score` that ranges from 0.0 to 1.0. The higher the sc
 
 ## Generate a factuality score
 
-import { Tab, Tabs } from 'nextra-theme-docs'
+To generate a factuality score, you can use the following code examples. Depending on your preference or requirements, select the appropriate method for your application.
 
-<Tabs items={['Python', 'cURL']}  defaultIndex="0">
-  <Tab>
-    ```python filename="main.py" copy
+<CodeBlocks>
+    <CodeBlock title="Python">
+    ```python filename="main.py"
     import os
     import json
 
@@ -24,7 +26,7 @@ import { Tab, Tabs } from 'nextra-theme-docs'
 
     # Perform the factual consistency check.
     result = pg.Factuality.check(
-        		reference="The sky is blue", 
+        		reference="The sky is blue",
         		text="The sky is green"
     )
 
@@ -35,19 +37,20 @@ import { Tab, Tabs } from 'nextra-theme-docs'
         separators=(',', ': ')
     ))
     ```
-  </Tab>
-  <Tab>
-    ```bash copy
+    </CodeBlock>
+    <CodeBlock title="cURL">
+    ```bash
     $ curl --location --request POST 'https://api.predictionguard.com/factuality' \
     --header 'x-api-key: <your access token>' \
     --header 'Content-Type: application/json' \
     --data-raw '{
-        "reference":"The sky is blue", 
+        "reference":"The sky is blue",
     		"text":"The sky is green"
     }'
     ```
-  </Tab>
-</Tabs>
+    </CodeBlock>
+
+</CodeBlocks>
 
 The output will look something like:
 

@@ -2,7 +2,6 @@
 title: Toxicity
 description: Controlled and compliant AI applications
 ---
-# Toxicity checks
 
 It is likely that the llm output may contain offensive and inappropriate content. With Prediction Guard's advanced toxicity detection, you can identify and filter out toxic text from llm outpu. Similar to factuality, the toxicity check can be "switched on" by setting toxicit=True or by using /toxicity endpoint. This is especially useful when managing online interactions, content creation, or customer service. The toxicity check helps in actively monitoring and controling the content.
 
@@ -47,21 +46,21 @@ print(json.dumps(
 
 **Note, `"toxicity": True` indicates that Prediction Guard will check for toxicity. It does NOT mean that you want the output to be toxic.**
 
-The above code, generates something like: 
+The above code, generates something like:
 
 ```json
 {
-    "choices": [
-        {
-            "index": 0,
-            "model": "Nous-Hermes-Llama2-13B",
-            "status": "success",
-            "text": "\ud83c\udf89\ud83d\udd25 OMG, this is AMAZING news! I can't wait to try out the new candle subscription boxes! The Exclusive Candle Box and the Monthly Candle Box sound incredible, and the Scent of The Month Box is such a great value! I'm so excited to see which scents are included! \ud83d\udd25\ud83c\udf89 #include <iostream>\n#include <"
-        }
-    ],
-    "created": 1701720943,
-    "id": "cmpl-WtXj5lfdALZhouZ5k493bEZyA00XP",
-    "object": "text_completion"
+  "choices": [
+    {
+      "index": 0,
+      "model": "Nous-Hermes-Llama2-13B",
+      "status": "success",
+      "text": "\ud83c\udf89\ud83d\udd25 OMG, this is AMAZING news! I can't wait to try out the new candle subscription boxes! The Exclusive Candle Box and the Monthly Candle Box sound incredible, and the Scent of The Month Box is such a great value! I'm so excited to see which scents are included! \ud83d\udd25\ud83c\udf89 #include <iostream>\n#include <"
+    }
+  ],
+  "created": 1701720943,
+  "id": "cmpl-WtXj5lfdALZhouZ5k493bEZyA00XP",
+  "object": "text_completion"
 }
 ```
 
@@ -88,17 +87,17 @@ This results in:
 
 ```json
 {
-    "choices": [
-        {
-            "index": 0,
-            "model": "",
-            "status": "error: failed a toxicity check",
-            "text": ""
-        }
-    ],
-    "created": 1701721063,
-    "id": "cmpl-LYF0yvqjtUq4TuygfmDPBVYU71ahu",
-    "object": "text_completion"
+  "choices": [
+    {
+      "index": 0,
+      "model": "",
+      "status": "error: failed a toxicity check",
+      "text": ""
+    }
+  ],
+  "created": 1701721063,
+  "id": "cmpl-LYF0yvqjtUq4TuygfmDPBVYU71ahu",
+  "object": "text_completion"
 }
 ```
 

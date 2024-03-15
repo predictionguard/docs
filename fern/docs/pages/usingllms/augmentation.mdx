@@ -3,8 +3,6 @@ title: Chaining and Retrieval
 description: Prediction Guard in action
 ---
 
-# Chaining and Retrieval
-
 (Run this example in Google Colab [here](https://drive.google.com/file/d/1ukAPgQf39POwHhirIknTwKN7A9NLlFyt/view?usp=sharing))
 
 We've actually already seen how it can be useful to "chain" various LLM operations together (see other notebooks under [Using LLMs](../usingllms)). In the [Hinglish chat example](prompting) we chained a response generation and then a machine translation using LLMs.
@@ -82,10 +80,11 @@ print(result['choices'][0]['text'])
 When we run this, at least sometimes, we get bad output because of the complicated instructions:
 
 ```
-The population of LA is approximately 3.9 million people. 
+The population of LA is approximately 3.9 million people.
 ```
 
 Rather than try to handle everything in one call to the LLM, let's decompose our logic into multiple calls that are each simple. We will also add in some non-LLM logic The chain of processing is:
+
 - Prompt 1 - Determine if the message is a request for code generation.
 - Prompt 2 - Q&A prompt to answer based on informational context
 - Prompt 3 - A general chat template for when there isn't an informational question being asked
@@ -194,7 +193,7 @@ def response_chain(message, convo_context, info_context):
 
   # Determine what kind of message this is.
   result = pg.Completion.create(
-      model="WizardCoder",
+      model="deepseek-coder-6.7b-instruct",
       prompt=category_prompt.format(query=message)
   )
 
@@ -219,7 +218,7 @@ def response_chain(message, convo_context, info_context):
 
     # Handle the code generation request.
     result = pg.Completion.create(
-        model="WizardCoder",
+        model="deepseek-coder-6.7b-instruct",
         prompt=code_prompt.format(query=message),
         max_tokens=500
     )
@@ -314,7 +313,7 @@ Gift cards are delivered via US Mail.
 
 ## Retrieval augmentated generation (RAG)
 
-![Retrieval augmented generation](./rag.png)
+![Retrieval augmented generation](https://publicpgdocimages.s3.amazonaws.com/rag.png)
 
 Retrieval-augmented generation (RAG) is an innovative approach that merges the capabilities of large-scale retrieval systems with sequence-to-sequence models to enhance their performance in generating detailed and contextually relevant responses. Instead of relying solely on the knowledge contained within the model's parameters, RAG allows the model to dynamically retrieve and integrate information from an external database or a set of documents during the generation process. By doing so, it provides a bridge between the vast knowledge stored in external sources and the powerful generation abilities of neural models, enabling more informed, diverse, and context-aware outputs in tasks like question answering, dialogue systems, and more.
 
@@ -350,7 +349,7 @@ This is the text that we will be referencing in our RAG system. I mean, who does
     * Describe your changes
     * Separate your changes
     * Style-check your changes
-    * Select the recipients for 
+    * Select the recipients for
 
 etc...
 ```
@@ -412,12 +411,12 @@ If you do not have a repository with the current kernel source handy, use
 `git` to obtain one. You'll want to start with the mainline repository, which
 can be grabbed with:
 
-    
-    
+
+
     git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
 ```
 
-We will now do a bit more clean up and "embed" these chunks to store them in a Vector Database. 
+We will now do a bit more clean up and "embed" these chunks to store them in a Vector Database.
 
 ```python copy
 # Let's take care of some of the formatting so it doesn't conflict with our
@@ -462,6 +461,7 @@ table.add(data=data)
 ```
 
 We now have:
+
 - Downloaded our reference data (for eventual retrieval)
 - Split that reference data into relevant sized chunks for injection into our prompts
 - Embedded those chunks (such that we have a vector that can be used for matching)
@@ -478,13 +478,13 @@ results.head()
 
 This will give a dataframe with a ranking of relevant text chunks by a "distance" metric. The lower the distance, the more semantically relevant the chunk is to the user query.
 
-|    |   chunk |   _distance |
-|---:|--------:|------------:|
-|  0 |      52 |    0.785209 |
-|  1 |      52 |    0.785209 |
-|  2 |      14 |    0.844908 |
-|  3 |      14 |    0.844908 |
-|  4 |       6 |    0.878058 |
+|     | chunk | \_distance |
+| --: | ----: | ---------: |
+|   0 |    52 |   0.785209 |
+|   1 |    52 |   0.785209 |
+|   2 |    14 |   0.844908 |
+|   3 |    14 |   0.844908 |
+|   4 |     6 |   0.878058 |
 
 Now we can create a function that will return an answer to a user query based on the RAG methodology:
 
@@ -532,5 +532,5 @@ print("RESPONSE:", response)
 This will return something similar to:
 
 ```
-RESPONSE: A single patch should solve one problem at a time. 
+RESPONSE: A single patch should solve one problem at a time.
 ```

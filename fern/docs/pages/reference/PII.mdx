@@ -1,4 +1,6 @@
-# PII
+---
+title: PII
+---
 
 You can check and replace Personal Identifiable Information (PII) from the `/PII` endpoint or `PII` class in the Python Client. This endpoint/Class takes three parameters:
 
@@ -6,15 +8,15 @@ You can check and replace Personal Identifiable Information (PII) from the `/PII
 - `replace` - A boolean for replacing the PII if any is found.
 - `replace_method` - The method you would like to use to replace any found PII. The methods are `random`, `mask`, `category`, and `fake`.
 
-The output will include the replaced PII if any is present, or will tell you if any PII is in the prompt is `replace` is not chosen.
+The output will include the replaced PII if any is present, or will tell you if any PII is in the prompt if `replace` is not chosen.
 
 ## Check and Replace PII
 
-import { Tab, Tabs } from 'nextra-theme-docs'
+To check and replace PII, you can use the following code examples. Depending on your preference or requirements, select the appropriate method for your application.
 
-<Tabs items={['Python', 'cURL']}  defaultIndex="0">
-  <Tab>
-    ```python filename="main.py" copy
+<CodeBlocks>
+    <CodeBlock title="Python">
+    ```python filename="main.py"
     import os
     import json
 
@@ -35,10 +37,10 @@ import { Tab, Tabs } from 'nextra-theme-docs'
         separators=(',', ': ')
     ))
     ```
-  </Tab>
-  <Tab>
-    ```bash copy
-    $ curl --location --request POST 'https://api.predictionguard.com/injection' \
+    </CodeBlock>
+    <CodeBlock title="cURL">
+    ```bash
+    $ curl --location --request POST 'https://api.predictionguard.com/PII' \
     --header 'Content-Type: application/json' \
     --header 'x-api-key: <your access token>' \
     --data '{
@@ -47,5 +49,8 @@ import { Tab, Tabs } from 'nextra-theme-docs'
         "replace_method": "random"
     }'
     ```
-  </Tab>
-</Tabs>
+    </CodeBlock>
+
+</CodeBlocks>
+
+This approach provides a straightforward way for readers to choose and apply the code example that best suits their needs for checking and replacing PII using either Python or cURL.

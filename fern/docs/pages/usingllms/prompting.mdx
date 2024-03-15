@@ -3,8 +3,6 @@ title: Basic Prompting
 description: Prediction Guard in action
 ---
 
-# Basic Prompting
-
 (Run this example in Google Colab [here](https://drive.google.com/file/d/1KVcpd3pcy_8TLq44Q5rRIQJrV1U5yIji/view?usp=sharing))
 
 **Prompt and AI Engineering** is the emerging developer task of designing and optimizing prompts (and associated workflows/ infra) for AI models to achieve specific goals or outcomes. It involves creating high-quality inputs that can elicit accurate and relevant responses from AI models. The next several examples will help get you up to speed on common prompt engineering strategies.
@@ -34,7 +32,7 @@ Depending on the desired outcome, the prompt may be a single sentence, a paragra
 
 ```python copy
 result = pg.Completion.create(
-    model="Notus-7B",
+    model="Neural-Chat-7B",
     prompt="Daniel Whitenack, a long forgotten wizard from the Lord of the Rings, entered into Mordor to"
 )
 
