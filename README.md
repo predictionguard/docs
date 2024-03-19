@@ -3,17 +3,19 @@
 ## Updating Live Documentation
 
 To update the live documentation:
+1. Go to Fern -> Docs -> Pages and add your page there. 
+2. If you are changing the title or adding a new doc update [docs.yml] ([https://docs.predictionguard.com](https://github.com/predictionguard/ferndocs/blob/main/fern/docs.yml). 
+3. Commit changes to the main branch.
+4. Monitor the actions tab for any errors. Successful updates without errors will automatically push the docs to production at [docs.predictionguard.com](https://docs.predictionguard.com).
 
-1. Commit changes to the main branch.
-2. Monitor the actions tab for any errors. Successful updates without errors will automatically push the docs to production at [docs.predictionguard.com](https://docs.predictionguard.com).
-
-## Warning
-
-> **Warning**: Any file uploaded to the "publicpgdocimages" bucket is publicly accessible to the Internet. Please be mindful of the data you upload.
 
 ## Uploading and Using Images
 
 To use images in the documentation, follow these steps (**do not use images from the asset folder**):
+
+## Warning
+
+> **Warning**: Any file uploaded to the "publicpgdocimages" bucket is publicly accessible to the Internet. Please be mindful of the data you upload.
 
 1. Upload images to the Amazon S3 bucket: [publicpgdocimages](https://s3.console.aws.amazon.com/s3/buckets/publicpgdocimages?region=us-east-1&bucketType=general&tab=objects).
 2. Incorporate the image into your documentation with the following line of code:
