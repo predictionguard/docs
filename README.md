@@ -29,3 +29,7 @@ To use images in the documentation, follow these steps (**do not use images from
 ## Adding Code Blocks
 
 For adding code blocks and multiple code blocks to your documentation, refer to the [Fern documentation on code blocks](https://docs.buildwithfern.com/generate-docs/component-library/code-block).
+
+## Updating API Reference Part of the docs
+Please edit the [OpenAPI file located here](https://github.com/predictionguard/docs/blob/main/fern/openapi/Prediction-Guard-Prediction-Guard-API-1.0-resolved.yaml). Must be a valid OPENAPI Spec. 
+
