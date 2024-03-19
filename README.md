@@ -4,7 +4,7 @@
 
 To update the live documentation:
 1. Go to Fern -> Docs -> Pages and add your page there. 
-2. If you are changing the title or adding a new doc update [docs.yml] ([https://docs.predictionguard.com](https://github.com/predictionguard/ferndocs/blob/main/fern/docs.yml). 
+2. If you are changing the title or adding a new doc update [docs.yml] ([docs.yml](https://github.com/predictionguard/ferndocs/blob/main/fern/docs.yml). 
 3. Commit changes to the main branch.
 4. Monitor the actions tab for any errors. Successful updates without errors will automatically push the docs to production at [docs.predictionguard.com](https://docs.predictionguard.com).
 
