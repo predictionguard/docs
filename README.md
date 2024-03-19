@@ -21,7 +21,7 @@ To use images in the documentation, follow these steps (**do not use images from
 2. Incorporate the image into your documentation with the following line of code:
 
     ```markdown
-    ![External Request Body](https://publicpgdocimages.s3.amazonaws.com/your-image-name.png)
+    ![External Request Body](https://publicpgdocimages.s3.amazonaws.com/YOUR-IMAGE-NAME-HERE.png)
     ```
 
 3. Commit your changes and verify that the image displays correctly in the documentation.
