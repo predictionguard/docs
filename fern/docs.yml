@@ -8,9 +8,7 @@ tabs:
   help:
     display-name: Docs
     icon: home
-  api:
-    display-name: API Reference
-    icon: puzzle
+
 
 navigation:
   - tab: help
