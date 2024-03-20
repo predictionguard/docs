@@ -21,7 +21,7 @@ paths:
                 type: string
               example: |
                 The Prediction Guard API is healthy!
-  /completions:
+  /chat/completions:
     post:
       summary: Generate Chat Completions
       description: Generate chat completions based on a conversation history.
@@ -54,6 +54,80 @@ paths:
 
                         (Note: I'm always open to making people laugh, but I also try to be helpful and empathetic when needed.)
                     index: 0
+      security:
+        - ApiKeyCredentials: []
+  /completions:
+    post:
+      summary: "Generate Completions"
+      description: "Retrieve text completions based on the provided input."
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - "model"
+                - "prompt"
+              type: "object"
+              properties:
+                model:
+                  type: "string"
+                prompt:
+                  type: "string"
+              additionalProperties: false
+            examples:
+              example:
+                value: "{\r\n    \"model\": \"Nous-Hermes-Llama2-13B\",\r\n    \"prompt\": \"The best joke I know is: \"\r\n}"
+      responses:
+        "200":
+          description: "Successful response with text completions."
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  id:
+                    type: "string"
+                    description: "Unique ID for the completion."
+                  object:
+                    type: "string"
+                    description: "Type of object (text completion)."
+                  created:
+                    type: "integer"
+                    description: "Timestamp of when the completion was created."
+                  choices:
+                    type: "array"
+                    items:
+                      required:
+                        - "text"
+                        - "index"
+                        - "status"
+                        - "model"
+                      type: "object"
+                      properties:
+                        text:
+                          type: "string"
+                          description: "The generated text completion."
+                        index:
+                          type: "integer" # Add the "type" property here
+                          description: "The index of the completion choice."
+                        status:
+                          type: "string"
+                          description: "The status of the completion choice."
+                        model:
+                          type: "string"
+                          description: "The model used for generating the completion."
+                      additionalProperties: false
+                additionalProperties: false
+              example:
+                id: "cmpl-wzWm4jHomeRdbyiiDth6RIC0CI2eN"
+                object: "text_completion"
+                created: 1706909094
+                choices:
+                  - text: '2 dogs are walking down the street. One says to the other, "I''m in love." The other says, "I''m in love with the same bone."'
+                    index: 0
+                    status: "success"
+                    model: "Nous-Hermes-Llama2-13B"
       security:
         - ApiKeyCredentials: []
   /factuality:
