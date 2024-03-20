@@ -71,7 +71,7 @@ For prompts where context is injected:
 <|im_start|>assistant<|im_end|>
 ```
 
-## SQLCoder
+## SQLCoder-34b
 
 (Replace the portions of the prompt below in curly braces `{...}` with the appropriate information, and do not keep the curly braces)
 
@@ -89,6 +89,22 @@ This query will run on a database whose schema is represented in this string:
 
 ### SQL
 Given the database schema, here is the SQL query that answers `{question}`:
+```
+## SQLCoder-7b
+
+(Replace the portions of the prompt below in curly braces `{...}` with the appropriate information, and do not keep the curly braces)
+
+```
+### Task
+Generate a SQL query to answer [QUESTION]{user_question}[/QUESTION]
+
+### Database Schema
+The query will run on a database with the following schema:
+{table_metadata_string_DDL_statements}
+
+### Answer
+Given the database schema, here is the SQL query that [QUESTION]{user_question}[/QUESTION]
+[SQL]
 ```
 
 ## Deepseek
