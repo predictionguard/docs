@@ -1,6 +1,7 @@
 ---
 title: Chat Completions
 description: Prediction Guard in action
+slug: usingllms/chat
 ---
 
 (Run this example in Google Colab [here](https://drive.google.com/file/d/15EBnc9aSC_KWeL677b_QHEOO7hIWDn1e/view?usp=sharing))
@@ -35,6 +36,7 @@ pg.Chat.list_models()
 ```
 
 To perform a chat completion, you need to create an array of `messages`. Each message object should have a:
+
 - `role` - "system", "user", or "assistant"
 - `content` - the text associated with the message
 
@@ -91,12 +93,12 @@ while True:
             "role": "user",
             "content": request
         })
-        
+
         response = pg.Chat.create(
             model="Neural-Chat-7B",
             messages=messages
         )['choices'][0]['message']['content'].split('\n')[0].strip()
-        
+
         messages.append({
             "role": "assistant",
             "content": response
