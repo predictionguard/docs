@@ -17,7 +17,9 @@ To generate a chat text completion, you can use the following code examples. Dep
     import predictionguard as pg
 
     # Set your Prediction Guard token as an environmental variable.
-    os.environ["PREDICTIONGUARD_TOKEN"] = "<your access token>"
+    os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
+    
+    client = PredictionGuard()
 
     messages = [
         {
@@ -38,7 +40,7 @@ To generate a chat text completion, you can use the following code examples. Dep
         }
     ]
 
-    result = pg.Chat.create(
+    result = client.chat.completions.create(
         model="Neural-Chat-7B",
         messages=messages,
         max_tokens=500

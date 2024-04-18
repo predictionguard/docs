@@ -23,9 +23,11 @@ To check and replace PII, you can use the following code examples. Depending on 
     import predictionguard as pg
 
     # Set your Prediction Guard token as an environmental variable.
-    os.environ["PREDICTIONGUARD_TOKEN"] = "<your access token>"
+    os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
+    
+    client = PredictionGuard()
 
-    response = pg.PII.check(
+    response = client.pii.check(
         prompt="Hello, my name is John Doe and my SSN is 111-22-3333.",
         replace=False
     )

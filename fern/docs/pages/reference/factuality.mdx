@@ -22,10 +22,12 @@ To generate a factuality score, you can use the following code examples. Dependi
     import predictionguard as pg
 
     # Set your Prediction Guard token as an environmental variable.
-    os.environ["PREDICTIONGUARD_TOKEN"] = "<your access token>"
+    os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
+    
+    client = PredictionGuard()
 
     # Perform the factual consistency check.
-    result = pg.Factuality.check(
+    result = client.factuality.check(
         		reference="The sky is blue",
         		text="The sky is green"
     )

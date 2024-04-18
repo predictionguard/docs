@@ -35,11 +35,13 @@ To generate a translation, you can use the following code examples. Depending on
 
     import predictionguard as pg
 
-    # Set your PREDICTIONGUARD access token as an environmental variable.
-    os.environ["PREDICTIONGUARD_TOKEN"] = "<your access token>"
+    # Set your Prediction Guard token as an environmental variable.
+    os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
+    
+    client = PredictionGuard()
 
     # Translate the text.
-    result = pg.Translate.create(
+    result = client.translate.create(
         		text="The sky is blue",
                 source_lang="eng",
                 target_lang="fra"

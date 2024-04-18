@@ -17,9 +17,11 @@ To generate a text completion, you can use the following code examples. Dependin
     import predictionguard as pg
 
     # Set your Prediction Guard token as an environmental variable.
-    os.environ["PREDICTIONGUARD_TOKEN"] = "<your access token>"
+    os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
+    
+    client = PredictionGuard()
 
-    response = pg.Completion.create(
+    response = client.completions.create(
       model="Nous-Hermes-Llama2-13B",
       prompt="The best joke I know is: "
     )
