@@ -9,11 +9,14 @@ Some of your incoming prompts may include personally identifiable information (P
 import os
 import json
 
-import predictionguard as pg
+from predictionguard import PredictionGuard
 
-os.environ['PREDICTIONGUARD_TOKEN'] = "<your access token>"
+# Set your Prediction Guard token as an environmental variable.
+os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
 
-result = pg.PII.check(
+client = PredictionGuard()
+
+result = client.pii.check(
     prompt="Hello, my name is John Doe and my SSN is 111-22-3333",
     replace=False
 )
@@ -46,7 +49,7 @@ This outputs the PII entity and indices of where the info was found:
 To maintain utility without compromising privacy, you have the option to replace PII with fake names and then forward the modified prompt to the LLM for further processing:
 
 ```python copy
-result = pg.PII.check(
+result = client.pii.check(
     prompt="Hello, my name is John Doe and my SSN is 111-22-3333",
     replace=True,
     replace_method="fake"
