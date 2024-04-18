@@ -16,15 +16,19 @@ We will use LangChain again, but we will also use a Google search API called Ser
 $ pip install predictionguard langchain google-search-results
 ```
 
-```python copy
+```python
+import os
 from langchain.agents import load_tools
 from langchain.agents import initialize_agent
 from langchain.agents import AgentType
 from langchain.llms import PredictionGuard
-import os
+from predictionguard import PredictionGuard
 
+# Set your Prediction Guard token as an environmental variable.
+os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
 
-os.environ['PREDICTIONGUARD_TOKEN'] = "<your access token>"
+client = PredictionGuard()
+
 os.environ['SERPAPI_API_KEY'] = "<your serpapi api key>"
 ```
 
