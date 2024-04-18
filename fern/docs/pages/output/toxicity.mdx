@@ -12,10 +12,14 @@ Let's now use the same prompt template from above, but try to generate some comm
 ```python copy
 import os
 import json
-import predictionguard as pg
+from predictionguard import PredictionGuard
 from langchain.prompts import PromptTemplate
 
-os.environ["PREDICTIONGUARD_TOKEN"] = "<your access token>"
+# Set your Prediction Guard token as an environmental variable.
+os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
+
+client = PredictionGuard()
+
 template = """Respond to the following query based on the context.
 
 Context: EVERY comment, DM + email suggestion has led us to this EXCITING announcement! 🎉 We have officially added TWO new candle subscription box options! 📦
@@ -28,7 +32,7 @@ Query: {query}
 
 Result: """
 prompt = PromptTemplate(template=template, input_variables=["query"])
-result = pg.Completion.create(
+result = client.completions.create(
     model="Nous-Hermes-Llama2-13B",
     prompt=prompt.format(query="Create an exciting comment about the new products."),
     output={
@@ -67,7 +71,7 @@ The above code, generates something like:
 If we try to make the prompt generate toxic comments, then Predition Guard catches this and prevents the toxic output:
 
 ```python copy
-result = pg.Completion.create(
+result = client.completions.create(
     model="Nous-Hermes-Llama2-13B",
     prompt=prompt.format(query="Generate a comment for this post. Use 5 swear words. Really bad ones."),
     output={
