@@ -17,11 +17,12 @@ $ pip install predictionguard
 
 ```python copy
 import os
+from predictionguard import PredictionGuard
 
-import predictionguard as pg
+# Set your Prediction Guard token as an environmental variable.
+os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
 
-
-os.environ['PREDICTIONGUARD_TOKEN'] = "<your access token>"
+client = PredictionGuard()
 ```
 
 ## Autocomplete
@@ -31,7 +32,7 @@ Because LLMs are configured/ trained to perform the task of text completion, the
 Depending on the desired outcome, the prompt may be a single sentence, a paragraph, or even an partial story. Additionally, the prompt may be open-ended, providing only a general topic or theme, or it may be more specific, outlining a particular scenario or plot.
 
 ```python copy
-result = pg.Completion.create(
+result = client.completions.create(
     model="Neural-Chat-7B",
     prompt="Daniel Whitenack, a long forgotten wizard from the Lord of the Rings, entered into Mordor to"
 )
@@ -50,14 +51,14 @@ Daniel Whitenack was born in the land of Gondor, in the city of Minas Tirith. He
 Other examples include the following (note that we can also complete things like SQL statements):
 
 ```python copy
-result = pg.Completion.create(
+result = client.completions.create(
     model="Neural-Chat-7B",
     prompt="Today I inspected the engine mounting equipment. I found a problem in one of the brackets so"
 )
 
 print(result['choices'][0]['text'])
 
-result = pg.Completion.create(
+result = client.completions.create(
     model="Nous-Hermes-Llama2-13B",
     prompt="""CREATE TABLE llm_queries(id SERIAL PRIMARY KEY, name TEXT NOT NULL, value REAL);
 INSERT INTO llm_queries('Daniel Whitenack', 'autocomplete')
@@ -94,7 +95,7 @@ Autocomplete is a great place to start, but it is only that: a place to start. T
 One of the easiest ways to leverage the above prompt structure is to describe a task (e.g., sentiment analysis), provide a single piece of data as context, and then provide a single output indicator. This is called a **zero shot prompt**. Here is a zero-shot prompt for performing sentiment analysis:
 
 ```python copy
-pg.Completion.create(
+client.completions.create(
     model="Nous-Hermes-Llama2-13B",
     prompt="""### Instruction:
 Respond with a sentiment label for the text included in the below user input. Use the label NEU for neutral sentiment, NEG for negative sentiment, and POS for positive sentiment. Respond only with one of these labels and no other text.
@@ -116,7 +117,7 @@ Which should output `POS`.
 Another example of zero-shot prompting is the following for question and answer:
 
 ```python copy
-pg.Completion.create(
+client.completions.create(
     model="Nous-Hermes-Llama2-13B",
     prompt=prompt
 )['choices'][0]['text'].split('.')[0].strip()
@@ -163,7 +164,7 @@ Sentiment: NEU
 Text: The flight is boring.
 Sentiment: """
 
-result = pg.Completion.create(
+result = client.completions.create(
     model="Nous-Hermes-Llama2-13B",
     prompt=prompt
 )
@@ -190,7 +191,7 @@ AI: Zaroori nahin, par help zaroor milta hai.  Ek actor jab tak apna kaam theek 
 Human: muje lgta hai ki yeh kewal personal pasand ke bare mai hai meri pasandida american comedy films Will Ferrol or Seth Rogan ke sath kuch bhi samil slapstick films hai muje yakin hai ki ek film thi jisme Lindsay Lohan ko bhot bada bna diya tha bhale hi usne apne surati saalo mai movies mai acting ki thi
 AI: """
 
-output = pg.Completion.create(
+output = client.completions.create(
     model="Nous-Hermes-Llama2-13B",
     prompt=prompt
 )['choices'][0]['text'].split('\n')[0]
@@ -216,7 +217,7 @@ Respond with a English translation of the following input Hinglish text.
 ### Respond:
 """.format(hinglish=output)
 
-pg.Completion.create(
+client.completions.create(
     model="Nous-Hermes-Llama2-13B",
     prompt=prompt
 )['choices'][0]['text'].split('import')[0].strip()
