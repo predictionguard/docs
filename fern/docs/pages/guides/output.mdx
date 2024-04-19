@@ -15,14 +15,17 @@ This example demonstrates how to integrate PredictionGuard with custom data stru
 1. **Set Environment Variable for PredictionGuard**: Ensure that your PredictionGuard API token is correctly set up in your environment variables.
 
 ```python
-import os
-os.environ["PREDICTIONGUARD_TOKEN"] = "<your access token>"
+from predictionguard import PredictionGuard
+
+# Set your Prediction Guard token as an environmental variable.
+os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
+
+client = PredictionGuard()
 ```
 
 2. **Import Necessary Libraries**: Import PredictionGuard, Pydantic for data validation, and LangChain for output parsing and prompt templating.
 
 ```python
-import predictionguard as pg
 from langchain.output_parsers import PydanticOutputParser
 from langchain.prompts import PromptTemplate
 from pydantic import BaseModel, Field, validator
@@ -61,7 +64,7 @@ prompt = PromptTemplate(
 6. **Generate and Parse Output**: Call PredictionGuard's text completion model "Neural-Chat-7B" to generate an output based on the formatted prompt, then parse the output into the Pydantic model. Handle exceptions for parsing errors.
 
 ```python
-result = pg.Completion.create(
+result = client.completions.create(
     model="Neural-Chat-7B",
     prompt=prompt.format(query="Tell me a joke."),
     max_tokens=200,
