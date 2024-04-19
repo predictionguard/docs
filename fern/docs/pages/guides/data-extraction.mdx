@@ -15,10 +15,12 @@ import itertools
 
 import pandas as pd
 from langchain import PromptTemplate
-import predictionguard as pg
+from predictionguard import PredictionGuard
 
+# Set your Prediction Guard token as an environmental variable.
+os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
 
-os.environ["PREDICTIONGUARD_TOKEN"] = "<your access token>"
+client = PredictionGuard()
 
 # Load the JSON data into a dataframe
 data = []
@@ -65,7 +67,7 @@ summary_prompt = PromptTemplate(template=summarize_template,
 # Loop over the rows summarizing the data
 summaries = []
 for i,row in df.iterrows():
-    result=pg.Completion.create(
+    result=client.completions.create(
         model="Nous-Hermes-Llama2-13B",
         prompt=summary_prompt.format(
             transcript=row['transcript']
@@ -121,7 +123,7 @@ for i, row in df.iterrows():
     for q in questions:
 
         # Extract the information
-        result = pg.Completion.create(
+        result = client.completions.create(
             model="Nous-Hermes-Llama2-13B",
             prompt=q_and_a_prompt.format(
                 question=q, transcript_summary=row["summary"]
@@ -132,7 +134,7 @@ for i, row in df.iterrows():
         )
 
         # Generate a factual consistency score
-        fact_score = pg.Factuality.check(
+        fact_score =client.factuality.check(
             reference=row['summary'],
             text=result['choices'][0]['text']
         )
