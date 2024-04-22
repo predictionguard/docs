@@ -101,10 +101,10 @@ Given the database schema, here is the SQL query that [QUESTION]{user_question}[
 
 ## Llama3
 
-(Replace the portions of the prompt below in the parentheses `(...)` with the appropriate information, and do not keep the parentheses)
+(Replace the portions of the prompt below in curly braces `{...}` with the appropriate information, and do not keep the curly braces)
 
 ```
 <|begin_of_text|><|start_header_id|>system<|end_header_id|>
-{{ (system prompt) }}<|eot_id|><|start_header_id|>user<|end_header_id|>
-{{ (context or user message) }}<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+{system prompt}<|eot_id|><|start_header_id|>user<|end_header_id|>
+{context or user message}<|eot_id|><|start_header_id|>assistant<|end_header_id|>
 ```
