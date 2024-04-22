@@ -54,11 +54,12 @@ You can then use our Python client or REST API to prompt one of our LLMs!
     ```python filename="main.py"
     import os
     import json
-import predictionguard as pg
+from predictionguard import PredictionGuard
 
 # Set your Prediction Guard token as an environmental variable.
+os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
 
-os.environ["PREDICTIONGUARD_TOKEN"] = "<your access token>"
+client = PredictionGuard()
 
 # Define our prompt.
 
@@ -73,7 +74,7 @@ messages = [
 }
 ]
 
-result = pg.Chat.create(
+result = client.chat.completions.create(
 model="Neural-Chat-7B",
 messages=messages
 )
