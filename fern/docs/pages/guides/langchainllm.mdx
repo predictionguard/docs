@@ -39,12 +39,6 @@ import os
 from langchain.llms import PredictionGuard
 from langchain import PromptTemplate, LLMChain
 
-
-# Set your Prediction Guard token as an environmental variable.
-os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
-
-client = PredictionGuard()
-
 # Define a prompt template
 template = """Respond to the following query based on the context.
 
