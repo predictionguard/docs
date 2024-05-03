@@ -63,12 +63,7 @@ To use the streaming capability, set the `stream` parameter to `True` in your AP
         stream=True
     ):
 
-    print(json.dumps(
-        res,
-        sort_keys=True,
-        indent=4,
-        separators=(',', ': ')
-    ))
+    print(res["data"]["choices"][0]["delta"]["content"])
     ```
     </CodeBlock>
     <CodeBlock title="cURL">
