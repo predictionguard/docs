@@ -43,8 +43,6 @@ navigation:
             path: ./docs/pages/usingllms/augmentation.mdx
           - page: Agents
             path: ./docs/pages/usingllms/agents.mdx
-          - page: Output Streaming
-            path: ./docs/pages/usingllms/streaming.mdx
       - section: Process LLM Input
         contents:
           - page: PII
