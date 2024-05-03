@@ -1,0 +1,59 @@
+---
+title: Embeddings
+---
+
+You can get privacy-conserving text and image embeddings from  [available models](../models) using a call to the `/embeddings` REST API endpoint or the `embeddings` class in the Python client.
+
+## Generate embeddings
+
+To generate embeddings, you can use the following code examples. Depending on your preference or requirements, select the appropriate method for your application. This funcitonality accepts text and image inputs, and supports batching multiple inputs.
+
+<CodeBlocks>
+    <CodeBlock title="Python">
+    ```python filename="main.py"
+    import os
+    import json
+
+    from predictionguard import PredictionGuard
+    
+    client = PredictionGuard(
+        api_key="<your access token>"
+    )
+
+    response = client.embeddings.create(
+      model="bridgetower-large-itm-mlm-itc",
+      input=[
+        {
+            "text": "Tell me a joke.",
+            "image": "https://farm4.staticflickr.com/3300/3497460990_11dfb95dd1_z.jpg"
+        }
+      ]
+    )
+
+    print(json.dumps(
+        response,
+        sort_keys=True,
+        indent=4,
+        separators=(',', ': ')
+    ))
+    ```
+    </CodeBlock>
+    <CodeBlock title="cURL">
+    ```bash
+    $ curl --location --request POST 'https://api.predictionguard.com/completions' \
+    --header 'Content-Type: application/json' \
+    --header 'x-api-key: <your access token>' \
+    --data '{
+        "model": "bridgetower-large-itm-mlm-itc",
+        "input": [
+            {
+                "text": "Tell me a joke.
+            }
+        ]
+    }'
+    ```
+    </CodeBlock>
+
+</CodeBlocks>
+
+This approach presents a straightforward way for readers to choose and apply the code example that best suits their needs for generating text completions using either Python or cURL.
