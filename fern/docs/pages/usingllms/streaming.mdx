@@ -62,8 +62,8 @@ To use the streaming capability, set the `stream` parameter to `True` in your AP
         temperature=0.1,
         stream=True
     ):
-
-    print(res["data"]["choices"][0]["delta"]["content"])
+        # Use 'end' parameter in print function to avoid new lines.
+        print(res["data"]["choices"][0]["delta"]["content"], end='')
     ```
     </CodeBlock>
     <CodeBlock title="cURL">
@@ -103,3 +103,8 @@ To use the streaming capability, set the `stream` parameter to `True` in your AP
 ## Streaming Output Example
 
 This animated GIF demonstrates the real-time output of our Streaming API as data is received:
+
+<video width="320" height="240" controls>
+  <source src="streaming.mov" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
