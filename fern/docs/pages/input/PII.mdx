@@ -158,3 +158,62 @@ Enabling this will lead to blocking the prompt with PII to reach the LLM. You wi
     "object": "text_completion"
 }
 ```
+You can add the `pii` check to the chat completions as well. This is illustrated below:
+
+```python copy
+import os
+import json
+from predictionguard import PredictionGuard
+
+os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
+client = PredictionGuard()
+
+messages = [
+    {
+        "role": "system",
+        "content": "You are a helpful assistant that provides safe and private answers"
+    },
+    {
+        "role": "user",
+        "content": "This is Kate's phone number: 796-097-7766. Based on this where is she located"
+    }
+]
+
+result = client.chat.completions.create(
+    model="Neural-Chat-7B",
+    messages=messages,
+    input={"pii": "replace", "pii_replace_method": "fake"}
+)
+print(json.dumps(
+    result,
+    sort_keys=True,
+    indent=4,
+    separators=(',', ': ')
+))
+```
+
+This will produce an output like the following:
+
+```json
+{
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "content": "Without more information about Kyle or the area code, it's difficult to determine an exact location. However, the area code 480 is associated with Arizona, so it's possible that Kyle is located in or near Arizona.",
+                "output": null,
+                "role": "assistant"
+            },
+            "status": "success"
+        }
+    ],
+    "created": 1716234761,
+    "id": "chat-F34QJfOM771wYxT1YYWkkrOFyTvAg",
+    "model": "Neural-Chat-7B",
+    "object": "chat_completion"
+}
+```
+
+In the output it is clear that before the prompt was sent to the llm, the PII was replaced with fictitious
+information.
+
