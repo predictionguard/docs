@@ -81,3 +81,142 @@ The processed prompt will then be:
 ```
 
 Other options for the `replace_method` parameter include: `random` (to replace the detected PII with random character), `category` (to mask the PII with the entity type) and `mask` (simply replace with `*`).
+
+Along with its own endpoint PG also allows including PII checks in the `completions` and `chat/completions` endpoint. 
+
+```python copy
+import os
+import json
+import predictionguard as pg
+
+# Set your Prediction Guard token as an environmental variable.
+os.environ["PREDICTIONGUARD_TOKEN"] = <PG token>
+
+response = pg.Completion.create(
+    model="Nous-Hermes-Llama2-13B",
+    prompt="This is Sam's phone number: 123-876-0989. Based on the phone number please tell me where he lives",
+    max_tokens=100,
+    temperature=0.7,
+    top_p=0.9,
+    input={"pii": "replace", "pii_replace_method": "fake"}
+)
+
+print(json.dumps(response, sort_keys=True, indent=4, separators=(',', ': ')))
+```
+
+In the response, you can see the PII has been replced and the LLM response is for the modified prompt:
+```json
+{
+    "choices": [
+        {
+            "index": 0,
+            "model": "Nous-Hermes-Llama2-13B",
+            "status": "success",
+            "text": "?\nI don't have any information about his location. Can you provide more details about James or the phone number?"
+        }
+    ],
+    "created": 1715088867,
+    "id": "cmpl-eBOPBS5k2ziC7J45NBnOdrvbmNZg7",
+    "object": "text_completion"
+}
+```
+
+You can enable PII in `\completions` endpoint to block the requests as well:
+
+
+```python copy
+import os
+import json
+import predictionguard as pg
+
+# Set your Prediction Guard token as an environmental variable.
+os.environ["PREDICTIONGUARD_TOKEN"] = <PG token>
+
+response = pg.Completion.create(
+    model="Nous-Hermes-Llama2-13B",
+    prompt="What is Sam",
+    max_tokens=100,
+    temperature=0.7,
+    top_p=0.9,
+    input={"pii": "block"}
+)
+
+print(json.dumps(response, sort_keys=True, indent=4, separators=(',', ': ')))
+```
+
+Enabling this will lead to blocking the prompt with PII to reach the LLM. You will be seeing this response:
+
+```json 
+{
+    "choices": [
+        {
+            "index": 0,
+            "model": "Nous-Hermes-Llama2-13B",
+            "status": "error: personal identifiable information detected",
+            "text": ""
+        }
+    ],
+    "created": 1715089688,
+    "id": "cmpl-UGgwaUVYHm7jXNmFXrPGuh7OkH2EK",
+    "object": "text_completion"
+}
+```
+You can add the `pii` check to the chat completions as well. This is illustrated below:
+
+```python copy
+import os
+import json
+from predictionguard import PredictionGuard
+
+os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
+client = PredictionGuard()
+
+messages = [
+    {
+        "role": "system",
+        "content": "You are a helpful assistant that provides safe and private answers"
+    },
+    {
+        "role": "user",
+        "content": "This is Kate's phone number: 796-097-7766. Based on this where is she located"
+    }
+]
+
+result = client.chat.completions.create(
+    model="Neural-Chat-7B",
+    messages=messages,
+    input={"pii": "replace", "pii_replace_method": "fake"}
+)
+print(json.dumps(
+    result,
+    sort_keys=True,
+    indent=4,
+    separators=(',', ': ')
+))
+```
+
+This will produce an output like the following:
+
+```json
+{
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "content": "Without more information about Kyle or the area code, it's difficult to determine an exact location. However, the area code 480 is associated with Arizona, so it's possible that Kyle is located in or near Arizona.",
+                "output": null,
+                "role": "assistant"
+            },
+            "status": "success"
+        }
+    ],
+    "created": 1716234761,
+    "id": "chat-F34QJfOM771wYxT1YYWkkrOFyTvAg",
+    "model": "Neural-Chat-7B",
+    "object": "chat_completion"
+}
+```
+
+In the output it is clear that before the prompt was sent to the llm, the PII was replaced with fictitious
+information.
+
