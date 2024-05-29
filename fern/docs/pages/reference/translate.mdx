@@ -36,7 +36,7 @@ To generate a translation, you can use the following code examples. Depending on
     from predictionguard import PredictionGuard
 
     # Set your Prediction Guard token as an environmental variable.
-    os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
+    os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
     
     client = PredictionGuard()
 
@@ -58,7 +58,7 @@ To generate a translation, you can use the following code examples. Depending on
     <CodeBlock title="cURL">
     ```bash
     $ curl --location --request POST 'https://api.predictionguard.com/translate' \
-    --header 'x-api-key: <your access token>' \
+    --header 'x-api-key: <api key>' \
     --header 'Content-Type: application/json' \
     --data-raw '{
         "text":"The sky is blue",

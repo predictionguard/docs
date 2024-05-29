@@ -17,7 +17,7 @@ To generate embeddings, you can use the following code examples. Depending on yo
     from predictionguard import PredictionGuard
     
     client = PredictionGuard(
-        api_key="<your access token>"
+        api_key="<api key>"
     )
 
     response = client.embeddings.create(
@@ -42,7 +42,7 @@ To generate embeddings, you can use the following code examples. Depending on yo
     ```bash
     $ curl --location --request POST 'https://api.predictionguard.com/completions' \
     --header 'Content-Type: application/json' \
-    --header 'x-api-key: <your access token>' \
+    --header 'x-api-key: <api key>' \
     --data '{
         "model": "bridgetower-large-itm-mlm-itc",
         "input": [
