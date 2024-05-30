@@ -6,7 +6,7 @@ You can get vision text completions from any of the vision enabled [models](../m
 
 ## Generate a vision text completion
 
-To generate a vision text completion, you can use the following code examples. Depending on your preference or requirements, select the appropriate method for your application. Streaming is not currently supported when generating a vision text completion. For image inputs, this endpoint supports image file, url, and base 64 encoded inputs in the python client, while the Go API only supports base64 encoded images.
+To generate a vision text completion, you can use the following code examples. Depending on your preference or requirements, select the appropriate method for your application. Streaming is not currently supported when generating a vision text completion. For image inputs, this endpoint supports image file, url, and base 64 encoded inputs in the python client, while the Go client only supports base64 encoded images.
 
 <CodeBlocks>
     <CodeBlock title="Python">
@@ -24,21 +24,20 @@ To generate a vision text completion, you can use the following code examples. D
 
     messages = [
         {
-            "role": "system",
-            "content": "You are a helpful assistant that provide clever and sometimes funny responses."
-        },
-        {
             "role": "user",
-            "content": "What's up!"
+            "content": [
+                {
+                    "type": "text",
+                    "text": "What's in this image?"
+                },
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg",
+                    }
+                }
+            ]
         },
-        {
-            "role": "assistant",
-            "content": "Well, technically vertically out from the center of the earth."
-        },
-        {
-            "role": "user",
-            "content": "Haha. Good one."
-        }
     ]
 
     result = client.chat.completions.create(
@@ -54,37 +53,39 @@ To generate a vision text completion, you can use the following code examples. D
     ))
     ```
     </CodeBlock>
+
     <CodeBlock title="cURL">
     ```bash
+    $ curl -O 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg'
+    $ base64_img="$(base64 -i 2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg)"
+    $ cat <<EOF > input.json
+    {
+      "model": "llava-1.5-7b-hf",
+      "messages": [
+        {
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": "What is in this image?"
+            },
+            {
+              "type": "image_url",
+              "image_url": {
+                "url": "data:image/jpeg;base64,$base64_img"
+              }
+            }
+          ]
+        }
+      ],
+      "max_tokens": 300
+    }
+    EOF
+
     $ curl --location --request POST 'https://api.predictionguard.com/chat/completions' \
     --header 'Content-Type: application/json' \
     --header 'x-api-key: <your access token>' \
-    --data '{
-        "model": "llava-1.5-7b-hf",
-        "messages": [
-            {
-                "role": "system",
-                "content": "You are a helpful assistant that provide clever and sometimes funny responses."
-            },
-            {
-                "role": "user",
-                "content": "What is up!"
-            },
-            {
-                "role": "assistant",
-                "content": "Well, technically vertically out from the center of the earth."
-            },
-            {
-                "role": "user",
-                "content": "Haha. Good one."
-            }
-        ],
-        "max_tokens": 500,
-        "temperature": 0.1
-    }'
+    --data @input.json
     ```
     </CodeBlock>
-
 </CodeBlocks>
-
-If you'd like to have tabs to show multiple CodeBlocks at a time, you can use the `CodeBlocks` component as demonstrated above.
