@@ -1,0 +1,90 @@
+---
+title: Vision
+---
+
+You can get vision text completions from any of the vision enabled [models](../models) using the `/chat/completions` REST API endpoint or `chat.completions` Python client class.
+
+## Generate a vision text completion
+
+To generate a vision text completion, you can use the following code examples. Depending on your preference or requirements, select the appropriate method for your application. Streaming is not currently supported when generating a vision text completion. For image inputs, this endpoint supports image file, url, and base 64 encoded inputs in the python client, while the Go API only supports base64 encoded images.
+
+<CodeBlocks>
+    <CodeBlock title="Python">
+    ```python filename="main.py"
+    import os
+    import json
+
+
+    from predictionguard import PredictionGuard
+
+    # Set your Prediction Guard token as an environmental variable.
+    os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
+    
+    client = PredictionGuard()
+
+    messages = [
+        {
+            "role": "system",
+            "content": "You are a helpful assistant that provide clever and sometimes funny responses."
+        },
+        {
+            "role": "user",
+            "content": "What's up!"
+        },
+        {
+            "role": "assistant",
+            "content": "Well, technically vertically out from the center of the earth."
+        },
+        {
+            "role": "user",
+            "content": "Haha. Good one."
+        }
+    ]
+
+    result = client.chat.completions.create(
+        model="llava-1.5-7b-hf",
+        messages=messages
+    )
+
+    print(json.dumps(
+        result,
+        sort_keys=True,
+        indent=4,
+        separators=(',', ': ')
+    ))
+    ```
+    </CodeBlock>
+    <CodeBlock title="cURL">
+    ```bash
+    $ curl --location --request POST 'https://api.predictionguard.com/chat/completions' \
+    --header 'Content-Type: application/json' \
+    --header 'x-api-key: <your access token>' \
+    --data '{
+        "model": "llava-1.5-7b-hf",
+        "messages": [
+            {
+                "role": "system",
+                "content": "You are a helpful assistant that provide clever and sometimes funny responses."
+            },
+            {
+                "role": "user",
+                "content": "What is up!"
+            },
+            {
+                "role": "assistant",
+                "content": "Well, technically vertically out from the center of the earth."
+            },
+            {
+                "role": "user",
+                "content": "Haha. Good one."
+            }
+        ],
+        "max_tokens": 500,
+        "temperature": 0.1
+    }'
+    ```
+    </CodeBlock>
+
+</CodeBlocks>
+
+If you'd like to have tabs to show multiple CodeBlocks at a time, you can use the `CodeBlocks` component as demonstrated above.
