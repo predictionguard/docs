@@ -22,7 +22,7 @@ To generate a factuality score, you can use the following code examples. Dependi
     from predictionguard import PredictionGuard
 
     # Set your Prediction Guard token as an environmental variable.
-    os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
+    os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
     
     client = PredictionGuard()
 
@@ -43,7 +43,7 @@ To generate a factuality score, you can use the following code examples. Dependi
     <CodeBlock title="cURL">
     ```bash
     $ curl --location --request POST 'https://api.predictionguard.com/factuality' \
-    --header 'x-api-key: <your access token>' \
+    --header 'x-api-key: <api key>' \
     --header 'Content-Type: application/json' \
     --data-raw '{
         "reference":"The sky is blue",

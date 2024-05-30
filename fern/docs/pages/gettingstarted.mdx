@@ -57,7 +57,7 @@ You can then use our Python client or REST API to prompt one of our LLMs!
 from predictionguard import PredictionGuard
 
 # Set your Prediction Guard token as an environmental variable.
-os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
+os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
 
 client = PredictionGuard()
 
@@ -127,7 +127,7 @@ func main() {
     return
   }
   req.Header.Add("Content-Type", "application/json")
-  req.Header.Add("x-api-key", "<your access token>")
+  req.Header.Add("x-api-key", "<api key>")
 
   res, err := client.Do(req)
   if err != nil {
@@ -169,7 +169,7 @@ maxBodyLength: Infinity,
 url: 'https://api.predictionguard.com/chat/completions',
 headers: {
 'Content-Type': 'application/json',
-'x-api-key': '<your access token>'
+'x-api-key': '<api key>'
 },
 data : data
 };
@@ -188,7 +188,7 @@ console.log(error);
 ```bash
 $ curl --location 'https://api.predictionguard.com/chat/completions' \
 --header 'Content-Type: application/json' \
---header 'x-api-key: <your access token>' \
+--header 'x-api-key: <api key>' \
 --data '{
     "model": "Neural-Chat-7B",
     "messages": [

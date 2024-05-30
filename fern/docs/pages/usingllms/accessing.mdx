@@ -16,7 +16,7 @@ To run any prompt through a model, we need to set a foundation for how we will a
 
 We will use [Prediction Guard](https://www.predictionguard.com/) to call open access LLMs (like Mistral, Llama 2, WizardCoder, etc.) via a standardized OpenAI-like API. This will allow us to explore the full range of LLMs available. Further, it will illustrate how companies can access a wide range of models (outside of the GPT family).
 
-In order to "prompt" an LLM via Prediction Guard (and eventually engineer prompts), you will need to first install the Python client and supply your access token as an environment variable:
+In order to "prompt" an LLM via Prediction Guard (and eventually engineer prompts), you will need to first install the Python client and supply your api key as an environment variable:
 
 ```bash copy
 $ pip install predictionguard
@@ -28,7 +28,7 @@ import os
 from predictionguard import PredictionGuard
 
 # Set your Prediction Guard token as an environmental variable.
-os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
+os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
 
 client = PredictionGuard()
 ```

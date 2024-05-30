@@ -24,7 +24,7 @@ import os
 from predictionguard import PredictionGuard
 
 # Set your Prediction Guard token as an environmental variable.
-os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
+os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
 
 client = PredictionGuard()
 ```
@@ -70,7 +70,7 @@ To use the streaming capability, set the `stream` parameter to `True` in your AP
     ```bash
     curl --location 'https://api.predictionguard.com/chat/completions' \
     --header 'Content-Type: application/json' \
-    --header 'x-api-key: <pg-access-token>' \
+    --header 'x-api-key: <api key>' \
     --data '{
         "model": "Neural-Chat-7B",
         "messages": [
@@ -103,6 +103,4 @@ To use the streaming capability, set the `stream` parameter to `True` in your AP
 ## Streaming Output Example
 
 This animated GIF demonstrates the real-time output of our Streaming API as data is received:
-
-![Streaming API Output Example](./streaming-demo.gif)
 

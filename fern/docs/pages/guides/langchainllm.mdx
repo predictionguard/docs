@@ -7,7 +7,7 @@ helps you "Build applications with LLMs through composability." LangChain doesn'
 
 ## Installation and Setup
 - Install the Python SDK with `pip install predictionguard`
-- Get a Prediction Guard access token (as described [here](https://docs.predictionguard.com/)) and set it as the environment variable `PREDICTIONGUARD_API_KEY`.
+- Get a Prediction Guard api key (as described [here](https://docs.predictionguard.com/)) and set it as the environment variable `PREDICTIONGUARD_API_KEY`.
 ## LLM Wrapper
 
 There exists a Prediction Guard LLM wrapper, which you can access with 
@@ -20,9 +20,9 @@ You can provide the name of the Prediction Guard model as an argument when initi
 pgllm = PredictionGuard(model="Nous-Hermes-Llama2-13B")
 ```
 
-You can also provide your access token directly as an argument:
+You can also provide your api key directly as an argument:
 ```python
-pgllm = PredictionGuard(model="Nous-Hermes-Llama2-13B", token="<your access token>")
+pgllm = PredictionGuard(model="Nous-Hermes-Llama2-13B", token="<api key>")
 ```
 
 Finally, you can provide an "output" argument that is used to validate the output of the LLM:
@@ -69,7 +69,7 @@ from langchain import PromptTemplate, LLMChain
 from langchain.llms import PredictionGuard
 
 # Your Prediction Guard API key. Get one at predictionguard.com
-os.environ["PREDICTIONGUARD_API_KEY"] = "<your Prediction Guard access token>"
+os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
 
 pgllm = PredictionGuard(model="Nous-Hermes-Llama2-13B")
 

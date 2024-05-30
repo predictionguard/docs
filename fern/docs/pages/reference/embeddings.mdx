@@ -6,7 +6,7 @@ You can get privacy-conserving text and image embeddings from  [available models
 
 ## Generate embeddings
 
-To generate embeddings, you can use the following code examples. Depending on your preference or requirements, select the appropriate method for your application. This functionality accepts text and image inputs, and supports batching multiple inputs. For images, this endpoint works with image files, urls, or base64 encoded images.
+To generate embeddings, you can use the following code examples. Depending on your preference or requirements, select the appropriate method for your application. This functionality accepts text and image inputs, and supports batching multiple inputs. The Go REST API only supports images that are input as a base64 encoded string, whereas the python client supports image files, image urls, and images encoded in a base64 string.
 
 <CodeBlocks>
     <CodeBlock title="Python">
@@ -17,7 +17,7 @@ To generate embeddings, you can use the following code examples. Depending on yo
     from predictionguard import PredictionGuard
     
     client = PredictionGuard(
-        api_key="<your access token>"
+        api_key="<api key>"
     )
 
     response = client.embeddings.create(
@@ -42,7 +42,7 @@ To generate embeddings, you can use the following code examples. Depending on yo
     ```bash
     $ curl --location --request POST 'https://api.predictionguard.com/completions' \
     --header 'Content-Type: application/json' \
-    --header 'x-api-key: <your access token>' \
+    --header 'x-api-key: <api key>' \
     --data '{
         "model": "bridgetower-large-itm-mlm-itc",
         "input": [

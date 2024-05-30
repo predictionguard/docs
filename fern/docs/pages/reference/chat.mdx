@@ -17,7 +17,7 @@ To generate a chat text completion, you can use the following code examples. Dep
     from predictionguard import PredictionGuard
 
     # Set your Prediction Guard token as an environmental variable.
-    os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
+    os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
     
     client = PredictionGuard()
 
@@ -58,7 +58,7 @@ To generate a chat text completion, you can use the following code examples. Dep
     ```bash
     $ curl --location --request POST 'https://api.predictionguard.com/chat/completions' \
     --header 'Content-Type: application/json' \
-    --header 'x-api-key: <your access token>' \
+    --header 'x-api-key: <api key>' \
     --data '{
         "model": "Neural-Chat-7B",
         "messages": [

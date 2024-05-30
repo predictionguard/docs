@@ -18,7 +18,7 @@ For this demo we have selecteed a public dataset from Kaggle - Jobs and Salaries
 
 ## Installation and Setup
 - Install the Python SDK with `pip install predictionguard`
-- Get a Prediction Guard access token (as described [here](https://docs.predictionguard.com/)) and set it as the environment variable `PREDICTIONGUARD_API_KEY`.
+- Get a Prediction Guard api key (as described [here](https://docs.predictionguard.com/)) and set it as the environment variable `PREDICTIONGUARD_API_KEY`.
 
 ## Setup
 
@@ -44,7 +44,7 @@ from getpass import getpass
 ## Authenticate to Prediction Guard API
 ```python
 # Set your Prediction Guard token as an environmental variable.
-os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
+os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
 
 client = PredictionGuard()
 ```

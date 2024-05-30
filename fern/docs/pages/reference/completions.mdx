@@ -17,7 +17,7 @@ To generate a text completion, you can use the following code examples. Dependin
     from predictionguard import PredictionGuard
 
     # Set your Prediction Guard token as an environmental variable.
-    os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
+    os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
     
     client = PredictionGuard()
 
@@ -38,7 +38,7 @@ To generate a text completion, you can use the following code examples. Dependin
     ```bash
     $ curl --location --request POST 'https://api.predictionguard.com/completions' \
     --header 'Content-Type: application/json' \
-    --header 'x-api-key: <your access token>' \
+    --header 'x-api-key: <api key>' \
     --data '{
         "model": "Nous-Hermes-Llama2-13B",
         "prompt": "The best joke I know is: "

@@ -23,7 +23,7 @@ To check and replace PII, you can use the following code examples. Depending on 
     from predictionguard import PredictionGuard
 
     # Set your Prediction Guard token as an environmental variable.
-    os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
+    os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
     
     client = PredictionGuard()
 
@@ -44,7 +44,7 @@ To check and replace PII, you can use the following code examples. Depending on 
     ```bash
     $ curl --location --request POST 'https://api.predictionguard.com/PII' \
     --header 'Content-Type: application/json' \
-    --header 'x-api-key: <your access token>' \
+    --header 'x-api-key: <api key>' \
     --data '{
         "prompt": "Hello, my name is John Doe and my SSN is 111-22-3333.",
         "replace": true,
