@@ -102,8 +102,8 @@ navbar-links:
     text: Contact us
     url: "mailto:contact@predictionguard.com"
   - type: primary
-    text: Join our Slack
-    url: https://join.slack.com/t/prediction-guard/shared_invite/zt-1pwck5pgg-bctLNmqk~CjK3GmJc23UHg
+    text: Join our Discord
+    url: https://discord.gg/TFHgnhAFKd
 
 colors:
   accentPrimary:

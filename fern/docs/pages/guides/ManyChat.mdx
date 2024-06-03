@@ -79,22 +79,24 @@ Our goal in this example is to allow the customer to click a button if they need
 
 - Your Prediction Guard API Key
 - [Sign-up for Manychat](https://manychat.com/signup) (must be a premium account)
-- [Create two Manychat User Custom fields](https://support.manychat.com/support/solutions/articles/36000003046-user-input-and-custom-fields#:~:text=Custom%20Fields%20allow%20you%20to,to%20create%20and%20manage%20them.) (User_Text, Bot_Text)
+- [Create three Manychat User Custom fields](https://support.manychat.com/support/solutions/articles/36000003046-user-input-and-custom-fields#:~:text=Custom%20Fields%20allow%20you%20to,to%20create%20and%20manage%20them.) (User_Text, Bot_Text, convo_placeholder)
 - [Create a telegram bot](https://support.manychat.com/support/solutions/articles/36000329373-getting-started-how-to-create-a-telegram-bot-in-manychat)
 - [AWS Lambda Function that can be reached by the Internet](https://docs.aws.amazon.com/lambda/)
 
 #### Steps
 
-1. **Follow Basic Example Steps:** Implement steps 1-6 from the no context example.
-2. **Use Dynamic Content:** Instead of making an External Request Action Block we are actually going to add a “Get Dynamic Content” block:
+1. **Create a New Automation:** Begin by setting up a new automation.
+2. **Trigger Automation:** Select an appropriate context to trigger the automation.
+3. **Create a Telegram Menu:** Use a telegram send message block to build a menu. Include a “Question?” button to send user queries to Prediction Guard. This should route to the next step.
+4. **Use Dynamic Content:** Instead of making an External Request Action Block we are actually going to add a “Get Dynamic Content” block. Please make sure to also save the user's question to the user field convo_placeholder:
 
 ![Dynamic Body Block](https://publicpgdocimages.s3.amazonaws.com/manychat-context-dynamic.png)
 
-3. **Send Data to Lambda Function:** Configure the block to send "Full Contact Data" to your [Lambda function URL](https://docs.aws.amazon.com/lambda/latest/dg/lambda-urls.html):
+5. **Send Data to Lambda Function:** Configure the block to send "Full Contact Data" to your [Lambda function URL](https://docs.aws.amazon.com/lambda/latest/dg/lambda-urls.html):
 
 ![Dynamic Body Request](https://publicpgdocimages.s3.amazonaws.com/manychat-context-dynamic_body.png)
 
-4. **Lambda Function Goals:**
+6. **Lambda Function Goals:**
 
 - Parse Incoming Request.
 - Extract Custom Fields.
@@ -270,10 +272,10 @@ Your response to ManyChat for Telegram should look something like [this](https:/
 }
 ```
 
-5. **Configure the rest of the flow**
+7. **Configure the rest of the flow**
 
    - The customer should be able to continue the conversation. This should just route back to the dynamic request without clearing the user fields.
-   - The customer should also be able to ask a new question, which should clear the user fields. This action clears the context of the conversation.
+   - The customer should also be able to ask a new question, which should clear the three user fields. This action clears the context of the conversation.
    - Finally, it is best to provide a way for a person to reach a real human agent and close the ticket if they so desire.
 
 After completing this your flow should look like this:
