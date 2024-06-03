@@ -1,0 +1,91 @@
+---
+title: Vision
+---
+
+You can get vision text completions from any of the vision enabled [models](../models) using the `/chat/completions` REST API endpoint or `chat.completions` Python client class.
+
+## Generate a vision text completion
+
+To generate a vision text completion, you can use the following code examples. Depending on your preference or requirements, select the appropriate method for your application. Streaming is not currently supported when generating a vision text completion. For image inputs, this endpoint supports image file, url, and base 64 encoded inputs in the python client, while the Go API only supports images that are base64 encoded represented by a data uri.
+
+<CodeBlocks>
+    <CodeBlock title="Python">
+    ```python filename="main.py"
+    import os
+    import json
+
+
+    from predictionguard import PredictionGuard
+
+    # Set your Prediction Guard token as an environmental variable.
+    os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
+    
+    client = PredictionGuard()
+
+    messages = [
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "What's in this image?"
+                },
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg",
+                    }
+                }
+            ]
+        },
+    ]
+
+    result = client.chat.completions.create(
+        model="llava-1.5-7b-hf",
+        messages=messages
+    )
+
+    print(json.dumps(
+        result,
+        sort_keys=True,
+        indent=4,
+        separators=(',', ': ')
+    ))
+    ```
+    </CodeBlock>
+
+    <CodeBlock title="cURL">
+    ```bash
+    $ curl -O 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg'
+    $ base64_img="$(base64 -i 2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg)"
+    $ cat <<EOF > input.json
+    {
+      "model": "llava-1.5-7b-hf",
+      "messages": [
+        {
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": "What is in this image?"
+            },
+            {
+              "type": "image_url",
+              "image_url": {
+                "url": "data:image/jpeg;base64,$base64_img"
+              }
+            }
+          ]
+        }
+      ],
+      "max_tokens": 300
+    }
+    EOF
+
+    $ curl --location --request POST 'https://api.predictionguard.com/chat/completions' \
+    --header 'Content-Type: application/json' \
+    --header 'x-api-key: <your access token>' \
+    --data @input.json
+    ```
+    </CodeBlock>
+</CodeBlocks>
