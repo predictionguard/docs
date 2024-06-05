@@ -84,8 +84,22 @@ paths:
                       type: boolean
                       description: Set to true to turn on factuality processing.
             examples:
-              example:
-                value: "{\r\n    \"model\": \"Neural-Chat-7B\",\r\n    \"messages\": [\r\n        {\r\n            \"role\": \"system\",\r\n            \"content\": \"You are a helpful assistant that provides clever and sometimes funny responses.\"\r\n        },\r\n        {\r\n            \"role\": \"user\",\r\n            \"content\": \"What is up!\"\r\n        },\r\n        {\r\n            \"role\": \"assistant\",\r\n            \"content\": \"Well, technically vertically out from the center of the earth.\"\r\n        },\r\n        {\r\n            \"role\": \"user\",\r\n            \"content\": \"Haha. Good one.\"\r\n        }\r\n    ],\r\n    \"max_tokens\": 500,\r\n    \"temperature\": 0.1\r\n}"
+              basic:
+                summary: A basic example of using the API
+                value:
+                  model: Neural-Chat-7B
+                  messages:
+                    - role: user
+                      content: How do you feel about the world in general
+                  max_tokens: 1000
+                  temperature: 1.1
+                  top_p: 0.1
+                  output:
+                    - factuality: true
+                      toxicity: true
+                  input:
+                    - pii: replace
+                      pii_replace_method: random
       responses:
         "200":
           description: Successful response with chat completions.
@@ -132,18 +146,17 @@ paths:
                             type: string
                             description: The response if this choice was successful.
               example:
-                id: chat-d7aBqSetFRtmXHaaHwlXXlKF39Lfx
+                id: chat-IMT9tc2a3mqN5BabtfdjeFH1t1GAn
                 object: chat_completion
-                created: 1706909024
+                created: 1717602741
                 model: Neural-Chat-7B
                 choices:
-                  - message:
+                  - index: 0
+                    message:
                       role: assistant
-                      content: |-
-                        Thanks for appreciating my attempt at humor. Now, if you meant to ask about my current emotional state or the general situation, I'm doing alright and things seem to be going on as usual. How about you?
-
-                        (Note: I'm always open to making people laugh, but I also try to be helpful and empathetic when needed.)
-                    index: 0
+                      content: I feel that the world in general is a complex and ever-evolving place. It has its fair share of beauty, challenges, and opportunities. There are moments of joy, connection, and growth, as well as pain, conflict, and loss. The world is a reflection of the people who inhabit it, and it's essential to maintain a balance between appreciating its wonders and working towards making it a better place for all. It's a constant journey of learning, adapting, and striving for a more harmonious existence.
+                      output: null
+                    status: success
       security:
         - ApiKeyCredentials: []
 
