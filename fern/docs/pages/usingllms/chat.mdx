@@ -20,11 +20,12 @@ $ pip install predictionguard
 
 ```python copy
 import os
+from predictionguard import PredictionGuard
 
-import predictionguard as pg
+# Set your Prediction Guard token as an environmental variable.
+os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
 
-
-os.environ['PREDICTIONGUARD_TOKEN'] = "<your access token>"
+client = PredictionGuard()
 ```
 
 ## Basic chat completion
@@ -32,7 +33,7 @@ os.environ['PREDICTIONGUARD_TOKEN'] = "<your access token>"
 Chat completions are enabled in the Prediction Guard API for only certain of the models. You don't have to worry about special prompt templates when doing these completions as they are already implemented.
 
 ```python copy
-pg.Chat.list_models()
+print(client.chat.completions.list_models())
 ```
 
 To perform a chat completion, you need to create an array of `messages`. Each message object should have a:
@@ -62,7 +63,7 @@ messages = [
     }
 ]
 
-result = pg.Chat.create(
+result = client.chat.completions.create(
     model="Neural-Chat-7B",
     messages=messages
 )
@@ -94,7 +95,7 @@ while True:
             "content": request
         })
 
-        response = pg.Chat.create(
+        response = client.chat.completions.create(
             model="Neural-Chat-7B",
             messages=messages
         )['choices'][0]['message']['content'].split('\n')[0].strip()

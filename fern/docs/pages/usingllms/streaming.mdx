@@ -1,10 +1,11 @@
 ---
 title: Streaming
 ---
-# Overview
 
+## Overview
 The Streaming API allows for real-time data transmission during the generation of API responses. By enabling the stream option, responses are sent incrementally, allowing users to begin processing parts of the response as they are received. This is especially useful for applications requiring immediate partial data rather than waiting for a complete response.
-# Benefits
+
+## Benefits
 
 **Immediate Access**: Receive parts of the data as they are generated, which can be useful for displaying real-time results or processing large volumes of data.
 
@@ -13,6 +14,7 @@ The Streaming API allows for real-time data transmission during the generation o
 ## Dependencies and imports
 
 Similar to the last notebook, you will need to install Prediction Guard and add your token.
+
 ```bash copy
 $ pip install predictionguard
 ```
@@ -20,16 +22,20 @@ $ pip install predictionguard
 ```python copy
 import os
 from predictionguard import PredictionGuard
+
 # Set your Prediction Guard token as an environmental variable.
-os.environ["PREDICTIONGUARD_API_KEY"] = "<your access token>"
+os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+
 client = PredictionGuard()
 ```
 ## How to Use the Streaming API
 
 To use the streaming capability, set the `stream` parameter to `True` in your API request. Below is an example using the Neural-Chat-7B model:
+
 <CodeBlocks>
     <CodeBlock title="Python">
     ```python filename="main.py"
+
     messages = [
     {
         "role": "system",
@@ -48,6 +54,7 @@ To use the streaming capability, set the `stream` parameter to `True` in your AP
         "content": "Haha. Good one."
     }
     ]
+
     for res in client.chat.completions.create(
         model="Neural-Chat-7B",
         messages=messages,
@@ -55,19 +62,15 @@ To use the streaming capability, set the `stream` parameter to `True` in your AP
         temperature=0.1,
         stream=True
     ):
-    print(json.dumps(
-        res,
-        sort_keys=True,
-        indent=4,
-        separators=(',', ': ')
-    ))
+        # Use 'end' parameter in print function to avoid new lines.
+        print(res["data"]["choices"][0]["delta"]["content"], end='')
     ```
     </CodeBlock>
     <CodeBlock title="cURL">
     ```bash
     curl --location 'https://api.predictionguard.com/chat/completions' \
     --header 'Content-Type: application/json' \
-    --header 'x-api-key: <pg-access-token>' \
+    --header 'x-api-key: <api key>' \
     --data '{
         "model": "Neural-Chat-7B",
         "messages": [
@@ -94,8 +97,7 @@ To use the streaming capability, set the `stream` parameter to `True` in your AP
     }'
     ```
     </CodeBlock>
+
 </CodeBlocks>
 
-## Streaming Output Example
 
-This animated GIF demonstrates the real-time output of our Streaming API as data is received:

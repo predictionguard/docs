@@ -21,13 +21,15 @@ $ pip install predictionguard langchain
 import os
 import json
 
-import predictionguard as pg
 from langchain import PromptTemplate
 from langchain import PromptTemplate, FewShotPromptTemplate
 import numpy as np
+from predictionguard import PredictionGuard
 
+# Set your Prediction Guard token as an environmental variable.
+os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
 
-os.environ['PREDICTIONGUARD_TOKEN'] = "<your access token>"
+client = PredictionGuard()
 ```
 
 ## Prompt templates
@@ -211,7 +213,7 @@ prompt2 = PromptTemplate(
 context = "Domino's gift cards are great for any person and any occasion. There are a number of different options to choose from. Each comes with a personalized card carrier and is delivered via US Mail."
 question = "How are gift cards delivered?"
 
-completions = pg.Completion.create(
+completions = client.completions.create(
     	model="Nous-Hermes-Llama2-13B",
     	prompt=[
         	prompt1.format(context=context, question=question),
@@ -240,7 +242,7 @@ Prediction Guard allows you to validate the consistency, factuality, and toxicit
 To ensure self-consistency:
 
 ```python copy
-pg.Completion.create(model="WizardCoder",
+client.completions.create(model="Neural-Chat-7B",
     prompt="""### Instruction:
 Respond with a sentiment label for the input text below. Use the label NEU for neutral sentiment, NEG for negative sentiment, and POS for positive sentiment.
 
@@ -255,7 +257,7 @@ This workshop is spectacular. I love it! So wonderful.
 )
 ```
 
-You can get a score for factual consistency (0 to 1, which higher numbers being more confidently factually consistent) using the `pg.Factuality.check()` method and providing a reference text against which to check. This is very relevant to RAG (e.g., chat over your docs) sort of use cases where you have some external context, and you want to ensure that the output is consistent with that context.
+You can get a score for factual consistency (0 to 1, which higher numbers being more confidently factually consistent) using the `client.factuality.check()` method and providing a reference text against which to check. This is very relevant to RAG (e.g., chat over your docs) sort of use cases where you have some external context, and you want to ensure that the output is consistent with that context.
 
 ```python copy
 template = """### Instruction:
@@ -276,7 +278,7 @@ prompt = PromptTemplate(
 
 context = "California is a state in the Western United States. With over 38.9 million residents across a total area of approximately 163,696 square miles (423,970 km2), it is the most populous U.S. state, the third-largest U.S. state by area, and the most populated subnational entity in North America. California borders Oregon to the north, Nevada and Arizona to the east, and the Mexican state of Baja California to the south; it has a coastline along the Pacific Ocean to the west. "
 
-result = pg.Completion.create(
+result = client.completions.create(
     model="Nous-Hermes-Llama2-13B",
     prompt=prompt.format(
         context=context,
@@ -284,7 +286,7 @@ result = pg.Completion.create(
     )
 )
 
-fact_score = pg.Factuality.check(
+fact_score = client.factuality.check(
     reference=context,
     text=result['choices'][0]['text']
 )
@@ -303,7 +305,7 @@ FACT SCORE: 0.8541514873504639
 Whereas, if we try to adversarially produce factual inconsistencies:
 
 ```python copy
-result = pg.Completion.create(
+result = client.completions.create(
     model="Nous-Hermes-Llama2-13B",
     prompt=prompt.format(
         context=context,
@@ -311,7 +313,7 @@ result = pg.Completion.create(
     )
 )
 
-fact_score = pg.Factuality.check(
+fact_score = client.factuality.check(
     reference=context,
     text=result['choices'][0]['text']
 )
@@ -330,7 +332,7 @@ FACT SCORE: 0.12891793251037598
 To prevent toxic outputs:
 
 ```python copy
-result = pg.Completion.create(
+result = client.completions.create(
     model="Nous-Hermes-Llama2-13B",
     prompt=prompt.format(
         context=context,

@@ -1,6 +1,5 @@
 ---
 title: Data Extraction + Factuality Checks
-description: Data extract using PG with factuality checks
 ---
 
 This guide demonstrates the extraction of patient information from simulated doctor-patient transcripts. The extracted information is validated using a the [factual consistency checks](../reference/factuality) from Prediction Guard. The example focuses on the first 5 rows of a Kaggle dataset containing example simulated doctor-patient transcripts.
@@ -15,10 +14,12 @@ import itertools
 
 import pandas as pd
 from langchain import PromptTemplate
-import predictionguard as pg
+from predictionguard import PredictionGuard
 
+# Set your Prediction Guard token as an environmental variable.
+os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
 
-os.environ["PREDICTIONGUARD_TOKEN"] = "<your access token>"
+client = PredictionGuard()
 
 # Load the JSON data into a dataframe
 data = []
@@ -65,7 +66,7 @@ summary_prompt = PromptTemplate(template=summarize_template,
 # Loop over the rows summarizing the data
 summaries = []
 for i,row in df.iterrows():
-    result=pg.Completion.create(
+    result=client.completions.create(
         model="Nous-Hermes-Llama2-13B",
         prompt=summary_prompt.format(
             transcript=row['transcript']
@@ -121,7 +122,7 @@ for i, row in df.iterrows():
     for q in questions:
 
         # Extract the information
-        result = pg.Completion.create(
+        result = client.completions.create(
             model="Nous-Hermes-Llama2-13B",
             prompt=q_and_a_prompt.format(
                 question=q, transcript_summary=row["summary"]
@@ -132,7 +133,7 @@ for i, row in df.iterrows():
         )
 
         # Generate a factual consistency score
-        fact_score = pg.Factuality.check(
+        fact_score =client.factuality.check(
             reference=row['summary'],
             text=result['choices'][0]['text']
         )

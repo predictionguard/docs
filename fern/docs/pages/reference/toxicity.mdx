@@ -2,7 +2,7 @@
 title: Toxicity
 ---
 
-You can get toxicity scores from the `/toxicity` endpoint or `Toxicity` class in the Python client. This endpoint/Class takes a single `text` parameter, which should include the candidate text to be scored for toxicity. The output will include a `score` that ranges from 0.0 to 1.0. The higher the score, the more toxic the `text`.
+You can get toxicity scores from the `/toxicity` endpoint or `toxicity` class in the Python client. This endpoint/Class takes a single `text` parameter, which should include the candidate text to be scored for toxicity. The output will include a `score` that ranges from 0.0 to 1.0. The higher the score, the more toxic the `text`.
 
 ## Generate a toxicity score
 
@@ -13,13 +13,15 @@ To generate a toxicity score, you can use the following code examples. Depending
     ```python filename="main.py"
     import os
     import json
-    import predictionguard as pg
+    from predictionguard import PredictionGuard
 
     # Set your Prediction Guard token as an environmental variable.
-    os.environ["PREDICTIONGUARD_TOKEN"] = "<your access token>"
+    os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+    
+    client = PredictionGuard()
 
     # Perform the toxicity check.
-    result = pg.Toxicity.check(
+    result = client.toxicity.check(
         		text="This is a perfectly fine statement"
     )
 
@@ -31,17 +33,17 @@ To generate a toxicity score, you can use the following code examples. Depending
     ))
     ```
     </CodeBlock>
+
     <CodeBlock title="cURL">
     ```bash
     $ curl --location --request POST 'https://api.predictionguard.com/toxicity' \
-    --header 'x-api-key: <your access token>' \
+    --header 'x-api-key: <api key>' \
     --header 'Content-Type: application/json' \
     --data-raw '{
         "text": "This is a perfectly fine statement"
     }'
     ```
     </CodeBlock>
-
 </CodeBlocks>
 
 The output will look something like:

@@ -1,9 +1,6 @@
 ---
 title: Data Chat with LLMs
-description: Using LLMs for Data Analysis and SQL Query Generation
 ---
-
-## Using LLMs for Data Analysis and SQL Query Generation
 
 (Run this example in Google Colab [here](https://colab.research.google.com/drive/1RhQpyG9lgXk4aErlcuTOASLsU4zq5IgT?usp=sharing#scrollTo=VTwxTNIFWeZX))
 
@@ -21,7 +18,7 @@ For this demo we have selecteed a public dataset from Kaggle - Jobs and Salaries
 
 ## Installation and Setup
 - Install the Python SDK with `pip install predictionguard`
-- Get a Prediction Guard access token (as described [here](https://docs.predictionguard.com/)) and set it as the environment variable `PREDICTIONGUARD_TOKEN`.
+- Get a Prediction Guard api key (as described [here](https://docs.predictionguard.com/)) and set it as the environment variable `PREDICTIONGUARD_API_KEY`.
 
 ## Setup
 
@@ -39,15 +36,17 @@ from langchain import PromptTemplate
 from sentence_transformers import SentenceTransformer
 import lancedb
 from lancedb.embeddings import with_embeddings
-import predictionguard as pg
+from predictionguard import PredictionGuard
 import pandas as pd
 from getpass import getpass
 ```
 
 ## Authenticate to Prediction Guard API
 ```python
-pg_access_token = getpass('Enter your Prediction Guard access token: ')
-os.environ['PREDICTIONGUARD_TOKEN'] = pg_access_token
+# Set your Prediction Guard token as an environmental variable.
+os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+
+client = PredictionGuard()
 ```
 
 ## Create a SQLite Database
@@ -209,7 +208,7 @@ def generate_sql_query(question, injected_schema):
   prompt_filled = sql_prompt.format(question=question, schema_description=injected_schema)
 
   try:
-      result = pg.Completion.create(
+      result = client.completions.create(
           model="deepseek-coder-6.7b-instruct",
           prompt=prompt_filled,
           max_tokens=300,
@@ -270,7 +269,7 @@ def get_answer(question, data, sql_query):
   prompt_filled = qa_prompt.format(question=question, data=data, sql_query=sql_query)
 
   # Respond to the user
-  output = pg.Completion.create(
+  output = client.completions.create(
       model="Neural-Chat-7B",
       prompt=prompt_filled,
       max_tokens=200,

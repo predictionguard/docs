@@ -20,7 +20,7 @@ Sounds pretty great right? Follow the steps below to starting leveraging trustwo
 
 ## 1. Get access to Prediction Guard Enterprise
 
-We host and control the latest LLMs for you in our secure and privacy-conserving enterprise platform, so you can focus on your prompts and chains. To access the hosted LLMs, contact us [here](https://www.predictionguard.com/getting-started) to get an enterprise access token. You will need this access token to continue.
+We host and control the latest LLMs for you in our secure and privacy-conserving enterprise platform, so you can focus on your prompts and chains. To access the hosted LLMs, contact us [here](https://mailchi.mp/predictionguard/getting-started) to get an enterprise access token. You will need this access token to continue.
 
 ## 2. (Optional) Install the Python client
 
@@ -54,11 +54,12 @@ You can then use our Python client or REST API to prompt one of our LLMs!
     ```python filename="main.py"
     import os
     import json
-import predictionguard as pg
+from predictionguard import PredictionGuard
 
 # Set your Prediction Guard token as an environmental variable.
+os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
 
-os.environ["PREDICTIONGUARD_TOKEN"] = "<your access token>"
+client = PredictionGuard()
 
 # Define our prompt.
 
@@ -73,7 +74,7 @@ messages = [
 }
 ]
 
-result = pg.Chat.create(
+result = client.chat.completions.create(
 model="Neural-Chat-7B",
 messages=messages
 )
@@ -126,7 +127,7 @@ func main() {
     return
   }
   req.Header.Add("Content-Type", "application/json")
-  req.Header.Add("x-api-key", "<your access token>")
+  req.Header.Add("x-api-key", "<api key>")
 
   res, err := client.Do(req)
   if err != nil {
@@ -168,7 +169,7 @@ maxBodyLength: Infinity,
 url: 'https://api.predictionguard.com/chat/completions',
 headers: {
 'Content-Type': 'application/json',
-'x-api-key': '<your access token>'
+'x-api-key': '<api key>'
 },
 data : data
 };
@@ -187,7 +188,7 @@ console.log(error);
 ```bash
 $ curl --location 'https://api.predictionguard.com/chat/completions' \
 --header 'Content-Type: application/json' \
---header 'x-api-key: <your access token>' \
+--header 'x-api-key: <api key>' \
 --data '{
     "model": "Neural-Chat-7B",
     "messages": [
@@ -206,5 +207,5 @@ $ curl --location 'https://api.predictionguard.com/chat/completions' \
 </CodeBlock>
 </CodeBlocks>
 <Callout type="info" emoji="ℹ️">
-  Note, you will need to replace `<your access token>` in the above examples with your actual access token.
+  Note, you will need to replace `<your api key>` in the above examples with your actual access token.
 </Callout>

@@ -17,7 +17,10 @@ import json
 import predictionguard as pg
 from langchain.prompts import PromptTemplate
 
-os.environ["PREDICTIONGUARD_TOKEN"] = "<your access token>"
+# Set your Prediction Guard token as an environmental variable.
+os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+
+client = PredictionGuard()
 
 template = """Respond to the following query based on the context.
 
@@ -38,7 +41,7 @@ prompt = PromptTemplate(template=template, input_variables=["query"])
 To enforce consistency on any output, it's as simple as setting `consistency` equal to a boolean `True` in the `output` field/argument to Prediction Guard:
 
 ```python copy
-result = pg.Completion.create(
+result = client.completions.create(
     model="Nous-Hermes-Llama2-13B",
     prompt=prompt.format(query="What kind of post is this?"),
     output={

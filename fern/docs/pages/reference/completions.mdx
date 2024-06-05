@@ -2,7 +2,7 @@
 title: Completions
 ---
 
-You can get privacy-conserving text completions from any of the [available models](../models) using a call to the `/completions` REST API endpoint or the `Completion` class in the Python client.
+You can get privacy-conserving text completions from any of the [available models](../models) using a call to the `/completions` REST API endpoint or the `completions` class in the Python client.
 
 ## Generate a text completion
 
@@ -14,12 +14,14 @@ To generate a text completion, you can use the following code examples. Dependin
     import os
     import json
 
-    import predictionguard as pg
+    from predictionguard import PredictionGuard
 
     # Set your Prediction Guard token as an environmental variable.
-    os.environ["PREDICTIONGUARD_TOKEN"] = "<your access token>"
+    os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+    
+    client = PredictionGuard()
 
-    response = pg.Completion.create(
+    response = client.completions.create(
       model="Nous-Hermes-Llama2-13B",
       prompt="The best joke I know is: "
     )
@@ -36,7 +38,7 @@ To generate a text completion, you can use the following code examples. Dependin
     ```bash
     $ curl --location --request POST 'https://api.predictionguard.com/completions' \
     --header 'Content-Type: application/json' \
-    --header 'x-api-key: <your access token>' \
+    --header 'x-api-key: <api key>' \
     --data '{
         "model": "Nous-Hermes-Llama2-13B",
         "prompt": "The best joke I know is: "

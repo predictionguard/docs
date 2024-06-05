@@ -2,7 +2,7 @@
 title: PII
 ---
 
-You can check and replace Personal Identifiable Information (PII) from the `/PII` endpoint or `PII` class in the Python Client. This endpoint/Class takes three parameters:
+You can check and replace Personal Identifiable Information (PII) from the `/PII` endpoint or `pii` class in the Python Client. This endpoint/Class takes three parameters:
 
 - `prompt` - The prompt that you want to check for PII.
 - `replace` - A boolean for replacing the PII if any is found.
@@ -20,12 +20,14 @@ To check and replace PII, you can use the following code examples. Depending on 
     import os
     import json
 
-    import predictionguard as pg
+    from predictionguard import PredictionGuard
 
     # Set your Prediction Guard token as an environmental variable.
-    os.environ["PREDICTIONGUARD_TOKEN"] = "<your access token>"
+    os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+    
+    client = PredictionGuard()
 
-    response = pg.PII.check(
+    response = client.pii.check(
         prompt="Hello, my name is John Doe and my SSN is 111-22-3333.",
         replace=False
     )
@@ -38,11 +40,12 @@ To check and replace PII, you can use the following code examples. Depending on 
     ))
     ```
     </CodeBlock>
+
     <CodeBlock title="cURL">
     ```bash
     $ curl --location --request POST 'https://api.predictionguard.com/PII' \
     --header 'Content-Type: application/json' \
-    --header 'x-api-key: <your access token>' \
+    --header 'x-api-key: <api key>' \
     --data '{
         "prompt": "Hello, my name is John Doe and my SSN is 111-22-3333.",
         "replace": true,
@@ -50,7 +53,4 @@ To check and replace PII, you can use the following code examples. Depending on 
     }'
     ```
     </CodeBlock>
-
 </CodeBlocks>
-
-This approach provides a straightforward way for readers to choose and apply the code example that best suits their needs for checking and replacing PII using either Python or cURL.
