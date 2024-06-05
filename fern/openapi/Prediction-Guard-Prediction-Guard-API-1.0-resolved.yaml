@@ -10,7 +10,7 @@ servers:
   - url: https://api.predictionguard.com
 
 paths:
-  "/":
+  "":
     get:
       summary: Check API Health
       description: A simple endpoint to check if the Prediction Guard API is healthy.
