@@ -2,7 +2,7 @@
 title: Factuality
 ---
 
-You can get factuality scores (or rather factual consistency scores) from the `/factuality` endpoint or `Factuality` class in the Python client. This endpoint/Class takes two parameters:
+You can get factuality scores (or rather factual consistency scores) from the `/factuality` endpoint or `factuality` class in the Python client. This endpoint/Class takes two parameters:
 
 - `reference` - A reference text with which you want to compare another text for factual consistency.
 - `text` - The candidate text that will be scored for factual consistency.
@@ -19,13 +19,15 @@ To generate a factuality score, you can use the following code examples. Dependi
     import os
     import json
 
-    import predictionguard as pg
+    from predictionguard import PredictionGuard
 
     # Set your Prediction Guard token as an environmental variable.
-    os.environ["PREDICTIONGUARD_TOKEN"] = "<your access token>"
+    os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+    
+    client = PredictionGuard()
 
     # Perform the factual consistency check.
-    result = pg.Factuality.check(
+    result = client.factuality.check(
         		reference="The sky is blue",
         		text="The sky is green"
     )
@@ -38,10 +40,11 @@ To generate a factuality score, you can use the following code examples. Dependi
     ))
     ```
     </CodeBlock>
+
     <CodeBlock title="cURL">
     ```bash
     $ curl --location --request POST 'https://api.predictionguard.com/factuality' \
-    --header 'x-api-key: <your access token>' \
+    --header 'x-api-key: <api key>' \
     --header 'Content-Type: application/json' \
     --data-raw '{
         "reference":"The sky is blue",

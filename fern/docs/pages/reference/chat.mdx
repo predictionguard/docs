@@ -2,7 +2,7 @@
 title: Chat
 ---
 
-You can get chat text completions (based on a thread of chat messages) from any of the chat enabled [models](../models) using the `/chat/completions` REST API endpoint or `Chat` Python client class.
+You can get chat text completions (based on a thread of chat messages) from any of the chat enabled [models](../models) using the `/chat/completions` REST API endpoint or `chat.completions` Python client class.
 
 ## Generate a chat text completion
 
@@ -14,10 +14,12 @@ To generate a chat text completion, you can use the following code examples. Dep
     import os
     import json
 
-    import predictionguard as pg
+    from predictionguard import PredictionGuard
 
     # Set your Prediction Guard token as an environmental variable.
-    os.environ["PREDICTIONGUARD_TOKEN"] = "<your access token>"
+    os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+    
+    client = PredictionGuard()
 
     messages = [
         {
@@ -38,7 +40,7 @@ To generate a chat text completion, you can use the following code examples. Dep
         }
     ]
 
-    result = pg.Chat.create(
+    result = client.chat.completions.create(
         model="Neural-Chat-7B",
         messages=messages,
         max_tokens=500
@@ -52,11 +54,12 @@ To generate a chat text completion, you can use the following code examples. Dep
     ))
     ```
     </CodeBlock>
+
     <CodeBlock title="cURL">
     ```bash
     $ curl --location --request POST 'https://api.predictionguard.com/chat/completions' \
     --header 'Content-Type: application/json' \
-    --header 'x-api-key: <your access token>' \
+    --header 'x-api-key: <api key>' \
     --data '{
         "model": "Neural-Chat-7B",
         "messages": [
@@ -82,7 +85,4 @@ To generate a chat text completion, you can use the following code examples. Dep
     }'
     ```
     </CodeBlock>
-
 </CodeBlocks>
-
-If you'd like to have tabs to show multiple CodeBlocks at a time, you can use the `CodeBlocks` component as demonstrated above.

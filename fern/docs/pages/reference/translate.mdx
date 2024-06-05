@@ -2,7 +2,7 @@
 title: Translate
 ---
 
-You can get machine translation and translation quality scores from the `/translate` endpoint. This endpoint/class takes three parameters:
+You can get machine translation and translation quality scores from the `/translate` endpoint or the "translate" class in the Python client. This endpoint/class takes three parameters:
 
 - `text` - The text to translate.
 - `source_lang` - The ISO 639 source language code (e.g. 'eng' for English).
@@ -33,13 +33,15 @@ To generate a translation, you can use the following code examples. Depending on
     import os
     import json
 
-    import predictionguard as pg
+    from predictionguard import PredictionGuard
 
-    # Set your PREDICTIONGUARD access token as an environmental variable.
-    os.environ["PREDICTIONGUARD_TOKEN"] = "<your access token>"
+    # Set your Prediction Guard token as an environmental variable.
+    os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+    
+    client = PredictionGuard()
 
     # Translate the text.
-    result = pg.Translate.create(
+    result = client.translate.create(
         		text="The sky is blue",
                 source_lang="eng",
                 target_lang="fra"
@@ -53,10 +55,11 @@ To generate a translation, you can use the following code examples. Depending on
     ))
     ```
     </CodeBlock>
+
     <CodeBlock title="cURL">
     ```bash
     $ curl --location --request POST 'https://api.predictionguard.com/translate' \
-    --header 'x-api-key: <your access token>' \
+    --header 'x-api-key: <api key>' \
     --header 'Content-Type: application/json' \
     --data-raw '{
         "text":"The sky is blue",
@@ -65,7 +68,6 @@ To generate a translation, you can use the following code examples. Depending on
     }'
     ```
     </CodeBlock>
-
 </CodeBlocks>
 
 The output will look something like:

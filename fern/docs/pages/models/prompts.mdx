@@ -12,11 +12,11 @@ import { Callout } from "nextra-theme-docs";
 <Callout type="info" emoji="ℹ️">
   **Note on Chat model prompts** - For your convenience, we automatically apply
   the right prompt formats when you supply a `messages` object to our
-  `/chat/completions` endpoint or via the `pg.Chat.create()` method in the
+  `/chat/completions` endpoint or via the `client.chat.completions.create()` method in the
   Python client. You don't have to add in special tokens or apply the below
   prompt formats as this will duplicate the formatting. However, if you want to
   use chat-tuned models in the `/completions` endpoint or via the
-  `pg.Completions.create()` method, you should apply the appropriate one of the
+  `client.completions.create()` method, you should apply the appropriate one of the
   below prompt formats.
 </Callout>
 
@@ -80,4 +80,20 @@ For prompts where context is injected:
 ### Instruction:
 {context or user message}
 ### Response:
+```
+
+## Llama-3-SQLCoder
+
+(Replace the portions of the prompt below in curly braces `{...}` with the appropriate information, and do not keep the curly braces)
+
+```
+<|begin_of_text|><|start_header_id|>user<|end_header_id|>
+
+Generate a SQL query to answer this question: {user_question}
+{instructions}
+
+DDL statements:
+{create_table_statements}<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+The following SQL query best answers the question {user_question}:
 ```

@@ -43,6 +43,8 @@ navigation:
             path: ./docs/pages/usingllms/augmentation.mdx
           - page: Agents
             path: ./docs/pages/usingllms/agents.mdx
+          - page: Streaming
+            path: ./docs/pages/usingllms/streaming.mdx
       - section: Process LLM Input
         contents:
           - page: PII
@@ -75,6 +77,10 @@ navigation:
             path: ./docs/pages/reference/chat.mdx
           - page: Completions
             path: ./docs/pages/reference/completions.mdx
+          - page: Embeddings
+            path: ./docs/pages/reference/embeddings.mdx
+          - page: Vision
+            path: ./docs/pages/reference/vision.mdx
           - page: Factuality
             path: ./docs/pages/reference/factuality.mdx
           - page: Injection

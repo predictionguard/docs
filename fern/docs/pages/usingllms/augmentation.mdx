@@ -25,7 +25,6 @@ import os
 import urllib.request
 
 import html2text
-import predictionguard as pg
 from langchain import PromptTemplate, FewShotPromptTemplate
 from langchain.text_splitter import CharacterTextSplitter
 from sentence_transformers import SentenceTransformer
@@ -33,9 +32,12 @@ import numpy as np
 import lancedb
 from lancedb.embeddings import with_embeddings
 import pandas as pd
+from predictionguard import PredictionGuard
 
+# Set your Prediction Guard token as an environmental variable.
+os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
 
-os.environ['PREDICTIONGUARD_TOKEN'] = "<your access token>"
+client = PredictionGuard()
 ```
 
 ## Chaining
@@ -70,7 +72,7 @@ prompt = PromptTemplate(
     template=template,
 )
 
-result = pg.Completion.create(
+result = client.completions.create(
     model="Nous-Hermes-Llama2-13B",
     prompt=prompt.format(query="What is the population of LA?")
 )
@@ -193,7 +195,7 @@ class QuestionID:
 def response_chain(message, convo_context, info_context):
 
   # Determine what kind of message this is.
-  result = pg.Completion.create(
+  result = client.completions.create(
       model="deepseek-coder-6.7b-instruct",
       prompt=category_prompt.format(query=message)
   )
@@ -209,7 +211,7 @@ def response_chain(message, convo_context, info_context):
   if code == "no" and question:
 
     # Handle the informational request.
-    result = pg.Completion.create(
+    result = client.completions.create(
         model="Nous-Hermes-Llama2-13B",
         prompt=qa_prompt.format(context=info_context, query=message)
     )
@@ -218,7 +220,7 @@ def response_chain(message, convo_context, info_context):
   elif code == "yes":
 
     # Handle the code generation request.
-    result = pg.Completion.create(
+    result = client.completions.create(
         model="deepseek-coder-6.7b-instruct",
         prompt=code_prompt.format(query=message),
         max_tokens=500
@@ -228,7 +230,7 @@ def response_chain(message, convo_context, info_context):
   else:
 
     # Handle the chat message.
-    result = pg.Completion.create(
+    result = client.completions.create(
         model="Nous-Hermes-Llama2-13B",
         prompt=chat_prompt.format(context=convo_context, query=message),
         output={
@@ -299,7 +301,7 @@ question = "How are gift cards delivered?"
 
 myprompt = prompt.format(context=context, question=question)
 
-result = pg.Completion.create(
+result = client.completions.create(
     model="Nous-Hermes-Llama2-13B",
     prompt=myprompt
 )
@@ -517,7 +519,7 @@ def rag_answer(message):
   prompt = qa_prompt.format(context=doc_use, question=message)
 
   # Get a response
-  result = pg.Completion.create(
+  result = client.completions.create(
       model="Nous-Hermes-Llama2-13B",
       prompt=prompt
   )
