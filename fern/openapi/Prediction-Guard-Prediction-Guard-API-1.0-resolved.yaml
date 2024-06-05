@@ -101,6 +101,18 @@ paths:
                     - pii: replace
                       pii_replace_method: random
       responses:
+        "403":
+          description: Authentication failure.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error message
+              example:
+                error: api understands the request but refuses to authorize it
         "200":
           description: Successful response with chat completions.
           content:
