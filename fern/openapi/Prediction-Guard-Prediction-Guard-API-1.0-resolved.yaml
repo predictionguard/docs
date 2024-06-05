@@ -94,14 +94,14 @@ paths:
                   max_tokens: 1000
                   temperature: 1.1
                   top_p: 0.1
-                  output:
+                  'output':
                     - factuality: true
                       toxicity: true
-                  input:
+                  'input':
                     - pii: replace
                       pii_replace_method: random
       responses:
-        "403":
+        default:
           description: Authentication failure.
           content:
             application/json:
@@ -113,7 +113,7 @@ paths:
                     description: The error message
               example:
                 error: api understands the request but refuses to authorize it
-        "200":
+        '200':
           description: Successful response with chat completions.
           content:
             application/json:
