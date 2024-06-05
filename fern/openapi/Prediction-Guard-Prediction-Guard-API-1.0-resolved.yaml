@@ -289,10 +289,8 @@ components:
           description: The translation quality score.
     completions_body:
       required:
-        - max_tokens
-        - messages
         - model
-        - temperature
+        - messages
       type: object
       properties:
         model:
