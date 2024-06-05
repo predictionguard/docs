@@ -10,7 +10,7 @@ servers:
   - url: https://api.predictionguard.com
 
 paths:
-  "":
+  "/":
     get:
       summary: Check API Health
       description: A simple endpoint to check if the Prediction Guard API is healthy.
@@ -107,8 +107,32 @@ paths:
                     - pii: replace
                       pii_replace_method: random
       responses:
+        '403':
+          description: Failed auth response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: api understands the request but refuses to authorize it
+        '400':
+          description: General error response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: required fields are missing
         '200':
-          description: Successful response with chat completions.
+          description: Successful response.
           content:
             application/json:
               schema:
