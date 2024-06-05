@@ -15,10 +15,11 @@ To generate embeddings, you can use the following code examples. Depending on yo
     import json
 
     from predictionguard import PredictionGuard
-    
-    client = PredictionGuard(
-        api_key="<api key>"
-    )
+
+    # Set your Prediction Guard token as an environmental variable.
+    os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+
+    client = PredictionGuard()
 
     response = client.embeddings.create(
       model="bridgetower-large-itm-mlm-itc",
