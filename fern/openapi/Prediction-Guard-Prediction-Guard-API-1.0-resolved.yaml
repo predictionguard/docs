@@ -93,8 +93,10 @@ paths:
                 value: {
                   model: Neural-Chat-7B,
                   messages: [
-                    role: 'user',
-                    content: 'How do you feel about the world in general?'
+                    {
+                      role: 'user',
+                      content: 'How do you feel about the world in general?'
+                    }
                   ],
                   max_tokens: 1000,
                   temperature: 1.1,
