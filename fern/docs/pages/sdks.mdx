@@ -1,35 +1,245 @@
 We provide official open-source SDKs (client libraries) for your favorite platforms. These clients make connecting to our API faster and help avoid errors.
 
-## Official SDKs
 
-<br />
+## Official SDK Documentation
 
 <Cards>
   <Card title="Python" icon="fa-brands fa-python" href="#pythonclient" />
-  <Card title="Node.js" icon="fa-brands fa-js" href="https://predictionguard.github.io/js-client/" />
-  <Card title="Go" icon="fa-brands fa-golang" href="https://pkg.go.dev/github.com/predictionguard/go-client" />
-  <Card title="Rust" icon="fa-brands fa-rust" href="https://crates.io/crates/prediction-guard" />
+  <Card title="Node.js" icon="fa-brands fa-js" href="#jsclient" />
+  <Card title="Go" icon="fa-brands fa-golang" href="#goclient" />
+  <Card title="Rust" icon="fa-brands fa-rust" href="#rustclient" />
 </Cards>
+
+
+## Request a New SDK
+
+If you'd like to request an SDK for a language that we don't currently support, please reach out to us on [Discord](https://discord.gg/TFHgnhAFKd). We prioritize languages based on demand.
+
+
+## Access Tokens
+
+To access the API, contact us [here](https://predictionguard.com/getting-started) to get an access token.
+
+
+## SDK Quick Start
 
 ### <a id="pythonclient">Python Client</a>
 
-This package provides functionality developed to simplify interfacing with the Prediction Guard API in Python 3.
+You can find the SDK docs and package information using these links.
 
-- [GitHub](https://github.com/predictionguard/python-client)
-- [PyPI](https://pypi.org/project/predictionguard/)
+[SDK Docs](https://docs.predictionguard.com/docs/reference)
 
-To install the Prediction Guard Python client:
+#### Code Example
 
-```bash copy
-$ pip install predictionguard
+```python
+import predictionguard as pg
+
+# Initialize a Prediction Guard client.
+client = Client(token=<your access token>)
+
+# Create some examples illustrating the kind of predictions you
+# want to make (domain/ use case specific).
+examples = [
+ {
+   "input": {
+     "phrase": "I'm so excited about Prediction Guard. It's gonna be awesome!"
+   },
+   "output": {
+     "sentiment": "POS"
+   }
+ },
+ {
+   "input": {
+     "phrase": "AI development without Prediction Guard is bad. It's really terrible."
+   },
+   "output": {
+     "sentiment": "NEG"
+   }
+ }
+]
+
+# Create a prediction "proxy." This proxy will save your examples, evaluate
+# SOTA models to find the best one for your use case, and expose the best model
+# at an endpoint corresponding to the proxy.
+client.create_proxy(task='sentiment', name='my-sentiment-proxy', examples=examples)
+
+# Now your ready to start getting reliable, future proof predictions. No fuss!
+client.predict(name='test-client-sentiment4', data={
+ "phrase": "Isn't this great! I'm so happy I'm using Prediction Guard"
+})
 ```
 
-Requirements:
+#### More Examples
 
-- Python 3.6+
+Take a look at the [examples](https://github.com/predictionguard/python-client/tree/master/examples) directory for more examples.
 
-To access the hosted LLMs, contact us [here](https://www.predictionguard.com/getting-started) to get an enterprise access token.
 
-## Request a new SDK
+### <a id="jsclient">JS Client</a>
 
-If you'd like to request an SDK for a language that we don't currently support, please reach out to us on [Discord](https://discord.gg/TFHgnhAFKd). We prioritize languages based on demand.
+You can find the SDK docs and package information using these links.
+
+[SDK Docs](https://predictionguard.github.io/js-client)
+
+#### Code Example
+
+```js
+import * as pg from 'predictionguard';
+
+const client = new pg.Client('https://api.predictionguard.com', process.env.PGKEY);
+
+async function Chat() {
+    const input = {
+        model: pg.Models.NeuralChat7B,
+        messages: [
+            {
+                role: pg.Roles.User,
+                content: 'How do you feel about the world in general',
+            },
+        ],
+        maxTokens: 1000,
+        temperature: 0.1,
+        topP: 0.1,
+        options: {
+            factuality: true,
+            toxicity: true,
+            pii: pg.PIIs.Replace,
+            piiReplaceMethod: pg.ReplaceMethods.Random,
+        },
+    };
+
+    var [result, err] = await client.Chat(input);
+    if (err != null) {
+        console.log('ERROR:' + err.error);
+        return;
+    }
+
+    console.log('RESULT:' + result.createdDate() + ': ' + result.model + ': ' + result.choices[0].message.content);
+}
+
+Chat();
+```
+
+#### More Examples
+
+Take a look at the [examples](https://github.com/predictionguard/js-client/tree/main/examples) directory for more examples.
+
+
+### <a id="goclient">Go Client</a>
+
+You can find the SDK docs using this link.
+
+[SDK Docs](https://pkg.go.dev/github.com/predictionguard/go-client)
+
+#### Code Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"log"
+	"os"
+	"time"
+
+	"github.com/predictionguard/go-client"
+)
+
+func main() {
+	if err := run(); err != nil {
+		log.Fatalln(err)
+	}
+}
+
+func run() error {
+	host := "https://api.predictionguard.com"
+	apiKey := os.Getenv("PGKEY")
+
+	logger := func(ctx context.Context, msg string, v ...any) {
+		s := fmt.Sprintf("msg: %s", msg)
+		for i := 0; i < len(v); i = i + 2 {
+			s = s + fmt.Sprintf(", %s: %v", v[i], v[i+1])
+		}
+		log.Println(s)
+	}
+
+	cln := client.New(logger, host, apiKey)
+
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	input := client.ChatInput{
+		Model: client.Models.NeuralChat7B,
+		Messages: []client.ChatInputMessage{
+			{
+				Role:    client.Roles.User,
+				Content: "How do you feel about the world in general",
+			},
+		},
+		MaxTokens:   1000,
+		Temperature: 0.1,
+		TopP:        0.1,
+		Options: &client.ChatInputOptions{
+			Factuality:       true,
+			Toxicity:         true,
+			PII:              client.PIIs.Replace,
+			PIIReplaceMethod: client.ReplaceMethods.Random,
+		},
+	}
+
+	resp, err := cln.Chat(ctx, input)
+	if err != nil {
+		return fmt.Errorf("ERROR: %w", err)
+	}
+
+	fmt.Println(resp.Choices[0].Message.Content)
+
+	return nil
+}
+```
+
+#### More Examples
+
+Take a look at the [examples](https://github.com/predictionguard/go-client/tree/main/examples) directory for more examples.
+
+
+### <a id="rustclient">Rust Client</a>
+
+You can find the SDK docs using this link.
+
+[SDK Docs](https://docs.predictionguard.com/docs/getting-started/welcome)
+
+#### Code Example
+
+```rust
+use std::env;
+
+use pg_rust_client as pg_client;
+use pg_client::{client, chat, models};
+
+#[tokio::main]
+async fn main() {
+    let pg_env = client::PgEnvironment::from_env().expect("env keys");
+
+    let clt = client::Client::new(pg_env).expect("client value");
+
+    let req = chat::Request::<chat::Message>::new(models::Model::NeuralChat7B)
+        .add_message(
+            chat::Roles::User,
+            "How do you feel about the world in general?".to_string(),
+        )
+        .max_tokens(1000)
+        .temperature(0.8);
+
+    let result = clt
+        .generate_chat_completion(&req)
+        .await
+        .expect("error from generate chat completion");
+
+    println!("\nchat completion response:\n\n {:?}", result);
+}
+```
+
+#### More Examples
+
+Take a look at the [examples](https://github.com/predictionguard/rust-client/tree/main/examples) directory for more examples.
