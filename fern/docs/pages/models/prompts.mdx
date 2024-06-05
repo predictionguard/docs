@@ -81,3 +81,19 @@ For prompts where context is injected:
 {context or user message}
 ### Response:
 ```
+
+## Llama-3-SQLCoder
+
+(Replace the portions of the prompt below in curly braces `{...}` with the appropriate information, and do not keep the curly braces)
+
+```
+<|begin_of_text|><|start_header_id|>user<|end_header_id|>
+
+Generate a SQL query to answer this question: {user_question}
+{instructions}
+
+DDL statements:
+{create_table_statements}<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+The following SQL query best answers the question {user_question}:
+```
