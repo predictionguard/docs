@@ -1,5 +1,5 @@
 ---
-openapi: 3.0.1
+openapi: 3.1.0
 
 info:
   title: Prediction Guard API
@@ -14,9 +14,8 @@ paths:
     get:
       summary: Check API Health
       description: A simple endpoint to check if the Prediction Guard API is healthy.
-      parameters: []
       responses:
-        "200":
+        '200':
           description: Successful response with API health status.
           content:
             text/plain:
@@ -29,7 +28,6 @@ paths:
     post:
       summary: Generate Chat Completions
       description: Generate chat completions based on a conversation history.
-      parameters: []
       requestBody:
         content:
           application/json:
