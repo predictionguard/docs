@@ -85,19 +85,19 @@ paths:
                       description: Set to true to turn on factuality processing.
             examples:
               basic:
-                summary: A basic example of using the API
+                summary: A basic example of using the API.
                 value:
                   model: Neural-Chat-7B
                   messages:
                     - role: user
-                      content: How do you feel about the world in general
+                      content: How do you feel about the world in general?
                   max_tokens: 1000
                   temperature: 1.1
                   top_p: 0.1
-                  bill:
+                  output:
                     - factuality: true
                       toxicity: true
-                  jill:
+                  input:
                     - pii: replace
                       pii_replace_method: random
       responses:
@@ -387,8 +387,13 @@ paths:
         - ApiKeyCredentials: []
 
 components:
-  schemas:
+  securitySchemes:
+    ApiKeyCredentials:
+      type: apiKey
+      name: x-api-key
+      in: header
 
+  schemas:
     inline_response_200_2_response:
       type: object
       properties:
@@ -663,9 +668,3 @@ components:
           type: string
           description: Type of object (injection check).
       additionalProperties: false
-
-  securitySchemes:
-    ApiKeyCredentials:
-      type: apiKey
-      name: x-api-key
-      in: header
