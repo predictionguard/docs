@@ -1,11 +1,14 @@
 ---
 openapi: 3.0.1
+
 info:
   title: Prediction Guard API
   description: "This is the Prediction Guard API, designed to provide various language-related services and checks."
   version: "1.2"
+
 servers:
   - url: https://api.predictionguard.com
+
 paths:
   "":
     get:
@@ -21,6 +24,7 @@ paths:
                 type: string
               example: |
                 The Prediction Guard API is healthy!
+
   /chat/completions:
     post:
       summary: Generate Chat Completions
@@ -30,7 +34,56 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/completions_body"
+              required:
+                - model
+                - messages
+              type: object
+              properties:
+                model:
+                  type: string
+                  description: The chat model to use for generating completions.
+                messages:
+                  type: array
+                  description: An array of messages used for generating completions.
+                  items:
+                    required:
+                      - role
+                      - content
+                    type: object
+                    properties:
+                      role:
+                        type: string
+                        description: The role of the sender (user or assistant).
+                      content:
+                        type: string
+                        description: The content of the message.
+                max_tokens:
+                  type: integer
+                  description: The maximum number of tokens in the generated completion.
+                temperature:
+                  type: number
+                  description: The temperature parameter for controlling randomness in completions.
+                top_p:
+                  type: number
+                  description: The diversity of the generated text.
+                output:
+                  type: object
+                  description: Options to affect the output of the response.
+                  properties:
+                    factuality:
+                      type: boolean
+                      description: Set to true to turn on factuality processing.
+                    toxicity:
+                      type: boolean
+                      description: Set to true to turn on toxicity processing.
+                input:
+                  type: object
+                  description: Options to affect the input of the request.
+                  properties:
+                    factuality:
+                      type: boolean
+                      description: Set to true to turn on factuality processing.
+              additionalProperties: false 
             examples:
               example:
                 value: "{\r\n    \"model\": \"Neural-Chat-7B\",\r\n    \"messages\": [\r\n        {\r\n            \"role\": \"system\",\r\n            \"content\": \"You are a helpful assistant that provides clever and sometimes funny responses.\"\r\n        },\r\n        {\r\n            \"role\": \"user\",\r\n            \"content\": \"What is up!\"\r\n        },\r\n        {\r\n            \"role\": \"assistant\",\r\n            \"content\": \"Well, technically vertically out from the center of the earth.\"\r\n        },\r\n        {\r\n            \"role\": \"user\",\r\n            \"content\": \"Haha. Good one.\"\r\n        }\r\n    ],\r\n    \"max_tokens\": 500,\r\n    \"temperature\": 0.1\r\n}"
@@ -56,6 +109,7 @@ paths:
                     index: 0
       security:
         - ApiKeyCredentials: []
+
   /completions:
     post:
       summary: "Generate Completions"
@@ -130,6 +184,7 @@ paths:
                     model: "Nous-Hermes-Llama2-13B"
       security:
         - ApiKeyCredentials: []
+
   /factuality:
     post:
       summary: Check Factuality
@@ -160,6 +215,7 @@ paths:
                 object: factuality_check
       security:
         - ApiKeyCredentials: []
+
   /translate:
     post:
       summary: Translate Text
@@ -186,6 +242,7 @@ paths:
                   Score: 0.8694148659706116
       security:
         - ApiKeyCredentials: []
+
   /PII:
     post:
       summary: Replace Personal Information
@@ -216,6 +273,7 @@ paths:
                 object: pii_check
       security:
         - ApiKeyCredentials: []
+
   /injection:
     post:
       summary: Detect Injection
@@ -246,6 +304,7 @@ paths:
                 object: injection_check
       security:
         - ApiKeyCredentials: []
+
   /toxicity:
     post:
       summary: Check Toxicity
@@ -276,6 +335,7 @@ paths:
                 object: toxicity_check
       security:
         - ApiKeyCredentials: []
+
 components:
   schemas:
 
