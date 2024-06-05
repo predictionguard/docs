@@ -301,18 +301,7 @@ components:
         messages:
           type: array
           items:
-            required:
-              - content
-              - role
-            type: object
-            properties:
-              role:
-                type: string
-                description: The role of the sender (user or assistant).
-              content:
-                type: string
-                description: The content of the message.
-      additionalProperties: false     
+            $ref: "#/components/schemas/completions_messages"
         max_tokens:
           type: integer
           description: The maximum number of tokens in the generated completion.
