@@ -300,16 +300,19 @@ components:
           description: The chat model to use for generating completions.
         messages:
           type: array
-          description: "The conversation history with roles (user, assistant) and messages."
-          properties:
-            role:
-              type: string
-              description: The role of the sender (user or assistant).
-              required: true
-            content:
-              type: string
-              description: The content of the message.
-              required: true
+          items:
+            required:
+              - content
+              - role
+            type: object
+            properties:
+              role:
+                type: string
+                description: The role of the sender (user or assistant).
+              content:
+                type: string
+                description: The content of the message.
+      additionalProperties: false     
         max_tokens:
           type: integer
           description: The maximum number of tokens in the generated completion.
