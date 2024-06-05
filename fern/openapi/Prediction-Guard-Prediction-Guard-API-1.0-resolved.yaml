@@ -385,9 +385,6 @@ paths:
                           index:
                             type: integer
                             description: The index position in the collection.
-                          model:
-                            type: string
-                            description: The model used for generating the result.
                           status:
                             type: string
                             description: The response if this choice was successful.
@@ -403,11 +400,8 @@ paths:
                 model: bridgetower-large-itm-mlm-itc
                 data:
                   - index: 0
-                    object: embedding
                     status: success
-                    embedding:
-                      - -0.04457271471619606
-                        -0.007496959064155817
+                    embedding: [-0.04457271471619606, -0.007496959064155817]
       security:
         - ApiKeyCredentials: []
 
