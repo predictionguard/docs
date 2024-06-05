@@ -83,7 +83,6 @@ paths:
                     factuality:
                       type: boolean
                       description: Set to true to turn on factuality processing.
-              additionalProperties: false 
             examples:
               example:
                 value: "{\r\n    \"model\": \"Neural-Chat-7B\",\r\n    \"messages\": [\r\n        {\r\n            \"role\": \"system\",\r\n            \"content\": \"You are a helpful assistant that provides clever and sometimes funny responses.\"\r\n        },\r\n        {\r\n            \"role\": \"user\",\r\n            \"content\": \"What is up!\"\r\n        },\r\n        {\r\n            \"role\": \"assistant\",\r\n            \"content\": \"Well, technically vertically out from the center of the earth.\"\r\n        },\r\n        {\r\n            \"role\": \"user\",\r\n            \"content\": \"Haha. Good one.\"\r\n        }\r\n    ],\r\n    \"max_tokens\": 500,\r\n    \"temperature\": 0.1\r\n}"
@@ -93,7 +92,45 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/inline_response_200"
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Unique ID for the chat completion.
+                  object:
+                      type: string
+                      description: Type of object (chat completion).
+                  created:
+                      type: integer
+                      description: Timestamp of when the chat completion was created.
+                  model:
+                      type: string
+                      description: The chat model used for generating completions.
+                  choices:
+                      type: array
+                      description: The set of result choices.
+                      items:
+                        type: object
+                        properties:
+                          message:
+                            type: object
+                            description: A result choice.
+                            properties:
+                              role:
+                                type: string
+                                description: The role of the sender (user or assistant).
+                              content:
+                                type: string
+                                description: The content of the message.
+                              output:
+                                type: string
+                                description: The output of the message.
+                          index:
+                            type: integer
+                            description: The index position in the collection.
+                          status:
+                            type: string
+                            description: The response if this choice was successful.
               example:
                 id: chat-d7aBqSetFRtmXHaaHwlXXlKF39Lfx
                 object: chat_completion
@@ -348,58 +385,6 @@ components:
         Score:
           type: number
           description: The translation quality score.
-
-    completions_body:
-      required:
-        - model
-        - messages
-      type: object
-      properties:
-        model:
-          type: string
-          description: The chat model to use for generating completions.
-        messages:
-          type: array
-          description: An array of messages used for generating completions.
-          items:
-            required:
-              - role
-              - content
-            type: object
-            properties:
-              role:
-                type: string
-                description: The role of the sender (user or assistant).
-              content:
-                type: string
-                description: The content of the message.
-        max_tokens:
-          type: integer
-          description: The maximum number of tokens in the generated completion.
-        temperature:
-          type: number
-          description: The temperature parameter for controlling randomness in completions.
-        top_p:
-          type: number
-          description: The diversity of the generated text.
-        output:
-          type: object
-          description: Options to affect the output of the response.
-          properties:
-            factuality:
-              type: boolean
-              description: Set to true to turn on factuality processing.
-            toxicity:
-              type: boolean
-              description: Set to true to turn on toxicity processing.
-        input:
-          type: object
-          description: Options to affect the input of the request.
-          properties:
-            factuality:
-              type: boolean
-              description: Set to true to turn on factuality processing.
-      additionalProperties: false 
 
     translate_body:
       required:
