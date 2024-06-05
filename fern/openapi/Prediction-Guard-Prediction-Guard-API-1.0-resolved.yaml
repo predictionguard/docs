@@ -336,7 +336,7 @@ components:
             factuality:
               type: boolean
               description: Set to true to turn on factuality processing.
-      additionalProperties: false
+        additionalProperties: false
 
      completions_messages:
       required:
