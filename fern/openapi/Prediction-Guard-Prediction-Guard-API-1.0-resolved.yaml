@@ -307,6 +307,19 @@ components:
         temperature:
           type: number
           description: The temperature parameter for controlling randomness in completions.
+        top_p:
+          type: number
+          description: The diversity of the generated text.
+        output:
+          type: object
+          description: Options to affect the output of the response.
+          properties:
+            factuality:
+              type: boolean
+              description: Set to true to turn on factuality processing.
+            toxicity:
+              type: boolean
+              description: Set to true to turn on toxicity processing.
       additionalProperties: false
     translate_body:
       required:
