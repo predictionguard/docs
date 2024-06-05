@@ -395,7 +395,7 @@ paths:
                             type: array
                             description: The array of vector values.
                             items:
-                              type: float
+                              type: number
               example:
                 id: emb-KBUhJ8dAc0hfGQhaWCLwRf5bYU8fw
                 object: embedding_batch
@@ -406,7 +406,8 @@ paths:
                     object: embedding
                     status: success
                     embedding:
-                      - 0.04457271471619606,-0.007496959064155817
+                      - -0.04457271471619606
+                        -0.007496959064155817
       security:
         - ApiKeyCredentials: []
 
