@@ -20,7 +20,7 @@ navigation:
           - page: Welcome
             path: ./docs/pages/welcome.mdx
           - page: Quick Start
-            path: ./docs/pages/gettingstarted.mdx
+            path: ./docs/pages/quickstart.mdx
           - page: SDKs
             path: ./docs/pages/sdks.mdx
       - section: Input Requirements

@@ -33,13 +33,13 @@ os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
 client = PredictionGuard()
 ```
 
-You can find out more about the models available via the Prediction Guard API [in the docs](https://docs.predictionguard.com/models), and you can list out the model names via this command:
+You can find out more about the models available via the Prediction Guard API [in the docs](https://docs.predictionguard.com/options/enumerations), and you can list out the model names via this command:
 
 ```python copy
 print(client.completions.list_models())
 ```
 
-Generating text with one of these models is then just single request for a "Completion" (note, we also support chat completions). Here we will call the `Notus-7B` model and try to have it autocomplete a joke.
+Generating text with one of these models is then just single request for a "Completion" (note, we also support chat completions). Here we will call the `Neural-Chat-7B"` model and try to have it autocomplete a joke.
 
 ```python copy
 response = client.completions.create(model="Neural-Chat-7B",
