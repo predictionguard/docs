@@ -1,22 +1,21 @@
 ---
-title: Model Options
+title: Enumerations
 description: Reliable, future proof AI predictions
-slug: options/models
+slug: options/enumerations
 ---
 
-Using Prediction Guard gives you quick and easy access to state-of-the-art LLMs, without you needing to spend weeks figuring out all of the implementation details, managing a bunch of different API specs, and setting up a secure infrastructure for model deployments.
+This page provides the list of enumerations used by the Prediction Guard API.
 
-LLMs are hosted by Prediction Guard in a secure, privacy conserving environment built in partnership with Intel's Liftoff program for startups.
+### These Roles, ReplaceMethods, and PII Algorithms are required in the `/chat/completions` endpoint:
 
-**Note - Prediction Guard does NOT save or share any data sent to these models (or responses from the models). Further, we are able to sign a BAA for customers needing HIPAA compliance. [Contact support](support) with any questions.**
+| Role Name | Code      |    | Replace Name | Code     |    | PII Name | Code    |
+|-----------|-----------|    |--------------|----------|    |----------|---------|
+| Assistant | assistant |    | Random       | random   |    | Block    | block   |
+| User      | user      |    | Fake         | fake     |    | Replace  | replace |
+| System    | system    |    | Category     | category |    |          |         | 
+|           |           |    | Mask         | mask     |    |          |         | 
 
-**Note - We only integrate models that are licensed permissively for commercial use.**
-
-## Open Access LLMs (what most of our customers use) 🚀
-
-Open access models are amazing these days! Each of these models was trained by a talented team and released publicly under a permissive license. The data used to train each model and the prompt formatting for each model varies. We've tried to give you some of the relevant details here, but shoot us a message [in Discord](support) with any questions.
-
-### Models required in `/completions` and `/chat/completions` endpoints:
+### These Models are required in `/completions` and `/chat/completions` endpoints:
 
 | Model Name                   | Type                 | Use Case                                                | Prompt Format                                 | Context Length | More Info                                                               |
 | ---------------------------- | -------------------- | ------------------------------------------------------- | --------------------------------------------- | -------------- | ----------------------------------------------------------------------- |
@@ -27,14 +26,94 @@ Open access models are amazing these days! Each of these models was trained by a
 | llama-3-sqlcoder-8b          | SQL Query Generation | Generating SQL queries                                  | [Llama-3-SQLCoder](prompts#llama-3-sqlcoder)  | 4096           | [link](https://huggingface.co/defog/llama-3-sqlcoder-8b)                |
 | deepseek-coder-6.7b-instruct | Code Generation      | Generating computer code or answering tech questions    | [Deepseek](prompts#deepseek)                  | 4096           | [link](https://huggingface.co/deepseek-ai/deepseek-coder-6.7b-instruct) |
 
-### Models available in `/embeddings` endpoint:
+### This Model is required in the `/embeddings` endpoint:
 
 | Model Name                        | Type                  | Use Case                                        | Context Length | More Info                                                                     |
 | --------------------------------- | --------------------- | ----------------------------------------------- | -------------- | ----------------------------------------------------------------------------- |
 | bridgetower-large-itm-mlm-itc     | Embedding Generation  | Used for generating text and image embedding    | 100            | [link](https://huggingface.co/BridgeTower/bridgetower-large-itm-mlm-itc)      |
 
-### Models available in `/chat/completions` vision endpoint:
+### This Model is required in the `/chat/completions` vision endpoint:
 
 | Model Name                        | Type                    | Use Case                                               | Context Length  | More Info                                                    |
 | --------------------------------- | ----------------------- | ------------------------------------------------------ | --------------- | ------------------------------------------------------------ |
 | llava-1.5-7b-hf                   | Vision Text Generation  | Used for generating text from text and image inputs    | 4096            | [link](https://huggingface.co/llava-hf/llava-1.5-7b-hf)      |
+
+### These Languages are required in `/translate` endpoint:
+
+The language code we support is the ISO 639 Set2/T standard.
+
+https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes
+
+| Langauge Name | Code |
+|---------------|------|
+| Afrikanns     |  afr |
+| Amharic       |  amh |
+| Arabic        |  ara |
+| Armenian      |  hye |
+| Azerbaijan    |  aze |
+| Basque        |  eus |
+| Belarusian    |  bel |
+| Bengali       |  ben |
+| Bosnian       |  bos |
+| Catalan       |  cat |
+| Chechen       |  che |
+| Cherokee      |  chr |
+| Chinese       |  zho |
+| Croatian      |  hrv |
+| Czech         |  ces |
+| Danish        |  dan |
+| Dutch         |  nld |
+| English       |  eng |
+| Estonian      |  est |
+| Fijian        |  fij |
+| Filipino      |  fil |
+| Finnish       |  fin |
+| French        |  fra |
+| Galician      |  glg |
+| Georgian      |  kat |
+| German        |  deu |
+| Greek         |  ell |
+| Gujarati      |  guj |
+| Haitian       |  hat |
+| Hebrew        |  heb |
+| Hindi         |  hin |
+| Hungarian     |  hun |
+| Icelandic     |  isl |
+| Indonesian    |  ind |
+| Irish         |  gle |
+| Italian       |  ita |
+| Japanese      |  jpn |
+| Kannada       |  kan |
+| Kazakh        |  kaz |
+| Korean        |  kor |
+| Latvian       |  lav |
+| Lithuanian    |  lit |
+| Macedonian    |  mkd |
+| Malay1        |  msa |
+| Malay2        |  zlm |
+| Malayalam     |  mal |
+| Maltese       |  mlt |
+| Marathi       |  mar |
+| Nepali        |  nep |
+| Norwegian     |  nor |
+| Persian       |  fas |
+| Polish        |  pol |
+| Portuguese    |  por |
+| Romanian      |  ron |
+| Russian       |  rus |
+| Samoan        |  smo |
+| Serbian       |  srp |
+| Slovak        |  slk |
+| Slovenian     |  slv |
+| Slavonic      |  chu |
+| Spanish       |  spa |
+| Swahili       |  swh |
+| Swedish       |  swe |
+| Tamil         |  tam |
+| Telugu        |  tel |
+| Thai          |  tha |
+| Turkish       |  tur |
+| Ukrainian     |  ukr |
+| Urdu          |  urd |
+| Welsh         |  cym |
+| Vietnamese    |  vie |

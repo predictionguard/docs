@@ -25,11 +25,9 @@ navigation:
             path: ./docs/pages/sdks.mdx
       - section: Options
         contents:
-          - page: Available Models
-            path: ./docs/pages/options/models.mdx
-          - page: Available Languages
-            path: ./docs/pages/options/languages.mdx
-          - page: Prompts
+          - page: Enumerations
+            path: ./docs/pages/options/enumerations.mdx
+          - page: Prompt Formatting
             path: ./docs/pages/options/prompts.mdx
       - section: Using LLMs
         contents:
