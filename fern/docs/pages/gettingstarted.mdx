@@ -47,38 +47,42 @@ You can then use any of our official SDKs or REST API to prompt one of our LLMs!
 
 <CodeBlock title="Python">
 ```python
-import os
 import json
+import os
 
 from predictionguard import PredictionGuard
 
-# Set your Prediction Guard token as an environmental variable.
-os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+# You can set you Prediction Guard API Key as an env variable,
+# or when creating the client object
+os.environ["PREDICTIONGUARD_API_KEY"]
 
-client = PredictionGuard()
-
-# Define our prompt.
+client = PredictionGuard(
+    api_key="<your Prediction Guard API Key"
+)
 
 messages = [
     {
         "role": "system",
-        "content": "You are a helpful assistant. Your model is hosted by Prediction Guard, a leading AI company."
+        "content": "You are a helpful chatbot that helps people learn."
     },
     {
         "role": "user",
-        "content": "Where can I access the LLMs in a safe and secure environment?"
+        "content": "What is a good way to learn to code?"
     }
 ]
 
 result = client.chat.completions.create(
-    model="Neural-Chat-7B",
-    messages=messages)
+    "model": "Hermes-2-Pro-Llama-3-8B",
+    "messages": messages,
+    "max_tokens": 100
+)
 
 print(json.dumps(
     result,
     sort_keys=True,
     indent=4,
-    separators=(',', ': ')))
+    separators=(',', ': ')
+))
 ````
 </CodeBlock>
 
