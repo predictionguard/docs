@@ -23,12 +23,14 @@ navigation:
             path: ./docs/pages/gettingstarted.mdx
           - page: SDKs
             path: ./docs/pages/sdks.mdx
-      - section: Models
+      - section: Options
         contents:
           - page: Available Models
-            path: ./docs/pages/models/details.mdx
+            path: ./docs/pages/options/models.mdx
+          - page: Available Languages
+            path: ./docs/pages/options/languages.mdx
           - page: Prompts
-            path: ./docs/pages/models/prompts.mdx
+            path: ./docs/pages/options/prompts.mdx
       - section: Using LLMs
         contents:
           - page: Accessing LLMs
@@ -53,8 +55,6 @@ navigation:
             path: ./docs/pages/input/injection.mdx
       - section: Validating LLM Output
         contents:
-          - page: Consistency
-            path: ./docs/pages/output/consistency.mdx
           - page: Factuality
             path: ./docs/pages/output/factuality.mdx
           - page: Toxicity
