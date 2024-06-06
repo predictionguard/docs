@@ -298,43 +298,46 @@ paths:
               schema:
                 type: object
                 properties:
-                  id:
-                    type: string
-                    description: Unique ID for the chat completion.
-                  object:
-                      type: string
-                      description: Type of object (chat completion).
-                  created:
-                      type: integer
-                      description: Timestamp of when the chat completion was created.
-                  model:
-                      type: string
-                      description: The chat model used for generating completions.
-                  choices:
-                      type: array
-                      description: The set of result choices.
-                      items:
-                        type: object
-                        properties:
-                          index:
-                            type: integer
-                            description: The index position in the collection.
-                          generated_text:
-                            type: string
-                            description: The final completed chat response which is provided when this is the last choice.
-                          logprobs:
-                            type: number
-                            description: The log probabilty of accuracy for this choice.
-                          finish_reason:
-                            type: string
-                            description: The reason the response has finished
-                          delta:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: Unique ID for the chat completion.
+                      object:
+                          type: string
+                          description: Type of object (chat completion).
+                      created:
+                          type: integer
+                          description: Timestamp of when the chat completion was created.
+                      model:
+                          type: string
+                          description: The chat model used for generating completions.
+                      choices:
+                          type: array
+                          description: The set of result choices.
+                          items:
                             type: object
-                            description: The partial content for this choice.
                             properties:
-                              content:
+                              index:
+                                type: integer
+                                description: The index position in the collection.
+                              generated_text:
                                 type: string
-                                description: The partial content response for a choice.
+                                description: The final completed chat response which is provided when this is the last choice.
+                              logprobs:
+                                type: number
+                                description: The log probabilty of accuracy for this choice.
+                              finish_reason:
+                                type: string
+                                description: The reason the response has finished
+                              delta:
+                                type: object
+                                description: The partial content for this choice.
+                                properties:
+                                  content:
+                                    type: string
+                                    description: The partial content response for a choice.
               example: {[
                 {
                   data: {
