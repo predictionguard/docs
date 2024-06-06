@@ -40,7 +40,7 @@ navigation:
           - page: Chat Completions
             path: ./docs/pages/usingllms/chat_completions.mdx
           - page: Chaining and Retrieval
-            path: ./docs/pages/usingllms/augmentation.mdx
+            path: ./docs/pages/usingllms/chaining_retrieval.mdx
           - page: Agents
             path: ./docs/pages/usingllms/agents.mdx
           - page: Streaming

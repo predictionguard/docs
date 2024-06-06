@@ -56,6 +56,8 @@ os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
 client = PredictionGuard()
 ```
 
+## Accessing LLMs
+
 Generating text with one of these models is then just single request for a
 “Completion” (note, we also support chat completions). Here we will call the
 Neural-Chat-7B model and try to have it autocomplete a joke.
@@ -92,3 +94,13 @@ output which includes the completion.
    ]
 }
 ```
+
+## Using The SDKs
+
+You can also try these examples using the other official SDKs:
+
+[Python](/docs/getting-started/sd-ks#pythonclient),
+[Go](/docs/getting-started/sd-ks#goclient),
+[Rust](/docs/getting-started/sd-ks#rustclient),
+[JS](/docs/getting-started/sd-ks#jsclient),
+[HTTP](/api-reference)
