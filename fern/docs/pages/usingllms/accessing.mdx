@@ -35,19 +35,27 @@ you can use any of the following SDKs:
 [JS](/docs/getting-started/sd-ks#jsclient), and
 [HTTP](/api-reference).
 
-We will use CURL to show an example:
+We will use Python to show an example:
 
-```bash
-curl -il -X POST https://api.predictionguard.com/completions \
-    -H "x-api-key: ${PGKEY}" \
-    -H "Content-Type: application/json" \
-    -d '{ \
-        "model": "Neural-Chat-7B", \
-        "prompt": "The best joke I know is: ", \
-        "max_tokens": 0, \
-        "temperature": 0, \
-        "top_p": 0 \
-    }'
+```python
+import os
+
+from predictionguard import PredictionGuard
+
+# Set your Prediction Guard token as an environmental variable.
+os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+
+client = PredictionGuard()
+
+response = client.completions.create(model="Neural-Chat-7B",
+                          prompt="The best joke I know is: ")
+
+print(json.dumps(
+    response,
+    sort_keys=True,
+    indent=4,
+    separators=(',', ': ')
+))
 ```
 
 You can find out more about the available [Models](options/enumerations) in the docs.
