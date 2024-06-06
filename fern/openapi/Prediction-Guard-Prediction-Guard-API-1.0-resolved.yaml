@@ -338,7 +338,7 @@ paths:
                                   content:
                                     type: string
                                     description: The partial content response for a choice.
-              example: {
+              example:
                 data: {
                   id: "chat-QTBHDiLvhW6XJJKn4skhBDADZTIgd",
                   object: "chat.completion.chunk",
@@ -356,7 +356,6 @@ paths:
                     }
                   ]
                 }
-              }
       security:
         - ApiKeyCredentials: []
 
