@@ -20,7 +20,7 @@ navigation:
           - page: Welcome
             path: ./docs/pages/welcome.mdx
           - page: Quick Start
-            path: ./docs/pages/quickstart.mdx
+            path: ./docs/pages/quick_start.mdx
           - page: SDKs
             path: ./docs/pages/sdks.mdx
       - section: Input Requirements
@@ -34,7 +34,7 @@ navigation:
           - page: Accessing LLMs
             path: ./docs/pages/usingllms/accessing.mdx
           - page: Basic Prompting
-            path: ./docs/pages/usingllms/prompting.mdx
+            path: ./docs/pages/usingllms/basic_prompting.mdx
           - page: Prompt Engineering
             path: ./docs/pages/usingllms/engineering.mdx
           - page: Chat Completions
