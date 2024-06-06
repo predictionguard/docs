@@ -60,6 +60,8 @@ Generating text with one of these models is then just single request for a
 “Completion” (note, we also support chat completions). Here we will call the
 Neural-Chat-7B model and try to have it autocomplete a joke.
 
+You can find out more about the available [Models](options/enumerations) in the docs.
+
 ```python copy
 response = client.completions.create(model="Neural-Chat-7B",
                           prompt="The best joke I know is: ")
@@ -71,8 +73,6 @@ print(json.dumps(
     separators=(',', ': ')
 ))
 ```
-
-You can find out more about the available [Models](options/enumerations) in the docs.
 
 The completions call should result in something similar to the following JSON
 output which includes the completion.

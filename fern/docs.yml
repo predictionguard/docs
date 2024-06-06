@@ -38,7 +38,7 @@ navigation:
           - page: Prompt Engineering
             path: ./docs/pages/usingllms/prompt_engineering.mdx
           - page: Chat Completions
-            path: ./docs/pages/usingllms/chat.mdx
+            path: ./docs/pages/usingllms/chat_completions.mdx
           - page: Chaining and Retrieval
             path: ./docs/pages/usingllms/augmentation.mdx
           - page: Agents

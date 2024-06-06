@@ -4,7 +4,8 @@ description: Prediction Guard in action
 slug: usingllms/chat
 ---
 
-(Run this example in Google Colab [here](https://drive.google.com/file/d/15EBnc9aSC_KWeL677b_QHEOO7hIWDn1e/view?usp=sharing))
+(Run this example in Google Colab
+[here](https://drive.google.com/file/d/15EBnc9aSC_KWeL677b_QHEOO7hIWDn1e/view?usp=sharing))
 
 We briefly introduced few shot chat prompts in the basic prompting tutorial. However, chat is a special scenario when it comes to LLMs because: (1) it is a very frequently occuring use case; (2) there are many models fine-tuned specifically for chat; and (3) the handling of message threads, context, and instructions in chat prompts is always the same.
 
@@ -12,14 +13,21 @@ As such, Prediction Guard has specifically created a "chat completions" enpoint 
 
 ## Dependencies and imports
 
-Similar to the last notebook, you will need to install Prediction Guard and add your token.
+We will use Python to show an example:
+
+## Dependencies and Imports
+
+You will need to install Prediction Guard into your Python environment.
 
 ```bash copy
 $ pip install predictionguard
 ```
 
+Now import PredictionGuard, setup your API Key, and create the client.
+
 ```python copy
 import os
+
 from predictionguard import PredictionGuard
 
 # Set your Prediction Guard token as an environmental variable.
@@ -28,20 +36,24 @@ os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
 client = PredictionGuard()
 ```
 
-## Basic chat completion
+## Basic Chat Completion
 
-Chat completions are enabled in the Prediction Guard API for only certain of the models. You don't have to worry about special prompt templates when doing these completions as they are already implemented.
+Chat completions are enabled in the Prediction Guard API for only certain of the
+models. You don't have to worry about special prompt templates when doing these
+completions as they are already implemented.
 
-```python copy
-print(client.chat.completions.list_models())
-```
+You can find out more about the available [Models](options/enumerations) in the docs.
 
-To perform a chat completion, you need to create an array of `messages`. Each message object should have a:
+To perform a chat completion, you need to create an array of `messages`. Each
+message object should have a:
 
 - `role` - "system", "user", or "assistant"
 - `content` - the text associated with the message
 
-You can utilize a single "system" role prompt to give general instructions to the bot. Then you should include the message memory from your chatbot in the message array. This gives the model the relevant context from the conversation to respond appropriately.
+You can utilize a single "system" role prompt to give general instructions to the
+bot. Then you should include the message memory from your chatbot in the message
+array. This gives the model the relevant context from the conversation to respond
+appropriately.
 
 ```python copy
 messages = [
@@ -76,9 +88,12 @@ print(json.dumps(
 ))
 ```
 
-## Simple chatbot
+## Simple Chatbot
 
-Here we will show the chat functionality with the most simple of chat UI, which just asks for messages and prints the message thread. We will create an evolving message thread and respond with the chat completion portion of the Python client highlighted above.
+Here we will show the chat functionality with the most simple of chat UI, which
+just asks for messages and prints the message thread. We will create an evolving
+message thread and respond with the chat completion portion of the Python client
+highlighted above.
 
 ```python copy
 print('Welcome to the Chatbot! Let me know how can I help you')
@@ -106,3 +121,13 @@ while True:
         })
         print('Bot: ', response)
 ```
+
+## Using The SDKs
+
+You can also try these examples using the other official SDKs:
+
+[Python](/docs/getting-started/sd-ks#pythonclient),
+[Go](/docs/getting-started/sd-ks#goclient),
+[Rust](/docs/getting-started/sd-ks#rustclient),
+[JS](/docs/getting-started/sd-ks#jsclient),
+[HTTP](/api-reference)

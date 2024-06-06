@@ -86,7 +86,7 @@ SELECT"""
 print(result['choices'][0]['text'])
 ```
 
-## Zero-shot prompts
+## Zero-Shot Prompts
 
 Autocomplete is a great place to start, but it is only that: a place to start.
 Throughout this workshop we will be putting on our prompt engineering hats to do
@@ -153,7 +153,7 @@ client.completions.create(
 )['choices'][0]['text'].split('.')[0].strip()
 ```
 
-## Few shot prompts
+## Few Shot Prompts
 
 When your task is slightly more complicated or requires a few more leaps in
 reasoning to generate an appropriate response, you can turn to few shot prompting

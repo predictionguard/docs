@@ -36,9 +36,9 @@ your API Key, and create the client.
 ```python copy
 import os
 import json
-import numpy as np
 
-from langchain import PromptTemplate, FewShotPromptTemplate
+from langchain.prompts import PromptTemplate, FewShotPromptTemplate
+import numpy as np
 from predictionguard import PredictionGuard
 
 # Set your Prediction Guard token as an environmental variable.
@@ -47,7 +47,7 @@ os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
 client = PredictionGuard()
 ```
 
-## Prompt templates
+## Prompt Templates
 
 One of the best practices that we will discuss below involves testing and
 evaluating model output using example prompt contexts and formulations. In order
@@ -197,7 +197,7 @@ Text: The flight is boring.
 Sentiment:
 ```
 
-## Multiple formulations
+## Multiple Formulations
 
 Why settle for a single prompt and/or set of parameters when you can use mutliple.
 Try using multiple formulations of your prompt to either:
@@ -261,7 +261,7 @@ Answer 1:  Gift cards are delivered via US Mail.
 Answer 2:  Gift cards are delivered via US Mail.
 ```
 
-## Consistency and output validation
+## Consistency and Output Validation
 
 Reliability and consistency in LLM output is a major problem for the "last mile"
 of LLM integrations. You could get a whole variety of outputs from your model, and
