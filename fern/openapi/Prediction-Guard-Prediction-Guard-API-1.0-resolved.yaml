@@ -205,7 +205,7 @@ paths:
       security:
         - ApiKeyCredentials: []
 
-  /chat/completions2:
+  /chat/completions - Streaming Version:
     post:
       summary: Chat Completions Streaming
       description: Generate chat completions based on a conversation history with streaming support.
@@ -353,9 +353,9 @@ paths:
                         delta: {
                           content: " I"
                         },
-                        generated_text: null,
+                        generated_text: "null",
                         logprobs: 0,
-                        finish_reason: null
+                        finish_reason: "null"
                       }
                     ]
                   }
