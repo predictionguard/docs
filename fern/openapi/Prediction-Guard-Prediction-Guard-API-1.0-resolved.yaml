@@ -441,32 +441,100 @@ paths:
 
   /factuality:
     post:
-      summary: Check Factuality
+      summary: Factuality
       description: Check the factuality of a given text compared to a reference.
-      parameters: []
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/factuality_body"
+              required:
+                - reference
+                - text
+              type: object
+              properties:
+                reference:
+                  type: string
+                  description: The reference text for comparison.
+                text:
+                  type: string
+                  description: The the text to be checked for factuality.
             examples:
-              example:
-                value: "{\r\n    \"reference\": \"The sky is blue\",\r\n\t\"text\": \"The sky is green\"\r\n}"
+              basic:
+                summary: A basic example of using the API.
+                value: {
+                  reference: "The President shall receive in full for his services during the term for which he shall have been elected compensation in the aggregate amount of 400,000 a year, to be paid monthly, and in addition an expense allowance of 50,000 to assist in defraying expenses relating to or resulting from the discharge of his official duties.",
+                  text: "The president of the united states can take a salary of one million dollars",
+            }
       responses:
-        "200":
-          description: Successful response with factuality checks.
+        '403':
+          description: Failed auth response.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/inline_response_200_1"
-              example:
-                checks:
-                  - score: 0.12404686957597733
-                    index: 0
-                    status: success
-                created: 1704311812
-                id: fact-OfuJHSTUDaNRZgL2cY8gtUVqqvFgf
-                object: factuality_check
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example: {
+                error: "api understands the request but refuses to authorize it"
+              }
+        '400':
+          description: General error response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example: {
+                error: "required fields are missing"
+              }
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Unique ID for the chat completion.
+                  object:
+                      type: string
+                      description: Type of object (chat completion).
+                  created:
+                      type: integer
+                      description: Timestamp of when the chat completion was created.
+                  checks:
+                      type: array
+                      description: The set of vectorized data.
+                      items:
+                        type: object
+                        properties:
+                          index:
+                            type: integer
+                            description: The index position in the collection.
+                          score:
+                            type: number
+                            description: The factuality score.
+                          status:
+                            type: string
+                            description: The response if this choice was successful.
+              example: {
+                id: "fact-JJtvGAUpioXgzwBGpwWiRVb3DSWgo",
+                object: "factuality_check",
+                created: 1717674781,
+                checks: [
+                  {
+                    index: 0,
+                    score: 0.7879657745361328,
+                    status: "success"
+                  }
+                ]
+              }
       security:
         - ApiKeyCredentials: []
 
