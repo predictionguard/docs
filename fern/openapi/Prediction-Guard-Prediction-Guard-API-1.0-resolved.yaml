@@ -442,9 +442,24 @@ paths:
               basic:
                 summary: A basic example of using the API.
                 value: {
-                  role: "user",
-                  question: "is there a deer in this picture",
-                  image: "data:image/jpeg;base64,<DATA>",
+                  model: "llava-1.5-7b-hf",
+                  messages: [
+                    {
+                      role: "user",
+                      content: [
+                        {
+                          type: 'text',
+                          text: input.question,
+                        },
+                        {
+                          type: 'image_url',
+                          image_url: {
+                              url: 'data:image/jpeg;base64,<DATA>',
+                          },
+                        }
+                      ]
+                    }
+                  ],
                   maxTokens: 1000,
                   temperature: 0.1,
                   topP: 0.1
