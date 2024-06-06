@@ -460,9 +460,9 @@ paths:
                       ]
                     }
                   ],
-                  maxTokens: 1000,
+                  max_tokens: 1000,
                   temperature: 0.1,
-                  topP: 0.1
+                  top_p: 0.1
                 }
       responses:
         '403':
