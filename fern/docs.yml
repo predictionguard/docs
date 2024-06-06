@@ -32,7 +32,7 @@ navigation:
       - section: Using LLMs
         contents:
           - page: Accessing LLMs
-            path: ./docs/pages/usingllms/accessing.mdx
+            path: ./docs/pages/usingllms/accessing_llms.mdx
           - page: Basic Prompting
             path: ./docs/pages/usingllms/basic_prompting.mdx
           - page: Prompt Engineering
