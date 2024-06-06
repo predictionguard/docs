@@ -13,8 +13,6 @@ tabs:
     icon: puzzle
 
 navigation:
-  - api: API Reference
-    display-errors: true 
   - tab: help
     layout:
       - section: Getting Started
@@ -98,6 +96,7 @@ navigation:
   - tab: api
     layout:
       - api: API Reference
+        display-errors: true
 
 navbar-links:
   - type: secondary
