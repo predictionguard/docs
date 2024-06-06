@@ -1,10 +1,10 @@
 {
   "index": "Getting Started",
-  "models": "Available Models",
+  "enumerations": "Enumerations",
+  "prompts": "Prompt Formatting",
   "usingllms": "Using LLMs",
   "input": "Process LLM Input",
   "output": "Validating LLM Output",
-  "compliance": "Compliance",
   "guides": "Guides",
   "reference": "Reference",
   "support": "Support",
