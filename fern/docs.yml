@@ -36,7 +36,7 @@ navigation:
           - page: Basic Prompting
             path: ./docs/pages/usingllms/basic_prompting.mdx
           - page: Prompt Engineering
-            path: ./docs/pages/usingllms/engineering.mdx
+            path: ./docs/pages/usingllms/prompt_engineering.mdx
           - page: Chat Completions
             path: ./docs/pages/usingllms/chat.mdx
           - page: Chaining and Retrieval

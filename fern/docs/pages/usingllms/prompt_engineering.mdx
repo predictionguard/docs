@@ -3,27 +3,42 @@ title: Prompt Engineering
 description: Prediction Guard in action
 ---
 
-(Run this example in Google Colab [here](https://drive.google.com/file/d/1ofThKWMoMVSdUGmDiRz4Ua1Zp7YV_b__/view?usp=sharing))
+(Run this example in Google Colab
+[here](https://drive.google.com/file/d/1ofThKWMoMVSdUGmDiRz4Ua1Zp7YV_b__/view?usp=sharing))
 
-As we have seen in the previous examples, it is easy enough to prompt a generative AI model. Shoot off an API call, and suddently you have an answer, a machine translation, sentiment analyzed, or a chat message generated. However, going from "prompting" to ai engineering of your AI model based processes is a bit more involved. The importance of the "engineering" in prompt engineering has become increasingly apparent, as models have become more complex and powerful, and the demand for more accurate and interpretable results has grown.
+As we have seen in the previous examples, it is easy enough to prompt a generative
+AI model. Shoot off an API call, and suddently you have an answer, a machine
+translation, sentiment analyzed, or a chat message generated. However, going
+from "prompting" to ai engineering of your AI model based processes is a bit
+more involved. The importance of the "engineering" in prompt engineering has
+become increasingly apparent, as models have become more complex and powerful,
+and the demand for more accurate and interpretable results has grown.
 
-The ability to engineer effective prompts and related workflows allows us to configure and tune model responses to better suit our specific needs (e.g., for a particular industry like healthcare), whether we are trying to improve the quality of the output, reduce bias, or optimize for efficiency.
+The ability to engineer effective prompts and related workflows allows us to
+configure and tune model responses to better suit our specific needs (e.g., for
+a particular industry like healthcare), whether we are trying to improve the
+quality of the output, reduce bias, or optimize for efficiency.
 
-## Dependencies and imports
+We will use Python to show an example:
 
-This time we will add a new import!
+## Dependencies and Imports
+
+You will need to install Prediction Guard and LangChain into your
+Python environment.
 
 ```bash copy
 $ pip install predictionguard langchain
 ```
 
+Now import PromptTemplate, FewShotPromptTemplate, PredictionGuard, setup
+your API Key, and create the client.
+
 ```python copy
 import os
 import json
-
-from langchain import PromptTemplate
-from langchain import PromptTemplate, FewShotPromptTemplate
 import numpy as np
+
+from langchain import PromptTemplate, FewShotPromptTemplate
 from predictionguard import PredictionGuard
 
 # Set your Prediction Guard token as an environmental variable.
@@ -34,7 +49,14 @@ client = PredictionGuard()
 
 ## Prompt templates
 
-One of the best practices that we will discuss below involves testing and evaluating model output using example prompt contexts and formulations. In order to institute this practice, we need a way to rapidly and programmatically format prompts with a variety of contexts. We will need this in our applications anyway, because in production we will be receiving dynamic input from the user or another application. That dynamic input (or something extracted from it) will be inserted into our prompts on-the-fly. We already saw in the last notebook a prompt that included a bunch of boilerplate:
+One of the best practices that we will discuss below involves testing and
+evaluating model output using example prompt contexts and formulations. In order
+to institute this practice, we need a way to rapidly and programmatically format
+prompts with a variety of contexts. We will need this in our applications anyway,
+because in production we will be receiving dynamic input from the user or another
+application. That dynamic input (or something extracted from it) will be inserted
+into our prompts on-the-fly. We already saw in the last notebook a prompt that
+included a bunch of boilerplate:
 
 ```python copy
 template = """### Instruction:
@@ -75,7 +97,10 @@ Question: How are gift cards delivered?
 ### Response:
 ```
 
-This kind of prompt template could in theory be flexible to create zero shot or few shot prompts. However, LangChain provides a bit more convenience for few shot prompts. We can first create a template for individual demonstrations within the few shot prompt:
+This kind of prompt template could in theory be flexible to create zero shot or
+few shot prompts. However, LangChain provides a bit more convenience for few shot
+prompts. We can first create a template for individual demonstrations within the
+few shot prompt:
 
 ```python copy
 # Create a string formatter for sentiment analysis demonstrations.
@@ -174,9 +199,12 @@ Sentiment:
 
 ## Multiple formulations
 
-Why settle for a single prompt and/or set of parameters when you can use mutliple. Try using multiple formulations of your prompt to either:
+Why settle for a single prompt and/or set of parameters when you can use mutliple.
+Try using multiple formulations of your prompt to either:
+
 - Provide multiple options to users; or
-- Create multiple candidate predictions, which you can choose from programmatically using a reference free evaluation of those candidates.
+- Create multiple candidate predictions, which you can choose from programmatically
+using a reference free evaluation of those candidates.
 
 ```python copy
 template1 = """### Instruction:
@@ -235,9 +263,17 @@ Answer 2:  Gift cards are delivered via US Mail.
 
 ## Consistency and output validation
 
-Reliability and consistency in LLM output is a major problem for the "last mile" of LLM integrations. You could get a whole variety of outputs from your model, and some of these outputs could be inaccurate or harmful in other ways (e.g., toxic).
+Reliability and consistency in LLM output is a major problem for the "last mile"
+of LLM integrations. You could get a whole variety of outputs from your model, and
+some of these outputs could be inaccurate or harmful in other ways (e.g., toxic).
 
-Prediction Guard allows you to validate the consistency, factuality, and toxicity of your LLMs outputs. Consistency refers to the internal (or self) model consistency and ensures that the model itself is giving a consistent reply. Factuality checks for the factual consistency of the output with context in the prompt (which is expecially useful if you are embedding retrieved context in prompts). Toxicity measures the harmful language included in the output, such as curse words, slurs, hate speech, etc.
+Prediction Guard allows you to validate the consistency, factuality, and toxicity
+of your LLMs outputs. Consistency refers to the internal (or self) model
+consistency and ensures that the model itself is giving a consistent reply.
+Factuality checks for the factual consistency of the output with context in the
+prompt (which is expecially useful if you are embedding retrieved context in prompts).
+Toxicity measures the harmful language included in the output, such as curse words,
+slurs, hate speech, etc.
 
 To ensure self-consistency:
 
@@ -257,7 +293,11 @@ This workshop is spectacular. I love it! So wonderful.
 )
 ```
 
-You can get a score for factual consistency (0 to 1, which higher numbers being more confidently factually consistent) using the `client.factuality.check()` method and providing a reference text against which to check. This is very relevant to RAG (e.g., chat over your docs) sort of use cases where you have some external context, and you want to ensure that the output is consistent with that context.
+You can get a score for factual consistency (0 to 1, which higher numbers being
+more confidently factually consistent) using the `client.factuality.check()` method
+and providing a reference text against which to check. This is very relevant to
+RAG (e.g., chat over your docs) sort of use cases where you have some external
+context, and you want to ensure that the output is consistent with that context.
 
 ```python copy
 template = """### Instruction:
@@ -368,3 +408,13 @@ The above will likely generate toxic output, but thanks to Prediction Guard, you
     "object": "text_completion"
 }
 ```
+
+## Using The SDKs
+
+You can also try these examples using the other official SDKs:
+
+[Python](/docs/getting-started/sd-ks#pythonclient),
+[Go](/docs/getting-started/sd-ks#goclient),
+[Rust](/docs/getting-started/sd-ks#rustclient),
+[JS](/docs/getting-started/sd-ks#jsclient),
+[HTTP](/api-reference)
