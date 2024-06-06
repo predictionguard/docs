@@ -21,7 +21,7 @@ etc. However, a common theme is the usage of LLMs through a REST API, which is e
 model hosting provider (Replicate, Baseten, etc.)
 - Self-hosted using a DIY model serving API (Flask, FastAPI, etc.)
 
-We will use [Prediction Guard](https://www.predictionguard.com/) to call open
+We will use [Prediction Guard](/) to call open
 access LLMs (like Mistral, Llama 2, WizardCoder, etc.) via a standardized
 OpenAI-like API. This will allow us to explore the full range of LLMs available.
 Further, it will illustrate how companies can access a wide range of models
@@ -50,7 +50,7 @@ curl -il -X POST https://api.predictionguard.com/completions \
     }'
 ```
 
-You can find out more about the models available [in the docs](options/enumerations).
+You can find out more about the available [Models](options/enumerations) in the docs.
 
 The completions call should result in something similar to the following JSON
 output which includes the completion.
