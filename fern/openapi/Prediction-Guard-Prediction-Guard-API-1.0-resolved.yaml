@@ -196,7 +196,7 @@ paths:
                     message: {
                       role: "assistant",
                       content: "I feel that the world in general is a complex and ever-evolving place. It has its fair share of beauty, challenges, and opportunities. There are moments of joy, connection, and growth, as well as pain, conflict, and loss. The world is a reflection of the people who inhabit it, and it's essential to maintain a balance between appreciating its wonders and working towards making it a better place for all. It's a constant journey of learning, adapting, and striving for a more harmonious existence.",
-                      output: null
+                      output: "null"
                     },
                     status: "success"
                   }
@@ -378,6 +378,165 @@ paths:
                   }
                 }
               ]
+      security:
+        - ApiKeyCredentials: []
+
+  /chat/completions - Vision Version:
+    post:
+      summary: Chat Completions Vision
+      description: Generate chat completions based on a text and images.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - model
+                - messages
+              type: object
+              properties:
+                model:
+                  type: string
+                  description: The chat model to use for generating completions.
+                messages:
+                  type: array
+                  description: An array of messages used for generating completions.
+                  items:
+                    required:
+                      - role
+                      - content
+                    type: object
+                    properties:
+                      role:
+                        type: string
+                        description: The role of the sender (user or assistant).
+                      content:
+                        type: array
+                        description: The content of the message.
+                        items:
+                          required:
+                            - type
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              description: The type of content ('text', 'image_url').
+                            text:
+                              type: string
+                              description: The text to provide.
+                            image_url:
+                              type: object
+                              properties:
+                                url:
+                                  type: string
+                                  description: The base64 content with this prefix `data:image/jpeg;base64,`
+                max_tokens:
+                  type: integer
+                  description: The maximum number of tokens in the generated completion.
+                temperature:
+                  type: number
+                  description: The temperature parameter for controlling randomness in completions.
+                top_p:
+                  type: number
+                  description: The diversity of the generated text.
+            examples:
+              basic:
+                summary: A basic example of using the API.
+                value: {
+                  role: "user",
+                  question: "is there a deer in this picture",
+                  image: "data:image/jpeg;base64,<DATA>",
+                  maxTokens: 1000,
+                  temperature: 0.1,
+                  topP: 0.1
+                }
+      responses:
+        '403':
+          description: Failed auth response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example: {
+                error: "api understands the request but refuses to authorize it"
+              }
+        '400':
+          description: General error response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example: {
+                error: "required fields are missing"
+              }
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Unique ID for the chat completion.
+                  object:
+                      type: string
+                      description: Type of object (chat completion).
+                  created:
+                      type: integer
+                      description: Timestamp of when the chat completion was created.
+                  model:
+                      type: string
+                      description: The chat model used for generating completions.
+                  choices:
+                      type: array
+                      description: The set of result choices.
+                      items:
+                        type: object
+                        properties:
+                          index:
+                            type: integer
+                            description: The index position in the collection.
+                          status:
+                            type: string
+                            description: The response if this choice was successful.
+                          message:
+                            type: object
+                            description: A result choice.
+                            properties:
+                              role:
+                                type: string
+                                description: The role of the sender (user or assistant).
+                              content:
+                                type: string
+                                description: The content of the message.
+                              output:
+                                type: string
+                                description: The output of the message.
+              example: {
+                id: "chat-8qptYQ1EC1cPhHIKh7ArD5OxKN01N",
+                object: "chat_completion",
+                created: 1717681459,
+                model: "llava-1.5-7b-hf",
+                choices: [
+                  {
+                    index: 0,
+                    message: {
+                      role: "assistant",
+                      content: "No, there is no deer in this picture. The image features a man wearing a hat and glasses, smiling for the camera.",
+                      output: "null"
+                    },
+                    status: "success"
+                  }
+                ]
+              }
       security:
         - ApiKeyCredentials: []
 
