@@ -8,10 +8,6 @@ info:
 
 servers:
   - url: https://api.predictionguard.com
-
-navigation:
-  - api: API Reference
-    display-errors: true 
  
 paths:
   "":

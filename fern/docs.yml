@@ -13,6 +13,8 @@ tabs:
     icon: puzzle
 
 navigation:
+  - api: API Reference
+    display-errors: true 
   - tab: help
     layout:
       - section: Getting Started
