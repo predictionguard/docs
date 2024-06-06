@@ -15,7 +15,7 @@ tabs:
 navigation:
   - tab: help
     layout:
-      - section: Getting started
+      - section: Getting Started
         contents:
           - page: Welcome
             path: ./docs/pages/welcome.mdx
@@ -23,7 +23,7 @@ navigation:
             path: ./docs/pages/gettingstarted.mdx
           - page: SDKs
             path: ./docs/pages/sdks.mdx
-      - section: Options
+      - section: Input Requirements
         contents:
           - page: Enumerations
             path: ./docs/pages/options/enumerations.mdx
