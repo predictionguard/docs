@@ -2,15 +2,18 @@
 title: Completions
 ---
 
-You can get privacy-conserving text completions from any of the [available models](../models) using a call to the `/completions` REST API endpoint or the `completions` class in the Python client.
+You can get privacy-conserving text completions from any of the
+[available models](/docs/options/enumerations) using a call to the `/completions` REST
+API endpoint or the `completions` class in the Python client.
 
 ## Generate a text completion
 
-To generate a text completion, you can use the following code examples. Depending on your preference or requirements, select the appropriate method for your application.
+To generate a text completion, you can use the following code examples. Depending
+on your preference or requirements, select the appropriate method for your application.
 
 <CodeBlocks>
     <CodeBlock title="Python">
-    ```python filename="main.py"
+    ```python
     import os
     import json
 
@@ -22,7 +25,7 @@ To generate a text completion, you can use the following code examples. Dependin
     client = PredictionGuard()
 
     response = client.completions.create(
-      model="Nous-Hermes-Llama2-13B",
+      model="Neural-Chat-7B",
       prompt="The best joke I know is: "
     )
 
@@ -37,31 +40,133 @@ To generate a text completion, you can use the following code examples. Dependin
 
     <CodeBlock title="Go">
     ```go
+    package main
+
+    import (
+        "context"
+        "fmt"
+        "log"
+        "os"
+        "time"
+
+        "github.com/predictionguard/go-client"
+    )
+
+    func main() {
+        if err := run(); err != nil {
+            log.Fatalln(err)
+        }
+    }
+
+    func run() error {
+        host := "https://api.predictionguard.com"
+        apiKey := os.Getenv("PGKEY")
+
+        logger := func(ctx context.Context, msg string, v ...any) {
+            s := fmt.Sprintf("msg: %s", msg)
+            for i := 0; i < len(v); i = i + 2 {
+                s = s + fmt.Sprintf(", %s: %v", v[i], v[i+1])
+            }
+            log.Println(s)
+        }
+
+        cln := client.New(logger, host, apiKey)
+
+        ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+        defer cancel()
+
+        input := client.CompletionInput{
+            Model:       client.Models.NeuralChat7B,
+            Prompt:      "The best joke I know is: ",
+            MaxTokens:   1000,
+            Temperature: 0.1,
+            TopP:        0.1,
+        }
+
+        resp, err := cln.Completions(ctx, input)
+        if err != nil {
+            return fmt.Errorf("ERROR: %w", err)
+        }
+
+        fmt.Println(resp.Choices[0].Text)
+
+        return nil
+    }
     ```
     </CodeBlock>
 
     <CodeBlock title="Rust">
     ```rust
+    extern crate prediction_guard as pg_client;
+
+    use pg_client::{client, completion, models};
+
+    #[tokio::main]
+    async fn main() {
+        let pg_env = client::PgEnvironment::from_env().expect("env keys");
+
+        let clt = client::Client::new(pg_env).expect("client value");
+
+        let req = completion::Request::new(
+            models::Model::NeuralChat7B,
+            "The best joke I know is: ".to_string(),
+        );
+
+        let result = clt
+            .generate_completion(&req)
+            .await
+            .expect("completion response");
+
+        println!("\ncompletion response:\n\n{:?}", result);
+    }
     ```
     </CodeBlock>
 
     <CodeBlock title="NodeJS">
     ```js
+    import * as pg from '../dist/index.js';
+
+    const client = new pg.Client('https://api.predictionguard.com', process.env.PGKEY);
+
+    async function Completions() {
+        const input = {
+            model: pg.Models.NeuralChat7B,
+            prompt: 'The best joke I know is: ',
+            maxTokens: 1000,
+            temperature: 0.1,
+            topP: 0.1,
+        };
+
+        var [result, err] = await client.Completion(input);
+        if (err != null) {
+            console.log('ERROR:' + err.error);
+            return;
+        }
+
+        console.log('RESULT:' + result.choices[0].text);
+    }
+
+    Completions();
     ```
     </CodeBlock>
 
     <CodeBlock title="cURL">
     ```bash
-    $ curl --location --request POST 'https://api.predictionguard.com/completions' \
-    --header 'Content-Type: application/json' \
-    --header 'x-api-key: <api key>' \
-    --data '{
-        "model": "Nous-Hermes-Llama2-13B",
-        "prompt": "The best joke I know is: "
-    }'
+	curl -il -X POST https://api.predictionguard.com/completions \
+     -H "x-api-key: ${PGKEY}" \
+     -H "Content-Type: application/json" \
+     -d '{
+		"model": "Neural-Chat-7B",
+		"prompt": "The best joke I know is: ",
+		"max_tokens": 1000,
+		"temperature": 1.1,
+		"top_p": 0.1
+	}'
     ```
     </CodeBlock>
 
 </CodeBlocks>
 
-This approach presents a straightforward way for readers to choose and apply the code example that best suits their needs for generating text completions using either Python or cURL.
+This approach presents a straightforward way for readers to choose and apply the
+code example that best suits their needs for generating text completions using
+either Python, Go, Rust, JS, or cURL.
