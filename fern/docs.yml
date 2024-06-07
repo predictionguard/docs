@@ -73,12 +73,12 @@ navigation:
         contents:
           - page: Chat
             path: ./docs/pages/reference/chat.mdx
+          - page: Chat Vision
+            path: ./docs/pages/reference/vision.mdx
           - page: Completions
             path: ./docs/pages/reference/completions.mdx
           - page: Embeddings
             path: ./docs/pages/reference/embeddings.mdx
-          - page: Vision
-            path: ./docs/pages/reference/vision.mdx
           - page: Factuality
             path: ./docs/pages/reference/factuality.mdx
           - page: Injection
