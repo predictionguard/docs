@@ -61,7 +61,7 @@ You can then use any of our official SDKs or REST API to prompt one of our LLMs!
 <CodeBlocks>
 
 <CodeBlock title="Python">
-```python copy
+```python
 import json
 import os
 
@@ -102,7 +102,7 @@ print(json.dumps(
 </CodeBlock>
 
 <CodeBlock title="Go">
-```go copy
+```go
 package main
 
 import (
@@ -174,7 +174,7 @@ func run() error {
 </CodeBlock>
 
 <CodeBlock title="Rust">
-```rust copy
+```rust
 use std::env;
 
 use pg_rust_client as pg_client;
@@ -209,7 +209,7 @@ async fn main() {
 </CodeBlock>
 
 <CodeBlock title="NodeJS">
-```js copy
+```js
 import * as pg from 'predictionguard';
 
 const client = new pg.Client('https://api.predictionguard.com', process.env.PGKEY);
@@ -252,7 +252,7 @@ Chat();
 </CodeBlock>
 
 <CodeBlock title="cURL">
-```bash copy
+```bash
 curl -il -X POST https://api.predictionguard.com/chat/completions \
     -H "x-api-key: ${PGKEY}" \
     -H "Content-Type: application/json" \

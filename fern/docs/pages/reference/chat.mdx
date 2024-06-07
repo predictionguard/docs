@@ -14,7 +14,7 @@ your application.
 
 <CodeBlocks>
     <CodeBlock title="Python">
-    ```python copy
+    ```python
     import os
     import json
 
@@ -60,7 +60,7 @@ your application.
     </CodeBlock>
 
     <CodeBlock title="Go">
-    ```go copy
+    ```go
     package main
 
     import (
@@ -140,7 +140,7 @@ your application.
     </CodeBlock>
 
     <CodeBlock title="Rust">
-    ```rust copy
+    ```rust
     extern crate prediction_guard as pg_client;
 
     use pg_client::{chat, client, models};
@@ -182,7 +182,7 @@ your application.
     </CodeBlock>
 
     <CodeBlock title="NodeJS">
-    ```js copy
+    ```js
     import * as pg from '../dist/index.js';
 
     const client = new pg.Client('https://api.predictionguard.com', process.env.PGKEY);
@@ -233,7 +233,7 @@ your application.
     </CodeBlock>
 
     <CodeBlock title="cURL">
-    ```bash copy
+    ```bash
         curl -il -X POST https://api.predictionguard.com/chat/completions \
         -H "x-api-key: ${PGKEY}" \
         -H "Content-Type: application/json" \
