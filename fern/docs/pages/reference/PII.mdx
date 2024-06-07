@@ -2,17 +2,16 @@
 title: PII
 ---
 
-You can check and replace Personal Identifiable Information (PII) from the `/PII` endpoint or `pii` class in the Python Client. This endpoint/Class takes three parameters:
+You can check and replace Personal Identifiable Information (PII) from the `/PII`
+REST API endpoint or any of the official SDKs (Python, Go, Rust, JS, or cURL).
 
-- `prompt` - The prompt that you want to check for PII.
-- `replace` - A boolean for replacing the PII if any is found.
-- `replace_method` - The method you would like to use to replace any found PII. The methods are `random`, `mask`, `category`, and `fake`.
-
-The output will include the replaced PII if any is present, or will tell you if any PII is in the prompt if `replace` is not chosen.
+The output will include the replaced PII if any is present, or will tell you if
+any PII is in the prompt if `replace` is not chosen.
 
 ## Check and Replace PII
 
-To check and replace PII, you can use the following code examples. Depending on your preference or requirements, select the appropriate method for your application.
+To check and replace PII, you can use the following code examples. Depending on
+your preference or requirements, select the appropriate method for your application.
 
 <CodeBlocks>
     <CodeBlock title="Python">
@@ -29,7 +28,8 @@ To check and replace PII, you can use the following code examples. Depending on 
 
     response = client.pii.check(
         prompt="Hello, my name is John Doe and my SSN is 111-22-3333.",
-        replace=False
+        replace=True,
+        replace_method="mask"
     )
 
     print(json.dumps(
@@ -43,29 +43,135 @@ To check and replace PII, you can use the following code examples. Depending on 
 
     <CodeBlock title="Go">
     ```go
+    package main
+
+    import (
+        "context"
+        "fmt"
+        "log"
+        "os"
+        "time"
+
+        "github.com/predictionguard/go-client"
+    )
+
+    func main() {
+        if err := run(); err != nil {
+            log.Fatalln(err)
+        }
+    }
+
+    func run() error {
+        host := "https://api.predictionguard.com"
+        apiKey := os.Getenv("PGKEY")
+
+        logger := func(ctx context.Context, msg string, v ...any) {
+            s := fmt.Sprintf("msg: %s", msg)
+            for i := 0; i < len(v); i = i + 2 {
+                s = s + fmt.Sprintf(", %s: %v", v[i], v[i+1])
+            }
+            log.Println(s)
+        }
+
+        cln := client.New(logger, host, apiKey)
+
+        ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+        defer cancel()
+
+        prompt := "Hello, my name is John Doe and my SSN is 111-22-3333."
+
+        resp, err := cln.ReplacePI(ctx, prompt, client.ReplaceMethods.Mask)
+        if err != nil {
+            return fmt.Errorf("ERROR: %w", err)
+        }
+
+        fmt.Println(resp.Checks[0].NewPrompt)
+
+        return nil
+    }
     ```
     </CodeBlock>
 
     <CodeBlock title="Rust">
     ```rust
+    extern crate prediction_guard as pg_client;
+
+    use pg_client::{client, pii};
+    use pii::ReplaceMethod;
+
+    #[tokio::main]
+    async fn main() {
+        let pg_env = client::PgEnvironment::from_env().expect("env keys");
+
+        let clt = client::Client::new(pg_env).expect("client value");
+
+        let req = pii::Request::new(
+            "Hello, my name is John Doe and my SSN is 111-22-3333.".to_string(),
+            true,
+            ReplaceMethod::Mask,
+        );
+
+        let result = clt.pii(&req).await.expect("error from pii");
+
+        println!("\n\npii response:\n{:?}\n\n", result);
+    }
     ```
     </CodeBlock>
 
     <CodeBlock title="NodeJS">
     ```js
+    import * as pg from '../dist/index.js';
+
+    const client = new pg.Client('https://api.predictionguard.com', process.env.PGKEY);
+
+    async function ReplacePI() {
+        const replaceMethod = pg.ReplaceMethods.Mask;
+        const prompt = `Hello, my name is John Doe and my SSN is 111-22-3333.`;
+
+        var [result, err] = await client.ReplacePI(replaceMethod, prompt);
+        if (err != null) {
+            console.log('ERROR:' + err.error);
+            return;
+        }
+
+        console.log('RESULT:' + result.checks[0].new_prompt);
+    }
+
+    ReplacePI();
     ```
     </CodeBlock>
 
     <CodeBlock title="cURL">
     ```bash
-    $ curl --location --request POST 'https://api.predictionguard.com/PII' \
-    --header 'Content-Type: application/json' \
-    --header 'x-api-key: <api key>' \
-    --data '{
-        "prompt": "Hello, my name is John Doe and my SSN is 111-22-3333.",
-        "replace": true,
-        "replace_method": "random"
-    }'
+    curl -X POST https://api.predictionguard.com/PII \
+     -H "x-api-key: ${PGKEY}" \
+     -H "Content-Type: application/json" \
+     -d '{
+		"prompt": "Hello, my name is John Doe and my SSN is 111-22-3333.",
+		"replace": true,
+		"replace_method": "mask"
+	}'
     ```
     </CodeBlock>
 </CodeBlocks>
+
+The output will look something like:
+
+```json
+{
+   "checks":[
+      {
+         "new_prompt":"Hello, my name is * and my SSN is *.",
+         "index":0,
+         "status":"success"
+      }
+   ],
+   "created":"1717781430",
+   "id":"pii-jYiO2ToMT0JVICWvrUUlErqwO11lVlHH",
+   "object":"pii_check"
+}
+```
+
+This approach presents a straightforward way for readers to choose and apply the
+code example that best suits their needs for generating text completions using
+either Python, Go, Rust, JS, or cURL.

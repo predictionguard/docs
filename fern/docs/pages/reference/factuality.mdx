@@ -2,16 +2,18 @@
 title: Factuality
 ---
 
-You can get factuality scores (or rather factual consistency scores) from the `/factuality` endpoint or `factuality` class in the Python client. This endpoint/Class takes two parameters:
+You can get factuality scores (or rather factual consistency scores) from the
+`/factuality` REST API endpoint or any of the official SDKs (Python, Go, Rust,
+JS, or cURL).
 
-- `reference` - A reference text with which you want to compare another text for factual consistency.
-- `text` - The candidate text that will be scored for factual consistency.
+The output will include a `score` that ranges from 0.0 to 1.0. The higher the
+score, the more factuality consistency between the `text` and the `reference`.
 
-The output will include a `score` that ranges from 0.0 to 1.0. The higher the score, the more factuality consistency between the `text` and the `reference`.
+## Generate a Factuality Score
 
-## Generate a factuality score
-
-To generate a factuality score, you can use the following code examples. Depending on your preference or requirements, select the appropriate method for your application.
+To generate a factuality score, you can use the following code examples.
+Depending on your preference or requirements, select the appropriate method
+for your application.
 
 <CodeBlocks>
     <CodeBlock title="Python">
@@ -28,8 +30,8 @@ To generate a factuality score, you can use the following code examples. Dependi
 
     # Perform the factual consistency check.
     result = client.factuality.check(
-        		reference="The sky is blue",
-        		text="The sky is green"
+        		reference="The sky is blue.",
+        		text="The sky is green."
     )
 
     print(json.dumps(
@@ -43,46 +45,136 @@ To generate a factuality score, you can use the following code examples. Dependi
 
     <CodeBlock title="Go">
     ```go
+    package main
+
+    import (
+        "context"
+        "fmt"
+        "log"
+        "os"
+        "time"
+
+        "github.com/predictionguard/go-client"
+    )
+
+    func main() {
+        if err := run(); err != nil {
+            log.Fatalln(err)
+        }
+    }
+
+    func run() error {
+        host := "https://api.predictionguard.com"
+        apiKey := os.Getenv("PGKEY")
+
+        logger := func(ctx context.Context, msg string, v ...any) {
+            s := fmt.Sprintf("msg: %s", msg)
+            for i := 0; i < len(v); i = i + 2 {
+                s = s + fmt.Sprintf(", %s: %v", v[i], v[i+1])
+            }
+            log.Println(s)
+        }
+
+        cln := client.New(logger, host, apiKey)
+
+        ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+        defer cancel()
+
+        fact := "The sky is blue."
+        text := "The sky is green."
+
+        resp, err := cln.Factuality(ctx, fact, text)
+        if err != nil {
+            return fmt.Errorf("ERROR: %w", err)
+        }
+
+        fmt.Println(resp.Checks[0])
+
+        return nil
+    }
     ```
     </CodeBlock>
 
     <CodeBlock title="Rust">
     ```rust
+    extern crate prediction_guard as pg_client;
+
+    use pg_client::{client, factuality};
+
+    #[tokio::main]
+    async fn main() {
+        let pg_env = client::PgEnvironment::from_env().expect("env keys");
+
+        let clt = client::Client::new(pg_env).expect("client value");
+
+        let req = factuality::Request::new(
+            "The sky is blue.".to_string(),
+            "The sky is green".to_string(),
+        );
+
+        let result = clt
+            .check_factuality(&req)
+            .await
+            .expect("error from factuality");
+
+        println!("\n\nfactuality response:\n{:?}\n\n", result);
+    }
     ```
     </CodeBlock>
 
     <CodeBlock title="NodeJS">
     ```js
+    import * as pg from '../dist/index.js';
+
+    const client = new pg.Client('https://api.predictionguard.com', process.env.PGKEY);
+
+    async function Factuality() {
+        const fact = `The sky is blue.`;
+        const text = `The sky is green.`;
+
+        var [result, err] = await client.Factuality(fact, text);
+        if (err != null) {
+            console.log('ERROR:' + err.error);
+            return;
+        }
+
+        console.log('RESULT:' + JSON.stringify(result.checks[0]));
+    }
+
+    Factuality();
     ```
     </CodeBlock>
 
     <CodeBlock title="cURL">
     ```bash
-    $ curl --location --request POST 'https://api.predictionguard.com/factuality' \
-    --header 'x-api-key: <api key>' \
-    --header 'Content-Type: application/json' \
-    --data-raw '{
-        "reference":"The sky is blue",
-    		"text":"The sky is green"
-    }'
+    curl -X POST https://api.predictionguard.com/factuality \
+     -H "x-api-key: ${PGKEY}" \
+     -H "Content-Type: application/json" \
+     -d '{
+		"reference": "The sky is blue.",
+		"text": "The sky is green."
+	}'
     ```
     </CodeBlock>
-
 </CodeBlocks>
 
 The output will look something like:
 
 ```json
 {
-  "checks": [
-    {
-      "score": 0.12404686957597733,
-      "index": 0,
-      "status": "success"
-    }
-  ],
-  "created": 1701721456,
-  "id": "fact-O0CdxbefFwSRo7uypla7hdUka3pPf",
-  "object": "factuality_check"
+   "checks":[
+      {
+         "score":0.26569077372550964,
+         "index":0,
+         "status":"success"
+      }
+   ],
+   "created":1717780745,
+   "id":"fact-04pim5X8ZXDbwTJzCA8aeKDxRDh6H",
+   "object":"factuality_check"
 }
 ```
+
+This approach presents a straightforward way for readers to choose and apply the
+code example that best suits their needs for generating text completions using
+either Python, Go, Rust, JS, or cURL.

@@ -2,11 +2,13 @@
 title: Toxicity
 ---
 
-You can get toxicity scores from the `/toxicity` endpoint or `toxicity` class in the Python client. This endpoint/Class takes a single `text` parameter, which should include the candidate text to be scored for toxicity. The output will include a `score` that ranges from 0.0 to 1.0. The higher the score, the more toxic the `text`.
+You can get toxicity scores from the `/toxicity` REST API endpoint or any of the
+official SDKs (Python, Go, Rust, JS, or cURL).
 
-## Generate a toxicity score
+## Generate a Toxicity Score
 
-To generate a toxicity score, you can use the following code examples. Depending on your preference or requirements, select the appropriate method for your application.
+To generate a toxicity score, you can use the following code examples. Depending
+on your preference or requirements, select the appropriate method for your application.
 
 <CodeBlocks>
     <CodeBlock title="Python">
@@ -22,7 +24,7 @@ To generate a toxicity score, you can use the following code examples. Depending
 
     # Perform the toxicity check.
     result = client.toxicity.check(
-        		text="This is a perfectly fine statement"
+        		text="This is a perfectly fine statement."
     )
 
     print(json.dumps(
@@ -36,27 +38,108 @@ To generate a toxicity score, you can use the following code examples. Depending
 
     <CodeBlock title="Go">
     ```go
+    package main
+
+    import (
+        "context"
+        "fmt"
+        "log"
+        "os"
+        "time"
+
+        "github.com/predictionguard/go-client"
+    )
+
+    func main() {
+        if err := run(); err != nil {
+            log.Fatalln(err)
+        }
+    }
+
+    func run() error {
+        host := "https://api.predictionguard.com"
+        apiKey := os.Getenv("PGKEY")
+
+        logger := func(ctx context.Context, msg string, v ...any) {
+            s := fmt.Sprintf("msg: %s", msg)
+            for i := 0; i < len(v); i = i + 2 {
+                s = s + fmt.Sprintf(", %s: %v", v[i], v[i+1])
+            }
+            log.Println(s)
+        }
+
+        cln := client.New(logger, host, apiKey)
+
+        ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+        defer cancel()
+
+        text := "This is a perfectly fine statement."
+
+        resp, err := cln.Toxicity(ctx, text)
+        if err != nil {
+            return fmt.Errorf("ERROR: %w", err)
+        }
+
+        fmt.Println(resp.Checks[0].Score)
+
+        return nil
+    }
     ```
     </CodeBlock>
 
     <CodeBlock title="Rust">
     ```rust
-    ```
+    extern crate prediction_guard as pg_client;
+
+    use pg_client::{client, toxicity};
+
+    #[tokio::main]
+    async fn main() {
+        let pg_env = client::PgEnvironment::from_env().expect("env keys");
+
+        let clt = client::Client::new(pg_env).expect("client value");
+
+        let req = toxicity::Request::new(
+            "This is a perfectly fine statement.".to_string(),
+        );
+
+        let result = clt.toxicity(&req).await.expect("error from toxicity");
+
+        println!("\n\ntoxicity response:\n{:?}\n\n", result);
+    }
+        ```
     </CodeBlock>
 
     <CodeBlock title="NodeJS">
     ```js
+    import * as pg from '../dist/index.js';
+
+    const client = new pg.Client('https://api.predictionguard.com', process.env.PGKEY);
+
+    async function Toxicity() {
+        const text = `This is a perfectly fine statement.`;
+
+        var [result, err] = await client.Toxicity(text);
+        if (err != null) {
+            console.log('ERROR:' + err.error);
+            return;
+        }
+
+        console.log('RESULT:' + result.checks[0].score);
+    }
+
+    Toxicity();
     ```
     </CodeBlock>
 
     <CodeBlock title="cURL">
     ```bash
-    $ curl --location --request POST 'https://api.predictionguard.com/toxicity' \
-    --header 'x-api-key: <api key>' \
-    --header 'Content-Type: application/json' \
-    --data-raw '{
-        "text": "This is a perfectly fine statement"
-    }'
+    curl -X POST https://api.predictionguard.com/toxicity \
+     -H "x-api-key: ${PGKEY}" \
+     -H "Content-Type: application/json" \
+     -d '{
+		"text": "This is a perfectly fine statement."
+	}'
     ```
     </CodeBlock>
 </CodeBlocks>
@@ -65,15 +148,19 @@ The output will look something like:
 
 ```json
 {
-  "checks": [
-    {
-      "index": 0,
-      "score": 0.00036882987478747964,
-      "status": "success"
-    }
-  ],
-  "created": 1701721860,
-  "id": "toxi-REU4ZqFADGAiU6xJmN9PgtlgBO6x9",
-  "object": "toxicity_check"
+   "checks":[
+      {
+         "score":0.00038018127088434994,
+         "index":0,
+         "status":"success"
+      }
+   ],
+   "created":1717781084,
+   "id":"toxi-CcaeeA5ESVssJM9M3KmZNZh0e4Gnq",
+   "object":"toxicity_check"
 }
 ```
+
+This approach presents a straightforward way for readers to choose and apply the
+code example that best suits their needs for generating text completions using
+either Python, Go, Rust, JS, or cURL.

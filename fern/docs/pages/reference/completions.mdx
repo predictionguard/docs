@@ -4,7 +4,7 @@ title: Completions
 
 You can get privacy-conserving text completions from any of the
 [available models](/options/enumerations) using a call to the `/completions` REST
-API endpoint or the `completions` class in the Python client.
+API endpoint or any of the official SDKs (Python, Go, Rust, JS, or cURL).
 
 ## Generate a Text Completion
 
@@ -164,8 +164,25 @@ on your preference or requirements, select the appropriate method for your appli
 	}'
     ```
     </CodeBlock>
-
 </CodeBlocks>
+
+The output will look something like this.
+
+```json
+{
+   "id":"cmpl-IkUw9KPuwrwzseWiOYXCi1TP3I447",
+   "object":"text_completion",
+   "created":1717780588,
+   "choices":[
+      {
+         "text":"\n\nA man walks into a bar and says to the bartender, \"If I show you something really weird, will you give me a free drink?\" The bartender, being intrigued, says, \"Sure, I'll give it a look.\" The man reaches into his pocket and pulls out a tiny horse. The bartender is astonished and gives the man a free drink. The man then puts the horse back into his pocket.\n\nThe next day, the same man walks back into the bar and says to the bartender, \"If I show you something even weirder than yesterday and you give me a free drink, will you do it again?\" The bartender, somewhat reluctantly, says, \"Okay, I guess you can show it to me.\" The man reaches into his pocket, pulls out the same tiny horse, and opens the door to reveal the entire bar inside the horse.\n\nThe bartender faints.",
+         "index":0,
+         "status":"success",
+         "model":"Neural-Chat-7B"
+      }
+   ]
+}
+```
 
 This approach presents a straightforward way for readers to choose and apply the
 code example that best suits their needs for generating text completions using

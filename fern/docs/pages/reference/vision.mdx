@@ -2,18 +2,24 @@
 title: Vision
 ---
 
-You can get vision text completions from any of the vision enabled [models](../models) using the `/chat/completions` REST API endpoint or `chat.completions` Python client class.
+You can get vision text completions from any of the vision enabled
+[models](/options/enumerations) using the `/chat/completions` REST API endpoint
+or any of the official SDKs (Python, Go, Rust, JS, or cURL).
 
-## Generate a vision text completion
+## Generate a Vision Text Completion
 
-To generate a vision text completion, you can use the following code examples. Depending on your preference or requirements, select the appropriate method for your application. Streaming is not currently supported when generating a vision text completion. For image inputs, this endpoint supports image file, url, and base 64 encoded inputs in the python client, while the Go API only supports images that are base64 encoded represented by a data uri.
+To generate a vision text completion, you can use the following code examples.
+Depending on your preference or requirements, select the appropriate method for
+your application. Streaming is not currently supported when generating a vision
+text completion. For image inputs, this endpoint supports image file, url, and
+base 64 encoded inputs in the python client, while the Go API only supports
+images that are base64 encoded represented by a data uri.
 
 <CodeBlocks>
     <CodeBlock title="Python">
-    ```python filename="main.py"
+    ```python
     import os
     import json
-
 
     from predictionguard import PredictionGuard
 
@@ -56,51 +62,192 @@ To generate a vision text completion, you can use the following code examples. D
 
     <CodeBlock title="Go">
     ```go
+    package main
+
+    import (
+        "context"
+        "fmt"
+        "log"
+        "os"
+        "time"
+
+        "github.com/predictionguard/go-client"
+    )
+
+    func main() {
+        if err := run(); err != nil {
+            log.Fatalln(err)
+        }
+    }
+
+    func run() error {
+        host := "https://staging.predictionguard.com"
+        apiKey := os.Getenv("PGKEYSTAGE")
+
+        logger := func(ctx context.Context, msg string, v ...any) {
+            s := fmt.Sprintf("msg: %s", msg)
+            for i := 0; i < len(v); i = i + 2 {
+                s = s + fmt.Sprintf(", %s: %v", v[i], v[i+1])
+            }
+            log.Println(s)
+        }
+
+        cln := client.New(logger, host, apiKey)
+
+        ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+        defer cancel()
+
+        image, err := client.NewImageNetwork("https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg")
+        if err != nil {
+            return fmt.Errorf("ERROR: %w", err)
+        }
+
+        input := client.ChatVisionInput{
+            Role:        client.Roles.User,
+            Question:    "What's in this image?",
+            Image:       image,
+            MaxTokens:   1000,
+            Temperature: 0.1,
+            TopP:        0.1,
+        }
+
+        resp, err := cln.ChatVision(ctx, input)
+        if err != nil {
+            return fmt.Errorf("ERROR: %w", err)
+        }
+
+        for i, choice := range resp.Choices {
+            fmt.Printf("choice %d: %s\n", i, choice.Message.Content)
+        }
+
+        return nil
+    }
     ```
     </CodeBlock>
 
     <CodeBlock title="Rust">
     ```rust
+    extern crate prediction_guard as pg_client;
+
+    use pg_client::chat::MessageVision;
+    use pg_client::{chat, client, models};
+
+    #[tokio::main]
+    async fn main() {
+        let pg_env = client::PgEnvironment::from_env().expect("env keys");
+
+        let clt = client::Client::new(pg_env).expect("client value");
+
+        let req = chat::Request::<MessageVision>::new(models::Model::Llava157bhf)
+            .temperature(0.85)
+            .max_tokens(1000)
+            .add_message(
+                chat::Roles::User,
+                "What's in this image?".to_string(),
+                IMAGE.to_string(),
+            );
+
+        let result = clt
+            .generate_chat_vision(&req)
+            .await
+            .expect("error from generate chat completion");
+
+        println!("\nchat completion response:\n\n {:?}", result);
+    }
     ```
     </CodeBlock>
 
     <CodeBlock title="NodeJS">
     ```js
+    import * as pg from '../dist/index.js';
+
+    const client = new pg.Client('https://api.predictionguard.com', process.env.PGKEY);
+
+    async function ChatVision() {
+        const image = new pg.ImageNetwork('https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg');
+
+        const input = {
+            role: pg.Roles.User,
+            question: 'What's in this image?',
+            image: image,
+            maxTokens: 1000,
+            temperature: 0.1,
+            topP: 0.1,
+        };
+
+        var [result, err] = await client.ChatVision(input);
+        if (err != null) {
+            console.log('ERROR:' + err.error);
+            return;
+        }
+
+        console.log('RESULT:' + result.createdDate() + ': ' + result.model + ': ' + result.choices[0].message.content);
+    }
+
+    ChatVision();
     ```
     </CodeBlock>
 
     <CodeBlock title="cURL">
     ```bash
-    $ curl -O 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg'
-    $ base64_img="$(base64 -i 2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg)"
-    $ cat <<EOF > input.json
+    curl -O 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg'
+        
+    base64_img="$(base64 -i 2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg)"
+
+    cat <<EOF > input.json
     {
-      "model": "llava-1.5-7b-hf",
-      "messages": [
-        {
-          "role": "user",
-          "content": [
+        "model": "llava-1.5-7b-hf",
+        "messages": [
             {
-              "type": "text",
-              "text": "What is in this image?"
-            },
-            {
-              "type": "image_url",
-              "image_url": {
-                "url": "data:image/jpeg;base64,$base64_img"
-              }
+            "role": "user",
+            "content": [
+                {
+                "type": "text",
+                "text": "What is in this image?"
+                },
+                {
+                "type": "image_url",
+                "image_url": {
+                    "url": "data:image/jpeg;base64,$base64_img"
+                }
+                }
+            ]
             }
-          ]
-        }
-      ],
-      "max_tokens": 300
+        ],
+        "max_tokens": 300
     }
     EOF
 
-    $ curl --location --request POST 'https://api.predictionguard.com/chat/completions' \
-    --header 'Content-Type: application/json' \
-    --header 'x-api-key: <your access token>' \
-    --data @input.json
+    curl -il -X POST https://api.predictionguard.com/chat/completions \
+    -H "x-api-key: ${PGKEY}" \
+    -H "Content-Type: application/json" \
+    -d @input.json
     ```
     </CodeBlock>
 </CodeBlocks>
+
+The output will look something like:
+
+```json
+{
+   "id":"chat-xQNsuexunK7zeMjlW25g99hax9qo4",
+   "object":"chat_completion",
+   "created":1717784541,
+   "model":"llava-1.5-7b-hf",
+   "choices":[
+      {
+         "index":0,
+         "message":{
+            "role":"assistant",
+            "content":"The image features a peaceful scene of a wooden pathway traveling through an open grassy field. The pathway seems to be leading to an even more remote and expansive meadow, providing a serene and picturesque view. The surroundings consist of lush green grass and trees, creating a sense of tranquility in the landscape.",
+            "output":null
+         },
+         "status":"success"
+      }
+   ]
+}
+```
+
+This approach presents a straightforward way for readers to choose and apply the
+code example that best suits their needs for generating text completions using
+either Python, Go, Rust, JS, or cURL.

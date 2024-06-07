@@ -3,10 +3,10 @@ title: Chat
 ---
 
 You can get chat text completions (based on a thread of chat messages) from any
-of the chat enabled [models](../models) using the `/chat/completions` REST API
-endpoint or `chat.completions` Python client class.
+of the chat enabled [models](/options/enumerations) using the `/chat/completions`
+REST API endpoint or any of the official SDKs (Python, Go, Rust, JS, or cURL).
 
-## Generate A Chat Text Completion
+## Generate a Chat Text Completion
 
 To generate a chat text completion, you can use the following code examples.
 Depending on your preference or requirements, select the appropriate method for
@@ -120,7 +120,7 @@ your application.
             Temperature: 0.1,
             TopP:        0.1,
             Options: &client.ChatInputOptions{
-                Factuality:       true,
+                Factuality:       false,
                 Toxicity:         true,
                 PII:              client.PIIs.Replace,
                 PIIReplaceMethod: client.ReplaceMethods.Random,
@@ -212,7 +212,7 @@ your application.
             temperature: 0.1,
             topP: 0.1,
             options: {
-                factuality: true,
+                factuality: false,
                 toxicity: true,
                 pii: pg.PIIs.Replace,
                 piiReplaceMethod: pg.ReplaceMethods.Random,
@@ -246,7 +246,7 @@ your application.
                 },
                 {
                     "role": "user",
-                    "content": "What's up!"
+                    "content": "What''s up!"
                 },
                 {
                     "role": "assistant",
@@ -261,7 +261,7 @@ your application.
             "temperature": 1.1,
             "top_p": 0.1,
             "output": {
-                "factuality": true,
+                "factuality": false,
                 "toxicity": true
             },
             "input": {
@@ -272,6 +272,28 @@ your application.
     ```
     </CodeBlock>
 </CodeBlocks>
+
+The output will look something like this.
+
+```json
+{
+   "id":"chat-SUZNF22Qn7uq22Ciez0AfhmnVlKF0",
+   "object":"chat_completion",
+   "created":1717780456,
+   "model":"Neural-Chat-7B",
+   "choices":[
+      {
+         "index":0,
+         "message":{
+            "role":"assistant",
+            "content":"Thanks, but if you're looking for something more serious, I'm here to help with any questions or tasks you might have. Just let me know!",
+            "output":null
+         },
+         "status":"success"
+      }
+   ]
+}
+```
 
 This approach presents a straightforward way for readers to choose and apply the
 code example that best suits their needs for generating text completions using
