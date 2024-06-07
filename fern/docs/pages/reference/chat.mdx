@@ -2,15 +2,19 @@
 title: Chat
 ---
 
-You can get chat text completions (based on a thread of chat messages) from any of the chat enabled [models](../models) using the `/chat/completions` REST API endpoint or `chat.completions` Python client class.
+You can get chat text completions (based on a thread of chat messages) from any
+of the chat enabled [models](../models) using the `/chat/completions` REST API
+endpoint or `chat.completions` Python client class.
 
-## Generate a chat text completion
+## Generate A Chat Text Completion
 
-To generate a chat text completion, you can use the following code examples. Depending on your preference or requirements, select the appropriate method for your application.
+To generate a chat text completion, you can use the following code examples.
+Depending on your preference or requirements, select the appropriate method for
+your application.
 
 <CodeBlocks>
     <CodeBlock title="Python">
-    ```python filename="main.py"
+    ```python copy
     import os
     import json
 
@@ -55,34 +59,216 @@ To generate a chat text completion, you can use the following code examples. Dep
     ```
     </CodeBlock>
 
-    <CodeBlock title="cURL">
-    ```bash
-    $ curl --location --request POST 'https://api.predictionguard.com/chat/completions' \
-    --header 'Content-Type: application/json' \
-    --header 'x-api-key: <api key>' \
-    --data '{
-        "model": "Neural-Chat-7B",
-        "messages": [
-            {
-                "role": "system",
-                "content": "You are a helpful assistant that provide clever and sometimes funny responses."
-            },
-            {
-                "role": "user",
-                "content": "What is up!"
-            },
-            {
-                "role": "assistant",
-                "content": "Well, technically vertically out from the center of the earth."
-            },
-            {
-                "role": "user",
-                "content": "Haha. Good one."
+    <CodeBlock title="Go">
+    ```go copy
+    package main
+
+    import (
+        "context"
+        "fmt"
+        "log"
+        "os"
+        "time"
+
+        "github.com/predictionguard/go-client"
+    )
+
+    func main() {
+        if err := run(); err != nil {
+            log.Fatalln(err)
+        }
+    }
+
+    func run() error {
+        host := "https://api.predictionguard.com"
+        apiKey := os.Getenv("PGKEY")
+
+        logger := func(ctx context.Context, msg string, v ...any) {
+            s := fmt.Sprintf("msg: %s", msg)
+            for i := 0; i < len(v); i = i + 2 {
+                s = s + fmt.Sprintf(", %s: %v", v[i], v[i+1])
             }
-        ],
-        "max_tokens": 500,
-        "temperature": 0.1
-    }'
+            log.Println(s)
+        }
+
+        cln := client.New(logger, host, apiKey)
+
+        ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+        defer cancel()
+
+        input := client.ChatInput{
+            Model: client.Models.NeuralChat7B,
+            Messages: []client.ChatInputMessage{
+                {
+                    Role: client.Roles.System,
+                    Content: "You are a helpful assistant that provide clever and sometimes funny responses.",
+                },
+                {
+                    Role: client.Roles.User,
+                    Content: "What's up!",
+                },
+                {
+                    Role: client.Roles.Assistant,
+                    Content: "Well, technically vertically out from the center of the earth.",
+                },
+                {
+                    Role: client.Roles.User,
+                    Content: "Haha. Good one.",
+                }
+            },
+            MaxTokens:   1000,
+            Temperature: 0.1,
+            TopP:        0.1,
+            Options: &client.ChatInputOptions{
+                Factuality:       true,
+                Toxicity:         true,
+                PII:              client.PIIs.Replace,
+                PIIReplaceMethod: client.ReplaceMethods.Random,
+            },
+        }
+
+        resp, err := cln.Chat(ctx, input)
+        if err != nil {
+            return fmt.Errorf("ERROR: %w", err)
+        }
+
+        fmt.Println(resp.Choices[0].Message.Content)
+
+        return nil
+    }
+    ```
+    </CodeBlock>
+
+    <CodeBlock title="Rust">
+    ```rust copy
+    extern crate prediction_guard as pg_client;
+
+    use pg_client::{chat, client, models};
+
+    #[tokio::main]
+    async fn main() {
+        let pg_env = client::PgEnvironment::from_env().expect("env keys");
+
+        let clt = client::Client::new(pg_env).expect("client value");
+
+        let req = chat::Request::<chat::Message>::new(models::Model::NeuralChat7B)
+            .add_message(
+                chat::Roles::System,
+                "You are a helpful assistant that provide clever and sometimes funny responses.".to_string(),
+            )
+            .add_message(
+                chat::Roles::User,
+                "What's up!".to_string(),
+            )
+            .add_message(
+                chat::Roles::Assistant,
+                "Well, technically vertically out from the center of the earth.".to_string(),
+            )
+            .add_message(
+                chat::Roles::User,
+                "Haha. Good one.".to_string(),
+            )
+            .max_tokens(1000)
+            .temperature(0.85);
+
+        let result = clt
+            .generate_chat_completion(&req)
+            .await
+            .expect("error from generate chat completion");
+
+        println!("\nchat completion response:\n\n {:?}", result);
+    }
+    ```
+    </CodeBlock>
+
+    <CodeBlock title="NodeJS">
+    ```js copy
+    import * as pg from '../dist/index.js';
+
+    const client = new pg.Client('https://api.predictionguard.com', process.env.PGKEY);
+
+    async function Chat() {
+        const input = {
+            model: pg.Models.NeuralChat7B,
+            messages: [
+                {
+                    role: pg.Roles.System,
+                    content: "You are a helpful assistant that provide clever and sometimes funny responses."
+                },
+                {
+                    role: pg.Roles.User,
+                    content: "What's up!"
+                },
+                {
+                    role: pg.Roles.User.Assistant,
+                    content: "Well, technically vertically out from the center of the earth."
+                },
+                {
+                    role: pg.Roles.User,
+                    content: "Haha. Good one."
+                }
+            ],
+            maxTokens: 1000,
+            temperature: 0.1,
+            topP: 0.1,
+            options: {
+                factuality: true,
+                toxicity: true,
+                pii: pg.PIIs.Replace,
+                piiReplaceMethod: pg.ReplaceMethods.Random,
+            },
+        };
+
+        var [result, err] = await client.Chat(input);
+        if (err != null) {
+            console.log('ERROR:' + err.error);
+            return;
+        }
+
+        console.log('RESULT:' + result.createdDate() + ': ' + result.model + ': ' + result.choices[0].message.content);
+    }
+
+    Chat();
+    ```
+    </CodeBlock>
+
+    <CodeBlock title="cURL">
+    ```bash copy
+        curl -il -X POST https://api.predictionguard.com/chat/completions \
+        -H "x-api-key: ${PGKEY}" \
+        -H "Content-Type: application/json" \
+        -d '{
+            "model": "Neural-Chat-7B",
+            "messages": [
+                {
+                    "role": "system",
+                    "content": "You are a helpful assistant that provide clever and sometimes funny responses."
+                },
+                {
+                    "role": "user",
+                    "content": "What's up!"
+                },
+                {
+                    "role": "assistant",
+                    "content": "Well, technically vertically out from the center of the earth."
+                },
+                {
+                    "role": "user",
+                    "content": "Haha. Good one."
+                }
+            ],
+            "max_tokens": 1000,
+            "temperature": 1.1,
+            "top_p": 0.1,
+            "output": {
+                "factuality": true,
+                "toxicity": true
+            },
+            "input": {
+                "pii": "replace",
+                "pii_replace_method": "random"
+            }
+        }'
     ```
     </CodeBlock>
 </CodeBlocks>
