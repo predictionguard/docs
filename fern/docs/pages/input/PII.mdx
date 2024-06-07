@@ -1,9 +1,14 @@
 ---
-title: PII anonymization
+title: PII Anonymization
 description: Controlled and compliant AI applications
 ---
 
-Some of your incoming prompts may include personally identifiable information (PII). With Prediction Guard's PII anonymization feature, you can detect PII such as names, email addresses, phone numbers, credit card details, and country-specific ID numbers like SSNs, NHS numbers, and passport numbers. Here's a demonstration of how this works:
+Some of your incoming prompts may include personally identifiable information
+(PII). With Prediction Guard's PII anonymization feature, you can detect PII such
+as names, email addresses, phone numbers, credit card details, and country-specific
+ID numbers like SSNs, NHS numbers, and passport numbers.
+
+Here's a demonstration of how this works.
 
 ```python copy
 import os
@@ -29,9 +34,9 @@ print(json.dumps(
 ))
 ```
 
-This outputs the PII entity and indices of where the info was found:
+This outputs the PII entity and indices of where the info was found.
 
-```json
+```json copy
 {
   "checks": [
     {
@@ -46,7 +51,9 @@ This outputs the PII entity and indices of where the info was found:
 }
 ```
 
-To maintain utility without compromising privacy, you have the option to replace PII with fake names and then forward the modified prompt to the LLM for further processing:
+To maintain utility without compromising privacy, you have the option to replace
+PII with fake names and then forward the modified prompt to the LLM for further
+processing.
 
 ```python copy
 result = client.pii.check(
@@ -63,9 +70,9 @@ print(json.dumps(
 ))
 ```
 
-The processed prompt will then be:
+The processed prompt will then be.
 
-```json
+```json copy
 {
   "checks": [
     {
@@ -80,9 +87,12 @@ The processed prompt will then be:
 }
 ```
 
-Other options for the `replace_method` parameter include: `random` (to replace the detected PII with random character), `category` (to mask the PII with the entity type) and `mask` (simply replace with `*`).
+Other options for the `replace_method` parameter include: `random` (to replace
+the detected PII with random character), `category` (to mask the PII with the
+entity type) and `mask` (simply replace with `*`).
 
-Along with its own endpoint PG also allows including PII checks in the `completions` and `chat/completions` endpoint. 
+Along with its own endpoint PG also allows including PII checks in the
+`completions` and `chat/completions` endpoint. 
 
 ```python copy
 import os
@@ -104,8 +114,10 @@ response = pg.Completion.create(
 print(json.dumps(response, sort_keys=True, indent=4, separators=(',', ': ')))
 ```
 
-In the response, you can see the PII has been replced and the LLM response is for the modified prompt:
-```json
+In the response, you can see the PII has been replced and the LLM response is for
+the modified prompt.
+
+```json copy
 {
     "choices": [
         {
@@ -121,8 +133,7 @@ In the response, you can see the PII has been replced and the LLM response is fo
 }
 ```
 
-You can enable PII in `\completions` endpoint to block the requests as well:
-
+You can enable PII in the `\completions` endpoint to block the requests as well.
 
 ```python copy
 import os
@@ -144,9 +155,10 @@ response = pg.Completion.create(
 print(json.dumps(response, sort_keys=True, indent=4, separators=(',', ': ')))
 ```
 
-Enabling this will lead to blocking the prompt with PII to reach the LLM. You will be seeing this response:
+Enabling this will lead to blocking the prompt with PII to reach the LLM. You will
+be seeing this response.
 
-```json 
+```json copy
 {
     "choices": [
         {
@@ -161,7 +173,9 @@ Enabling this will lead to blocking the prompt with PII to reach the LLM. You wi
     "object": "text_completion"
 }
 ```
-You can add the `pii` check to the chat completions as well. This is illustrated below:
+
+You can add the `pii` check to the chat completions as well. This is illustrated
+below.
 
 ```python copy
 import os
@@ -195,9 +209,9 @@ print(json.dumps(
 ))
 ```
 
-This will produce an output like the following:
+This will produce an output like the following.
 
-```json
+```json copy
 {
     "choices": [
         {
@@ -217,6 +231,5 @@ This will produce an output like the following:
 }
 ```
 
-In the output it is clear that before the prompt was sent to the llm, the PII was replaced with fictitious
-information.
-
+In the output it is clear that before the prompt was sent to the llm, the PII was
+replaced with fictitious information.

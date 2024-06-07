@@ -2,30 +2,28 @@
 title: Translate
 ---
 
-You can get machine translation and translation quality scores from the `/translate` endpoint or the "translate" class in the Python client. This endpoint/class takes three parameters:
+You can get machine translation and translation quality scores from the
+`/translate` REST API endpoint or any of the official SDKs (Python, Go, Rust,
+JS, or cURL).
 
-- `text` - The text to translate.
-- `source_lang` - The ISO 639 source language code (e.g. 'eng' for English).
-- `target_lang` - The ISO 639 target language code (e.g 'fra' for French).
-
-Under the hood, the `/translate` endpoint simultaneously leverages multiple state-of-the-art LLM and machine translation models to perform translations. The translations from these models are scored and ranked using reference-free quality estimation models. This allows us to select the highest quality machine translation for the given source and target languages.
-
-## Supported Languages
-
-Our translation API supports a wide range of languages, including but not limited to English, Hindi, French, Spanish, German, and more. Refer to the language codes to identify specific languages.
-
-![List of supported languages](https://publicpgdocimages.s3.amazonaws.com/languages.png)
-
-### `/translate`
+Under the hood, the `/translate` endpoint simultaneously leverages multiple
+state-of-the-art LLM and machine translation models to perform translations. The
+translations from these models are scored and ranked using reference-free quality
+estimation models. This allows us to select the highest quality machine translation
+for the given source and target languages.
 
 The /translate endpoint will return a JSON object response with two fields:
 
 - `Best translation` - The translated text.
 - `Score` - A score from -1.0 to 1.0 representing the translation quality. Higher the score better the quality.
 
-## Generate a translation
+Our translation API supports a wide range of [languages](/options/enumerations),
+including but not limited to English, Hindi, French, Spanish, German, and more.
 
-To generate a translation, you can use the following code examples. Depending on your preference or requirements, select the appropriate method for your application.
+## Generate a Translation
+
+To generate a translation, you can use the following code examples. Depending on
+your preference or requirements, select the appropriate method for your application.
 
 <CodeBlocks>
     <CodeBlock title="Python">
@@ -56,16 +54,116 @@ To generate a translation, you can use the following code examples. Depending on
     ```
     </CodeBlock>
 
+    <CodeBlock title="Go">
+    ```go
+    package main
+
+    import (
+        "context"
+        "fmt"
+        "log"
+        "os"
+        "time"
+
+        "github.com/predictionguard/go-client"
+    )
+
+    func main() {
+        if err := run(); err != nil {
+            log.Fatalln(err)
+        }
+    }
+
+    func run() error {
+        host := "https://api.predictionguard.com"
+        apiKey := os.Getenv("PGKEY")
+
+        logger := func(ctx context.Context, msg string, v ...any) {
+            s := fmt.Sprintf("msg: %s", msg)
+            for i := 0; i < len(v); i = i + 2 {
+                s = s + fmt.Sprintf(", %s: %v", v[i], v[i+1])
+            }
+            log.Println(s)
+        }
+
+        cln := client.New(logger, host, apiKey)
+
+        ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+        defer cancel()
+
+        text := "The sky is blue"
+
+        resp, err := cln.Translate(ctx, text, client.Languages.English, client.Languages.French)
+        if err != nil {
+            return fmt.Errorf("ERROR: %w", err)
+        }
+
+        fmt.Println(resp.BestTranslation)
+
+        return nil
+    }
+    ```
+    </CodeBlock>
+
+    <CodeBlock title="Rust">
+    ```rust
+    extern crate prediction_guard as pg_client;
+
+    use pg_client::{client, translate};
+
+    #[tokio::main]
+    async fn main() {
+        let pg_env = client::PgEnvironment::from_env().expect("env keys");
+
+        let clt = client::Client::new(pg_env).expect("client value");
+
+        let req = translate::Request::new(
+            "The sky is blue".to_string(),
+            translate::Language::English,
+            translate::Language::French,
+        );
+
+        let result = clt.translate(&req).await.expect("error from translate");
+
+        println!("\n\ntranslate response:\n{:?}\n\n", result);
+    }
+    ```
+    </CodeBlock>
+
+    <CodeBlock title="NodeJS">
+    ```js
+    import * as pg from '../dist/index.js';
+
+    const client = new pg.Client('https://api.predictionguard.com', process.env.PGKEY);
+
+    async function Translate() {
+        const sourceLang = pg.Languages.English;
+        const targetLang = pg.Languages.French;
+        const text = `The sky is blue`;
+
+        var [result, err] = await client.Translate(text, sourceLang, targetLang);
+        if (err != null) {
+            console.log('ERROR:' + err.error);
+            return;
+        }
+
+        console.log('RESULT:' + result.best_translation);
+    }
+
+    Translate();
+    ```
+    </CodeBlock>
+
     <CodeBlock title="cURL">
     ```bash
-    $ curl --location --request POST 'https://api.predictionguard.com/translate' \
-    --header 'x-api-key: <api key>' \
-    --header 'Content-Type: application/json' \
-    --data-raw '{
-        "text":"The sky is blue",
-        "source_lang":"eng",
-        "target_lang":"fra"
-    }'
+    curl -X POST https://api.predictionguard.com/translate \
+     -H "x-api-key: ${PGKEY}" \
+     -H "Content-Type: application/json" \
+     -d '{
+		"text": "The sky is blue",
+		"source_lang": "eng",
+		"target_lang": "fra"
+	}'
     ```
     </CodeBlock>
 </CodeBlocks>
@@ -74,9 +172,41 @@ The output will look something like:
 
 ```json
 {
-  "response": {
-    "Best translation": "Le ciel est bleu",
-    "Score": 0.8694158792495728
-  }
+   "translations":[
+      {
+         "score":-100,
+         "translation":"",
+         "model":"openai",
+         "status":"error: couldn’t get translation"
+      },
+      {
+         "score":0.8694148659706116,
+         "translation":"Le ciel est bleu",
+         "model":"deepl",
+         "status":"success"
+      },
+      {
+         "score":0.8694148659706116,
+         "translation":"Le ciel est bleu",
+         "model":"google",
+         "status":"success"
+      },
+      {
+         "score":0.8588921427726746,
+         "translation":"Le ciel est bleu.",
+         "model":"nous_hermes_llama2",
+         "status":"success"
+      }
+   ],
+   "best_translation":"Le ciel est bleu",
+   "best_score":0.8694148659706116,
+   "best_translation_model":"deepl",
+   "created":1717782273,
+   "id":"translation-29acf4b138504bb692e24dbaf62ee5e3",
+   "object":"translation"
 }
 ```
+
+This approach presents a straightforward way for readers to choose and apply the
+code example that best suits their needs for generating text completions using
+either Python, Go, Rust, JS, or cURL.

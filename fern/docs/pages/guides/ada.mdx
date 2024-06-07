@@ -1,30 +1,47 @@
 ---
-title: Data Chat with LLMs
+title: Data Chat With LLMs
 ---
 
-(Run this example in Google Colab [here](https://colab.research.google.com/drive/1RhQpyG9lgXk4aErlcuTOASLsU4zq5IgT?usp=sharing#scrollTo=VTwxTNIFWeZX))
+(Run this example in Google Colab
+[here](https://colab.research.google.com/drive/1RhQpyG9lgXk4aErlcuTOASLsU4zq5IgT?usp=sharing#scrollTo=VTwxTNIFWeZX))
 
-Large language models (LLMs) like 'deepseek-coder-6.7B-instruct' have demonstrated impressive capabilities for understanding natural language and generating SQL. We can leverage these skills for data analysis by having them automatically generate SQL queries against known database structures. And then rephrase these sql outputs using state of the art text/chat completion models like 'Neural-Chat-7B' to get well written answers to user questions.
+Large Language Models (LLMs) like 'deepseek-coder-6.7B-instruct' have demonstrated
+impressive capabilities for understanding natural language and generating SQL.
+We can leverage these skills for data analysis by having them automatically
+generate SQL queries against known database structures. And then rephrase these
+sql outputs using state of the art text/chat completion models like 'Neural-Chat-7B'
+to get well written answers to user questions.
 
-Unlike code generation interfaces that attempt to produce executable code from scratch, our approach focuses strictly on generating industry-standard SQL from plain English questions. This provides two major benefits:
+Unlike code generation interfaces that attempt to produce executable code from
+scratch, our approach focuses strictly on generating industry-standard SQL from
+plain English questions. This provides two major benefits:
 
-- SQL is a well-established language supported across environments, avoiding the need to execute less secure auto-generated code. 
+- SQL is a well-established language supported across environments, avoiding the need
+to execute less secure auto-generated code. 
 
-- Mapping natural language questions to SQL over known schemas is more robust than attempting to generate arbitrary code for unfamiliar data structures.  
+- Mapping natural language questions to SQL over known schemas is more robust than
+attempting to generate arbitrary code for unfamiliar data structures.  
 
-By combining language model understanding of questions with a defined database schema, the system can translate simple natural language queries into precise SQL for fast and reliable data analysis. This makes surfacing insights more accessible compared to manual SQL writing or hopelessly broad code generation.
+By combining language model understanding of questions with a defined database
+schema, the system can translate simple natural language queries into precise SQL
+for fast and reliable data analysis. This makes surfacing insights more accessible
+compared to manual SQL writing or hopelessly broad code generation.
 
-For this demo we have selecteed a public dataset from Kaggle - Jobs and Salaries in Data Science (Find the dataset [here](https://www.kaggle.com/datasets/hummaamqaasim/jobs-in-data?resource=download))
+For this demo we have selecteed a public dataset from Kaggle - Jobs and Salaries
+in Data Science
+(Find the dataset [here](https://www.kaggle.com/datasets/hummaamqaasim/jobs-in-data?resource=download))
 
 ## Installation and Setup
 - Install the Python SDK with `pip install predictionguard`
-- Get a Prediction Guard api key (as described [here](https://docs.predictionguard.com/)) and set it as the environment variable `PREDICTIONGUARD_API_KEY`.
+
+- Get a Prediction Guard api key (as described [here](https://docs.predictionguard.com/))
+and set it as the environment variable `PREDICTIONGUARD_API_KEY`.
 
 ## Setup
 
-First, import the necessary libraries:
+First, import the necessary libraries.
 
-```python
+```python copy
 import time
 import os
 import re
@@ -42,7 +59,10 @@ from getpass import getpass
 ```
 
 ## Authenticate to Prediction Guard API
-```python
+
+Now setup your API Key, and create the client.
+
+```python copy
 # Set your Prediction Guard token as an environmental variable.
 os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
 
@@ -50,30 +70,41 @@ client = PredictionGuard()
 ```
 
 ## Create a SQLite Database
-We will create a local SQLite database for this example, but a similar approach could be used with any remote Postgres, MySQL, etc. database. We will load an example movie rental database called Sakila. Sakila models a database for a chain of video rental stores. It contains a vast amount of information about:
 
-movie titles
-actors, genres, etc.
-what stores have what films in inventory
-transactions and payments
-customers
-staff
+We will create a local SQLite database for this example, but a similar approach
+could be used with any remote Postgres, MySQL, etc. database. We will load an
+example movie rental database called Sakila. Sakila models a database for a
+chain of video rental stores.
+
+It contains a vast amount of information about.
+
+- movie titles, actors, genres, etc.
+- what stores have what films in inventory
+- transactions and payments
+- customers and staff
+
 ![External Request Body](https://publicpgdocimages.s3.amazonaws.com/data.png)
-```python
+
+```python copy
 # Pull the example database
 ! git clone https://github.com/bradleygrant/sakila-sqlite3.git
 ```
 
 ## Establish connection to the SQLite DB
-```python
+
+Now connect to the database.
+
+```python copy
 db_path = 'sakila-sqlite3/sakila_master.db'
 conn = sqlite3.connect(db_path)
 ```
 
 ## Query Execution
-After having a look at the dataset , make data cleaning/preprocessing decisions if needed.
 
-```python
+After having a look at the dataset , make data cleaning/preprocessing decisions
+if needed.
+
+```python copy
 def execute_sql_query(query):
   cursor = conn.cursor()
   cursor.execute(query)
@@ -86,8 +117,10 @@ def execute_sql_query(query):
 results = execute_sql_query("SELECT * FROM customer LIMIT 3;")
 results
 ```
-Output :
-```python
+
+Here is the expected output.
+
+```python copy
 [(1,
   1,
   'MARY',
@@ -116,15 +149,27 @@ Output :
   '2006-02-14 22:04:36.000',
   '2020-12-23 07:15:11')]
 ```
-# Simple approach with static schema information
-Generally, our approach to SQL generation involves asking the LLM to generate a relevant SQL query and injecting the schema information in the prompt for context. The problem in this case is that the schema information is quite long. In reality, production DBs might have 100's of tables, views, etc. All of this schema information addeded into the prompt creates issues with:
 
-Model context windows
-Model performance
-As such, one "naive" thing we could try is generating a summary of the schema information that fits into the context window of the given model. This will only scale to a certain point, and it may introduce weirdness because of lack of relevant context. However, it might be enough for your use case.
+# Simple Approach With Static Schema Information
 
-## Prepare descriptive static schema information
-```python
+Generally, our approach to SQL generation involves asking the LLM to generate a
+relevant SQL query and injecting the schema information in the prompt for context.
+The problem in this case is that the schema information is quite long. In reality,
+production DBs might have 100's of tables, views, etc.
+
+All of this schema information addeded into the prompt can create issues with:
+
+- Model context windows
+- Model performance
+
+As such, one "naive" thing we could try is generating a summary of the schema
+information that fits into the context window of the given model. This will only
+scale to a certain point, and it may introduce weirdness because of lack of
+relevant context. However, it might be enough for your use case.
+
+## Prepare Descriptive Static Schema Information
+
+```python copy
 schema_description = []
 query = "SELECT name FROM sqlite_master WHERE type='table';"
 
@@ -146,8 +191,9 @@ static_schema_description = "\n".join(schema_description)
 print(static_schema_description)
 ```
 
-Schema for this example dataset will look like this :
-```python
+Schema for this example dataset will look like this.
+
+```python copy
 - actor: includes actor_id, first_name, last_name, last_update
 - country: includes country_id, country, last_update
 - city: includes city_id, city, country_id, last_update
@@ -167,7 +213,9 @@ Schema for this example dataset will look like this :
 ```
 
 ## Prompt Templates
-Define prompt templates for generating SQL queries and chatbot responses using Prediction Guard:
+
+Define prompt templates for generating SQL queries and chatbot responses using
+Prediction Guard.
 
 ```python
 sql_template = """You are a SQL expert and you only generate SQL queries which are executable. You provide no extra explanations.
@@ -199,8 +247,10 @@ Data: {data}
 qa_prompt = PromptTemplate(template=qa_template,input_variables=["question", "sql_query", "data"])
 ```
 
-## Create some utilities to generate and refine the SQL query
-Generate SQL queries based on user questions using PredictionGuard and process the queries:
+## Create Some Utilities To Generate And Refine The SQL Query
+
+Generate SQL queries based on user questions using PredictionGuard and process
+the queries.
 
 ```python
 def generate_sql_query(question, injected_schema):
@@ -259,9 +309,9 @@ def get_answer_from_sql(question, injected_schema):
 
 ```
 
+## Return Natural Language Responses
 
-## Return natural language responses
-Generate responses to user questions based on SQL query results:
+Generate responses to user questions based on SQL query results.
 
 ```python
 def get_answer(question, data, sql_query):
@@ -280,8 +330,11 @@ def get_answer(question, data, sql_query):
   return completion
 ```
 
-## Test it out
-```python
+## Test It Out
+
+Let's test out the demo.
+
+```python copy
 question = "What are the three most rented movies?"
 
 print('Question:')
@@ -308,10 +361,12 @@ print('------------------------')
 print(answer)
 ```
 
-Output :
+Output:
+
 ![External Request Body](https://publicpgdocimages.s3.amazonaws.com/query_result.png)
 
-## More advanced retrieval approach with dynamic schema information
+## More Advanced Retrieval Approach With Dynamic Schema information
+
 Assuming that your database fits one of the following scenarios:
 
 -has many tables
@@ -322,20 +377,31 @@ Assuming that your database fits one of the following scenarios:
 
 -includes columns with non-semantically meaningful names etc.
 
-We need to go beyond the simple, naive SQL generation method. We will need to integrate a vector database to store schema information along with data dictionary descriptions of tables and columns. The column description will also include example field values for extra context.
+We need to go beyond the simple, naive SQL generation method. We will need to
+integrate a vector database to store schema information along with data dictionary
+descriptions of tables and columns. The column description will also include
+example field values for extra context.
 
-We will retrieve the relevant information to answer a question on-the-fly and inject it into the prompt. We will also include "special instructions" in the prompt to deal with database quirks.
+We will retrieve the relevant information to answer a question on-the-fly and
+inject it into the prompt. We will also include "special instructions" in the
+prompt to deal with database quirks.
 
 You can go through this code to replicate for your various use cases :
-(Run this example in Google Colab [here](https://colab.research.google.com/drive/1RhQpyG9lgXk4aErlcuTOASLsU4zq5IgT?usp=sharing#scrollTo=VTwxTNIFWeZX))
 
-## For an interactive UI
-In this case we will be using a streamlit based web application to create an appealing chat interface.
+(Run this example in Google Colab
+[here](https://colab.research.google.com/drive/1RhQpyG9lgXk4aErlcuTOASLsU4zq5IgT?usp=sharing#scrollTo=VTwxTNIFWeZX))
+
+## For An Interactive UI
+
+In this case we will be using a streamlit based web application to create an
+appealing chat interface.
 
 You can go through this code to replicate for your various use cases :
-(Find relavent codes and details for this in our github repo[here](https://github.com/predictionguard/datachat-streamlit))
 
-Chatbot in action :
+(Find relavent codes and details for this in our github
+repo[here](https://github.com/predictionguard/datachat-streamlit))
+
+### Chatbot in action
 
   <iframe
     src="https://www.loom.com/embed/7f35885e57f14c1daf0af1c71e019c06"

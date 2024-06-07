@@ -4,5 +4,6 @@
     "engineering": "Prompt Engineering",
     "chat": "Chat Completions",
     "augmentation": "Chaining and Retrieval",
-    "agents": "Agents"
-  }
+    "agents": "Agents",
+    "streaming": "Streaming"
+}

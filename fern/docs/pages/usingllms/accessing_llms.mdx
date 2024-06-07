@@ -1,0 +1,106 @@
+---
+title: Accessing LLMs
+description: Prediction Guard in action
+slug: usingllms/accessing
+---
+
+(Run this example in Google Colab
+[here](https://drive.google.com/file/d/1H5YAkQKzCwG70eK9fRSBBngytHQvlPXZ/view?usp=sharing))
+
+**Prompting** is the process of providing a partial, usually text, input to a model.
+As we discussed in the last chapter, models will then use their parameterized data
+transformations to find a probable completion or output that matches the prompt.
+
+To run any prompt through a model, we need to set a foundation for how we will
+access generative AI models and perform inference. There is a huge variety in
+the landscape of generative AI models in terms of size, access patterns, licensing,
+etc. However, a common theme is the usage of LLMs through a REST API, which is either:
+
+- Provided by a third party service (OpenAI, Anthropic, Cohere, etc.)
+- Self-hosted in your own infrastructure or in an account you control with a
+model hosting provider (Replicate, Baseten, etc.)
+- Self-hosted using a DIY model serving API (Flask, FastAPI, etc.)
+
+We will use [Prediction Guard](/) to call open
+access LLMs (like Mistral, Llama 2, WizardCoder, etc.) via a standardized
+OpenAI-like API. This will allow us to explore the full range of LLMs available.
+Further, it will illustrate how companies can access a wide range of models
+(outside of the GPT family).
+
+In order to "prompt" an LLM via Prediction Guard (and eventually engineer prompts),
+you can use any of the following SDKs:
+[Python](/docs/getting-started/sd-ks#pythonclient),
+[Go](/docs/getting-started/sd-ks#goclient),
+[Rust](/docs/getting-started/sd-ks#rustclient),
+[JS](/docs/getting-started/sd-ks#jsclient), and
+[HTTP](/api-reference).
+
+We will use Python to show an example:
+
+You will need to install Prediction Guard into your Python environment.
+
+```bash copy
+$ pip install predictionguard
+```
+
+Now import PredictionGuard, setup your API Key, and create the client.
+
+```python copy
+import os
+
+from predictionguard import PredictionGuard
+
+# Set your Prediction Guard token as an environmental variable.
+os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+
+client = PredictionGuard()
+```
+
+## Accessing LLMs
+
+Generating text with one of these models is then just single request for a
+“Completion” (note, we also support chat completions). Here we will call the
+Neural-Chat-7B model and try to have it autocomplete a joke.
+
+You can find out more about the available [Models](options/enumerations) in the docs.
+
+```python copy
+response = client.completions.create(model="Neural-Chat-7B",
+                          prompt="The best joke I know is: ")
+
+print(json.dumps(
+    response,
+    sort_keys=True,
+    indent=4,
+    separators=(',', ': ')
+))
+```
+
+The completions call should result in something similar to the following JSON
+output which includes the completion.
+
+```json copy
+{
+   "id":"cmpl-hUb28aOve3iF5lLlwkai6YmzZQer6",
+   "object":"text_completion",
+   "created":1717692267,
+   "choices":[
+      {
+         "text":"\n\nA man walks into a bar and says to the bartender, \"If I show you something really weird, will you give me a free drink?\" The bartender, being intrigued, says, \"Sure, I'll give it a look.\" The man reaches into his pocket and pulls out a tiny horse. The bartender is astonished and gives the man a free drink. The man then puts the horse back into his pocket.\n\nThe next day, the same man walks back into the bar and says to the bartender, \"If I show you something even weirder than yesterday and you give me a free drink, will you do it again?\" The bartender, somewhat reluctantly, says, \"Okay, I guess you can show it to me.\" The man reaches into his pocket, pulls out the same tiny horse, and opens the door to reveal the entire bar inside the horse.\n\nThe bartender faints.",
+         "index":0,
+         "status":"success",
+         "model":"Neural-Chat-7B"
+      }
+   ]
+}
+```
+
+## Using The SDKs
+
+You can also try these examples using the other official SDKs:
+
+[Python](/docs/getting-started/sd-ks#pythonclient),
+[Go](/docs/getting-started/sd-ks#goclient),
+[Rust](/docs/getting-started/sd-ks#rustclient),
+[JS](/docs/getting-started/sd-ks#jsclient),
+[HTTP](/api-reference)

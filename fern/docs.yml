@@ -15,32 +15,32 @@ tabs:
 navigation:
   - tab: help
     layout:
-      - section: Getting started
+      - section: Getting Started
         contents:
           - page: Welcome
             path: ./docs/pages/welcome.mdx
           - page: Quick Start
-            path: ./docs/pages/gettingstarted.mdx
+            path: ./docs/pages/quick_start.mdx
           - page: SDKs
             path: ./docs/pages/sdks.mdx
-      - section: Models
+      - section: Input Requirements
         contents:
-          - page: Available Models
-            path: ./docs/pages/models/details.mdx
-          - page: Prompts
-            path: ./docs/pages/models/prompts.mdx
+          - page: Enumerations
+            path: ./docs/pages/options/enumerations.mdx
+          - page: Prompt Formatting
+            path: ./docs/pages/options/prompts.mdx
       - section: Using LLMs
         contents:
           - page: Accessing LLMs
-            path: ./docs/pages/usingllms/accessing.mdx
+            path: ./docs/pages/usingllms/accessing_llms.mdx
           - page: Basic Prompting
-            path: ./docs/pages/usingllms/prompting.mdx
+            path: ./docs/pages/usingllms/basic_prompting.mdx
           - page: Prompt Engineering
-            path: ./docs/pages/usingllms/engineering.mdx
+            path: ./docs/pages/usingllms/prompt_engineering.mdx
           - page: Chat Completions
-            path: ./docs/pages/usingllms/chat.mdx
+            path: ./docs/pages/usingllms/chat_completions.mdx
           - page: Chaining and Retrieval
-            path: ./docs/pages/usingllms/augmentation.mdx
+            path: ./docs/pages/usingllms/chaining_retrieval.mdx
           - page: Agents
             path: ./docs/pages/usingllms/agents.mdx
           - page: Streaming
@@ -53,8 +53,6 @@ navigation:
             path: ./docs/pages/input/injection.mdx
       - section: Validating LLM Output
         contents:
-          - page: Consistency
-            path: ./docs/pages/output/consistency.mdx
           - page: Factuality
             path: ./docs/pages/output/factuality.mdx
           - page: Toxicity
@@ -75,12 +73,14 @@ navigation:
         contents:
           - page: Chat
             path: ./docs/pages/reference/chat.mdx
+          - page: Chat SSE
+            path: ./docs/pages/reference/chat_sse.mdx
+          - page: Chat Vision
+            path: ./docs/pages/reference/chat_vision.mdx
           - page: Completions
             path: ./docs/pages/reference/completions.mdx
           - page: Embeddings
             path: ./docs/pages/reference/embeddings.mdx
-          - page: Vision
-            path: ./docs/pages/reference/vision.mdx
           - page: Factuality
             path: ./docs/pages/reference/factuality.mdx
           - page: Injection
@@ -98,6 +98,7 @@ navigation:
   - tab: api
     layout:
       - api: API Reference
+        display-errors: true
 
 navbar-links:
   - type: secondary

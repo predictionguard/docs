@@ -3,20 +3,30 @@ title: Basic Prompting
 description: Prediction Guard in action
 ---
 
-(Run this example in Google Colab [here](https://drive.google.com/file/d/1KVcpd3pcy_8TLq44Q5rRIQJrV1U5yIji/view?usp=sharing))
+(Run this example in Google Colab
+[here](https://drive.google.com/file/d/1KVcpd3pcy_8TLq44Q5rRIQJrV1U5yIji/view?usp=sharing))
 
-**Prompt and AI Engineering** is the emerging developer task of designing and optimizing prompts (and associated workflows/ infra) for AI models to achieve specific goals or outcomes. It involves creating high-quality inputs that can elicit accurate and relevant responses from AI models. The next several examples will help get you up to speed on common prompt engineering strategies.
+**Prompt and AI Engineering** is the emerging developer task of designing and
+optimizing prompts (and associated workflows/ infra) for AI models to achieve
+specific goals or outcomes. It involves creating high-quality inputs that can
+elicit accurate and relevant responses from AI models. The next several examples
+will help get you up to speed on common prompt engineering strategies.
 
-## Dependencies and imports
+We will use Python to show an example:
 
-Similar to the last notebook, you will need to install Prediction Guard and add your token.
+## Dependencies and Imports
+
+You will need to install Prediction Guard into your Python environment.
 
 ```bash copy
 $ pip install predictionguard
 ```
 
+Now import PredictionGuard, setup your API Key, and create the client.
+
 ```python copy
 import os
+
 from predictionguard import PredictionGuard
 
 # Set your Prediction Guard token as an environmental variable.
@@ -27,9 +37,16 @@ client = PredictionGuard()
 
 ## Autocomplete
 
-Because LLMs are configured/ trained to perform the task of text completion, the most basic kind of prompt that you might provide is an autocomplete prompt. Regardless of prompt structure, the model function will compute the probabilities of words, tokens, or characters that might follow in the sequence of words, tokens, or characters that you provided in the prompt.
+Because LLMs are configured/ trained to perform the task of text completion, the
+most basic kind of prompt that you might provide is an autocomplete prompt. Regardless
+of prompt structure, the model function will compute the probabilities of words,
+tokens, or characters that might follow in the sequence of words, tokens, or
+characters that you provided in the prompt.
 
-Depending on the desired outcome, the prompt may be a single sentence, a paragraph, or even an partial story. Additionally, the prompt may be open-ended, providing only a general topic or theme, or it may be more specific, outlining a particular scenario or plot.
+Depending on the desired outcome, the prompt may be a single sentence, a paragraph,
+or even an partial story. Additionally, the prompt may be open-ended, providing
+only a general topic or theme, or it may be more specific, outlining a particular
+scenario or plot.
 
 ```python copy
 result = client.completions.create(
@@ -48,7 +65,8 @@ This prompt should result in an output similar to:
 Daniel Whitenack was born in the land of Gondor, in the city of Minas Tirith. He was a descendant of the great wizard Saruman, but he was not as powerful as his ancestor. He was a
 ```
 
-Other examples include the following (note that we can also complete things like SQL statements):
+Other examples include the following (note that we can also complete things like
+SQL statements):
 
 ```python copy
 result = client.completions.create(
@@ -68,9 +86,12 @@ SELECT"""
 print(result['choices'][0]['text'])
 ```
 
-## Zero-shot prompts
+## Zero-Shot Prompts
 
-Autocomplete is a great place to start, but it is only that: a place to start. Throughout this workshop we will be putting on our prompt engineering hats to do some impressive things with generative AI. As we continue along that path, there is a general prompt structure that will pop up over and over again:
+Autocomplete is a great place to start, but it is only that: a place to start.
+Throughout this workshop we will be putting on our prompt engineering hats to do
+some impressive things with generative AI. As we continue along that path, there
+is a general prompt structure that will pop up over and over again:
 
 ```
  Prompt:
@@ -92,7 +113,10 @@ Autocomplete is a great place to start, but it is only that: a place to start. T
 +------------------------------------------------------------+
 ```
 
-One of the easiest ways to leverage the above prompt structure is to describe a task (e.g., sentiment analysis), provide a single piece of data as context, and then provide a single output indicator. This is called a **zero shot prompt**. Here is a zero-shot prompt for performing sentiment analysis:
+One of the easiest ways to leverage the above prompt structure is to describe a
+task (e.g., sentiment analysis), provide a single piece of data as context, and
+then provide a single output indicator. This is called a **zero shot prompt**.
+Here is a zero-shot prompt for performing sentiment analysis:
 
 ```python copy
 client.completions.create(
@@ -110,9 +134,15 @@ This tutorial is spectacular. I love it! So wonderful.
 
 Which should output `POS`.
 
-**Note** - We are doing some post-processing on the text output (stripping out extra whitespace and only getting the first word/label), because the model will just continue generating text in certain cases. We will return to this later on in the tutorials.
+**Note** - We are doing some post-processing on the text output (stripping out
+extra whitespace and only getting the first word/label), because the model will
+just continue generating text in certain cases. We will return to this later on
+in the tutorials.
 
-**Note** - We are using a very specific prompt format (with the `### Instruction:` etc. markers). This is the alpaca prompt format that is preferred by the `Nous-Hermes-Llama2-13B` model. Each model might have a different preferred prompt format, and you can find out more about that [here](../models).
+**Note** - We are using a very specific prompt format (with the `### Instruction:`
+etc. markers). This is the alpaca prompt format that is preferred by the
+`Nous-Hermes-Llama2-13B` model. Each model might have a different preferred prompt
+format, and you can find out more about that [here](../models).
 
 Another example of zero-shot prompting is the following for question and answer:
 
@@ -123,11 +153,18 @@ client.completions.create(
 )['choices'][0]['text'].split('.')[0].strip()
 ```
 
-## Few shot prompts
+## Few Shot Prompts
 
-When your task is slightly more complicated or requires a few more leaps in reasoning to generate an appropriate response, you can turn to few shot prompting (aka in context learning). In few shot prompting, a small number of gold standard demonstrations are integrated into the prompt. These demonstrations serve as example (context, output) pairs for the model, which serve to tune the probable output on-the-fly to what we ideally want in the output.
+When your task is slightly more complicated or requires a few more leaps in
+reasoning to generate an appropriate response, you can turn to few shot prompting
+(aka in context learning). In few shot prompting, a small number of gold standard
+demonstrations are integrated into the prompt. These demonstrations serve as
+example (context, output) pairs for the model, which serve to tune the probable
+output on-the-fly to what we ideally want in the output.
 
-Although not always necessary (as seen above), few shot prompting generally produces better results than single shot prompting in terms of consistency and similarity to your ideal outputs. 
+Although not always necessary (as seen above), few shot prompting generally
+produces better results than single shot prompting in terms of consistency and
+similarity to your ideal outputs. 
 
 Let's reformat our sentiment prompt to include demonstrations:
 
@@ -174,7 +211,10 @@ print(result['choices'][0]['text'].split('\n')[0].strip())
 
 This should output `NEG`.
 
-Another common example of few shot prompting is chat conversations. Although Prediction Guard has specific functionality to support chat memory and threads. You can actually use any non-chat-specific model to generate a chat response. For example:
+Another common example of few shot prompting is chat conversations. Although
+Prediction Guard has specific functionality to support chat memory and threads.
+You can actually use any non-chat-specific model to generate a chat response.
+For example:
 
 ```python copy
 prompt = """The following is a conversation with an AI assistant in Hinglish. The assistant is helpful, creative, clever, and very friendly. The AI assistant responds in Hinglish.
@@ -229,4 +269,12 @@ Which will output similar to:
 Wow, you've told me a lot of things. I thought you'd like this movie. You said Lindsay Lohan did a great job acting. You said you thought this movie was good. You said you thought this movie was good.
 ```
 
+## Using The SDKs
 
+You can also try these examples using the other official SDKs:
+
+[Python](/docs/getting-started/sd-ks#pythonclient),
+[Go](/docs/getting-started/sd-ks#goclient),
+[Rust](/docs/getting-started/sd-ks#rustclient),
+[JS](/docs/getting-started/sd-ks#jsclient),
+[HTTP](/api-reference)

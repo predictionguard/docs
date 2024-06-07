@@ -4,17 +4,34 @@ description: Prediction Guard in action
 slug: usingllms/agents
 ---
 
-(Run this example in Google Colab [here](https://drive.google.com/file/d/1w_pDpWh-J9N3pUXAvI2QyIDT2N4W62Gf/view?usp=sharing))
+(Run this example in Google Colab
+[here](https://drive.google.com/file/d/1w_pDpWh-J9N3pUXAvI2QyIDT2N4W62Gf/view?usp=sharing))
 
-Prompts, chaining, and prompt engineering is important. However, you might not always know what chain or prompts you need to execute prior to receiving user input or new data. This is where automation and **agents** can help. This is an active area of development, but some very useful tooling is available.
+Prompts, chaining, and prompt engineering is important. However, you might not
+always know what chain or prompts you need to execute prior to receiving user
+input or new data. This is where automation and **agents** can help. This is an
+active area of development, but some very useful tooling is available.
 
-In the following we will explore using [LangChain agents](https://python.langchain.com/en/latest/use_cases/personal_assistants.html) with Prediction Guard LLMs to detect and automate LLM actions.
+In the following we will explore using
+[LangChain agents](https://python.langchain.com/en/latest/use_cases/personal_assistants.html)
+with Prediction Guard LLMs to detect and automate LLM actions.
 
-We will use LangChain again, but we will also use a Google search API called SerpAPI. You can get a free API key for SerpAPI [here](https://serpapi.com/).
+We will use LangChain again, but we will also use a Google search API called
+SerpAPI. You can get a free API key for SerpAPI [here](https://serpapi.com/).
+
+We will use Python to show an example:
+
+## Dependencies and Imports
+
+You will need to install the Prediction Guard, LangChain and Google Search Results
+dependencies in you Python environment.
 
 ```bash
 $ pip install predictionguard langchain google-search-results
 ```
+
+Now import PredictionGuard and the other dependencies, setup your API Key, and
+create the client.
 
 ```python
 import os
@@ -32,7 +49,10 @@ client = PredictionGuard()
 os.environ['SERPAPI_API_KEY'] = "<your serpapi api key>"
 ```
 
-To setup an agent that will search the internet on-the-fly and use the LLM to generate a response:
+## Agents
+
+To setup an agent that will search the internet on-the-fly and use the LLM to
+generate a response:
 
 ```python copy
 # In LangChain, "tools" are like resources that are available to your agent to
@@ -45,7 +65,8 @@ agent = initialize_agent(tools, PredictionGuard(model="Neural-Chat-7B"),
 agent.run("How are Domino's gift cards delivered?")
 ```
 
-This will verbosely log the agents activities until it reaching a final answer and generates the response:
+This will verbosely log the agents activities until it reaching a final answer 
+nd generates the response:
 
 ```
 > Entering new AgentExecutor chain...
@@ -59,3 +80,13 @@ Final Answer: Domino's gift cards can be delivered electronically or physically,
 > Finished chain.
 Domino's gift cards can be delivered electronically or physically, and can be used for online, phone, or in-store orders. They can be sent as eGift cards or physical cards, and can be used for both delivery and carryout orders.
 ```
+
+## Using The SDKs
+
+You can also try these examples using the other official SDKs:
+
+[Python](/docs/getting-started/sd-ks#pythonclient),
+[Go](/docs/getting-started/sd-ks#goclient),
+[Rust](/docs/getting-started/sd-ks#rustclient),
+[JS](/docs/getting-started/sd-ks#jsclient),
+[HTTP](/api-reference)

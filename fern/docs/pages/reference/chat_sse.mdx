@@ -1,16 +1,17 @@
 ---
-title: Chat
+title: Chat SSE
 ---
 
-You can get chat text completions (based on a thread of chat messages) from any
-of the chat enabled [models](/options/enumerations) using the `/chat/completions`
-REST API endpoint or any of the official SDKs (Python, Go, Rust, JS, or cURL).
+You can get stream based chat text completions (based on a thread of chat messages)
+from any of the chat enabled [models](/options/enumerations) using the
+`/chat/completions` REST API endpoint or any of the official SDKs (Python, Go,
+Rust, JS, or cURL).
 
-## Generate a Chat Text Completion
+## Generate a Stream Based Chat Text Completion
 
-To generate a chat text completion, you can use the following code examples.
-Depending on your preference or requirements, select the appropriate method for
-your application.
+To generate a stream based chat text completion, you can use the following code
+examples. Depending on your preference or requirements, select the appropriate
+method for your application.
 
 <CodeBlocks>
     <CodeBlock title="Python">
@@ -47,7 +48,8 @@ your application.
     result = client.chat.completions.create(
         model="Neural-Chat-7B",
         messages=messages,
-        max_tokens=500
+        max_tokens=500,
+        stream=true,
     )
 
     print(json.dumps(
@@ -96,7 +98,7 @@ your application.
         ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
         defer cancel()
 
-        input := client.ChatInput{
+        input := client.ChatSSEInput{
             Model: client.Models.NeuralChat7B,
             Messages: []client.ChatInputMessage{
                 {
@@ -118,21 +120,19 @@ your application.
             },
             MaxTokens:   1000,
             Temperature: 0.1,
-            TopP:        0.1,
-            Options: &client.ChatInputOptions{
-                Factuality:       false,
-                Toxicity:         true,
-                PII:              client.PIIs.Replace,
-                PIIReplaceMethod: client.ReplaceMethods.Random,
-            },
+            TopP:        0.1
         }
 
-        resp, err := cln.Chat(ctx, input)
+        resp, err := cln.ChatSSE(ctx, input)
         if err != nil {
             return fmt.Errorf("ERROR: %w", err)
         }
 
-        fmt.Println(resp.Choices[0].Message.Content)
+        for resp := range ch {
+            for _, choice := range resp.Choices {
+                fmt.Print(choice.Delta.Content)
+            }
+        }
 
         return nil
     }
@@ -171,12 +171,20 @@ your application.
             .max_tokens(1000)
             .temperature(0.85);
 
-        let result = clt
-            .generate_chat_completion(&req)
-            .await
-            .expect("error from generate chat completion");
+        let lock = std::io::stdout().lock();
+        let mut buf = std::io::BufWriter::new(lock);
 
-        println!("\nchat completion response:\n\n {:?}", result);
+        let mut evt_handler = |msg: &String| {
+            let _ = buf.write(msg.as_bytes());
+            let _ = buf.flush();
+        };
+
+        let result = clt
+            .generate_chat_completion_events(req, &mut evt_handler)
+            .await
+            .expect("error from chat_events");
+
+        println!("\n\nchat sse completion response:\n{:?}\n\n", result);
     }
     ```
     </CodeBlock>
@@ -187,7 +195,7 @@ your application.
 
     const client = new pg.Client('https://api.predictionguard.com', process.env.PGKEY);
 
-    async function Chat() {
+    async function ChatSSE() {
         const input = {
             model: pg.Models.NeuralChat7B,
             messages: [
@@ -211,15 +219,23 @@ your application.
             maxTokens: 1000,
             temperature: 0.1,
             topP: 0.1,
-            options: {
-                factuality: false,
-                toxicity: true,
-                pii: pg.PIIs.Replace,
-                piiReplaceMethod: pg.ReplaceMethods.Random,
+            onMessage: function (event, err) {
+                if (err != null) {
+                    if (err.error == 'EOF') {
+                        return;
+                    }
+                    console.log(err);
+                }
+
+                for (const choice of event.choices) {
+                    if (choice.delta.hasOwnProperty('content')) {
+                        process.stdout.write(choice.delta.content);
+                    }
+                }
             },
         };
 
-        var [result, err] = await client.Chat(input);
+        var err = await client.ChatSSE(input);
         if (err != null) {
             console.log('ERROR:' + err.error);
             return;
@@ -228,71 +244,82 @@ your application.
         console.log('RESULT:' + result.createdDate() + ': ' + result.model + ': ' + result.choices[0].message.content);
     }
 
-    Chat();
+    ChatSSE();
     ```
     </CodeBlock>
 
     <CodeBlock title="cURL">
     ```bash
-        curl -il -X POST https://api.predictionguard.com/chat/completions \
-        -H "x-api-key: ${PGKEY}" \
-        -H "Content-Type: application/json" \
-        -d '{
-            "model": "Neural-Chat-7B",
-            "messages": [
-                {
-                    "role": "system",
-                    "content": "You are a helpful assistant that provide clever and sometimes funny responses."
-                },
-                {
-                    "role": "user",
-                    "content": "What''s up!"
-                },
-                {
-                    "role": "assistant",
-                    "content": "Well, technically vertically out from the center of the earth."
-                },
-                {
-                    "role": "user",
-                    "content": "Haha. Good one."
-                }
-            ],
-            "max_tokens": 1000,
-            "temperature": 1.1,
-            "top_p": 0.1,
-            "output": {
-                "factuality": false,
-                "toxicity": true
+    curl -il -X POST https://api.predictionguard.com/chat/completions \
+    -H "x-api-key: ${PGKEY}" \
+    -H "Content-Type: application/json" \
+    -d '{
+        "model": "Neural-Chat-7B",
+        "messages": [
+            {
+                "role": "system",
+                "content": "You are a helpful assistant that provide clever and sometimes funny responses."
             },
-            "input": {
-                "pii": "replace",
-                "pii_replace_method": "random"
+            {
+                "role": "user",
+                "content": "What''s up!"
+            },
+            {
+                "role": "assistant",
+                "content": "Well, technically vertically out from the center of the earth."
+            },
+            {
+                "role": "user",
+                "content": "Haha. Good one."
             }
-        }'
+        ],
+        "stream": true
+    }'
     ```
     </CodeBlock>
 </CodeBlocks>
 
-The output will look something like this.
+The output will look something like this. The SDK clean up the non-conforming
+JSON document.
 
-```json
-{
-   "id":"chat-SUZNF22Qn7uq22Ciez0AfhmnVlKF0",
-   "object":"chat_completion",
-   "created":1717780456,
+```
+data: {
+   "id":"chat-sr48TCgumnYx0cdV342eQz4uD9PpI",
+   "object":"chat.completion.chunk",
+   "created":1717785387,
    "model":"Neural-Chat-7B",
    "choices":[
       {
          "index":0,
-         "message":{
-            "role":"assistant",
-            "content":"Thanks, but if you're looking for something more serious, I'm here to help with any questions or tasks you might have. Just let me know!",
-            "output":null
+         "delta":{
+            "content":" past"
          },
-         "status":"success"
+         "generated_text":null,
+         "logprobs":-0.11733246,
+         "finish_reason":null
       }
    ]
 }
+
+data: {
+   "id":"chat-PTpR04EN0VxSIyfHFXNS57FCC8ZJJ",
+   "object":"chat.completion.chunk",
+   "created":1717785387,
+   "model":"Neural-Chat-7B",
+   "choices":[
+      {
+         "index":0,
+         "delta":{
+            
+         },
+         "generated_text":"Thanks, I try to keep things interesting. Now, if you want something more serious, how about a weather update or a joke? Your choice!\n\nWeather: Sunny with a slight chance of humor.\nJoke: A man walks into a bar and says, \"I'll have a beer, and tell me a joke about time.\" The bartender replies, \"Time to go, you're two minutes past last call!\"",
+         "logprobs":0,
+         "finish_reason":"stop"
+      }
+   ]
+}
+
+data: [DONE]
 ```
 
 This approach presents a straightforward way for readers to choose and apply the

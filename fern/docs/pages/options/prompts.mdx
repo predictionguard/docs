@@ -1,11 +1,17 @@
 ---
-title: Prompt Formats
+title: Prompt Formatting
 description: Reliable, future proof AI predictions
+slug: options/prompts
 ---
 
-You might be used to entering simple text prompts into systems like ChatGPT. However, when you utilize certain open access LLMs directly, you might want to follow a specific prompt format. These models are fine-tuned using prompt data, and if you match your prompt formats to that training data format then you can see boosts in performance.
+You might be used to entering simple text prompts into systems like ChatGPT.
+However, when you utilize certain open access LLMs directly, you might want to
+follow a specific prompt format. These models are fine-tuned using prompt data,
+and if you match your prompt formats to that training data format then you can
+see boosts in performance.
 
-Check out the [model details page](details) to learn which prompt formats match certain LLMs. We've included some of the most important prompt formats below.
+Check out the [model details page](details) to learn which prompt formats match
+certain LLMs. We've included some of the most important prompt formats below.
 
 import { Callout } from "nextra-theme-docs";
 
@@ -22,7 +28,8 @@ import { Callout } from "nextra-theme-docs";
 
 ## Alpaca
 
-This format has two options. First, for prompts that are single instructions, without relevant context (e.g., retrieved context):
+This format has two options. First, for prompts that are single instructions,
+without relevant context (e.g., retrieved context):
 
 ```
 ### Instruction:
@@ -45,11 +52,13 @@ For prompts where context is injected:
 <leave a newline blank for model to respond>
 ```
 
-(Replace the portions of the prompt below in `<...>` with the appropriate information, and do not keep the `<` or `>` characters)
+(Replace the portions of the prompt below in `<...>` with the appropriate
+information, and do not keep the `<` or `>` characters)
 
 ## Neural Chat
 
-(Replace the portions of the prompt below in `<...>` with the appropriate information, and do not keep the `<` or `>` characters)
+(Replace the portions of the prompt below in `<...>` with the appropriate
+information, and do not keep the `<` or `>` characters)
 
 ```
 ### System:
@@ -61,7 +70,8 @@ For prompts where context is injected:
 
 ## ChatML
 
-(Replace the portions of the prompt below in curly braces `{...}` with the appropriate information, and do not keep the curly braces)
+(Replace the portions of the prompt below in curly braces `{...}` with the
+appropriate information, and do not keep the curly braces)
 
 ```
 <|im_start|>system
@@ -73,7 +83,8 @@ For prompts where context is injected:
 
 ## Deepseek
 
-(Replace the portions of the prompt below in curly braces `{...}` with the appropriate information, and do not keep the curly braces)
+(Replace the portions of the prompt below in curly braces `{...}` with the
+appropriate information, and do not keep the curly braces)
 
 ```
 <|begin_of_sentence|>{prompt}
@@ -84,7 +95,8 @@ For prompts where context is injected:
 
 ## Llama-3-SQLCoder
 
-(Replace the portions of the prompt below in curly braces `{...}` with the appropriate information, and do not keep the curly braces)
+(Replace the portions of the prompt below in curly braces `{...}` with the
+appropriate information, and do not keep the curly braces)
 
 ```
 <|begin_of_text|><|start_header_id|>user<|end_header_id|>

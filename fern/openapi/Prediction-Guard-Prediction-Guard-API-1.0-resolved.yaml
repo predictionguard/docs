@@ -8,7 +8,7 @@ info:
 
 servers:
   - url: https://api.predictionguard.com
-
+ 
 paths:
   "":
     get:

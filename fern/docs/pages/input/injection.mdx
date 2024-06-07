@@ -1,11 +1,17 @@
 ---
-title: Prompt injection detection
+title: Prompt Injection Detection
 description: Controlled and compliant AI applications
 ---
 
-There are several types of prompt injection attacks, new attacks being discovered at a rapid speed. As you integrate LLMs to regular workflow is is always good to be prepared against these injection attacks.
+There are several types of prompt injection attacks, new attacks being discovered
+at a rapid speed. As you integrate LLMs to regular workflow is is always good to
+be prepared against these injection attacks.
 
-With Prediction Guard, you have the ability to assess whether an incoming prompt might be an injection attempt before it reaches the LLM. Get a probability score and the option to block it, safeguarding against potential attacks. Below, you can see the feature in action, demonstrated with a modified version of a known prompt injection:
+With Prediction Guard, you have the ability to assess whether an incoming prompt
+might be an injection attempt before it reaches the LLM. Get a probability score
+and the option to block it, safeguarding against potential attacks. Below, you
+can see the feature in action, demonstrated with a modified version of a known
+prompt injection.
 
 ```python copy
 import os
@@ -31,9 +37,9 @@ print(json.dumps(
 ))
 ```
 
-We can now get an output with probability of injection
+We can now get an output with probability of injection.
 
-```json
+```json copy
 {
   "checks": [
     {
@@ -48,7 +54,7 @@ We can now get an output with probability of injection
 }
 ```
 
-Let's try this again with an inoccuous prompt:
+Let's try this again with an inoccuous prompt.
 
 ```python copy
 result = client.injection.check(
@@ -64,9 +70,9 @@ print(json.dumps(
 ))
 ```
 
-which outputs:
+This will produce an output like the following.
 
-```json
+```json copy
 {
   "checks": [
     {
