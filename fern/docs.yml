@@ -73,8 +73,10 @@ navigation:
         contents:
           - page: Chat
             path: ./docs/pages/reference/chat.mdx
+          - page: Chat SSE
+            path: ./docs/pages/reference/chat_sse.mdx
           - page: Chat Vision
-            path: ./docs/pages/reference/vision.mdx
+            path: ./docs/pages/reference/chat_vision.mdx
           - page: Completions
             path: ./docs/pages/reference/completions.mdx
           - page: Embeddings

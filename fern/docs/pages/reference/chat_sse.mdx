@@ -1,0 +1,326 @@
+---
+title: Chat SSE
+---
+
+You can get stream chat text completions (based on a thread of chat messages) from
+any of the chat enabled [models](/options/enumerations) using the `/chat/completions`
+REST API endpoint or any of the official SDKs (Python, Go, Rust, JS, or cURL).
+
+## Generate a Chat Text Completion
+
+To generate a stream chat text completion, you can use the following code examples.
+Depending on your preference or requirements, select the appropriate method for
+your application.
+
+<CodeBlocks>
+    <CodeBlock title="Python">
+    ```python
+    import os
+    import json
+
+    from predictionguard import PredictionGuard
+
+    # Set your Prediction Guard token as an environmental variable.
+    os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+    
+    client = PredictionGuard()
+
+    messages = [
+        {
+            "role": "system",
+            "content": "You are a helpful assistant that provide clever and sometimes funny responses."
+        },
+        {
+            "role": "user",
+            "content": "What's up!"
+        },
+        {
+            "role": "assistant",
+            "content": "Well, technically vertically out from the center of the earth."
+        },
+        {
+            "role": "user",
+            "content": "Haha. Good one."
+        }
+    ]
+
+    result = client.chat.completions.create(
+        model="Neural-Chat-7B",
+        messages=messages,
+        max_tokens=500,
+        stream=true,
+    )
+
+    print(json.dumps(
+        result,
+        sort_keys=True,
+        indent=4,
+        separators=(',', ': ')
+    ))
+    ```
+    </CodeBlock>
+
+    <CodeBlock title="Go">
+    ```go
+    package main
+
+    import (
+        "context"
+        "fmt"
+        "log"
+        "os"
+        "time"
+
+        "github.com/predictionguard/go-client"
+    )
+
+    func main() {
+        if err := run(); err != nil {
+            log.Fatalln(err)
+        }
+    }
+
+    func run() error {
+        host := "https://api.predictionguard.com"
+        apiKey := os.Getenv("PGKEY")
+
+        logger := func(ctx context.Context, msg string, v ...any) {
+            s := fmt.Sprintf("msg: %s", msg)
+            for i := 0; i < len(v); i = i + 2 {
+                s = s + fmt.Sprintf(", %s: %v", v[i], v[i+1])
+            }
+            log.Println(s)
+        }
+
+        cln := client.New(logger, host, apiKey)
+
+        ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+        defer cancel()
+
+        input := client.ChatSSEInput{
+            Model: client.Models.NeuralChat7B,
+            Messages: []client.ChatInputMessage{
+                {
+                    Role: client.Roles.System,
+                    Content: "You are a helpful assistant that provide clever and sometimes funny responses.",
+                },
+                {
+                    Role: client.Roles.User,
+                    Content: "What's up!",
+                },
+                {
+                    Role: client.Roles.Assistant,
+                    Content: "Well, technically vertically out from the center of the earth.",
+                },
+                {
+                    Role: client.Roles.User,
+                    Content: "Haha. Good one.",
+                }
+            },
+            MaxTokens:   1000,
+            Temperature: 0.1,
+            TopP:        0.1
+        }
+
+        resp, err := cln.ChatSSE(ctx, input)
+        if err != nil {
+            return fmt.Errorf("ERROR: %w", err)
+        }
+
+        for resp := range ch {
+            for _, choice := range resp.Choices {
+                fmt.Print(choice.Delta.Content)
+            }
+        }
+
+        return nil
+    }
+    ```
+    </CodeBlock>
+
+    <CodeBlock title="Rust">
+    ```rust
+    extern crate prediction_guard as pg_client;
+
+    use pg_client::{chat, client, models};
+
+    #[tokio::main]
+    async fn main() {
+        let pg_env = client::PgEnvironment::from_env().expect("env keys");
+
+        let clt = client::Client::new(pg_env).expect("client value");
+
+        let req = chat::Request::<chat::Message>::new(models::Model::NeuralChat7B)
+            .add_message(
+                chat::Roles::System,
+                "You are a helpful assistant that provide clever and sometimes funny responses.".to_string(),
+            )
+            .add_message(
+                chat::Roles::User,
+                "What's up!".to_string(),
+            )
+            .add_message(
+                chat::Roles::Assistant,
+                "Well, technically vertically out from the center of the earth.".to_string(),
+            )
+            .add_message(
+                chat::Roles::User,
+                "Haha. Good one.".to_string(),
+            )
+            .max_tokens(1000)
+            .temperature(0.85);
+
+        let lock = std::io::stdout().lock();
+        let mut buf = std::io::BufWriter::new(lock);
+
+        let mut evt_handler = |msg: &String| {
+            let _ = buf.write(msg.as_bytes());
+            let _ = buf.flush();
+        };
+
+        let result = clt
+            .generate_chat_completion_events(req, &mut evt_handler)
+            .await
+            .expect("error from chat_events");
+
+        println!("\n\nchat sse completion response:\n{:?}\n\n", result);
+    }
+    ```
+    </CodeBlock>
+
+    <CodeBlock title="NodeJS">
+    ```js
+    import * as pg from '../dist/index.js';
+
+    const client = new pg.Client('https://api.predictionguard.com', process.env.PGKEY);
+
+    async function ChatSSE() {
+        const input = {
+            model: pg.Models.NeuralChat7B,
+            messages: [
+                {
+                    role: pg.Roles.System,
+                    content: "You are a helpful assistant that provide clever and sometimes funny responses."
+                },
+                {
+                    role: pg.Roles.User,
+                    content: "What's up!"
+                },
+                {
+                    role: pg.Roles.User.Assistant,
+                    content: "Well, technically vertically out from the center of the earth."
+                },
+                {
+                    role: pg.Roles.User,
+                    content: "Haha. Good one."
+                }
+            ],
+            maxTokens: 1000,
+            temperature: 0.1,
+            topP: 0.1,
+            onMessage: function (event, err) {
+                if (err != null) {
+                    if (err.error == 'EOF') {
+                        return;
+                    }
+                    console.log(err);
+                }
+
+                for (const choice of event.choices) {
+                    if (choice.delta.hasOwnProperty('content')) {
+                        process.stdout.write(choice.delta.content);
+                    }
+                }
+            },
+        };
+
+        var err = await client.ChatSSE(input);
+        if (err != null) {
+            console.log('ERROR:' + err.error);
+            return;
+        }
+
+        console.log('RESULT:' + result.createdDate() + ': ' + result.model + ': ' + result.choices[0].message.content);
+    }
+
+    ChatSSE();
+    ```
+    </CodeBlock>
+
+    <CodeBlock title="cURL">
+    ```bash
+    curl -il -X POST https://api.predictionguard.com/chat/completions \
+    -H "x-api-key: ${PGKEY}" \
+    -H "Content-Type: application/json" \
+    -d '{
+        "model": "Neural-Chat-7B",
+        "messages": [
+            {
+                "role": "system",
+                "content": "You are a helpful assistant that provide clever and sometimes funny responses."
+            },
+            {
+                "role": "user",
+                "content": "What''s up!"
+            },
+            {
+                "role": "assistant",
+                "content": "Well, technically vertically out from the center of the earth."
+            },
+            {
+                "role": "user",
+                "content": "Haha. Good one."
+            }
+        ],
+        "stream": true
+    }'
+    ```
+    </CodeBlock>
+</CodeBlocks>
+
+The output will look something like this. The SDK clean up the non-conforming
+JSON document.
+
+```
+data: {
+   "id":"chat-sr48TCgumnYx0cdV342eQz4uD9PpI",
+   "object":"chat.completion.chunk",
+   "created":1717785387,
+   "model":"Neural-Chat-7B",
+   "choices":[
+      {
+         "index":0,
+         "delta":{
+            "content":" past"
+         },
+         "generated_text":null,
+         "logprobs":-0.11733246,
+         "finish_reason":null
+      }
+   ]
+}
+
+data: {
+   "id":"chat-PTpR04EN0VxSIyfHFXNS57FCC8ZJJ",
+   "object":"chat.completion.chunk",
+   "created":1717785387,
+   "model":"Neural-Chat-7B",
+   "choices":[
+      {
+         "index":0,
+         "delta":{
+            
+         },
+         "generated_text":"Thanks, I try to keep things interesting. Now, if you want something more serious, how about a weather update or a joke? Your choice!\n\nWeather: Sunny with a slight chance of humor.\nJoke: A man walks into a bar and says, \"I'll have a beer, and tell me a joke about time.\" The bartender replies, \"Time to go, you're two minutes past last call!\"",
+         "logprobs":0,
+         "finish_reason":"stop"
+      }
+   ]
+}
+
+data: [DONE]
+```
+
+This approach presents a straightforward way for readers to choose and apply the
+code example that best suits their needs for generating text completions using
+either Python, Go, Rust, JS, or cURL.
