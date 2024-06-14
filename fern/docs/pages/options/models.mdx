@@ -1,0 +1,182 @@
+---
+title: Models
+description: Reliable, future proof AI predictions
+slug: options/models
+---
+
+This page provides information about the different models used by the Prediction
+Guard API.
+
+## Hermes-2-Pro-Llama-3-8B
+
+A general use model that maintains excellent general task and conversation
+capabilities while excelling at JSON Structured Outputs and improving on several
+other metrics.
+
+**Type**: Chat  
+**Use Case**: Instruction Following or Chat-Like Applications  
+**Promp Format**: [ChatML](/options/prompts#chatml)
+
+https://huggingface.co/NousResearch/Hermes-2-Pro-Llama-3-8B
+
+Hermes 2 Pro is an upgraded, retrained version of Nous Hermes 2, consisting of
+an updated and cleaned version of the OpenHermes 2.5 Dataset, as well as a newly
+introduced Function Calling and JSON Mode dataset developed in-house.
+
+This new version of Hermes maintains its excellent general task and conversation
+capabilities - but also excels at Function Calling, JSON Structured Outputs,
+and has improved on several other metrics as well, scoring a 90% on our function
+calling evaluation built in partnership with Fireworks.AI, and an 84% on our
+structured JSON Output evaluation.
+
+Hermes Pro takes advantage of a special system prompt and multi-turn function
+calling structure with a new chatml role in order to make function calling
+reliable and easy to parse.
+
+## Nous-Hermes-Llama2-13B
+
+A general use model that combines advanced analytics capabilities with a vast 13
+billion parameter count, enabling it to perform in-depth data analysis and
+support complex decision-making processes. This model is designed to process
+large volumes of data, uncover hidden patterns, and provide actionable insights.
+
+**Type**: Text Generation  
+**Use Case**: Generating Output in Response to Arbitrary Instructions  
+**Promp Format**: [Alpaca](/options/prompts#alpaca)
+
+https://huggingface.co/NousResearch/Nous-Hermes-Llama2-13b
+
+Nous-Hermes-Llama2-13b is a state-of-the-art language model fine-tuned on over
+300,000 instructions. This model was fine-tuned by Nous Research, with Teknium
+and Emozilla leading the fine tuning process and dataset curation, Redmond AI
+sponsoring the compute, and several other contributors.
+
+This Hermes model uses the exact same dataset as Hermes on Llama-1. This is to
+ensure consistency between the old Hermes and new, for anyone who wanted to keep
+Hermes as similar to the old one, just more capable.
+
+This model stands out for its long responses, lower hallucination rate, and
+absence of OpenAI censorship mechanisms. The fine-tuning process was performed
+with a 4096 sequence length on an 8x a100 80GB DGX machine.
+
+## Hermes-2-Pro-Mistral-7B
+
+A general use model that offers advanced natural language understanding and
+generation capabilities, empowering applications with high-performance
+text-processing functionalities across diverse domains and languages. The model
+excels in delivering accurate and contextually relevant responses, making it ideal
+for a wide range of applications, including chatbots, language translation,
+content creation, and more.
+
+**Type**: Chat  
+**Use Case**: Instruction Following or Chat-Like Applications  
+**Promp Format**: [ChatML](/options/prompts#chatml)
+
+https://huggingface.co/NousResearch/Hermes-2-Pro-Mistral-7B
+
+Hermes 2 Pro is an upgraded, retrained version of Nous Hermes 2, consisting of
+an updated and cleaned version of the OpenHermes 2.5 Dataset, as well as a newly
+introduced Function Calling and JSON Mode dataset developed in-house.
+
+This new version of Hermes maintains its excellent general task and conversation
+capabilities - but also excels at Function Calling, JSON Structured Outputs, and
+has improved on several other metrics as well, scoring a 90% on our function
+calling evaluation built in partnership with Fireworks.AI, and an 84% on our
+structured JSON Output evaluation.
+
+Hermes Pro takes advantage of a special system prompt and multi-turn function
+calling structure with a new chatml role in order to make function calling
+reliable and easy to parse. Learn more about prompting below.
+
+## Neural-Chat-7B
+
+A revolutionary AI model for perfoming digital conversations.
+
+**Type**: Chat  
+**Use Case**: Instruction Following or Chat-Like Applications  
+**Promp Format**: [Neural Chat](/options/prompts#neural-chat)
+
+https://huggingface.co/Intel/neural-chat-7b-v3-3
+
+This model is a fine-tuned 7B parameter LLM on the Intel Gaudi 2 processor from
+the Intel/neural-chat-7b-v3-1 on the meta-math/MetaMathQA dataset. The model was
+aligned using the Direct Performance Optimization (DPO) method with
+Intel/orca_dpo_pairs. The Intel/neural-chat-7b-v3-1 was originally fine-tuned
+from mistralai/Mistral-7B-v-0.1. For more information, refer to the blog
+
+[The Practice of Supervised Fine-tuning and Direct Preference Optimization on Intel Gaudi2](https://medium.com/@NeuralCompressor/the-practice-of-supervised-finetuning-and-direct-preference-optimization-on-habana-gaudi2-a1197d8a3cd3).
+
+## llama-3-sqlcoder-8b
+
+A state of the art AI model for generating SQL queries from natural language.
+
+**Type**: SQL Query Generation  
+**Use Case**: Generating SQL Queries  
+**Promp Format**: [Llama-3-SQLCoder](/options/prompts#llama-3-sqlcoder)
+
+https://huggingface.co/defog/llama-3-sqlcoder-8b
+
+A capable language model for text to SQL generation for Postgres, Redshift and
+Snowflake that is on-par with the most capable generalist frontier models.
+
+## deepseek-coder-6.7b-instruct
+
+DeepSeek Coder is a capable coding model trained on two trillion code and natural
+language tokens.
+
+**Type**: Code Generation  
+**Use Case**: Generating Computer Code or Answering Tech Questions  
+**Promp Format**: [Deepseek](/options/prompts#deepseek)
+
+https://huggingface.co/deepseek-ai/deepseek-coder-6.7b-instruct
+
+Deepseek Coder is composed of a series of code language models, each trained
+from scratch on 2T tokens, with a composition of 87% code and 13% natural
+language in both English and Chinese. We provide various sizes of the code model,
+ranging from 1B to 33B versions. Each model is pre-trained on project-level code
+corpus by employing a window size of 16K and a extra fill-in-the-blank task, to
+support project-level code completion and infilling. For coding capabilities,
+Deepseek Coder achieves state-of-the-art performance among open-source code models
+on multiple programming languages and various benchmarks.
+
+## bridgetower-large-itm-mlm-itc
+
+BridgeTower is a multimodal model for creating joint embeddings between images
+and text.
+
+_**Note: This Model is required to be used with the `/embeddings` endpoint. Most of the
+SDKs will not ask you to provide model because it's using this one.**_
+
+**Type**: Embedding Generation  
+**Use Case**: Used for Generating Text and Image Embedding  
+
+https://huggingface.co/BridgeTower/bridgetower-large-itm-mlm-itc
+
+BridgeTower introduces multiple bridge layers that build a connection between
+the top layers of uni-modal encoders and each layer of the cross-modal encoder.
+This enables effective bottom-up cross-modal alignment and fusion between visual
+and textual representations of different semantic levels of pre-trained uni-modal
+encoders in the cross-modal encoder. Pre-trained with only 4M images, BridgeTower
+achieves state-of-the-art performance on various downstream vision-language tasks.
+In particular, on the VQAv2 test-std set, BridgeTower achieves an accuracy of
+78.73%, outperforming the previous state-of-the-art model METER by 1.09% with
+the same pre-training data and almost negligible additional parameters and
+computational costs. Notably, when further scaling the model, BridgeTower
+achieves an accuracy of 81.15%, surpassing models that are pre-trained on
+orders-of-magnitude larger datasets.
+
+## llava-1.5-7b-hf
+
+LLaVa is a multimodal model that supports vision and language models combined.
+
+_**This Model is required to be used with the `/chat/completions` vision endpoint.
+Most of the SDKs will not ask you to provide model because it's using this one.**_
+
+**Type**: Vision Text Generation  
+**Use Case**: Used for Generating Text from Text and Image Inputs  
+
+https://huggingface.co/llava-hf/llava-1.5-7b-hf
+
+LLaVA is an open-source chatbot trained by fine-tuning LLaMA/Vicuna on
+GPT-generated multimodal instruction-following data. It is an auto-regressive
+language model, based on the transformer architecture.

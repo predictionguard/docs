@@ -25,6 +25,8 @@ navigation:
             path: ./docs/pages/sdks.mdx
       - section: Input Requirements
         contents:
+          - page: Models
+            path: ./docs/pages/options/models.mdx
           - page: Enumerations
             path: ./docs/pages/options/enumerations.mdx
           - page: Prompt Formatting
