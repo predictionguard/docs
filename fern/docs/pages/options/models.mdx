@@ -13,9 +13,9 @@ A general use model that maintains excellent general task and conversation
 capabilities while excelling at JSON Structured Outputs and improving on several
 other metrics.
 
-*Type* : Chat  
-*Use Case* : Instruction following or chat-like applications  
-*Promp Format*: [ChatML](/options/prompts#chatml)
+**Type**: Chat  
+**Use Case**: Instruction following or chat-like applications  
+**Promp Format**: [ChatML](/options/prompts#chatml)
 
 https://huggingface.co/NousResearch/Hermes-2-Pro-Llama-3-8B
 
@@ -40,11 +40,9 @@ billion parameter count, enabling it to perform in-depth data analysis and
 support complex decision-making processes. This model is designed to process
 large volumes of data, uncover hidden patterns, and provide actionable insights.
 
-```
-Type        : Text Generation
-Use Case    : Generating output in response to arbitrary instructions
-Promp Format: [Alpaca](/options/prompts#alpaca)
-```
+**Type**: Text Generation
+**Use Case**: Generating output in response to arbitrary instructions
+**Promp Format**: [Alpaca](/options/prompts#alpaca)
 
 https://huggingface.co/NousResearch/Nous-Hermes-Llama2-13b
 
@@ -70,11 +68,9 @@ excels in delivering accurate and contextually relevant responses, making it ide
 for a wide range of applications, including chatbots, language translation,
 content creation, and more.
 
-```
-Type        : Chat
-Use Case    : Instruction following or chat-like applications
-Promp Format: [ChatML](/options/prompts#chatml)
-```
+**Type**: Chat
+**Use Case**: Instruction following or chat-like applications
+**Promp Format**: [ChatML](/options/prompts#chatml)
 
 https://huggingface.co/NousResearch/Hermes-2-Pro-Mistral-7B
 
@@ -96,11 +92,9 @@ reliable and easy to parse. Learn more about prompting below.
 
 A revolutionary AI model for perfoming digital conversations.
 
-```
-Type        : Chat
-Use Case    : Instruction following or chat-like applications
-Promp Format: [Neural Chat](/options/prompts#neural-chat)
-```
+**Type**: Chat
+**Use Case**: Instruction following or chat-like applications
+**Promp Format**: [Neural Chat](/options/prompts#neural-chat)
 
 https://huggingface.co/Intel/neural-chat-7b-v3-3
 
@@ -116,11 +110,9 @@ from mistralai/Mistral-7B-v-0.1. For more information, refer to the blog
 
 A state of the art AI model for generating SQL queries from natural language.
 
-```
-Type        : SQL Query Generation
-Use Case    : Generating SQL queries
-Promp Format: [Llama-3-SQLCoder](/options/prompts#llama-3-sqlcoder)
-```
+**Type**: SQL Query Generation
+**Use Case**: Generating SQL queries
+**Promp Format**: [Llama-3-SQLCoder](/options/prompts#llama-3-sqlcoder)
 
 https://huggingface.co/defog/llama-3-sqlcoder-8b
 
@@ -132,11 +124,9 @@ Snowflake that is on-par with the most capable generalist frontier models.
 DeepSeek Coder is a capable coding model trained on two trillion code and natural
 language tokens.
 
-```
-Type        : Code Generation
-Use Case    : Generating computer code or answering tech questions
-Promp Format: [Deepseek](/options/prompts#deepseek)
-```
+**Type**: Code Generation
+**Use Case**: Generating computer code or answering tech questions
+**Promp Format**: [Deepseek](/options/prompts#deepseek)
 
 https://huggingface.co/deepseek-ai/deepseek-coder-6.7b-instruct
 
@@ -154,13 +144,11 @@ on multiple programming languages and various benchmarks.
 BridgeTower is a multimodal model for creating joint embeddings between images
 and text.
 
-_*Note: This Model is required to be used with the `/embeddings` endpoint. Most of the
-SDKs will not ask you to provide model because it's using this one.*_
+_**Note: This Model is required to be used with the `/embeddings` endpoint. Most of the
+SDKs will not ask you to provide model because it's using this one.**_
 
-```
-Type        : Embedding Generation
-Use Case    : Used for generating text and image embedding
-```
+**Type**: Embedding Generation
+**Use Case**: Used for generating text and image embedding
 
 https://huggingface.co/BridgeTower/bridgetower-large-itm-mlm-itc
 
@@ -181,13 +169,11 @@ orders-of-magnitude larger datasets.
 
 LLaVa is a multimodal model that supports vision and language models combined.
 
-_*This Model is required to be used with the `/chat/completions` vision endpoint.
-Most of the SDKs will not ask you to provide model because it's using this one.*_
+_**This Model is required to be used with the `/chat/completions` vision endpoint.
+Most of the SDKs will not ask you to provide model because it's using this one.**_
 
-```
-Type        : Vision Text Generation
-Use Case    : Used for generating text from text and image inputs
-```
+**Type**: Vision Text Generation
+**Use Case**: Used for generating text from text and image inputs
 
 https://huggingface.co/llava-hf/llava-1.5-7b-hf
 
