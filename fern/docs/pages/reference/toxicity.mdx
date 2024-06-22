@@ -134,7 +134,7 @@ on your preference or requirements, select the appropriate method for your appli
 
     <CodeBlock title="cURL">
     ```bash
-    curl -X POST https://api.predictionguard.com/toxicity \
+    curl -i -X POST https://api.predictionguard.com/toxicity \
      -H "x-api-key: ${PGKEY}" \
      -H "Content-Type: application/json" \
      -d '{
