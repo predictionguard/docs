@@ -185,7 +185,7 @@ encoded in a base64 string.
     }
     EOF
 
-    curl -il -X POST https://api.predictionguard.com/embeddings \
+    curl -i -X POST https://api.predictionguard.com/embeddings \
     -H "x-api-key: ${PGKEY}" \
     -H "Content-Type: application/json" \
     -d @input.json

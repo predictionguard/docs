@@ -218,7 +218,7 @@ images that are base64 encoded represented by a data uri.
     }
     EOF
 
-    curl -il -X POST https://api.predictionguard.com/chat/completions \
+    curl -i -X POST https://api.predictionguard.com/chat/completions \
     -H "x-api-key: ${PGKEY}" \
     -H "Content-Type: application/json" \
     -d @input.json

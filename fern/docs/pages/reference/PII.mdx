@@ -80,7 +80,7 @@ your preference or requirements, select the appropriate method for your applicat
 
         prompt := "Hello, my name is John Doe and my SSN is 111-22-3333."
 
-        resp, err := cln.ReplacePI(ctx, prompt, client.ReplaceMethods.Mask)
+        resp, err := cln.ReplacePII(ctx, prompt, client.ReplaceMethods.Mask)
         if err != nil {
             return fmt.Errorf("ERROR: %w", err)
         }
@@ -124,11 +124,11 @@ your preference or requirements, select the appropriate method for your applicat
 
     const client = new pg.Client('https://api.predictionguard.com', process.env.PGKEY);
 
-    async function ReplacePI() {
+    async function ReplacePII() {
         const replaceMethod = pg.ReplaceMethods.Mask;
         const prompt = `Hello, my name is John Doe and my SSN is 111-22-3333.`;
 
-        var [result, err] = await client.ReplacePI(replaceMethod, prompt);
+        var [result, err] = await client.ReplacePII(replaceMethod, prompt);
         if (err != null) {
             console.log('ERROR:' + err.error);
             return;
@@ -137,13 +137,13 @@ your preference or requirements, select the appropriate method for your applicat
         console.log('RESULT:' + result.checks[0].new_prompt);
     }
 
-    ReplacePI();
+    ReplacePII();
     ```
     </CodeBlock>
 
     <CodeBlock title="cURL">
     ```bash
-    curl -X POST https://api.predictionguard.com/PII \
+    curl -i -X POST https://api.predictionguard.com/PII \
      -H "x-api-key: ${PGKEY}" \
      -H "Content-Type: application/json" \
      -d '{
