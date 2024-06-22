@@ -235,7 +235,7 @@ your application.
     <CodeBlock title="cURL">
     ```bash
         curl -i -X POST https://api.predictionguard.com/chat/completions \
-        -H "x-api-key: ${PGKEY}" \
+        -H "Authorization: Bearer ${PGKEY}" \
         -H "Content-Type: application/json" \
         -d '{
             "model": "Neural-Chat-7B",

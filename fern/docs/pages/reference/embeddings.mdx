@@ -196,7 +196,7 @@ encoded in a base64 string.
     EOF
 
     curl -i -X POST https://api.predictionguard.com/embeddings \
-    -H "x-api-key: ${PGKEY}" \
+    -H "Authorization: Bearer ${PGKEY}" \
     -H "Content-Type: application/json" \
     -d @input.json
     ```

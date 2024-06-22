@@ -144,7 +144,7 @@ your preference or requirements, select the appropriate method for your applicat
     <CodeBlock title="cURL">
     ```bash
     curl -i -X POST https://api.predictionguard.com/PII \
-     -H "x-api-key: ${PGKEY}" \
+     -H "Authorization: Bearer ${PGKEY}" \
      -H "Content-Type: application/json" \
      -d '{
 		"prompt": "Hello, my name is John Doe and my SSN is 111-22-3333.",

@@ -148,7 +148,7 @@ for your application.
     <CodeBlock title="cURL">
     ```bash
     curl -i -X POST https://api.predictionguard.com/factuality \
-     -H "x-api-key: ${PGKEY}" \
+     -H "Authorization: Bearer ${PGKEY}" \
      -H "Content-Type: application/json" \
      -d '{
 		"reference": "The sky is blue.",

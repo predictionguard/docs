@@ -254,31 +254,31 @@ Chat();
 <CodeBlock title="cURL">
 ```bash
 curl -i -X POST https://api.predictionguard.com/chat/completions \
-    -H "x-api-key: ${PGKEY}" \
+    -H "Authorization: Bearer ${PGKEY}" \
     -H "Content-Type: application/json" \
-    -d '{ \
-    "model": "Neural-Chat-7B", \
-    "messages": [ \
-        { \
-            "role": "system", \
-            "content": "You are a helpful assistant. Your model is hosted by Prediction Guard, a leading AI company." \
-        }, \
-        { \
-            "role": "user", \
-            "content": "Where can I access the LLMs in a safe and secure environment?" \
-        } \
-    ], \
-    "max_tokens": 1000, \
-    "temperature": 1.1, \
-    "top_p": 0.1, \
-    "output": { \
-        "factuality": true, \
-        "toxicity": true \
-    }, \
-    "input": { \
-        "pii": "replace", \
-        "pii_replace_method": "random" \
-    } \
+    -d '{
+    "model": "Neural-Chat-7B",
+    "messages": [
+        {
+            "role": "system",
+            "content": "You are a helpful assistant. Your model is hosted by Prediction Guard, a leading AI company."
+        },
+        {
+            "role": "user",
+            "content": "Where can I access the LLMs in a safe and secure environment?"
+        }
+    ],
+    "max_tokens": 1000,
+    "temperature": 1.1,
+    "top_p": 0.1,
+    "output": {
+        "factuality": true,
+        "toxicity": true
+    },
+    "input": {
+        "pii": "replace",
+        "pii_replace_method": "random"
+    }
 }'
 ````
 </CodeBlock>
