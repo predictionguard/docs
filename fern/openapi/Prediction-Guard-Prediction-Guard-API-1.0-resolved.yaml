@@ -65,7 +65,7 @@ paths:
                   type: number
                   description: The diversity of the generated text based on nucleus sampling.
                 top_k:
-                  type: number
+                  type: integer
                   description: The diversity of the generated text based on top-k sampling.
                 output:
                   type: object
@@ -250,7 +250,7 @@ paths:
                   type: number
                   description: The diversity of the generated text based on nucleus sampling.
                 top_k:
-                  type: number
+                  type: integer
                   description: The diversity of the generated text based on top-k sampling.
                 stream:
                   type: boolean
@@ -447,7 +447,7 @@ paths:
                   type: number
                   description: The diversity of the generated text based on nucleus sampling.
                 top_k:
-                  type: number
+                  type: integer
                   description: The diversity of the generated text based on top-k sampling.
             examples:
               basic:
@@ -596,7 +596,7 @@ paths:
                   type: number
                   description: The diversity of the generated text based on nucleus sampling.
                 top_k:
-                  type: number
+                  type: integer
                   description: The diversity of the generated text based on top-k sampling.
             examples:
               basic:
