@@ -81,6 +81,7 @@ on your preference or requirements, select the appropriate method for your appli
             MaxTokens:   1000,
             Temperature: 0.1,
             TopP:        0.1,
+            TopK:        50.0,
         }
 
         resp, err := cln.Completions(ctx, input)
@@ -135,6 +136,7 @@ on your preference or requirements, select the appropriate method for your appli
             maxTokens: 1000,
             temperature: 0.1,
             topP: 0.1,
+            topK: 50.0,
         };
 
         var [result, err] = await client.Completion(input);
@@ -160,7 +162,8 @@ on your preference or requirements, select the appropriate method for your appli
 		"prompt": "The best joke I know is: ",
 		"max_tokens": 1000,
 		"temperature": 1.1,
-		"top_p": 0.1
+		"top_p": 0.1,
+        "top_k": 50.0,
 	}'
     ```
     </CodeBlock>

@@ -109,6 +109,7 @@ images that are base64 encoded represented by a data uri.
             MaxTokens:   1000,
             Temperature: 0.1,
             TopP:        0.1,
+            TopK:        50.0,
         }
 
         resp, err := cln.ChatVision(ctx, input)
@@ -173,6 +174,7 @@ images that are base64 encoded represented by a data uri.
             maxTokens: 1000,
             temperature: 0.1,
             topP: 0.1,
+            topK: 50.0,
         };
 
         var [result, err] = await client.ChatVision(input);

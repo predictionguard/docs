@@ -118,7 +118,8 @@ method for your application.
             },
             MaxTokens:   1000,
             Temperature: 0.1,
-            TopP:        0.1
+            TopP:        0.1,
+            TopK:        50.0,
         }
 
         resp, err := cln.ChatSSE(ctx, input)
@@ -217,6 +218,7 @@ method for your application.
             maxTokens: 1000,
             temperature: 0.1,
             topP: 0.1,
+            topK: 50.0,
             onMessage: function (event, err) {
                 if (err != null) {
                     if (err.error == 'EOF') {

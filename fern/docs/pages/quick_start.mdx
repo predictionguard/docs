@@ -153,6 +153,7 @@ func run() error {
 		MaxTokens:   1000,
 		Temperature: 0.1,
 		TopP:        0.1,
+        TopK:        50.0,
 		Options: &client.ChatInputOptions{
 			Factuality:       true,
 			Toxicity:         true,
@@ -230,6 +231,7 @@ async function Chat() {
         maxTokens: 1000,
         temperature: 0.1,
         topP: 0.1,
+        topK: 50.0,
         options: {
             factuality: true,
             toxicity: true,
@@ -271,6 +273,7 @@ curl -i -X POST https://api.predictionguard.com/chat/completions \
     "max_tokens": 1000,
     "temperature": 1.1,
     "top_p": 0.1,
+    "top_k": 50.0,
     "output": {
         "factuality": true,
         "toxicity": true
