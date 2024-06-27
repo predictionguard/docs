@@ -45,19 +45,17 @@ method for your application.
         }
     ]
 
-    result = client.chat.completions.create(
-        model="Neural-Chat-7B",
-        messages=messages,
-        max_tokens=500,
-        stream=true,
-    )
-
-    print(json.dumps(
-        result,
-        sort_keys=True,
-        indent=4,
-        separators=(',', ': ')
-    ))
+for res in client.chat.completions.create(
+    model="Neural-Chat-7B",
+    messages=messages,
+    max_tokens=500,
+    temperature=0.1,
+    stream=True
+):
+    
+    # Use 'end' parameter in print function to avoid new lines.
+    print(res["data"]["choices"][0]["delta"]["content"], end='')
+```
     ```
     </CodeBlock>
 
