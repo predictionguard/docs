@@ -63,7 +63,10 @@ paths:
                   description: The temperature parameter for controlling randomness in completions.
                 top_p:
                   type: number
-                  description: The diversity of the generated text.
+                  description: The diversity of the generated text based on nucleus sampling.
+                top_k:
+                  type: integer
+                  description: The diversity of the generated text based on top-k sampling.
                 output:
                   type: object
                   description: Options to affect the output of the response.
@@ -99,8 +102,9 @@ paths:
                     }
                   ],
                   max_tokens: 1000,
-                  temperature: 1.1,
-                  top_p: 0.1,
+                  temperature: 1.0,
+                  top_p: 1.0,
+                  top_k: 50,
                   output: [
                     {
                       factuality: true,
@@ -244,7 +248,10 @@ paths:
                   description: The temperature parameter for controlling randomness in completions.
                 top_p:
                   type: number
-                  description: The diversity of the generated text.
+                  description: The diversity of the generated text based on nucleus sampling.
+                top_k:
+                  type: integer
+                  description: The diversity of the generated text based on top-k sampling.
                 stream:
                   type: boolean
                   description: Turn streaming on.
@@ -260,8 +267,9 @@ paths:
                     }
                   ],
                   max_tokens: 1000,
-                  temperature: 1.1,
-                  top_p: 0.1,
+                  temperature: 1.0,
+                  top_p: 1.0,
+                  top_k: 50,
                   stream: true
                 }
       responses:
@@ -437,7 +445,10 @@ paths:
                   description: The temperature parameter for controlling randomness in completions.
                 top_p:
                   type: number
-                  description: The diversity of the generated text.
+                  description: The diversity of the generated text based on nucleus sampling.
+                top_k:
+                  type: integer
+                  description: The diversity of the generated text based on top-k sampling.
             examples:
               basic:
                 summary: A basic example of using the API.
@@ -461,8 +472,9 @@ paths:
                     }
                   ],
                   max_tokens: 1000,
-                  temperature: 0.1,
-                  top_p: 0.1
+                  temperature: 1.0,
+                  top_p: 1.0,
+                  top_k: 50
                 }
       responses:
         '403':
@@ -582,7 +594,10 @@ paths:
                   description: The temperature parameter for controlling randomness in completions.
                 top_p:
                   type: number
-                  description: The diversity of the generated text.
+                  description: The diversity of the generated text based on nucleus sampling.
+                top_k:
+                  type: integer
+                  description: The diversity of the generated text based on top-k sampling.
             examples:
               basic:
                 summary: A basic example of using the API.
@@ -590,8 +605,9 @@ paths:
                   model: "Neural-Chat-7B",
                   prompt: "Will I lose my hair?",
                   max_tokens: 1000,
-                  temperature: 1.1,
-                  top_p: 0.1
+                  temperature: 1.0,
+                  top_p: 1.0,
+                  top_k: 50
                 }
       responses:
         '403':
