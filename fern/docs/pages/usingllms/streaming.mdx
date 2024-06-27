@@ -71,8 +71,8 @@ for res in client.chat.completions.create(
     stream=True
 ):
     
-# Use 'end' parameter in print function to avoid new lines.
-print(res["data"]["choices"][0]["delta"]["content"], end='')
+    # Use 'end' parameter in print function to avoid new lines.
+    print(res["data"]["choices"][0]["delta"]["content"], end='')
 ```
 
 ![Retrieval augmented generation](streaming.gif)
