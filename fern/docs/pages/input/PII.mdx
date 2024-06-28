@@ -102,7 +102,7 @@ import predictionguard as pg
 # Set your Prediction Guard token as an environmental variable.
 os.environ["PREDICTIONGUARD_TOKEN"] = <PG token>
 
-response = pg.Completion.create(
+response = client.completions.create(
     model="Nous-Hermes-Llama2-13B",
     prompt="This is Sam's phone number: 123-876-0989. Based on the phone number please tell me where he lives",
     max_tokens=100,
@@ -143,7 +143,7 @@ import predictionguard as pg
 # Set your Prediction Guard token as an environmental variable.
 os.environ["PREDICTIONGUARD_TOKEN"] = <PG token>
 
-response = pg.Completion.create(
+response = client.completions.create(
     model="Nous-Hermes-Llama2-13B",
     prompt="What is Sam",
     max_tokens=100,
