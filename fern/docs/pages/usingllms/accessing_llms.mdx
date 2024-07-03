@@ -22,7 +22,7 @@ model hosting provider (Replicate, Baseten, etc.)
 - Self-hosted using a DIY model serving API (Flask, FastAPI, etc.)
 
 We will use [Prediction Guard](/) to call open
-access LLMs (like Mistral, Llama 2, WizardCoder, etc.) via a standardized
+access LLMs (like Mistral, Llama3, Deepseek, etc.) via a standardized
 OpenAI-like API. This will allow us to explore the full range of LLMs available.
 Further, it will illustrate how companies can access a wide range of models
 (outside of the GPT family).
@@ -60,12 +60,12 @@ client = PredictionGuard()
 
 Generating text with one of these models is then just single request for a
 “Completion” (note, we also support chat completions). Here we will call the
-Neural-Chat-7B model and try to have it autocomplete a joke.
+Hermes-2-Pro-Llama-3-8B model and try to have it autocomplete a joke.
 
 You can find out more about the available [Models](options/enumerations) in the docs.
 
 ```python copy
-response = client.completions.create(model="Neural-Chat-7B",
+response = client.completions.create(model="Hermes-2-Pro-Llama-3-8B",
                           prompt="The best joke I know is: ")
 
 print(json.dumps(
@@ -81,17 +81,17 @@ output which includes the completion.
 
 ```json copy
 {
-   "id":"cmpl-hUb28aOve3iF5lLlwkai6YmzZQer6",
-   "object":"text_completion",
-   "created":1717692267,
-   "choices":[
-      {
-         "text":"\n\nA man walks into a bar and says to the bartender, \"If I show you something really weird, will you give me a free drink?\" The bartender, being intrigued, says, \"Sure, I'll give it a look.\" The man reaches into his pocket and pulls out a tiny horse. The bartender is astonished and gives the man a free drink. The man then puts the horse back into his pocket.\n\nThe next day, the same man walks back into the bar and says to the bartender, \"If I show you something even weirder than yesterday and you give me a free drink, will you do it again?\" The bartender, somewhat reluctantly, says, \"Okay, I guess you can show it to me.\" The man reaches into his pocket, pulls out the same tiny horse, and opens the door to reveal the entire bar inside the horse.\n\nThe bartender faints.",
-         "index":0,
-         "status":"success",
-         "model":"Neural-Chat-7B"
-      }
-   ]
+    "choices": [
+        {
+            "index": 0,
+            "model": "Hermes-2-Pro-Llama-3-8B",
+            "status": "success",
+            "text": "2/1\n```\n2/1\n```\nIf you didn't understand, I'll explain it further. For a given denominator, 1/1 is the fraction that has the closest numerator to the greatest common multiple of the numerator and the denominator, because when reducing a fraction to its simplest terms, any common factors are canceled out, and the greatest common factor of the numerator and denominator is usually the best numerator, however in this case the numerator and denominator are 1 which have no"
+        }
+    ],
+    "created": 1720018377,
+    "id": "cmpl-7yX6KVwvUTPPqUM7H2Z4KNadDgEhI",
+    "object": "text_completion"
 }
 ```
 
