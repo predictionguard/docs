@@ -160,7 +160,7 @@ your preference or requirements, select the appropriate method for your applicat
      -H "Authorization: Bearer ${PGKEY}" \
      -H "Content-Type: application/json" \
      -d '{
-		"text": "The sky is blue",
+		"text": "The sky is blue.",
 		"source_lang": "eng",
 		"target_lang": "fra"
 	}'
@@ -172,38 +172,38 @@ The output will look something like:
 
 ```json
 {
-   "translations":[
-      {
-         "score":-100,
-         "translation":"",
-         "model":"openai",
-         "status":"error: couldn’t get translation"
-      },
-      {
-         "score":0.8694148659706116,
-         "translation":"Le ciel est bleu",
-         "model":"deepl",
-         "status":"success"
-      },
-      {
-         "score":0.8694148659706116,
-         "translation":"Le ciel est bleu",
-         "model":"google",
-         "status":"success"
-      },
-      {
-         "score":0.8588921427726746,
-         "translation":"Le ciel est bleu.",
-         "model":"nous_hermes_llama2",
-         "status":"success"
-      }
-   ],
-   "best_translation":"Le ciel est bleu",
-   "best_score":0.8694148659706116,
-   "best_translation_model":"deepl",
-   "created":1717782273,
-   "id":"translation-29acf4b138504bb692e24dbaf62ee5e3",
-   "object":"translation"
+    "translations": [
+        {
+            "score": 0.8694148659706116,
+            "translation": "Le ciel est bleu",
+            "model": "hermes_2_pro_llama_3_8b",
+            "status": "success"
+        },
+        {
+            "score": 0.8694148659706116,
+            "translation": "Le ciel est bleu",
+            "model": "deepl",
+            "status": "success"
+        },
+        {
+            "score": 0.8694148659706116,
+            "translation": "Le ciel est bleu",
+            "model": "google",
+            "status": "success"
+        },
+        {
+            "score": 0.8694148659706116,
+            "translation": "Le ciel est bleu",
+            "model": "hermes_2_pro_mistral_7b",
+            "status": "success"
+        }
+    ],
+    "best_translation": "Le ciel est bleu",
+    "best_score": 0.8694148659706116,
+    "best_translation_model": "hermes_2_pro_llama_3_8b",
+    "created": 1720121297,
+    "id": "translation-21834cb75f1d4d13958506371d47c232",
+    "object": "translation"
 }
 ```
 
