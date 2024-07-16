@@ -255,6 +255,19 @@ paths:
                 stream:
                   type: boolean
                   description: Turn streaming on.
+                input:
+                  type: object
+                  description: Options to affect the input of the request.
+                  properties:
+                    block_prompt_injection:
+                      type: boolean
+                      description: Set to true to turn on factuality processing.
+                    pii:
+                      type: string
+                      description: Set to either 'block' or 'replace'.
+                    pii_replace_method:
+                      type: string
+                      description: Set to either 'random', 'fake', 'category', 'mask'.
             examples:
               basic:
                 summary: A basic example of using the API.
