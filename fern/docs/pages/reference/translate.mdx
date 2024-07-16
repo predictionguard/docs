@@ -97,7 +97,7 @@ your preference or requirements, select the appropriate method for your applicat
 
         text := "The sky is blue"
 
-        resp, err := cln.Translate(ctx, text, client.Languages.English, client.Languages.French)
+        resp, err := cln.Translate(ctx, text, client.Languages.English, client.Languages.French, false)
         if err != nil {
             return fmt.Errorf("ERROR: %w", err)
         }
