@@ -1278,13 +1278,17 @@ paths:
                 target_lang:
                   type: string
                   description: The target language for the translation.
+                use_third_party_engine:
+                  type: boolean
+                  description: Enables/disables third party translations.
             examples:
               basic:
                 summary: A basic example of using the API.
                 value: {
-                  text: "The rain in Spain stays mainly in the plain",
+                  text: "The sky is blue.",
                   source_lang: "eng",
-                  target_lang: "spa"
+                  target_lang: "spa",
+                  use_third_party_engine: true
                 }
       responses:
         '403':
@@ -1357,36 +1361,42 @@ paths:
                             type: string
                             description: The status of using the model for this translation.
               example: {
-                id: "translation-9b2c6f43cf7d4fe69cb9b9e6a4478999",
+                id: "translation-52929bae5c2c44c9b5177921958cb5f7",
                 object: "translation",
-                created: 1717676604,
-                best_translation: "La lluvia en España permanece principalmente en la llanura",
-                best_score: 0.5381202101707458,
-                best_translation_model: "google",
+                created: 1721136682,
+                best_translation: "Le ciel est bleu.",
+                best_score: 0.8694148659706116,
+                best_translation_model: "hermes_2_pro_llama_3_8b",
                 translations: [
                   {
-                    score: -100,
-                    translation: "",
-                    model: "openai",
-                    status: "error: couldn’t get translation"
+                      "score": 0.8694148659706116,
+                      "translation": "Le ciel est bleu.",
+                      "model": "hermes_2_pro_llama_3_8b",
+                      "status": "success"
                   },
                   {
-                    score: 0.5008216500282288,
-                    translation: "La lluvia en España se queda principalmente en la llanura",
-                    model: "deepl",
-                    status: "success"
+                      "score": 0.8694148659706116,
+                      "translation": "Le ciel est bleu.",
+                      "model": "hermes_2_pro_mistral_7b",
+                      "status": "success"
                   },
                   {
-                    score: 0.5381202101707458,
-                    translation: "La lluvia en España permanece principalmente en la llanura",
-                    model: "google",
-                    status: "success"
+                      "score": 0.8694148659706116,
+                      "translation": "Le ciel est bleu.",
+                      "model": "openai",
+                      "status": "success"
                   },
                   {
-                    score: 0.4843788146972656,
-                    translation: "La lluvia en España se queda principalmente en la llanura.",
-                    model: "nous_hermes_llama2",
-                    status: "success"
+                      "score": 0.8694148659706116,
+                      "translation": "Le ciel est bleu.",
+                      "model": "deepl",
+                      "status": "success"
+                  },
+                  {
+                      "score": 0.8694148659706116,
+                      "translation": "Le ciel est bleu.",
+                      "model": "google",
+                      "status": "success"
                   }
                 ]
               }
