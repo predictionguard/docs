@@ -255,6 +255,19 @@ paths:
                 stream:
                   type: boolean
                   description: Turn streaming on.
+                input:
+                  type: object
+                  description: Options to affect the input of the request.
+                  properties:
+                    block_prompt_injection:
+                      type: boolean
+                      description: Set to true to turn on factuality processing.
+                    pii:
+                      type: string
+                      description: Set to either 'block' or 'replace'.
+                    pii_replace_method:
+                      type: string
+                      description: Set to either 'random', 'fake', 'category', 'mask'.
             examples:
               basic:
                 summary: A basic example of using the API.
@@ -270,7 +283,13 @@ paths:
                   temperature: 1.0,
                   top_p: 1.0,
                   top_k: 50,
-                  stream: true
+                  stream: true,
+                  input: [
+                    {
+                      pii: "replace",
+                      pii_replace_method: "random"
+                    }
+                  ]
                 }
       responses:
         '403':
@@ -449,6 +468,29 @@ paths:
                 top_k:
                   type: integer
                   description: The diversity of the generated text based on top-k sampling.
+                output:
+                  type: object
+                  description: Options to affect the output of the response.
+                  properties:
+                    factuality:
+                      type: boolean
+                      description: Set to true to turn on factuality processing.
+                    toxicity:
+                      type: boolean
+                      description: Set to true to turn on toxicity processing.
+                input:
+                  type: object
+                  description: Options to affect the input of the request.
+                  properties:
+                    block_prompt_injection:
+                      type: boolean
+                      description: Set to true to turn on factuality processing.
+                    pii:
+                      type: string
+                      description: Set to either 'block' or 'replace'.
+                    pii_replace_method:
+                      type: string
+                      description: Set to either 'random', 'fake', 'category', 'mask'.
             examples:
               basic:
                 summary: A basic example of using the API.
@@ -474,7 +516,19 @@ paths:
                   max_tokens: 1000,
                   temperature: 1.0,
                   top_p: 1.0,
-                  top_k: 50
+                  top_k: 50,
+                  output: [
+                    {
+                      factuality: true,
+                      toxicity: true
+                    }
+                  ],
+                  input: [
+                    {
+                      pii: "replace",
+                      pii_replace_method: "random"
+                    }
+                  ]
                 }
       responses:
         '403':
@@ -598,6 +652,29 @@ paths:
                 top_k:
                   type: integer
                   description: The diversity of the generated text based on top-k sampling.
+                output:
+                  type: object
+                  description: Options to affect the output of the response.
+                  properties:
+                    factuality:
+                      type: boolean
+                      description: Set to true to turn on factuality processing.
+                    toxicity:
+                      type: boolean
+                      description: Set to true to turn on toxicity processing.
+                input:
+                  type: object
+                  description: Options to affect the input of the request.
+                  properties:
+                    block_prompt_injection:
+                      type: boolean
+                      description: Set to true to turn on factuality processing.
+                    pii:
+                      type: string
+                      description: Set to either 'block' or 'replace'.
+                    pii_replace_method:
+                      type: string
+                      description: Set to either 'random', 'fake', 'category', 'mask'.
             examples:
               basic:
                 summary: A basic example of using the API.
@@ -607,7 +684,19 @@ paths:
                   max_tokens: 1000,
                   temperature: 1.0,
                   top_p: 1.0,
-                  top_k: 50
+                  top_k: 50,
+                  output: [
+                    {
+                      factuality: true,
+                      toxicity: true
+                    }
+                  ],
+                  input: [
+                    {
+                      pii: "replace",
+                      pii_replace_method: "random"
+                    }
+                  ]
                 }
       responses:
         '403':
@@ -1224,13 +1313,17 @@ paths:
                 target_lang:
                   type: string
                   description: The target language for the translation.
+                use_third_party_engine:
+                  type: boolean
+                  description: Enables/disables third party translations.
             examples:
               basic:
                 summary: A basic example of using the API.
                 value: {
-                  text: "The rain in Spain stays mainly in the plain",
+                  text: "The sky is blue.",
                   source_lang: "eng",
-                  target_lang: "spa"
+                  target_lang: "spa",
+                  use_third_party_engine: true
                 }
       responses:
         '403':
@@ -1303,36 +1396,42 @@ paths:
                             type: string
                             description: The status of using the model for this translation.
               example: {
-                id: "translation-9b2c6f43cf7d4fe69cb9b9e6a4478999",
+                id: "translation-52929bae5c2c44c9b5177921958cb5f7",
                 object: "translation",
-                created: 1717676604,
-                best_translation: "La lluvia en España permanece principalmente en la llanura",
-                best_score: 0.5381202101707458,
-                best_translation_model: "google",
+                created: 1721136682,
+                best_translation: "Le ciel est bleu.",
+                best_score: 0.8694148659706116,
+                best_translation_model: "hermes_2_pro_llama_3_8b",
                 translations: [
                   {
-                    score: -100,
-                    translation: "",
-                    model: "openai",
-                    status: "error: couldn’t get translation"
+                      "score": 0.8694148659706116,
+                      "translation": "Le ciel est bleu.",
+                      "model": "hermes_2_pro_llama_3_8b",
+                      "status": "success"
                   },
                   {
-                    score: 0.5008216500282288,
-                    translation: "La lluvia en España se queda principalmente en la llanura",
-                    model: "deepl",
-                    status: "success"
+                      "score": 0.8694148659706116,
+                      "translation": "Le ciel est bleu.",
+                      "model": "hermes_2_pro_mistral_7b",
+                      "status": "success"
                   },
                   {
-                    score: 0.5381202101707458,
-                    translation: "La lluvia en España permanece principalmente en la llanura",
-                    model: "google",
-                    status: "success"
+                      "score": 0.8694148659706116,
+                      "translation": "Le ciel est bleu.",
+                      "model": "openai",
+                      "status": "success"
                   },
                   {
-                    score: 0.4843788146972656,
-                    translation: "La lluvia en España se queda principalmente en la llanura.",
-                    model: "nous_hermes_llama2",
-                    status: "success"
+                      "score": 0.8694148659706116,
+                      "translation": "Le ciel est bleu.",
+                      "model": "deepl",
+                      "status": "success"
+                  },
+                  {
+                      "score": 0.8694148659706116,
+                      "translation": "Le ciel est bleu.",
+                      "model": "google",
+                      "status": "success"
                   }
                 ]
               }

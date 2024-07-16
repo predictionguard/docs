@@ -17,6 +17,9 @@ The /translate endpoint will return a JSON object response with two fields:
 - `Best translation` - The translated text.
 - `Score` - A score from -1.0 to 1.0 representing the translation quality. Higher the score better the quality.
 
+Additionally, you can opt to use third-party translation engines such as OpenAI, DeepL, and Google. 
+By default, the use of these commercial engines is set to false. 
+
 Our translation API supports a wide range of [languages](/options/enumerations),
 including but not limited to English, Hindi, French, Spanish, German, and more.
 
@@ -42,7 +45,8 @@ your preference or requirements, select the appropriate method for your applicat
     result = client.translate.create(
         		text="The sky is blue",
                 source_lang="eng",
-                target_lang="fra"
+                target_lang="fra",
+                use_third_party_engine=True
         )
 
     print(json.dumps(
@@ -93,7 +97,7 @@ your preference or requirements, select the appropriate method for your applicat
 
         text := "The sky is blue"
 
-        resp, err := cln.Translate(ctx, text, client.Languages.English, client.Languages.French)
+        resp, err := cln.Translate(ctx, text, client.Languages.English, client.Languages.French, true)
         if err != nil {
             return fmt.Errorf("ERROR: %w", err)
         }
@@ -137,11 +141,12 @@ your preference or requirements, select the appropriate method for your applicat
     const client = new pg.Client('https://api.predictionguard.com', process.env.PGKEY);
 
     async function Translate() {
+        const text = `The sky is blue`;
         const sourceLang = pg.Languages.English;
         const targetLang = pg.Languages.French;
-        const text = `The sky is blue`;
+        const useThirdPartyEngine = true;
 
-        var [result, err] = await client.Translate(text, sourceLang, targetLang);
+        var [result, err] = await client.Translate(text, sourceLang, targetLang, useThirdPartyEngine);
         if (err != null) {
             console.log('ERROR:' + err.error);
             return;
@@ -182,6 +187,18 @@ The output will look something like:
         {
             "score": 0.8694148659706116,
             "translation": "Le ciel est bleu",
+            "model": "hermes_2_pro_mistral_7b",
+            "status": "success"
+        },
+        {
+            "score": 0.8694148659706116,
+            "translation": "Le ciel est bleu",
+            "model": "openai",
+            "status": "success"
+        },
+        {
+            "score": 0.8694148659706116,
+            "translation": "Le ciel est bleu",
             "model": "deepl",
             "status": "success"
         },
@@ -190,19 +207,13 @@ The output will look something like:
             "translation": "Le ciel est bleu",
             "model": "google",
             "status": "success"
-        },
-        {
-            "score": 0.8694148659706116,
-            "translation": "Le ciel est bleu",
-            "model": "hermes_2_pro_mistral_7b",
-            "status": "success"
         }
     ],
     "best_translation": "Le ciel est bleu",
     "best_score": 0.8694148659706116,
     "best_translation_model": "hermes_2_pro_llama_3_8b",
-    "created": 1720121297,
-    "id": "translation-21834cb75f1d4d13958506371d47c232",
+    "created": 1721136682,
+    "id": "translation-52929bae5c2c44c9b5177921958cb5f7",
     "object": "translation"
 }
 ```
