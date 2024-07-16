@@ -652,6 +652,29 @@ paths:
                 top_k:
                   type: integer
                   description: The diversity of the generated text based on top-k sampling.
+                output:
+                  type: object
+                  description: Options to affect the output of the response.
+                  properties:
+                    factuality:
+                      type: boolean
+                      description: Set to true to turn on factuality processing.
+                    toxicity:
+                      type: boolean
+                      description: Set to true to turn on toxicity processing.
+                input:
+                  type: object
+                  description: Options to affect the input of the request.
+                  properties:
+                    block_prompt_injection:
+                      type: boolean
+                      description: Set to true to turn on factuality processing.
+                    pii:
+                      type: string
+                      description: Set to either 'block' or 'replace'.
+                    pii_replace_method:
+                      type: string
+                      description: Set to either 'random', 'fake', 'category', 'mask'.
             examples:
               basic:
                 summary: A basic example of using the API.
@@ -661,7 +684,19 @@ paths:
                   max_tokens: 1000,
                   temperature: 1.0,
                   top_p: 1.0,
-                  top_k: 50
+                  top_k: 50,
+                  output: [
+                    {
+                      factuality: true,
+                      toxicity: true
+                    }
+                  ],
+                  input: [
+                    {
+                      pii: "replace",
+                      pii_replace_method: "random"
+                    }
+                  ]
                 }
       responses:
         '403':
