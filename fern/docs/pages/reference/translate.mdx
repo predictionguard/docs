@@ -97,7 +97,7 @@ your preference or requirements, select the appropriate method for your applicat
 
         text := "The sky is blue"
 
-        resp, err := cln.Translate(ctx, text, client.Languages.English, client.Languages.French, false)
+        resp, err := cln.Translate(ctx, text, client.Languages.English, client.Languages.French, true)
         if err != nil {
             return fmt.Errorf("ERROR: %w", err)
         }
@@ -141,11 +141,12 @@ your preference or requirements, select the appropriate method for your applicat
     const client = new pg.Client('https://api.predictionguard.com', process.env.PGKEY);
 
     async function Translate() {
+        const text = `The sky is blue`;
         const sourceLang = pg.Languages.English;
         const targetLang = pg.Languages.French;
-        const text = `The sky is blue`;
+        const useThirdPartyEngine = true;
 
-        var [result, err] = await client.Translate(text, sourceLang, targetLang);
+        var [result, err] = await client.Translate(text, sourceLang, targetLang, useThirdPartyEngine);
         if (err != null) {
             console.log('ERROR:' + err.error);
             return;
