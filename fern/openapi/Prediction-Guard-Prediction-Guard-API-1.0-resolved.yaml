@@ -83,7 +83,7 @@ paths:
                   properties:
                     block_prompt_injection:
                       type: boolean
-                      description: Set to true to turn on factuality processing.
+                      description: Set to true to detect prompt injection attacks.
                     pii:
                       type: string
                       description: Set to either 'block' or 'replace'.
@@ -261,7 +261,7 @@ paths:
                   properties:
                     block_prompt_injection:
                       type: boolean
-                      description: Set to true to turn on factuality processing.
+                      description: Set to true to detect prompt injection attacks.
                     pii:
                       type: string
                       description: Set to either 'block' or 'replace'.
@@ -484,7 +484,7 @@ paths:
                   properties:
                     block_prompt_injection:
                       type: boolean
-                      description: Set to true to turn on factuality processing.
+                      description: Set to true to detect prompt injection attacks.
                     pii:
                       type: string
                       description: Set to either 'block' or 'replace'.
@@ -668,7 +668,7 @@ paths:
                   properties:
                     block_prompt_injection:
                       type: boolean
-                      description: Set to true to turn on factuality processing.
+                      description: Set to true to detect prompt injection attacks.
                     pii:
                       type: string
                       description: Set to either 'block' or 'replace'.
