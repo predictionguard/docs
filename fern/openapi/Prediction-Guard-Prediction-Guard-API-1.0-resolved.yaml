@@ -21,7 +21,7 @@ paths:
             text/plain:
               schema:
                 type: string
-              example: {
+              examples: {
                 The Prediction Guard API is healthy!
               }
 
@@ -219,7 +219,7 @@ paths:
             text/plain:
               schema:
                 type: string
-              example: {
+              examples: {
                 [
                   "Hermes-2-Pro-Mistral-7B",
                   "Neural-Chat-7B",
@@ -805,7 +805,7 @@ paths:
             text/plain:
               schema:
                 type: string
-              example: {
+              examples: {
                 [
                   "Hermes-2-Pro-Mistral-7B",
                   "Nous-Hermes-Llama2-13B",
@@ -945,7 +945,7 @@ paths:
             text/plain:
               schema:
                 type: string
-              example: {
+              examples: {
                 [
                   "bridgetower-large-itm-mlm-itc"
                 ]
