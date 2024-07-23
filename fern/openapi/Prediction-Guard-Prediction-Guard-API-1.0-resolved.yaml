@@ -21,8 +21,9 @@ paths:
             text/plain:
               schema:
                 type: string
-              example: |
+              example: {
                 The Prediction Guard API is healthy!
+              }
 
   /chat/completions:
     post:
@@ -218,7 +219,7 @@ paths:
             text/plain:
               schema:
                 type: string
-              example: |
+              example: {
                 [
                   "Hermes-2-Pro-Mistral-7B",
                   "Neural-Chat-7B",
@@ -227,6 +228,7 @@ paths:
                   "Hermes-2-Pro-Llama-3-8B",
                   "llava-1.5-7b-hf"
                 ]
+              }
 
   /chat/completions - Streaming Version:
     post:
@@ -803,7 +805,7 @@ paths:
             text/plain:
               schema:
                 type: string
-              example: |
+              example: {
                 [
                   "Hermes-2-Pro-Mistral-7B",
                   "Nous-Hermes-Llama2-13B",
@@ -812,6 +814,7 @@ paths:
                   "deepseek-coder-6.7b-instruct",
                   "Hermes-2-Pro-Llama-3-8B"
                 ]
+              }
 
   /embedding:
     post:
@@ -942,10 +945,11 @@ paths:
             text/plain:
               schema:
                 type: string
-              example: |
+              example: {
                 [
                   "bridgetower-large-itm-mlm-itc"
                 ]
+              }
 
   /factuality:
     post:
