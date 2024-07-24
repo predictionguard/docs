@@ -806,7 +806,7 @@ paths:
             application/json:
               schema:
                 type: array
-                  items:
+                items:
                   $ref: {
                     [
                       "Hermes-2-Pro-Mistral-7B",
