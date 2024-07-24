@@ -220,7 +220,6 @@ paths:
               type: array
               items:
                 type: string
-                format: string
               example: [
                 "Hermes-2-Pro-Mistral-7B",
                 "Neural-Chat-7B",
