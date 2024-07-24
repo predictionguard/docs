@@ -220,14 +220,13 @@ paths:
               type: array
               items:
                 type: string
-              example: [
-                "Hermes-2-Pro-Mistral-7B",
-                "Neural-Chat-7B",
-                "llama-3-sqlcoder-8b",
-                "deepseek-coder-6.7b-instruct",
-                "Hermes-2-Pro-Llama-3-8B",
-                "llava-1.5-7b-hf"
-              ]
+              example: 
+                - Hermes-2-Pro-Mistral-7B
+                - Neural-Chat-7B
+                - llama-3-sqlcoder-8b
+                - deepseek-coder-6.7b-instruct
+                - Hermes-2-Pro-Llama-3-8B
+                - llava-1.5-7b-hf
 
   /chat/completions - Streaming Version:
     post:
