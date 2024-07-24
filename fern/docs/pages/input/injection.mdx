@@ -94,10 +94,12 @@ How to detect Injections while using the \completions Endpoint:
 ```python copy
 import os
 import json
-import predictionguard as pg
+from predictionguard import PredictionGuard
 
 # Set your Prediction Guard token as an environmental variable.
-os.environ["PREDICTIONGUARD_TOKEN"] = "<api key>"
+os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+
+client = PredictionGuard()
 
 response = client.completions.create(
     model="Hermes-2-Pro-Llama-3-8B",
