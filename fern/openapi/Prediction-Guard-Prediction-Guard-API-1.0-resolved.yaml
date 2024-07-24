@@ -218,7 +218,7 @@ paths:
           content:
             text/plain:
               schema:
-                type: string
+                type: array
               examples: {
                 [
                   "Hermes-2-Pro-Mistral-7B",
@@ -804,7 +804,7 @@ paths:
           content:
             text/plain:
               schema:
-                type: string
+                type: array
               examples: {
                 [
                   "Hermes-2-Pro-Mistral-7B",
@@ -942,14 +942,14 @@ paths:
         '200':
           description: Successful response with an array of embeddings generation models.
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
-              examples: {
-                [
-                  "bridgetower-large-itm-mlm-itc"
-                ]
-              }
+                type: array
+                items: {
+                  [
+                    "bridgetower-large-itm-mlm-itc"
+                  ]
+                }
 
   /factuality:
     post:
