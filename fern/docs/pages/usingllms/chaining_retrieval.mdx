@@ -45,10 +45,8 @@ import urllib.request
 import html2text
 from langchain import PromptTemplate, FewShotPromptTemplate
 from langchain.text_splitter import CharacterTextSplitter
-from sentence_transformers import SentenceTransformer
 import numpy as np
 import lancedb
-from lancedb.embeddings import with_embeddings
 import pandas as pd
 from predictionguard import PredictionGuard
 
@@ -471,41 +469,72 @@ Vector Database.
 # typical prompt template structure
 docs = [x.replace('#', '-') for x in docs]
 
-
 # Now we need to embed these documents and put them into a "vector store" or
 # "vector db" that we will use for semantic search and retrieval.
 
-# Embeddings setup
-name="all-MiniLM-L12-v2"
-model = SentenceTransformer(name)
+# Function to get embeddings from Prediction Guard in batches
+def embed_text_column(df, text_column="text", batch_size=20):
+    def embed_batch(batch):
+        embeddings = []
+        for i in range(0, len(batch), batch_size):
+            chunk = batch[i:i+batch_size]
+            response = client.embeddings.create(
+                model="bridgetower-large-itm-mlm-itc",
+                input=[{"text": text} for text in chunk]
+            )
 
-def embed_batch(batch):
-    return [model.encode(sentence) for sentence in batch]
+            if "data" in response:
+                chunk_embeddings = [item["embedding"] for item in response["data"] if "embedding" in item]
+                embeddings.extend(chunk_embeddings)
+            else:
+                raise Exception(f"Error in embedding response: {response}")
+        return [np.array(embedding) for embedding in embeddings]
+
+    # Embed the documents in smaller batches
+    embeddings = embed_batch(df[text_column].tolist())
+
+    # Verify the number of embeddings matches the number of documents
+    if len(embeddings) != len(df):
+        raise ValueError("The number of embeddings does not match the number of documents")
+
+    # Add embeddings to the dataframe as a single column named "vector"
+    df["vector"] = embeddings
+
+    return df
 
 def embed(sentence):
-    return model.encode(sentence)
+    response = client.embeddings.create(
+        model="bridgetower-large-itm-mlm-itc",
+        input=[{"text": sentence}]
+    )
+    
+    if "data" in response:
+        embedding = response["data"][0]["embedding"]
+        return embedding
+    else:
+        raise Exception(f"Error in embedding response: {response}")
 
 # LanceDB setup
-os.mkdir(".lancedb")
 uri = ".lancedb"
+if os.path.exists(uri):
+    shutil.rmtree(uri)
+os.mkdir(uri)
 db = lancedb.connect(uri)
 
 # Create a dataframe with the chunk ids and chunks
 metadata = []
 for i in range(len(docs)):
-    metadata.append([
-        i,
-        docs[i]
-    ])
+    metadata.append([i, docs[i]])
 doc_df = pd.DataFrame(metadata, columns=["chunk", "text"])
 
-# Embed the documents
-data = with_embeddings(embed_batch, doc_df)
+#Embed the documents
+data=embed_text_column(doc_df)
 
-# Create the DB table and add the records.
-db.create_table("linux", data=data)
-table = db.open_table("linux")
-table.add(data=data)
+# Create the DB table and add the records
+if "linux" in db.table_names():
+    db.drop_table("linux")
+
+table = db.create_table("linux", data=data)
 ```
 
 We now have:
