@@ -216,19 +216,20 @@ paths:
         '200':
           description: Successful response with an array of LLMs.
           content:
-            text/plain:
+            application/json:
               schema:
                 type: array
-              examples: {
-                [
-                  "Hermes-2-Pro-Mistral-7B",
-                  "Neural-Chat-7B",
-                  "llama-3-sqlcoder-8b",
-                  "deepseek-coder-6.7b-instruct",
-                  "Hermes-2-Pro-Llama-3-8B",
-                  "llava-1.5-7b-hf"
-                ]
-              }
+                  items: 
+                    $ref: {
+                      [
+                        "Hermes-2-Pro-Mistral-7B",
+                        "Neural-Chat-7B",
+                        "llama-3-sqlcoder-8b",
+                        "deepseek-coder-6.7b-instruct",
+                        "Hermes-2-Pro-Llama-3-8B",
+                        "llava-1.5-7b-hf"
+                      ]
+                    }
 
   /chat/completions - Streaming Version:
     post:
@@ -802,19 +803,20 @@ paths:
         '200':
           description: Successful response with an array of LLMs.
           content:
-            text/plain:
+            application/json:
               schema:
                 type: array
-              examples: {
-                [
-                  "Hermes-2-Pro-Mistral-7B",
-                  "Nous-Hermes-Llama2-13B",
-                  "Neural-Chat-7B",
-                  "llama-3-sqlcoder-8b",
-                  "deepseek-coder-6.7b-instruct",
-                  "Hermes-2-Pro-Llama-3-8B"
-                ]
-              }
+                  items:
+                    $ref: {
+                      [
+                        "Hermes-2-Pro-Mistral-7B",
+                        "Nous-Hermes-Llama2-13B",
+                        "Neural-Chat-7B",
+                        "llama-3-sqlcoder-8b",
+                        "deepseek-coder-6.7b-instruct",
+                        "Hermes-2-Pro-Llama-3-8B"
+                      ]
+                    }
 
   /embedding:
     post:
@@ -945,11 +947,12 @@ paths:
             application/json:
               schema:
                 type: array
-                items: {
-                  [
-                    "bridgetower-large-itm-mlm-itc"
-                  ]
-                }
+                items: 
+                  $ref: {
+                    [
+                      "bridgetower-large-itm-mlm-itc"
+                    ]
+                  }
 
   /factuality:
     post:
