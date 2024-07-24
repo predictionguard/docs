@@ -216,19 +216,19 @@ paths:
         '200':
           description: Successful response with an array of LLMs.
           content:
-            application/json:
-              schema:
-                type: array
-                examples: {
-                  [
-                    "Hermes-2-Pro-Mistral-7B",
-                    "Neural-Chat-7B",
-                    "llama-3-sqlcoder-8b",
-                    "deepseek-coder-6.7b-instruct",
-                    "Hermes-2-Pro-Llama-3-8B",
-                    "llava-1.5-7b-hf"
-                  ]
-                }
+            schema:
+              type: array
+              items:
+                type: string
+                format: string
+              example: [
+                "Hermes-2-Pro-Mistral-7B",
+                "Neural-Chat-7B",
+                "llama-3-sqlcoder-8b",
+                "deepseek-coder-6.7b-instruct",
+                "Hermes-2-Pro-Llama-3-8B",
+                "llava-1.5-7b-hf"
+              ]
 
   /chat/completions - Streaming Version:
     post:
