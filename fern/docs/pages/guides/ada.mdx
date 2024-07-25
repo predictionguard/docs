@@ -50,10 +50,11 @@ import urllib
 import html2text
 import sqlite3
 from langchain import PromptTemplate
+from sentence_transformers import SentenceTransformer
 import lancedb
+from lancedb.embeddings import with_embeddings
 from predictionguard import PredictionGuard
 import pandas as pd
-import numpy as np
 from getpass import getpass
 ```
 
