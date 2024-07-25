@@ -21,9 +21,9 @@ paths:
             text/plain:
               schema:
                 type: string
-              examples: {
-                The Prediction Guard API is healthy!
-              }
+                examples: |
+                  The Prediction Guard API is healthy!
+
 
   /chat/completions:
     post:
@@ -220,13 +220,8 @@ paths:
               type: array
               items:
                 type: string
-              example: 
-                - Hermes-2-Pro-Mistral-7B
-                - Neural-Chat-7B
-                - llama-3-sqlcoder-8b
-                - deepseek-coder-6.7b-instruct
-                - Hermes-2-Pro-Llama-3-8B
-                - llava-1.5-7b-hf
+              examples:
+                "models": [ "Hermes-2-Pro-Mistral-7B", "Neural-Chat-7B", "llama-3-sqlcoder-8b", "deepseek-coder-6.7b-instruct", "Hermes-2-Pro-Llama-3-8B", "llava-1.5-7b-hf" ]
 
   /chat/completions - Streaming Version:
     post:
@@ -285,9 +280,9 @@ paths:
                       type: string
                       description: Set to either 'block' or 'replace'.
                     pii_replace_method:
-                      type: string
-                      description: Set to either 'random', 'fake', 'category', 'mask'.
-            examples:
+                      type: string  examples: {
+                  The Prediction Guard API is healthy!
+                }
               basic:
                 summary: A basic example of using the API.
                 value: {
@@ -1499,3 +1494,5 @@ components:
       type: apiKey
       name: x-api-key
       in: header
+  schemas:
+
