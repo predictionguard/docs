@@ -280,9 +280,9 @@ paths:
                       type: string
                       description: Set to either 'block' or 'replace'.
                     pii_replace_method:
-                      type: string  examples: {
-                  The Prediction Guard API is healthy!
-                }
+                      type: string
+                      description: Set to either 'random', 'fake', 'category', 'mask'.
+            examples:
               basic:
                 summary: A basic example of using the API.
                 value: {
