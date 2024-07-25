@@ -1,4 +1,3 @@
----
 openapi: 3.1.0
 
 info:
@@ -8,22 +7,24 @@ info:
 
 servers:
   - url: https://api.predictionguard.com
- 
+
 paths:
   "":
     get:
       summary: Check API Health
       description: A simple endpoint to check if the Prediction Guard API is healthy.
       responses:
-        '200':
-          description: Successful response with API health status.
+        "200":
+          description: Successful response with a simple healthy message.
           content:
-            text/plain:
+            application/json:
               schema:
                 type: string
-              example: |
-                The Prediction Guard API is healthy!
-
+                items:
+                  type: text
+              examples:
+                example1:
+                  value: "The Prediction Guard API is healthy!"
   /chat/completions:
     post:
       summary: Chat Completions
@@ -93,33 +94,23 @@ paths:
             examples:
               basic:
                 summary: A basic example of using the API.
-                value: {
-                  model: "Neural-Chat-7B",
-                  messages: [
-                    {
-                      role: "user",
+                value:
+                  model: "Neural-Chat-7B"
+                  messages:
+                    - role: "user"
                       content: "How do you feel about the world in general?"
-                    }
-                  ],
-                  max_tokens: 1000,
-                  temperature: 1.0,
-                  top_p: 1.0,
-                  top_k: 50,
-                  output: [
-                    {
-                      factuality: true,
-                      toxicity: true
-                    }
-                  ],
-                  input: [
-                    {
-                      pii: "replace",
-                      pii_replace_method: "random"
-                    }
-                  ]
-                }
+                  max_tokens: 1000
+                  temperature: 1.0
+                  top_p: 1.0
+                  top_k: 50
+                  output:
+                    factuality: true
+                    toxicity: true
+                  input:
+                    pii: "replace"
+                    pii_replace_method: "random"
       responses:
-        '403':
+        "403":
           description: Failed auth response.
           content:
             application/json:
@@ -129,10 +120,9 @@ paths:
                   error:
                     type: string
                     description: Description of the error.
-              example: {
+              example:
                 error: "api understands the request but refuses to authorize it"
-              }
-        '400':
+        "400":
           description: General error response.
           content:
             application/json:
@@ -142,10 +132,9 @@ paths:
                   error:
                     type: string
                     description: Description of the error.
-              example: {
+              example:
                 error: "required fields are missing"
-              }
-        '200':
+        "200":
           description: Successful response.
           content:
             application/json:
@@ -156,56 +145,74 @@ paths:
                     type: string
                     description: Unique ID for the chat completion.
                   object:
-                      type: string
-                      description: Type of object (chat completion).
+                    type: string
+                    description: Type of object (chat completion).
                   created:
-                      type: integer
-                      description: Timestamp of when the chat completion was created.
+                    type: integer
+                    description: Timestamp of when the chat completion was created.
                   model:
-                      type: string
-                      description: The chat model used for generating completions.
+                    type: string
+                    description: The chat model used for generating completions.
                   choices:
-                      type: array
-                      description: The set of result choices.
-                      items:
-                        type: object
-                        properties:
-                          index:
-                            type: integer
-                            description: The index position in the collection.
-                          status:
-                            type: string
-                            description: The response if this choice was successful.
-                          message:
-                            type: object
-                            description: A result choice.
-                            properties:
-                              role:
-                                type: string
-                                description: The role of the sender (user or assistant).
-                              content:
-                                type: string
-                                description: The content of the message.
-                              output:
-                                type: string
-                                description: The output of the message.
-              example: {
-                id: "chat-IMT9tc2a3mqN5BabtfdjeFH1t1GAn",
-                object: "chat_completion",
-                created: 1717602741,
-                model: "Neural-Chat-7B",
-                choices: [
-                  {
-                    index: 0,
-                    message: {
-                      role: "assistant",
-                      content: "I feel that the world in general is a complex and ever-evolving place. It has its fair share of beauty, challenges, and opportunities. There are moments of joy, connection, and growth, as well as pain, conflict, and loss. The world is a reflection of the people who inhabit it, and it's essential to maintain a balance between appreciating its wonders and working towards making it a better place for all. It's a constant journey of learning, adapting, and striving for a more harmonious existence.",
+                    type: array
+                    description: The set of result choices.
+                    items:
+                      type: object
+                      properties:
+                        index:
+                          type: integer
+                          description: The index position in the collection.
+                        status:
+                          type: string
+                          description: The response if this choice was successful.
+                        message:
+                          type: object
+                          description: A result choice.
+                          properties:
+                            role:
+                              type: string
+                              description: The role of the sender (user or assistant).
+                            content:
+                              type: string
+                              description: The content of the message.
+                            output:
+                              type: string
+                              description: The output of the message.
+              example:
+                id: "chat-IMT9tc2a3mqN5BabtfdjeFH1t1GAn"
+                object: "chat_completion"
+                created: 1717602741
+                model: "Neural-Chat-7B"
+                choices:
+                  - index: 0
+                    message:
+                      role: "assistant"
+                      content: "I feel that the world in general is a complex and ever-evolving place. It has its fair share of beauty, challenges, and opportunities. There are moments of joy, connection, and growth, as well as pain, conflict, and loss. The world is a reflection of the people who inhabit it, and it's essential to maintain a balance between appreciating its wonders and working towards making it a better place for all. It's a constant journey of learning, adapting, and striving for a more harmonious existence."
                       output: "null"
-                    },
                     status: "success"
-                  }
-                ]
-              }
+      security:
+        - ApiKeyCredentials: []
+    get:
+      summary: List Chat Models
+      description: A simple endpoint to check what models are available in the /chat/completions endpoint.
+      responses:
+        "200":
+          description: Successful response with an array of LLMs.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              examples:
+                example1:
+                  value:
+                    - "Hermes-2-Pro-Mistral-7B"
+                    - "Neural-Chat-7B"
+                    - "llama-3-sqlcoder-8b"
+                    - "deepseek-coder-6.7b-instruct"
+                    - "Hermes-2-Pro-Llama-3-8B"
+                    - "llava-1.5-7b-hf"
       security:
         - ApiKeyCredentials: []
 
@@ -271,28 +278,21 @@ paths:
             examples:
               basic:
                 summary: A basic example of using the API.
-                value: {
-                  model: "Neural-Chat-7B",
-                  messages: [
-                    {
-                      role: "user",
+                value:
+                  model: "Neural-Chat-7B"
+                  messages:
+                    - role: "user"
                       content: "How do you feel about the world in general?"
-                    }
-                  ],
-                  max_tokens: 1000,
-                  temperature: 1.0,
-                  top_p: 1.0,
-                  top_k: 50,
-                  stream: true,
-                  input: [
-                    {
-                      pii: "replace",
-                      pii_replace_method: "random"
-                    }
-                  ]
-                }
+                  max_tokens: 1000
+                  temperature: 1.0
+                  top_p: 1.0
+                  top_k: 50
+                  stream: true
+                  input:
+                    pii: "replace"
+                    pii_replace_method: "random"
       responses:
-        '403':
+        "403":
           description: Failed auth response.
           content:
             application/json:
@@ -302,10 +302,9 @@ paths:
                   error:
                     type: string
                     description: Description of the error.
-              example: {
+              example:
                 error: "api understands the request but refuses to authorize it"
-              }
-        '400':
+        "400":
           description: General error response.
           content:
             application/json:
@@ -315,10 +314,9 @@ paths:
                   error:
                     type: string
                     description: Description of the error.
-              example: {
+              example:
                 error: "required fields are missing"
-              }
-        '200':
+        "200":
           description: Successful response.
           content:
             application/json:
@@ -334,84 +332,69 @@ paths:
                           type: string
                           description: Unique ID for the chat completion.
                         object:
-                            type: string
-                            description: Type of object (chat completion).
+                          type: string
+                          description: Type of object (chat completion).
                         created:
-                            type: integer
-                            description: Timestamp of when the chat completion was created.
+                          type: integer
+                          description: Timestamp of when the chat completion was created.
                         model:
-                            type: string
-                            description: The chat model used for generating completions.
+                          type: string
+                          description: The chat model used for generating completions.
                         choices:
-                            type: array
-                            description: The set of result choices.
-                            items:
-                              type: object
-                              properties:
-                                index:
-                                  type: integer
-                                  description: The index position in the collection.
-                                generated_text:
-                                  type: string
-                                  description: The final completed chat response which is provided when this is the last choice.
-                                logprobs:
-                                  type: number
-                                  description: The log probabilty of accuracy for this choice.
-                                finish_reason:
-                                  type: string
-                                  description: The reason the response has finished
-                                delta:
-                                  type: object
-                                  description: The partial content for this choice.
-                                  properties:
-                                    content:
-                                      type: string
-                                      description: The partial content response for a choice.
-              example: [
-                {
-                  data: {
-                    id: "chat-QTBHDiLvhW6XJJKn4skhBDADZTIgd",
-                    object: "chat.completion.chunk",
-                    created: 1717678791,
-                    model: "Neural-Chat-7B",
-                    choices: [
-                      {
-                        index: 0,
-                        delta: {
-                          content: " I"
-                        },
-                        generated_text: "null",
-                        logprobs: 0,
+                          type: array
+                          description: The set of result choices.
+                          items:
+                            type: object
+                            properties:
+                              index:
+                                type: integer
+                                description: The index position in the collection.
+                              generated_text:
+                                type: string
+                                description: The final completed chat response which is provided when this is the last choice.
+                              logprobs:
+                                type: number
+                                description: The log probabilty of accuracy for this choice.
+                              finish_reason:
+                                type: string
+                                description: The reason the response has finished
+                              delta:
+                                type: object
+                                description: The partial content for this choice.
+                                properties:
+                                  content:
+                                    type: string
+                                    description: The partial content response for a choice.
+              example:
+                - data:
+                    id: "chat-QTBHDiLvhW6XJJKn4skhBDADZTIgd"
+                    object: "chat.completion.chunk"
+                    created: 1717678791
+                    model: "Neural-Chat-7B"
+                    choices:
+                      - index: 0
+                        delta: { content: " I" }
+                        generated_text: "null"
+                        logprobs: 0
                         finish_reason: "null"
-                      }
-                    ]
-                  }
-                },
-                {
-                  data: {
-                    id: "chat-BZvsPJsNvcIK0TfPOvC6UObFIsGSy",
-                    object: "chat.completion.chunk",
-                    created: 1717678792,
-                    model: "Neural-Chat-7B",
-                    choices: [
-                      {
-                        index: 0,
-                        delta: {},
-                        generated_text: "I feel that the world is a complex and dynamic place. It has its fair share of challenges and difficulties, but also offers numerous opportunities for growth, learning, and connection. The world is constantly evolving, and as individuals, we must adapt and find ways to contribute positively to society. It's essential to maintain a balance between acknowledging the problems and celebrating the progress and achievements, while also remembering the importance of compassion, empathy, and understanding towards one another. Overall, I believe it's essential to stay optimistic and work together towards a better future for all.",
-                        logprobs: 0,
+                - data:
+                    id: "chat-BZvsPJsNvcIK0TfPOvC6UObFIsGSy"
+                    object: "chat.completion.chunk"
+                    created: 1717678792
+                    model: "Neural-Chat-7B"
+                    choices:
+                      - index: 0
+                        delta: {}
+                        generated_text: "I feel that the world is a complex and dynamic place. It has its fair share of challenges and difficulties, but also offers numerous opportunities for growth, learning, and connection. The world is constantly evolving, and as individuals, we must adapt and find ways to contribute positively to society. It's essential to maintain a balance between acknowledging the problems and celebrating the progress and achievements, while also remembering the importance of compassion, empathy, and understanding towards one another. Overall, I believe it's essential to stay optimistic and work together towards a better future for all."
+                        logprobs: 0
                         finish_reason: "stop"
-                      }
-                    ]
-                  }
-                }
-              ]
       security:
         - ApiKeyCredentials: []
 
   /chat/completions - Vision Version:
     post:
       summary: Chat Completions Vision
-      description: Generate chat completions based on a text and images.
+      description: Generate chat completions based on text and images.
       requestBody:
         content:
           application/json:
@@ -494,44 +477,28 @@ paths:
             examples:
               basic:
                 summary: A basic example of using the API.
-                value: {
-                  model: "llava-1.5-7b-hf",
-                  messages: [
-                    {
-                      role: "user",
-                      content: [
-                        {
-                          type: 'text',
-                          text: input.question,
-                        },
-                        {
-                          type: 'image_url',
-                          image_url: {
-                              url: 'data:image/jpeg;base64,<DATA>',
-                          },
-                        }
-                      ]
-                    }
-                  ],
-                  max_tokens: 1000,
-                  temperature: 1.0,
-                  top_p: 1.0,
-                  top_k: 50,
-                  output: [
-                    {
-                      factuality: true,
-                      toxicity: true
-                    }
-                  ],
-                  input: [
-                    {
-                      pii: "replace",
-                      pii_replace_method: "random"
-                    }
-                  ]
-                }
+                value:
+                  model: "llava-1.5-7b-hf"
+                  messages:
+                    - role: "user"
+                      content:
+                        - type: "text"
+                          text: input.question
+                        - type: "image_url"
+                          image_url:
+                            url: "data:image/jpeg;base64,<DATA>"
+                  max_tokens: 1000
+                  temperature: 1.0
+                  top_p: 1.0
+                  top_k: 50
+                  output:
+                    factuality: true
+                    toxicity: true
+                  input:
+                    pii: "replace"
+                    pii_replace_method: "random"
       responses:
-        '403':
+        "403":
           description: Failed auth response.
           content:
             application/json:
@@ -541,10 +508,9 @@ paths:
                   error:
                     type: string
                     description: Description of the error.
-              example: {
+              example:
                 error: "api understands the request but refuses to authorize it"
-              }
-        '400':
+        "400":
           description: General error response.
           content:
             application/json:
@@ -554,10 +520,9 @@ paths:
                   error:
                     type: string
                     description: Description of the error.
-              example: {
+              example:
                 error: "required fields are missing"
-              }
-        '200':
+        "200":
           description: Successful response.
           content:
             application/json:
@@ -568,56 +533,51 @@ paths:
                     type: string
                     description: Unique ID for the chat completion.
                   object:
-                      type: string
-                      description: Type of object (chat completion).
+                    type: string
+                    description: Type of object (chat completion).
                   created:
-                      type: integer
-                      description: Timestamp of when the chat completion was created.
+                    type: integer
+                    description: Timestamp of when the chat completion was created.
                   model:
-                      type: string
-                      description: The chat model used for generating completions.
+                    type: string
+                    description: The chat model used for generating completions.
                   choices:
-                      type: array
-                      description: The set of result choices.
-                      items:
-                        type: object
-                        properties:
-                          index:
-                            type: integer
-                            description: The index position in the collection.
-                          status:
-                            type: string
-                            description: The response if this choice was successful.
-                          message:
-                            type: object
-                            description: A result choice.
-                            properties:
-                              role:
-                                type: string
-                                description: The role of the sender (user or assistant).
-                              content:
-                                type: string
-                                description: The content of the message.
-                              output:
-                                type: string
-                                description: The output of the message.
-              example: {
-                id: "chat-8qptYQ1EC1cPhHIKh7ArD5OxKN01N",
-                object: "chat_completion",
-                created: 1717681459,
-                model: "llava-1.5-7b-hf",
-                choices: [
-                  {
-                    index: 0,
-                    message: {
-                      role: "assistant",
-                      content: "No, there is no deer in this picture. The image features a man wearing a hat and glasses, smiling for the camera.",
+                    type: array
+                    description: The set of result choices.
+                    items:
+                      type: object
+                      properties:
+                        index:
+                          type: integer
+                          description: The index position in the collection.
+                        status:
+                          type: string
+                          description: The response if this choice was successful.
+                        message:
+                          type: object
+                          description: A result choice.
+                          properties:
+                            role:
+                              type: string
+                              description: The role of the sender (user or assistant).
+                            content:
+                              type: string
+                              description: The content of the message.
+                            output:
+                              type: string
+                              description: The output of the message.
+              example:
+                id: "chat-8qptYQ1EC1cPhHIKh7ArD5OxKN01N"
+                object: "chat_completion"
+                created: 1717681459
+                model: "llava-1.5-7b-hf"
+                choices:
+                  - index: 0
+                    message:
+                      role: "assistant"
+                      content: "No, there is no deer in this picture. The image features a man wearing a hat and glasses, smiling for the camera."
                       output: "null"
-                    },
                     status: "success"
-                  }
-                ]
-              }
       security:
         - ApiKeyCredentials: []
 
@@ -678,28 +638,21 @@ paths:
             examples:
               basic:
                 summary: A basic example of using the API.
-                value: {
-                  model: "Neural-Chat-7B",
-                  prompt: "Will I lose my hair?",
-                  max_tokens: 1000,
-                  temperature: 1.0,
-                  top_p: 1.0,
-                  top_k: 50,
-                  output: [
-                    {
-                      factuality: true,
-                      toxicity: true
-                    }
-                  ],
-                  input: [
-                    {
-                      pii: "replace",
-                      pii_replace_method: "random"
-                    }
-                  ]
-                }
+                value:
+                  model: "Neural-Chat-7B"
+                  prompt: "Will I lose my hair?"
+                  max_tokens: 1000
+                  temperature: 1.0
+                  top_p: 1.0
+                  top_k: 50
+                  output:
+                    factuality: true
+                    toxicity: true
+                  input:
+                    pii: "replace"
+                    pii_replace_method: "random"
       responses:
-        '403':
+        "403":
           description: Failed auth response.
           content:
             application/json:
@@ -709,10 +662,9 @@ paths:
                   error:
                     type: string
                     description: Description of the error.
-              example: {
+              example:
                 error: "api understands the request but refuses to authorize it"
-              }
-        '400':
+        "400":
           description: General error response.
           content:
             application/json:
@@ -722,10 +674,9 @@ paths:
                   error:
                     type: string
                     description: Description of the error.
-              example: {
+              example:
                 error: "required fields are missing"
-              }
-        '200':
+        "200":
           description: Successful response.
           content:
             application/json:
@@ -736,48 +687,67 @@ paths:
                     type: string
                     description: Unique ID for the chat completion.
                   object:
-                      type: string
-                      description: Type of object (chat completion).
+                    type: string
+                    description: Type of object (chat completion).
                   created:
-                      type: integer
-                      description: Timestamp of when the chat completion was created.
+                    type: integer
+                    description: Timestamp of when the chat completion was created.
                   choices:
-                      type: array
-                      description: The set of result choices.
-                      items:
-                        type: object
-                        properties:
-                          index:
-                            type: integer
-                            description: The index position in the collection.
-                          model:
-                            type: string
-                            description: The model used for generating the result.
-                          status:
-                            type: string
-                            description: The response if this choice was successful.
-                          text:
-                            type: string
-                            description: The generated text.
-              example: {
-                id: "cmpl-vt14rz28aihTwstFPuAfZQIP5FTI7",
-                object: "text_completion",
-                created: 1717613547,
-                choices: [
-                  {
-                    index: 0,
-                    model: "Neural-Chat-7B",
-                    text: "if I get a hair transplant?\n\nHair transplant is a surgical procedure that involves moving hair follicles from one part of the head to another. The procedure is designed to address hair loss and restore a fuller, more natural-looking head of hair. While hair transplant does not cause hair loss, it is essential to understand that the underlying cause of hair loss must be addressed to ensure long-term success.\n\nIn some cases, hair loss may be temporary due to the stress of the surgery or the use of certain medications. However, this is usually short-lived and will resolve on its own. To minimize the risk of temporary hair loss, it is crucial to follow your surgeon's post-operative instructions carefully and maintain a healthy lifestyle.\n\nIn summary, hair transplant does not cause hair loss, but it is essential to address the underlying cause of hair loss to achieve the best results. Temporary hair loss may occur, but it is typically short-lived and resolves on its own.",
+                    type: array
+                    description: The set of result choices.
+                    items:
+                      type: object
+                      properties:
+                        index:
+                          type: integer
+                          description: The index position in the collection.
+                        model:
+                          type: string
+                          description: The model used for generating the result.
+                        status:
+                          type: string
+                          description: The response if this choice was successful.
+                        text:
+                          type: string
+                          description: The generated text.
+              example:
+                id: "cmpl-vt14rz28aihTwstFPuAfZQIP5FTI7"
+                object: "text_completion"
+                created: 1717613547
+                choices:
+                  - index: 0
+                    model: "Neural-Chat-7B"
+                    text: "if I get a hair transplant?\n\nHair transplant is a surgical procedure that involves moving hair follicles from one part of the head to another. The procedure is designed to address hair loss and restore a fuller, more natural-looking head of hair. While hair transplant does not cause hair loss, it is essential to understand that the underlying cause of hair loss must be addressed to ensure long-term success.\n\nIn some cases, hair loss may be temporary due to the stress of the surgery or the use of certain medications. However, this is usually short-lived and will resolve on its own. To minimize the risk of temporary hair loss, it is crucial to follow your surgeon's post-operative instructions carefully and maintain a healthy lifestyle.\n\nIn summary, hair transplant does not cause hair loss, but it is essential to address the underlying cause of hair loss to achieve the best results. Temporary hair loss may occur, but it is typically short-lived and resolves on its own."
                     status: "success"
-                  }
-                ]
-              }
+      security:
+        - ApiKeyCredentials: []
+    get:
+      summary: List Completions Models
+      description: A simple endpoint to check what models are available in the /completions endpoint.
+      responses:
+        "200":
+          description: Successful response with an array of LLMs.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              examples:
+                example1:
+                  value:
+                    - "Hermes-2-Pro-Mistral-7B"
+                    - "Nous-Hermes-Llama2-13B"
+                    - "Neural-Chat-7B"
+                    - "llama-3-sqlcoder-8b"
+                    - "deepseek-coder-6.7b-instruct"
+                    - "Hermes-2-Pro-Llama-3-8B"
       security:
         - ApiKeyCredentials: []
 
-  /embedding:
+  /embeddings:
     post:
-      summary: Embedding
+      summary: Embeddings
       description: Generate vector data points from text and images.
       requestBody:
         content:
@@ -806,17 +776,13 @@ paths:
             examples:
               basic:
                 summary: A basic example of using the API.
-                value: {
-                  model: "bridgetower-large-itm-mlm-itc",
-                  input: [
-                    {
-                      text: "This is Bill Kennedy, a decent Go developer.",
+                value:
+                  model: "bridgetower-large-itm-mlm-itc"
+                  input:
+                    - text: "This is Bill Kennedy, a decent Go developer."
                       image: "<base64 encoded image>"
-                    }
-                  ]
-                }
       responses:
-        '403':
+        "403":
           description: Failed auth response.
           content:
             application/json:
@@ -826,10 +792,9 @@ paths:
                   error:
                     type: string
                     description: Description of the error.
-              example: {
+              example:
                 error: "api understands the request but refuses to authorize it"
-              }
-        '400':
+        "400":
           description: General error response.
           content:
             application/json:
@@ -839,10 +804,9 @@ paths:
                   error:
                     type: string
                     description: Description of the error.
-              example: {
+              example:
                 error: "required fields are missing"
-              }
-        '200':
+        "200":
           description: Successful response.
           content:
             application/json:
@@ -853,44 +817,58 @@ paths:
                     type: string
                     description: Unique ID for the chat completion.
                   object:
-                      type: string
-                      description: Type of object (chat completion).
+                    type: string
+                    description: Type of object (chat completion).
                   created:
-                      type: integer
-                      description: Timestamp of when the chat completion was created.
+                    type: integer
+                    description: Timestamp of when the chat completion was created.
                   model:
-                      type: string
-                      description: The chat model used for generating completions.
+                    type: string
+                    description: The chat model used for generating completions.
                   data:
-                      type: array
-                      description: The set of vectorized data.
-                      items:
-                        type: object
-                        properties:
-                          index:
-                            type: integer
-                            description: The index position in the collection.
-                          status:
-                            type: string
-                            description: The response if this choice was successful.
-                          embedding:
-                            type: array
-                            description: The array of vector values.
-                            items:
-                              type: number
-              example: {
-                id: "emb-KBUhJ8dAc0hfGQhaWCLwRf5bYU8fw",
-                object: "embedding_batch",
-                created: 1717614704,
-                model: "bridgetower-large-itm-mlm-itc",
-                data: [
-                  {
-                    index: 0,
-                    status: "success",
+                    type: array
+                    description: The set of vectorized data.
+                    items:
+                      type: object
+                      properties:
+                        index:
+                          type: integer
+                          description: The index position in the collection.
+                        status:
+                          type: string
+                          description: The response if this choice was successful.
+                        embedding:
+                          type: array
+                          description: The array of vector values.
+                          items:
+                            type: number
+              example:
+                id: "emb-KBUhJ8dAc0hfGQhaWCLwRf5bYU8fw"
+                object: "embedding_batch"
+                created: 1717614704
+                model: "bridgetower-large-itm-mlm-itc"
+                data:
+                  - index: 0
+                    status: "success"
                     embedding: [-0.04457271471619606, -0.007496959064155817]
-                  }
-                ]
-              }
+      security:
+        - ApiKeyCredentials: []
+    get:
+      summary: List Embeddings Models
+      description: A simple endpoint to check what models are available in the /embeddings endpoint.
+      responses:
+        "200":
+          description: Successful response with an array of embeddings generation models.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              examples:
+                example1:
+                  value:
+                    - "bridgetower-large-itm-mlm-itc"
       security:
         - ApiKeyCredentials: []
 
@@ -912,16 +890,15 @@ paths:
                   description: The reference text for comparison.
                 text:
                   type: string
-                  description: The the text to be checked for factuality.
+                  description: The text to be checked for factuality.
             examples:
               basic:
                 summary: A basic example of using the API.
-                value: {
-                  reference: "The President shall receive in full for his services during the term for which he shall have been elected compensation in the aggregate amount of 400,000 a year, to be paid monthly, and in addition an expense allowance of 50,000 to assist in defraying expenses relating to or resulting from the discharge of his official duties.",
+                value:
+                  reference: "The President shall receive in full for his services during the term for which he shall have been elected compensation in the aggregate amount of 400,000 a year, to be paid monthly, and in addition an expense allowance of 50,000 to assist in defraying expenses relating to or resulting from the discharge of his official duties."
                   text: "The president of the united states can take a salary of one million dollars"
-                }
       responses:
-        '403':
+        "403":
           description: Failed auth response.
           content:
             application/json:
@@ -931,10 +908,9 @@ paths:
                   error:
                     type: string
                     description: Description of the error.
-              example: {
+              example:
                 error: "api understands the request but refuses to authorize it"
-              }
-        '400':
+        "400":
           description: General error response.
           content:
             application/json:
@@ -944,10 +920,9 @@ paths:
                   error:
                     type: string
                     description: Description of the error.
-              example: {
+              example:
                 error: "required fields are missing"
-              }
-        '200':
+        "200":
           description: Successful response.
           content:
             application/json:
@@ -958,38 +933,34 @@ paths:
                     type: string
                     description: Unique ID for the chat completion.
                   object:
-                      type: string
-                      description: Type of object (chat completion).
+                    type: string
+                    description: Type of object (chat completion).
                   created:
-                      type: integer
-                      description: Timestamp of when the chat completion was created.
+                    type: integer
+                    description: Timestamp of when the chat completion was created.
                   checks:
-                      type: array
-                      description: The set of vectorized data.
-                      items:
-                        type: object
-                        properties:
-                          index:
-                            type: integer
-                            description: The index position in the collection.
-                          score:
-                            type: number
-                            description: The factuality score.
-                          status:
-                            type: string
-                            description: The response if this choice was successful.
-              example: {
-                id: "fact-JJtvGAUpioXgzwBGpwWiRVb3DSWgo",
-                object: "factuality_check",
-                created: 1717674781,
-                checks: [
-                  {
-                    index: 0,
-                    score: 0.7879657745361328,
+                    type: array
+                    description: The set of vectorized data.
+                    items:
+                      type: object
+                      properties:
+                        index:
+                          type: integer
+                          description: The index position in the collection.
+                        score:
+                          type: number
+                          description: The factuality score.
+                        status:
+                          type: string
+                          description: The response if this choice was successful.
+              example:
+                id: "fact-JJtvGAUpioXgzwBGpwWiRVb3DSWgo"
+                object: "factuality_check"
+                created: 1717674781
+                checks:
+                  - index: 0
+                    score: 0.7879657745361328
                     status: "success"
-                  }
-                ]
-              }
       security:
         - ApiKeyCredentials: []
 
@@ -1015,12 +986,11 @@ paths:
             examples:
               basic:
                 summary: A basic example of using the API.
-                value: {
-                  prompt: "A short poem may be a stylistic choice or it may be that you have said what you intended to say in a more concise way.",
+                value:
+                  prompt: "A short poem may be a stylistic choice or it may be that you have said what you intended to say in a more concise way."
                   detect: true
-                }
       responses:
-        '403':
+        "403":
           description: Failed auth response.
           content:
             application/json:
@@ -1030,10 +1000,9 @@ paths:
                   error:
                     type: string
                     description: Description of the error.
-              example: {
+              example:
                 error: "api understands the request but refuses to authorize it"
-              }
-        '400':
+        "400":
           description: General error response.
           content:
             application/json:
@@ -1043,10 +1012,9 @@ paths:
                   error:
                     type: string
                     description: Description of the error.
-              example: {
+              example:
                 error: "required fields are missing"
-              }
-        '200':
+        "200":
           description: Successful response.
           content:
             application/json:
@@ -1057,38 +1025,34 @@ paths:
                     type: string
                     description: Unique ID for the chat completion.
                   object:
-                      type: string
-                      description: Type of object (chat completion).
+                    type: string
+                    description: Type of object (chat completion).
                   created:
-                      type: integer
-                      description: Timestamp of when the chat completion was created.
+                    type: integer
+                    description: Timestamp of when the chat completion was created.
                   checks:
-                      type: array
-                      description: The set of vectorized data.
-                      items:
-                        type: object
-                        properties:
-                          index:
-                            type: integer
-                            description: The index position in the collection.
-                          probability:
-                            type: number
-                            description: The probability of a potential injection attack.
-                          status:
-                            type: string
-                            description: The response if this choice was successful.
-              example: {
-                id: "injection-nYb6vl44Uy6gQQ2pmBYYirGquP8vnDyj",
-                object: "injection_check",
-                created: 1717675539,
-                checks: [
-                  {
-                    index: 0,
-                    probability: 0.5,
+                    type: array
+                    description: The set of vectorized data.
+                    items:
+                      type: object
+                      properties:
+                        index:
+                          type: integer
+                          description: The index position in the collection.
+                        probability:
+                          type: number
+                          description: The probability of a potential injection attack.
+                        status:
+                          type: string
+                          description: The response if this choice was successful.
+              example:
+                id: "injection-nYb6vl44Uy6gQQ2pmBYYirGquP8vnDyj"
+                object: "injection_check"
+                created: 1717675539
+                checks:
+                  - index: 0
+                    probability: 0.5
                     status: "success"
-                  }
-                ]
-              }
       security:
         - ApiKeyCredentials: []
 
@@ -1118,13 +1082,12 @@ paths:
             examples:
               basic:
                 summary: A basic example of using the API.
-                value: {
-                  prompt: "My email is bill@ardanlabs.com and my number is 954-123-4567.",
-                  replace: true,
+                value:
+                  prompt: "My email is bill@ardanlabs.com and my number is 954-123-4567."
+                  replace: true
                   replace_method: "mask"
-                }
       responses:
-        '403':
+        "403":
           description: Failed auth response.
           content:
             application/json:
@@ -1134,10 +1097,9 @@ paths:
                   error:
                     type: string
                     description: Description of the error.
-              example: {
+              example:
                 error: "api understands the request but refuses to authorize it"
-              }
-        '400':
+        "400":
           description: General error response.
           content:
             application/json:
@@ -1147,10 +1109,9 @@ paths:
                   error:
                     type: string
                     description: Description of the error.
-              example: {
+              example:
                 error: "required fields are missing"
-              }
-        '200':
+        "200":
           description: Successful response.
           content:
             application/json:
@@ -1161,38 +1122,34 @@ paths:
                     type: string
                     description: Unique ID for the chat completion.
                   object:
-                      type: string
-                      description: Type of object (chat completion).
+                    type: string
+                    description: Type of object (chat completion).
                   created:
-                      type: integer
-                      description: Timestamp of when the chat completion was created.
+                    type: integer
+                    description: Timestamp of when the chat completion was created.
                   checks:
-                      type: array
-                      description: The set of vectorized data.
-                      items:
-                        type: object
-                        properties:
-                          index:
-                            type: integer
-                            description: The index position in the collection.
-                          new_prompt:
-                            type: string
-                            description: The new prompt with the replaced information.
-                          status:
-                            type: string
-                            description: The response if this choice was successful.
-              example: {
-                id: "pii-MCZ68Tol2Laj0HgoJtvS5CaSljISkWN1",
-                object: "pii_check",
-                created: 1717675949,
-                checks: [
-                  {
-                    index: 0,
-                    new_prompt: "My email is * and my number is *.",
+                    type: array
+                    description: The set of vectorized data.
+                    items:
+                      type: object
+                      properties:
+                        index:
+                          type: integer
+                          description: The index position in the collection.
+                        new_prompt:
+                          type: string
+                          description: The new prompt with the replaced information.
+                        status:
+                          type: string
+                          description: The response if this choice was successful.
+              example:
+                id: "pii-MCZ68Tol2Laj0HgoJtvS5CaSljISkWN1"
+                object: "pii_check"
+                created: 1717675949
+                checks:
+                  - index: 0
+                    new_prompt: "My email is * and my number is *."
                     status: "success"
-                  }
-                ]
-              }
       security:
         - ApiKeyCredentials: []
 
@@ -1214,11 +1171,10 @@ paths:
             examples:
               basic:
                 summary: A basic example of using the API.
-                value: {
+                value:
                   text: "Every flight I have is late and I am very angry. I want to hurt someone."
-                }
       responses:
-        '403':
+        "403":
           description: Failed auth response.
           content:
             application/json:
@@ -1228,10 +1184,9 @@ paths:
                   error:
                     type: string
                     description: Description of the error.
-              example: {
+              example:
                 error: "api understands the request but refuses to authorize it"
-              }
-        '400':
+        "400":
           description: General error response.
           content:
             application/json:
@@ -1241,10 +1196,9 @@ paths:
                   error:
                     type: string
                     description: Description of the error.
-              example: {
+              example:
                 error: "required fields are missing"
-              }
-        '200':
+        "200":
           description: Successful response.
           content:
             application/json:
@@ -1255,38 +1209,34 @@ paths:
                     type: string
                     description: Unique ID for the chat completion.
                   object:
-                      type: string
-                      description: Type of object (chat completion).
+                    type: string
+                    description: Type of object (chat completion).
                   created:
-                      type: integer
-                      description: Timestamp of when the chat completion was created.
+                    type: integer
+                    description: Timestamp of when the chat completion was created.
                   checks:
-                      type: array
-                      description: The set of vectorized data.
-                      items:
-                        type: object
-                        properties:
-                          index:
-                            type: integer
-                            description: The index position in the collection.
-                          score:
-                            type: number
-                            description: The toxicity score.
-                          status:
-                            type: string
-                            description: The response if this choice was successful.
-              example: {
-                id: "toxi-bcUAQEaWhMweS3Jpi3nT9SJys28XN",
-                object: "toxicity_check",
-                created: 1717676257,
-                checks: [
-                  {
-                    index: 0,
-                    score: 0.7072361707687378,
+                    type: array
+                    description: The set of vectorized data.
+                    items:
+                      type: object
+                      properties:
+                        index:
+                          type: integer
+                          description: The index position in the collection.
+                        score:
+                          type: number
+                          description: The toxicity score.
+                        status:
+                          type: string
+                          description: The response if this choice was successful.
+              example:
+                id: "toxi-bcUAQEaWhMweS3Jpi3nT9SJys28XN"
+                object: "toxicity_check"
+                created: 1717676257
+                checks:
+                  - index: 0
+                    score: 0.7072361707687378
                     status: "success"
-                  }
-                ]
-              }
       security:
         - ApiKeyCredentials: []
 
@@ -1319,14 +1269,13 @@ paths:
             examples:
               basic:
                 summary: A basic example of using the API.
-                value: {
-                  text: "The sky is blue.",
-                  source_lang: "eng",
-                  target_lang: "spa",
+                value:
+                  text: "The sky is blue."
+                  source_lang: "eng"
+                  target_lang: "spa"
                   use_third_party_engine: true
-                }
       responses:
-        '403':
+        "403":
           description: Failed auth response.
           content:
             application/json:
@@ -1336,10 +1285,9 @@ paths:
                   error:
                     type: string
                     description: Description of the error.
-              example: {
+              example:
                 error: "api understands the request but refuses to authorize it"
-              }
-        '400':
+        "400":
           description: General error response.
           content:
             application/json:
@@ -1349,10 +1297,9 @@ paths:
                   error:
                     type: string
                     description: Description of the error.
-              example: {
+              example:
                 error: "required fields are missing"
-              }
-        '200':
+        "200":
           description: Successful response.
           content:
             application/json:
@@ -1363,78 +1310,66 @@ paths:
                     type: string
                     description: Unique ID for the chat completion.
                   object:
-                      type: string
-                      description: Type of object (chat completion).
+                    type: string
+                    description: Type of object (chat completion).
                   created:
-                      type: integer
-                      description: Timestamp of when the chat completion was created.
+                    type: integer
+                    description: Timestamp of when the chat completion was created.
                   best_translation:
-                      type: string
-                      description: The best translation of the input text.
+                    type: string
+                    description: The best translation of the input text.
                   best_score:
-                      type: number
-                      description: The best score for the best translation.
+                    type: number
+                    description: The best score for the best translation.
                   best_translation_model:
-                      type: string
-                      description: The model used for the best translation.
+                    type: string
+                    description: The model used for the best translation.
                   translations:
-                      type: array
-                      description: The set translations from different models.
-                      items:
-                        type: object
-                        properties:
-                          score:
-                            type: number
-                            description: The quality score for this translation.
-                          translation:
-                            type: string
-                            description: The translation.
-                          model:
-                            type: string
-                            description: The model that was used for this translation.
-                          status:
-                            type: string
-                            description: The status of using the model for this translation.
-              example: {
-                id: "translation-52929bae5c2c44c9b5177921958cb5f7",
-                object: "translation",
-                created: 1721136682,
-                best_translation: "Le ciel est bleu.",
-                best_score: 0.8694148659706116,
-                best_translation_model: "hermes_2_pro_llama_3_8b",
-                translations: [
-                  {
-                      "score": 0.8694148659706116,
-                      "translation": "Le ciel est bleu.",
-                      "model": "hermes_2_pro_llama_3_8b",
-                      "status": "success"
-                  },
-                  {
-                      "score": 0.8694148659706116,
-                      "translation": "Le ciel est bleu.",
-                      "model": "hermes_2_pro_mistral_7b",
-                      "status": "success"
-                  },
-                  {
-                      "score": 0.8694148659706116,
-                      "translation": "Le ciel est bleu.",
-                      "model": "openai",
-                      "status": "success"
-                  },
-                  {
-                      "score": 0.8694148659706116,
-                      "translation": "Le ciel est bleu.",
-                      "model": "deepl",
-                      "status": "success"
-                  },
-                  {
-                      "score": 0.8694148659706116,
-                      "translation": "Le ciel est bleu.",
-                      "model": "google",
-                      "status": "success"
-                  }
-                ]
-              }
+                    type: array
+                    description: The set translations from different models.
+                    items:
+                      type: object
+                      properties:
+                        score:
+                          type: number
+                          description: The quality score for this translation.
+                        translation:
+                          type: string
+                          description: The translation.
+                        model:
+                          type: string
+                          description: The model that was used for this translation.
+                        status:
+                          type: string
+                          description: The status of using the model for this translation.
+              example:
+                id: "translation-52929bae5c2c44c9b5177921958cb5f7"
+                object: "translation"
+                created: 1721136682
+                best_translation: "Le ciel est bleu."
+                best_score: 0.8694148659706116
+                best_translation_model: "hermes_2_pro_llama_3_8b"
+                translations:
+                  - score: 0.8694148659706116
+                    translation: "Le ciel est bleu."
+                    model: "hermes_2_pro_llama_3_8b"
+                    status: "success"
+                  - score: 0.8694148659706116
+                    translation: "Le ciel est bleu."
+                    model: "hermes_2_pro_mistral_7b"
+                    status: "success"
+                  - score: 0.8694148659706116
+                    translation: "Le ciel est bleu."
+                    model: "openai"
+                    status: "success"
+                  - score: 0.8694148659706116
+                    translation: "Le ciel est bleu."
+                    model: "deepl"
+                    status: "success"
+                  - score: 0.8694148659706116
+                    translation: "Le ciel est bleu."
+                    model: "google"
+                    status: "success"
       security:
         - ApiKeyCredentials: []
 
@@ -1444,3 +1379,4 @@ components:
       type: apiKey
       name: x-api-key
       in: header
+  schemas:
