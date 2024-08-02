@@ -1,0 +1,202 @@
+
+When sending a request to the Vision models, Prediction Guard offers various options to upload your image. You can upload the image from using a URL, a local image file, data URI, or base64 encoded image.
+Here is an example of how to use an image from a URL:
+
+``` Python
+import os
+import json
+from predictionguard import PredictionGuard
+
+# Set your Prediction Guard token as an environmental variable.
+os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+
+client = PredictionGuard()
+
+messages = [
+    {
+        "role": "user",
+        "content": [
+            {
+                "type": "text",
+                "text": "What's in this image?"
+            },
+            {
+                "type": "image_url",
+                "image_url": {
+                    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg",
+                }
+            }
+        ]
+    },
+]
+
+result = client.chat.completions.create(
+    model="llava-1.5-7b-hf",
+    messages=messages
+)
+
+print(json.dumps(
+    result,
+    sort_keys=True,
+    indent=4,
+    separators=(',', ': ')
+))
+
+
+```
+
+This example shows how you can upload the image from a local file:
+
+``` Python
+import os
+import json
+from predictionguard import PredictionGuard
+
+# Set your Prediction Guard token as an environmental variable.
+os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+
+client = PredictionGuard()
+
+messages = [
+    {
+        "role": "user",
+        "content": [
+            {
+                "type": "text",
+                "text": "What's in this image?"
+            },
+            {
+                "type": "image_url",
+                "image_url": {
+                    "url": "image_data/Gfp-wisconsin-madison-the-nature-boardwalk.jpg",
+                }
+            }
+        ]
+    },
+]
+
+result = client.chat.completions.create(
+    model="llava-1.5-7b-hf",
+    messages=messages
+)
+
+print(json.dumps(
+    result,
+    sort_keys=True,
+    indent=4,
+    separators=(',', ': ')
+))
+
+
+```
+
+When using base64 encoded image inputs or data URIs, you first need to encode the image.
+
+Here is how you convert an image to base64 encoding
+
+```Python
+import base64
+
+def encode_image_to_base64(image_path):
+    with open(image_path, 'rb') as image_file:
+        image_data = image_file.read()
+        base64_encoded_data = base64.b64encode(image_data)
+        base64_message = base64_encoded_data.decode('utf-8')
+        return base64_message
+
+image_path = 'image_data/Gfp-wisconsin-madison-the-nature-boardwalk.jpg'
+encoded_image = encode_image_to_base64(image_path)
+
+```
+
+This example shows how to enter just the base64 encoded image:
+
+```Python
+messages = [
+    {
+        "role": "user",
+        "content": [
+            {
+                "type": "text",
+                "text": "What's in this image?"
+            },
+            {
+                "type": "image_url",
+                "image_url": {
+                    "url": encoded_image,
+                }
+            }
+        ]
+    },
+]
+
+result = client.chat.completions.create(
+    model="llava-1.5-7b-hf",
+    messages=messages
+)
+
+print(json.dumps(
+    result,
+    sort_keys=True,
+    indent=4,
+    separators=(',', ': ')
+))
+```
+
+And this example shows how to use a data URI
+
+```Python
+data_uri = "data:image/png;base64," + encoded_string
+
+messages = [
+    {
+        "role": "user",
+        "content": [
+            {
+                "type": "text",
+                "text": "What's in this image?"
+            },
+            {
+                "type": "image_url",
+                "image_url": {
+                    "url": data_uri,
+                }
+            }
+        ]
+    },
+]
+
+result = client.chat.completions.create(
+    model="llava-1.5-7b-hf",
+    messages=messages
+)
+
+print(json.dumps(
+    result,
+    sort_keys=True,
+    indent=4,
+    separators=(',', ': ')
+))
+```
+
+The output of these will be similar to this:
+
+```json
+{
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "content": "The image features a beautiful wooden path lined with green grass and a blue sky overhead. The pathway leads towards a body of water, creating a serene atmosphere. Along the path, there is a bench overlooking the pond, inviting to sit and relax. The scene also includes trees in the background, adding to the picturesque scenery.\nWith the combination of the peaceful atmosphere, the sunny blue sky, and the presence of water nearby, this image",
+                "output": null,
+                "role": "assistant"
+            },
+            "status": "success"
+        }
+    ],
+    "created": 1722545890,
+    "id": "chat-xX9FDkWknG8G0ZHQjCgNdp47uBQZy",
+    "model": "llava-1.5-7b-hf",
+    "object": "chat_completion"
+}
+```

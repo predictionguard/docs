@@ -1,0 +1,142 @@
+# Embeddings endpoint
+
+At Prediction Guard, we offer an embedding endpoint capable of generating embeddings for both text and images. This feature is particularly useful when you want to load embeddings into a vector database for performing semantically similar searches etc.
+
+The Bridgetower model is a cross-modal encoder that handles both images and text. Here is a simple illustration of how to make a call to the embeddings endpoint with both image and text inputs. This endpoint accepts image URL, local image files, data URIs, and base64 encoded image strings as input.
+
+## Embeddings for text and image
+
+```Python
+import os
+import json
+
+from predictionguard import PredictionGuard
+
+# Set your Prediction Guard token as an environmental variable.
+os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+
+client = PredictionGuard()
+
+response = client.embeddings.create(
+  model="bridgetower-large-itm-mlm-itc",
+  input=[
+    {
+        "text": "Cool skateboarding tricks you can try this summer",
+        "image": "https://farm4.staticflickr.com/3300/3497460990_11dfb95dd1_z.jpg"
+    }
+  ]
+)
+
+print(json.dumps(
+    response,
+    sort_keys=True,
+    indent=4,
+    separators=(',', ': ')
+))
+```
+
+This will yield a json object with the embedding.
+
+## Embeddings for text only 
+
+```Python
+import os
+import json
+
+from predictionguard import PredictionGuard
+
+# Set your Prediction Guard token as an environmental variable.
+os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+
+client = PredictionGuard()
+
+response = client.embeddings.create(
+  model="bridgetower-large-itm-mlm-itc",
+  input=[
+    {
+        "text": "Tell me a joke.",
+    }
+  ]
+)
+
+print(json.dumps(
+    response,
+    sort_keys=True,
+    indent=4,
+    separators=(',', ': ')
+))
+```
+
+## Embeddings for Image only
+
+```Python
+import os
+import json
+
+from predictionguard import PredictionGuard
+
+# Set your Prediction Guard token as an environmental variable.
+os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+
+client = PredictionGuard()
+
+response = client.embeddings.create(
+  model="bridgetower-large-itm-mlm-itc",
+  input=[
+    {
+         "image": "https://farm4.staticflickr.com/3300/3497460990_11dfb95dd1_z.jpg",
+    }
+  ]
+)
+
+print(json.dumps(
+    response,
+    sort_keys=True,
+    indent=4,
+    separators=(',', ': ')
+))
+```
+
+Once we have computed the embeddings, we can use them to calculate the similarity between two embeddings. First, we compute the embeddings using the PG API. Then, we convert the embeddings into tensors and pass them to a function that calculates the cosine similarity between the images.
+
+```Python
+import os
+import json
+from predictionguard import PredictionGuard
+import torch
+import numpy
+os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+client = PredictionGuard()
+
+response1 = client.embeddings.create(
+  model="bridgetower-large-itm-mlm-itc",
+  input=[
+    {
+         "image": "https://farm4.staticflickr.com/3300/3497460990_11dfb95dd1_z.jpg",
+    }
+  ]
+)
+
+response2 = client.embeddings.create(
+  model="bridgetower-large-itm-mlm-itc",
+  input=[
+    {
+         "image": "https://ichef.bbci.co.uk/news/976/cpsprodpb/10A6B/production/_133130286_gettyimages-1446849679.jpg",
+    }
+  ]
+)
+
+embedding1 = response1['data'][0]['embedding']
+embedding2 = response2['data'][0]['embedding']
+
+tensor1 = torch.tensor(embedding1)
+tensor2 = torch.tensor(embedding2)
+
+def compute_scores(emb_one, emb_two):
+    """Computes cosine similarity between two vectors."""
+    scores = torch.nn.functional.cosine_similarity(emb_one.unsqueeze(0), emb_two.unsqueeze(0))
+    return scores.numpy().tolist()
+
+similarity_score = compute_scores(tensor1, tensor2)
+print("Cosine Similarity Score:", similarity_score)
+```

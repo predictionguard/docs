@@ -207,20 +207,22 @@ The output will look something like this.
 
 ```json
 {
-   "id":"emb-oM1AChyqjQKqT6XKiUqY0bnqIUikK",
-   "object":"embedding_batch",
-   "created":1717780716,
-   "model":"bridgetower-large-itm-mlm-itc",
-   "data":[
-      {
-         "status":"error: could not call model, contact support",
-         "index":0,
-         "object":"embedding",
-         "embedding":[
-            
-         ]
-      }
-   ]
+    "created": 1722607307,
+    "data": [
+        {
+            "embedding": [
+                0.0073536476120352745,
+                -0.08882588893175125,
+                ...
+            ],
+            "index": 0,
+            "object": "embedding",
+            "status": "success"
+        }
+    ],
+    "id": "emb-weuRKl9D1kN4rzbM3mX29cqtdH3Cj",
+    "model": "bridgetower-large-itm-mlm-itc",
+    "object": "embedding_batch"
 }
 ```
 
