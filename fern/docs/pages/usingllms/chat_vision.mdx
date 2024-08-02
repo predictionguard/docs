@@ -1,5 +1,5 @@
 
-While sending a request to the Vision model PredictionGuard offers various options to upload your image. You can upload the image from using the url, a local image or base 64 encoded image.
+When sending a request to the Vision models, Prediction Guard offers various options to upload your image. You can upload the image from using a URL, a local image file, data URI, or base64 encoded image.
 Here is an example of how to use an image from a URL:
 
 ``` Python
@@ -90,10 +90,13 @@ print(json.dumps(
 
 ```
 
-This example shows how you can chat with a base64 encoded image
+When using base64 encoded image inputs or data URIs, you first need to encode the image.
 
 Here is how you convert an image to base64 encoding
+
 ```Python
+import base64
+
 def encode_image_to_base64(image_path):
     with open(image_path, 'rb') as image_file:
         image_data = image_file.read()
@@ -106,7 +109,7 @@ encoded_image = encode_image_to_base64(image_path)
 
 ```
 
-and this is how you can use it with predictionguard:
+This example shows how to enter just the base64 encoded image:
 
 ```Python
 messages = [
@@ -121,6 +124,42 @@ messages = [
                 "type": "image_url",
                 "image_url": {
                     "url": encoded_image,
+                }
+            }
+        ]
+    },
+]
+
+result = client.chat.completions.create(
+    model="llava-1.5-7b-hf",
+    messages=messages
+)
+
+print(json.dumps(
+    result,
+    sort_keys=True,
+    indent=4,
+    separators=(',', ': ')
+))
+```
+
+And this example shows how to use a data URI
+
+```Python
+data_uri = "data:iamge/png;base64," + encoded_string
+
+messages = [
+    {
+        "role": "user",
+        "content": [
+            {
+                "type": "text",
+                "text": "What's in this image?"
+            },
+            {
+                "type": "image_url",
+                "image_url": {
+                    "url": data_uri,
                 }
             }
         ]
