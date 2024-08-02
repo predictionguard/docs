@@ -47,6 +47,10 @@ navigation:
             path: ./docs/pages/usingllms/agents.mdx
           - page: Streaming
             path: ./docs/pages/usingllms/streaming.mdx
+          - page: Chat Vision
+            path: ./docs/pages/usingllms/chat_vision.mdx
+          - page: Emebddings
+            path: ./docs/pages/usingllms/embeddings.mdx
       - section: Process LLM Input
         contents:
           - page: PII
