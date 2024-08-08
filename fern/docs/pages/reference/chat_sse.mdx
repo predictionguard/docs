@@ -55,7 +55,6 @@ method for your application.
         
         # Use 'end' parameter in print function to avoid new lines.
         print(res["data"]["choices"][0]["delta"]["content"], end='')
-```
     ```
     </CodeBlock>
 
@@ -237,7 +236,7 @@ method for your application.
 
         var err = await client.ChatSSE(input);
         if (err != null) {
-            console.log('ERROR:' + err.error);
+            console.log('ERROR:' + err.errory: string);
             return;
         }
 
