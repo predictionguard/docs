@@ -67,12 +67,11 @@ import os
 
 from predictionguard import PredictionGuard
 
-# You can set you Prediction Guard API Key as an env variable,
+# You can set you Prediction Guard API Key as an env variable named "PREDICTIONGUARD_API_KEY",
 # or when creating the client object
-os.environ["PREDICTIONGUARD_API_KEY"]
 
 client = PredictionGuard(
-    api_key="<your Prediction Guard API Key"
+    api_key="<api key>"
 )
 
 messages = [
@@ -123,7 +122,7 @@ func main() {
 
 func run() error {
 	host := "https://api.predictionguard.com"
-	apiKey := os.Getenv("PGKEY")
+	apiKey := os.Getenv("PREDICTIONGUARD_API_KEY")
 
 	logger := func(ctx context.Context, msg string, v ...any) {
 		s := fmt.Sprintf("msg: %s", msg)
@@ -213,7 +212,7 @@ async fn main() {
 ```js
 import * as pg from 'predictionguard';
 
-const client = new pg.Client('https://api.predictionguard.com', process.env.PGKEY);
+const client = new pg.Client('https://api.predictionguard.com', process.env.PREDICTIONGUARD_API_KEY);
 
 async function Chat() {
     const input = {
@@ -256,7 +255,7 @@ Chat();
 <CodeBlock title="cURL">
 ```bash
 curl -i -X POST https://api.predictionguard.com/chat/completions \
-    -H "Authorization: Bearer ${PGKEY}" \
+    -H "Authorization: Bearer ${PREDICTIONGUARD_API_KEY}" \
     -H "Content-Type: application/json" \
     -d '{
     "model": "Neural-Chat-7B",

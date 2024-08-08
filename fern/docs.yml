@@ -49,7 +49,7 @@ navigation:
             path: ./docs/pages/usingllms/streaming.mdx
           - page: Chat Vision
             path: ./docs/pages/usingllms/chat_vision.mdx
-          - page: Emebddings
+          - page: Embeddings
             path: ./docs/pages/usingllms/embeddings.mdx
       - section: Process LLM Input
         contents:

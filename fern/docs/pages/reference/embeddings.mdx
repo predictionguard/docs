@@ -69,7 +69,7 @@ encoded in a base64 string.
 
     func run() error {
         host := "https://api.predictionguard.com"
-        apiKey := os.Getenv("PGKEY")
+        apiKey := os.Getenv("PREDICTIONGUARD_API_KEY")
 
         logger := func(ctx context.Context, msg string, v ...any) {
             s := fmt.Sprintf("msg: %s", msg)
@@ -150,7 +150,7 @@ encoded in a base64 string.
     ```js
     import * as pg from 'predictionguard';
 
-    const client = new pg.Client('https://api.predictionguard.com', process.env.PGKEY);
+    const client = new pg.Client('https://api.predictionguard.com', process.env.PREDICTIONGUARD_API_KEY);
 
     async function Embedding() {
         const image = new pg.ImageNetwork('https://farm4.staticflickr.com/3300/3497460990_11dfb95dd1_z.jpg');
@@ -196,7 +196,7 @@ encoded in a base64 string.
     EOF
 
     curl -i -X POST https://api.predictionguard.com/embeddings \
-    -H "Authorization: Bearer ${PGKEY}" \
+    -H "Authorization: Bearer ${PREDICTIONGUARD_API_KEY}" \
     -H "Content-Type: application/json" \
     -d @input.json
     ```

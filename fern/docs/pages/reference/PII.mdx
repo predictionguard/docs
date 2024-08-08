@@ -63,7 +63,7 @@ your preference or requirements, select the appropriate method for your applicat
 
     func run() error {
         host := "https://api.predictionguard.com"
-        apiKey := os.Getenv("PGKEY")
+        apiKey := os.Getenv("PREDICTIONGUARD_API_KEY")
 
         logger := func(ctx context.Context, msg string, v ...any) {
             s := fmt.Sprintf("msg: %s", msg)
@@ -122,7 +122,7 @@ your preference or requirements, select the appropriate method for your applicat
     ```js
     import * as pg from 'predictionguard';
 
-    const client = new pg.Client('https://api.predictionguard.com', process.env.PGKEY);
+    const client = new pg.Client('https://api.predictionguard.com', process.env.PREDICTIONGUARD_API_KEY);
 
     async function ReplacePII() {
         const replaceMethod = pg.ReplaceMethods.Mask;
@@ -144,7 +144,7 @@ your preference or requirements, select the appropriate method for your applicat
     <CodeBlock title="cURL">
     ```bash
     curl -i -X POST https://api.predictionguard.com/PII \
-     -H "Authorization: Bearer ${PGKEY}" \
+     -H "Authorization: Bearer ${PREDICTIONGUARD_API_KEY}" \
      -H "Content-Type: application/json" \
      -d '{
 		"prompt": "Hello, my name is John Doe and my SSN is 111-22-3333.",
