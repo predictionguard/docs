@@ -82,7 +82,7 @@ images that are base64 encoded represented by a data uri.
 
     func run() error {
         host := "https://staging.predictionguard.com"
-        apiKey := os.Getenv("PGKEYSTAGE")
+        apiKey := os.Getenv("PREDICTIONGUARD_API_KEY")
 
         logger := func(ctx context.Context, msg string, v ...any) {
             s := fmt.Sprintf("msg: %s", msg)
@@ -162,7 +162,7 @@ images that are base64 encoded represented by a data uri.
     ```js
     import * as pg from 'predictionguard';
 
-    const client = new pg.Client('https://api.predictionguard.com', process.env.PGKEY);
+    const client = new pg.Client('https://api.predictionguard.com', process.env.PREDICTIONGUARD_API_KEY);
 
     async function ChatVision() {
         const image = new pg.ImageNetwork('https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg');
@@ -221,7 +221,7 @@ images that are base64 encoded represented by a data uri.
     EOF
 
     curl -i -X POST https://api.predictionguard.com/chat/completions \
-    -H "Authorization: Bearer ${PGKEY}" \
+    -H "Authorization: Bearer ${PREDICTIONGUARD_API_KEY}" \
     -H "Content-Type: application/json" \
     -d @input.json
     ```
