@@ -191,7 +191,7 @@ paths:
                       output: "null"
                     status: "success"
       security:
-        - ApiKeyCredentials: []
+        - bearerAuth: []
     get:
       summary: List Chat Models
       description: A simple endpoint to check what models are available in the /chat/completions endpoint.
@@ -214,7 +214,7 @@ paths:
                     - "Hermes-2-Pro-Llama-3-8B"
                     - "llava-1.5-7b-hf"
       security:
-        - ApiKeyCredentials: []
+        - bearerAuth: []
 
   /chat/completions - Streaming Version:
     post:
@@ -389,7 +389,7 @@ paths:
                         logprobs: 0
                         finish_reason: "stop"
       security:
-        - ApiKeyCredentials: []
+        - bearerAuth: []
 
   /chat/completions - Vision Version:
     post:
@@ -579,7 +579,7 @@ paths:
                       output: "null"
                     status: "success"
       security:
-        - ApiKeyCredentials: []
+        - bearerAuth: []
 
   /completions:
     post:
@@ -720,7 +720,7 @@ paths:
                     text: "if I get a hair transplant?\n\nHair transplant is a surgical procedure that involves moving hair follicles from one part of the head to another. The procedure is designed to address hair loss and restore a fuller, more natural-looking head of hair. While hair transplant does not cause hair loss, it is essential to understand that the underlying cause of hair loss must be addressed to ensure long-term success.\n\nIn some cases, hair loss may be temporary due to the stress of the surgery or the use of certain medications. However, this is usually short-lived and will resolve on its own. To minimize the risk of temporary hair loss, it is crucial to follow your surgeon's post-operative instructions carefully and maintain a healthy lifestyle.\n\nIn summary, hair transplant does not cause hair loss, but it is essential to address the underlying cause of hair loss to achieve the best results. Temporary hair loss may occur, but it is typically short-lived and resolves on its own."
                     status: "success"
       security:
-        - ApiKeyCredentials: []
+        - bearerAuth: []
     get:
       summary: List Completions Models
       description: A simple endpoint to check what models are available in the /completions endpoint.
@@ -743,7 +743,7 @@ paths:
                     - "deepseek-coder-6.7b-instruct"
                     - "Hermes-2-Pro-Llama-3-8B"
       security:
-        - ApiKeyCredentials: []
+        - bearerAuth: []
 
   /embeddings:
     post:
@@ -852,7 +852,7 @@ paths:
                     status: "success"
                     embedding: [-0.04457271471619606, -0.007496959064155817]
       security:
-        - ApiKeyCredentials: []
+        - bearerAuth: []
     get:
       summary: List Embeddings Models
       description: A simple endpoint to check what models are available in the /embeddings endpoint.
@@ -870,7 +870,7 @@ paths:
                   value:
                     - "bridgetower-large-itm-mlm-itc"
       security:
-        - ApiKeyCredentials: []
+        - bearerAuth: []
 
   /factuality:
     post:
@@ -962,7 +962,7 @@ paths:
                     score: 0.7879657745361328
                     status: "success"
       security:
-        - ApiKeyCredentials: []
+        - bearerAuth: []
 
   /injection:
     post:
@@ -1054,7 +1054,7 @@ paths:
                     probability: 0.5
                     status: "success"
       security:
-        - ApiKeyCredentials: []
+        - bearerAuth: []
 
   /PII:
     post:
@@ -1151,7 +1151,7 @@ paths:
                     new_prompt: "My email is * and my number is *."
                     status: "success"
       security:
-        - ApiKeyCredentials: []
+        - bearerAuth: []
 
   /toxicity:
     post:
@@ -1238,7 +1238,7 @@ paths:
                     score: 0.7072361707687378
                     status: "success"
       security:
-        - ApiKeyCredentials: []
+        - bearerAuth: []
 
   /translate:
     post:
@@ -1371,12 +1371,13 @@ paths:
                     model: "google"
                     status: "success"
       security:
-        - ApiKeyCredentials: []
+        - bearerAuth: []
 
 components:
   securitySchemes:
-    ApiKeyCredentials:
-      type: apiKey
-      name: x-api-key
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
       in: header
   schemas:
