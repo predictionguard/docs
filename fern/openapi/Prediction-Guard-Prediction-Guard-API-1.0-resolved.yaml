@@ -1376,7 +1376,7 @@ paths:
 components:
   securitySchemes:
     ApiKeyCredentials:
-      type: apiKey
-      name: x-api-key
+      type: Bearer <api key>
+      name: Authorization
       in: header
   schemas:
