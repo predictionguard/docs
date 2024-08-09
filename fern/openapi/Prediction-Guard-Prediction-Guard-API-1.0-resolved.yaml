@@ -779,7 +779,7 @@ paths:
                 value:
                   model: "bridgetower-large-itm-mlm-itc"
                   input:
-                    - text: "This is Bill Kennedy, a decent Go developer."
+                    - text: "A person is ironing something while standing on the back of a taxi."
                       image: "<base64 encoded image>"
       responses:
         "403":
