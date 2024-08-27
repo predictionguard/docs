@@ -121,7 +121,7 @@ encoded in a base64 string.
         let pg_env = client::PgEnvironment::from_env().expect("env keys");
 
         let img_str = match image::encode(
-          "https://farm4.staticflickr.com/3300/3497460990_11dfb95dd1_z.jpg".to_string(),
+            "https://farm4.staticflickr.com/3300/3497460990_11dfb95dd1_z.jpg".to_string(),
         )
         .await
         {

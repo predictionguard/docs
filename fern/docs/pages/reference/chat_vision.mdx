@@ -144,7 +144,7 @@ images that are base64 encoded represented by a data uri.
             .max_tokens(1000)
             .add_message(
                 chat::Roles::User,
-                "What's in this image?".to_string(),
+                "What is in this image?".to_string(),
                 IMAGE.to_string(),
             );
 
@@ -155,6 +155,8 @@ images that are base64 encoded represented by a data uri.
 
         println!("\nchat completion response:\n\n {:?}", result);
     }
+
+    const IMAGE: &str = r#"data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mP8z8BQz0AEYBxVSF+FABJADveWkH6oAAAAAElFTkSuQmCC"#;
     ```
     </CodeBlock>
 

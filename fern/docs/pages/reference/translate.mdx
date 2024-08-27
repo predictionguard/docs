@@ -111,7 +111,7 @@ your preference or requirements, select the appropriate method for your applicat
 
     <CodeBlock title="Rust">
     ```rust
-    extern crate prediction_guard as pg_client;
+        extern crate prediction_guard as pg_client;
 
     use pg_client::{client, translate};
 
@@ -122,9 +122,10 @@ your preference or requirements, select the appropriate method for your applicat
         let clt = client::Client::new(pg_env).expect("client value");
 
         let req = translate::Request::new(
-            "The sky is blue".to_string(),
+            "The rain in Spain stays mainly in the plain".to_string(),
             translate::Language::English,
-            translate::Language::French,
+            translate::Language::Spanish,
+            true,
         );
 
         let result = clt.translate(&req).await.expect("error from translate");
