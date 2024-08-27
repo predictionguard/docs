@@ -100,7 +100,7 @@ on your preference or requirements, select the appropriate method for your appli
         let clt = client::Client::new(pg_env).expect("client value");
 
         let req = toxicity::Request::new(
-            "This is a perfectly fine statement.".to_string(),
+            "Every flight I have is late and I am very angry. I want to hurt someone.".to_string(),
         );
 
         let result = clt.toxicity(&req).await.expect("error from toxicity");

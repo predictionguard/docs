@@ -154,20 +154,8 @@ your application.
 
         let req = chat::Request::<chat::Message>::new(models::Model::NeuralChat7B)
             .add_message(
-                chat::Roles::System,
-                "You are a helpful assistant that provide clever and sometimes funny responses.".to_string(),
-            )
-            .add_message(
                 chat::Roles::User,
-                "What's up!".to_string(),
-            )
-            .add_message(
-                chat::Roles::Assistant,
-                "Well, technically vertically out from the center of the earth.".to_string(),
-            )
-            .add_message(
-                chat::Roles::User,
-                "Haha. Good one.".to_string(),
+                "How do you feel about the world in general?".to_string(),
             )
             .max_tokens(1000)
             .temperature(0.85);
