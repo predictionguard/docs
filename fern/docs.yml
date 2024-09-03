@@ -5,15 +5,21 @@ instances:
 title: Prediction Guard | Docs
 
 tabs:
-  help:
-    display-name: Docs
+  home:
+    display-name: Home
     icon: home
+  help:
+    display-name: Guides and concepts
+    icon: book
   api:
     display-name: API Reference
     icon: puzzle
+  sdk:
+    display-name: SDK Docs
+    icon: fa-brands fa-codepen
 
 navigation:
-  - tab: help
+  - tab: home
     layout:
       - section: Getting Started
         contents:
@@ -21,8 +27,9 @@ navigation:
             path: ./docs/pages/welcome.mdx
           - page: Quick Start
             path: ./docs/pages/quick_start.mdx
-          - page: SDKs
-            path: ./docs/pages/sdks.mdx
+
+  - tab: help
+    layout:
       - section: Input Requirements
         contents:
           - page: Models
@@ -75,11 +82,20 @@ navigation:
             path: ./docs/pages/guides/langchainllm.mdx
           - page: Many Chat with LLMs
             path: ./docs/pages/guides/ManyChat.mdx
-      - section: Reference
+      - section: Support
+        contents:
+          - page: Contact Us
+            path: ./docs/pages/support.mdx
+
+  - tab: api
+    layout:
+      - api: API Reference
+        display-errors: true
+      - section: SDK Reference
         contents:
           - page: Chat
             path: ./docs/pages/reference/chat.mdx
-          - page: Chat SSE
+          - page: Chat SSE (Streaming)
             path: ./docs/pages/reference/chat_sse.mdx
           - page: Chat Vision
             path: ./docs/pages/reference/chat_vision.mdx
@@ -97,19 +113,40 @@ navigation:
             path: ./docs/pages/reference/toxicity.mdx
           - page: Translate
             path: ./docs/pages/reference/translate.mdx
-      - section: Support
-        contents:
-          - page: Contact Us
-            path: ./docs/pages/support.mdx
-  - tab: api
+
+  - tab: sdk
     layout:
-      - api: API Reference
-        display-errors: true
+      - section: Software Development Kits
+        contents:
+          - page: SDKs
+            path: ./docs/pages/sdks.mdx
+      - section: SDK Reference
+        contents:
+          - page: Chat
+            path: ./docs/pages/reference/chat.mdx
+          - page: Chat SSE (Streaming)
+            path: ./docs/pages/reference/chat_sse.mdx
+          - page: Chat Vision
+            path: ./docs/pages/reference/chat_vision.mdx
+          - page: Completions
+            path: ./docs/pages/reference/completions.mdx
+          - page: Embeddings
+            path: ./docs/pages/reference/embeddings.mdx
+          - page: Factuality
+            path: ./docs/pages/reference/factuality.mdx
+          - page: Injection
+            path: ./docs/pages/reference/injection.mdx
+          - page: PII
+            path: ./docs/pages/reference/PII.mdx
+          - page: Toxicity
+            path: ./docs/pages/reference/toxicity.mdx
+          - page: Translate
+            path: ./docs/pages/reference/translate.mdx
 
 navbar-links:
   - type: secondary
     text: Contact us
-    url: "mailto:contact@predictionguard.com"
+    url: "https://predictionguard.com/get-started"
   - type: primary
     text: Join our Discord
     url: https://discord.gg/TFHgnhAFKd
@@ -125,3 +162,9 @@ logo:
   height: 85
 
 favicon: ./docs/assets/favicon.png
+
+layout:
+  page-width: 1504px
+  header-height: 75px
+  searchbar-placement: header
+  tabs-placement: header
