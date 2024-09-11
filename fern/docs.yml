@@ -165,6 +165,7 @@ logo:
   dark: ./docs/assets/logo_pg_dark.png
   light: ./docs/assets/logo_pg_light.png
   height: 85
+  href: https://predictionguard.com/
 
 favicon: ./docs/assets/favicon.png
 
