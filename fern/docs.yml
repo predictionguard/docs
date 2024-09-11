@@ -8,7 +8,7 @@ tabs:
   home:
     display-name: Home
     icon: home
-  help:
+  Guides:
     display-name: Guides and concepts
     icon: book
   api:
@@ -25,11 +25,14 @@ navigation:
         contents:
           - page: Welcome
             path: ./docs/pages/welcome.mdx
+          - page: Security
+            path: ./docs/pages/security.mdx
+  - tab: Guides
+    layout:
+      - section: Getting Started
+        contents:
           - page: Quick Start
             path: ./docs/pages/quick_start.mdx
-
-  - tab: help
-    layout:
       - section: Input Requirements
         contents:
           - page: Models
@@ -120,6 +123,8 @@ navigation:
         contents:
           - page: SDKs
             path: ./docs/pages/sdks.mdx
+          - page: Quick Start
+            path: ./docs/pages/sdkquickstart.mdx
       - section: SDK Reference
         contents:
           - page: Chat
@@ -153,8 +158,8 @@ navbar-links:
 
 colors:
   accentPrimary:
-    dark: "#212121"
-    light: "#376d20"
+    dark: "#009959"
+    light: "#009959"
 
 logo:
   dark: ./docs/assets/logo_pg_dark.png
@@ -164,7 +169,10 @@ logo:
 favicon: ./docs/assets/favicon.png
 
 layout:
-  page-width: 1504px
+  page-width: 108rem
   header-height: 75px
   searchbar-placement: header
   tabs-placement: header
+  content-width: 54rem
+
+css: ./styles.css
