@@ -88,3 +88,15 @@
 .endpoint-link:hover {
   color: #88b290; /* Changes link color on hover */
 }
+
+.light .fern-theme-default.fern-container {
+  background-color: white;
+}
+
+.light .fern-header {
+  background-color: white !important;
+}
+
+.light .fern-header-tabs {
+  background-color: white !important;
+}
