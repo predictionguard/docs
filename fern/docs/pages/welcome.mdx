@@ -1,41 +1,143 @@
 ---
-title: Getting Started
-description: Reliable, future proof AI predictions
+title: Security & Self Hosted
+subtitle: Reliable, future-proof AI predictions
+description: Reliable, future-proof AI predictions
+layout: custom
 ---
 
-Prediction Guard allows you to integrate secure, private GenAI functionality into your
-software applications via an easy-to-use API. The API can be self-hosted or accessed via
-our managed cloud offering. These docs are relevant to both the self-hosted and managed
-cloud offerings (although a self-hosted installation might have a variety of custom
-models deployed that are not listed throughout these docs).
-
-**Note - Prediction Guard does NOT save or share any data sent to these models
-(or responses from the models). Further, we are able to sign a BAA for customers
-needing HIPAA compliance. [Contact support](support) with any questions.**
-
-**Note - We only integrate models that are licensed permissively for commercial
-use.**
-
-Click below to explore and get started!
+<div></div>
 
 <Cards>
   <Card
-    title="Quick Start"
-    icon="fa-solid fa-play"
-    href="/docs/getting-started/quick-start"
-  />
-  <Card title="API Reference" icon="fa-solid fa-code" href="/api-reference" />
-</Cards>
-<br />
-<Cards>
+    href="/guides-and-concepts/getting-started/quick-start"
+    icon="fa-solid fa-book"
+    title="Guides and Concepts"
+  >
+    Understand how to use our API on a deeper level. Learn how to use our different endpoints and features.
+      \
+      \
+    [**Get Started** →](/guides-and-concepts/getting-started/quick-start)
+  </Card>
+
+{" "}
+
+<Card
+  href="/api-reference/api-reference/check-api-health"
+  icon="fa-solid fa-code"
+  title="API Reference"
+>
+    Integrate compliant natural language processing and generation into your products with a few lines of code.
+      \
+      \
+[**Get
+Started**→](/api-reference/api-reference/check-api-health)
+
+</Card>
+
+{" "}
+
+<Card
+  href="/sdk-docs/software-development-kits/sd-ks"
+  icon="fa-solid fa-cogs"
+  title="SDK Documentation"
+>
+    We provide official open-source SDKs (client libraries) for your favorite platforms. These clients make connecting to our API faster and help avoid errors.
+      \
+      \
+[**Get Started**
+→](/sdk-docs/software-development-kits/sd-ks)
+
+</Card>
+
   <Card
-    title="SDKs"
-    icon="fa-solid fa-signal"
-    href="/docs/getting-started/sd-ks"
-  />
-  <Card
-    title="HIPAA Compliant"
-    icon="fa-solid fa-shield-halved"
-    href="https://app.drata.com/trust/d31ad8d0-eeb1-45e6-846b-8eaad6c1ae75"
-  />
+    href="security"
+    icon="fa-solid fa-shield-halved" 
+    title="Compliance, Security, and Self Hosting"
+  >
+    We don't store, log, or cache any prompt data flowing through our system. We couldn't train models on your data if we wanted to! Our focus is keeping your data your data.
+      \
+      \
+    [**Get Started** →](security)
+  </Card>
 </Cards>
+
+---
+
+<br>
+
+</br>
+## About Us
+<br>
+
+</br>
+Prediction Guard allows you to integrate secure, private GenAI functionality into your software applications via an easy-to-use API. The API can be self-hosted or accessed via our managed cloud offering. These docs are relevant to both the self-hosted and managed cloud offerings (although a self-hosted installation might have a variety of custom models deployed that are not listed throughout these docs).
+
+<Tip>
+  Prediction Guard does NOT save or share any data sent to our models (or
+  responses from the models). Further, we are able to sign a BAA for customers
+  needing HIPAA compliance. [Contact support](support) with any questions
+</Tip>
+
+<video
+  width="100%"
+  height="200px"
+  controls
+  poster="https://predictionguard.com/lib_eltrNYEjQbpUWFRI/u9ipmgbzyy3y4m09.png?w=1280&dpr=2"
+>
+  <source
+    src="https://predictionguard.com/lib_eltrNYEjQbpUWFRI/ahaybas1d89gnu6s.mp4"
+    type="video/mp4"
+  ></source>
+</video>
+
+<br>
+
+</br>
+
+<Card title = " Our endpoints offer different ways to interact with our models and offer
+  additional value on top of them. From PII protection to Toxicity checks we can help
+  you utilize AI in a safe and compliant way.">
+
+{" "}
+
+{" "}
+
+<br></br>
+
+<div class="endpoints-links">
+  <a href="/api-reference/api-reference/embeddings" class="endpoint-link">
+    /EMBEDDINGS →
+  </a>
+  <a href="/api-reference/api-reference/injection" class="endpoint-link">
+    /INJECTION →
+  </a>
+  <a href="/api-reference/api-reference/factuality" class="endpoint-link">
+    /FACTUALITY →
+  </a>
+  <a href="/api-reference/api-reference/toxicity" class="endpoint-link">
+    /TOXICITY →
+  </a>
+  <a
+    href="/api-reference/api-reference/replace-personal-information"
+    class="endpoint-link"
+  >
+    /PII →
+  </a>
+  <a href="/api-reference/api-reference/translate" class="endpoint-link">
+    /TRANSLATE →
+  </a>
+</div>
+
+</Card>
+
+<br></br>
+
+<ButtonGroup>
+<Button href="https://predictionguard.com/get-started" intent="primary" rightIcon="arrow-right" large>
+  Schedule a demo with our team!
+</Button>
+
+<Button href="https://predictionguard.com/get-started" minimal large>
+  Learn More
+</Button>
+</ButtonGroup>

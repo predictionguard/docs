@@ -1,60 +1,48 @@
 ---
 title: Quick Start
-description: Reliable, future proof AI predictions
+subtitle: Reliable, future-proof AI predictions
+description: Reliable, future-proof AI predictions
 ---
 
-Technical teams need to figure out how to integrate the latest Large Language
-Models (LLMs), but:
+Technical teams need to figure out how to integrate the latest Large Language Models (LLMs), but:
 
 - You can’t build robust systems with inconsistent, unvalidated outputs; and
-- LLM integrations scare corporate lawyers, finance departments, and security
-professionals due to hallucinations, cost, lack of compliance (e.g., HIPAA),
-leaked IP/PII, and “injection” vulnerabilities.
+- LLM integrations scare corporate lawyers, finance departments, and security professionals due to hallucinations, cost, lack of compliance (e.g., HIPAA), leaked IP/PII, and “injection” vulnerabilities.
 
-Some companies are moving forward anyway by investing tons of engineering time/money
-in their own wrappers around LLMs and expensive hosting with OpenAI/Azure. Others
-are ignoring these issues and pressing forward with fragile and risky LLM integrations.
+Some companies are moving forward anyway by investing tons of engineering time/money in their own wrappers around LLMs and expensive hosting with OpenAI/Azure. Others are ignoring these issues and pressing forward with fragile and risky LLM integrations.
 
-At Prediction Guard, we think that you should get useful output from compliant
-AI systems (without crazy implementation/ hosting costs), so our solution lets you:
+At Prediction Guard, we think that you should get useful output from compliant AI systems (without crazy implementation/hosting costs), so our solution lets you:
 
 1. **De-risk LLM inputs** to remove PII and prompt injections;
-2. **Validate and check LLM outputs** to guard against hallucination, toxicity and
-inconsistencies; and
-3. **Implement private and compliant LLM systems** (HIPAA and self-hosted) that
-give your legal counsel warm fuzzy feeling while still delighting your customers
-with AI features.
+2. **Validate and check LLM outputs** to guard against hallucination, toxicity, and inconsistencies; and
+3. **Implement private and compliant LLM systems** (HIPAA and self-hosted) that give your legal counsel a warm fuzzy feeling while still delighting your customers with AI features.
 
-Sounds pretty great right? Follow the steps below to starting leveraging
-trustworthy LLMs:
+## Sounds pretty great, right? Follow the steps below to start leveraging trustworthy LLMs:
 
-## 1. Get access to Prediction Guard Enterprise
+<Steps toc={true}>
+  
+### Get access to Prediction Guard Enterprise
 
-We host and control the latest LLMs for you in our secure and privacy-conserving
-enterprise platform, so you can focus on your prompts and chains. To access the
-hosted LLMs, contact us [here](https://mailchi.mp/predictionguard/getting-started)
-to get an enterprise access token. You will need this access token to continue.
+We host and control the latest LLMs for you in our secure and privacy-conserving enterprise platform, so you can focus on your prompts and chains. To access the hosted LLMs, contact us [here](https://predictionguard.com/get-started) to get an enterprise access token. You will need this access token to continue.
 
-## 2. Start using one of our LLMs!
+### Start using one of our LLMs!
 
-Suppose you want to prompt an LLM to answer a user query from a chat application.
-You can setup a message thread, which includes a system prompt (that instructs
-the LLM how to behave in responding) as follows:
+Suppose you want to prompt an LLM to answer a user query from a chat application. You can set up a message thread, which includes a system prompt (that instructs the LLM how to behave in responding) as follows:
 
-```
+```json
 [
-    {
-        "role": "system",
-        "content": "You are a helpful assistant. Your model is hosted by Prediction Guard, a leading AI company."
-    },
-    {
-        "role": "user",
-        "content": "Where can I access the LLMs in a safe and secure environment?"
-    }
+  {
+    "role": "system",
+    "content": "You are a helpful assistant. Your model is hosted by Prediction Guard, a leading AI company."
+  },
+  {
+    "role": "user",
+    "content": "Where can I access the LLMs in a safe and secure environment?"
+  }
 ]
 ```
 
-## 3. Download the SDK for your favorite language
+### Download the SDK for your favorite language
 
 You can then use any of our official SDKs or REST API to prompt one of our LLMs!
 
@@ -67,36 +55,38 @@ import os
 
 from predictionguard import PredictionGuard
 
-# You can set you Prediction Guard API Key as an env variable named "PREDICTIONGUARD_API_KEY",
+# You can set your Prediction Guard API Key as an env variable named "PREDICTIONGUARD_API_KEY",
+
 # or when creating the client object
 
 client = PredictionGuard(
-    api_key="<api key>"
+api_key="<api key>"
 )
 
 messages = [
-    {
-        "role": "system",
-        "content": "You are a helpful chatbot that helps people learn."
-    },
-    {
-        "role": "user",
-        "content": "What is a good way to learn to code?"
-    }
+{
+"role": "system",
+"content": "You are a helpful chatbot that helps people learn."
+},
+{
+"role": "user",
+"content": "What is a good way to learn to code?"
+}
 ]
 
 result = client.chat.completions.create(
-    model="Hermes-2-Pro-Llama-3-8B",
-    messages=messages,
-    max_tokens=100
+model="Hermes-2-Pro-Llama-3-8B",
+messages=messages,
+max_tokens=100
 )
 
 print(json.dumps(
-    result,
-    sort_keys=True,
-    indent=4,
-    separators=(',', ': ')
+result,
+sort_keys=True,
+indent=4,
+separators=(',', ': ')
 ))
+
 ````
 </CodeBlock>
 
@@ -171,6 +161,7 @@ func run() error {
 	return nil
 }
 ````
+
 </CodeBlock>
 
 <CodeBlock title="Rust">
@@ -182,7 +173,7 @@ use pg_client::{client, chat, models};
 
 #[tokio::main]
 async fn main() {
-    let pg_env = client::PgEnvironment::from_env().expect("env keys");
+let pg_env = client::PgEnvironment::from_env().expect("env keys");
 
     let clt = client::Client::new(pg_env).expect("client value");
 
@@ -203,9 +194,14 @@ async fn main() {
         .await
         .expect("error from generate chat completion");
 
-    println!("\nchat completion response:\n\n {:?}", result);
+    println!("
+
+chat completion response:
+
+{:?}", result);
 }
-```
+
+````
 </CodeBlock>
 
 <CodeBlock title="NodeJS">
@@ -250,14 +246,12 @@ async function Chat() {
 
 Chat();
 ````
+
 </CodeBlock>
 
 <CodeBlock title="cURL">
 ```bash
-curl -i -X POST https://api.predictionguard.com/chat/completions \
-    -H "Authorization: Bearer ${PREDICTIONGUARD_API_KEY}" \
-    -H "Content-Type: application/json" \
-    -d '{
+curl -i -X POST https://api.predictionguard.com/chat/completions     -H "Authorization: Bearer ${PREDICTIONGUARD_API_KEY}"     -H "Content-Type: application/json"     -d '{
     "model": "Neural-Chat-7B",
     "messages": [
         {
@@ -282,7 +276,7 @@ curl -i -X POST https://api.predictionguard.com/chat/completions \
         "pii_replace_method": "random"
     }
 }'
-````
+```
 </CodeBlock>
 
 </CodeBlocks>
@@ -290,3 +284,5 @@ curl -i -X POST https://api.predictionguard.com/chat/completions \
 <Callout type="info" emoji="ℹ️">
   Note, you will need to replace `<your api key>` in the above examples with your actual access token.
 </Callout>
+
+</Steps>

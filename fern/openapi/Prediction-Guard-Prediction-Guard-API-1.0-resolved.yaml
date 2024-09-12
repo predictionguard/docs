@@ -1083,7 +1083,7 @@ paths:
               basic:
                 summary: A basic example of using the API.
                 value:
-                  prompt: "My email is bill@ardanlabs.com and my number is 954-123-4567."
+                  prompt: "My email is frodo@predictionguard.com and my number is 954-123-4567."
                   replace: true
                   replace_method: "mask"
       responses:
