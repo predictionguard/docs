@@ -18,7 +18,7 @@ etc. However, a common theme is the usage of LLMs through a REST API, which is e
 
 - Provided by a third party service (OpenAI, Anthropic, Cohere, etc.)
 - Self-hosted in your own infrastructure or in an account you control with a
-model hosting provider (Replicate, Baseten, etc.)
+  model hosting provider (Replicate, Baseten, etc.)
 - Self-hosted using a DIY model serving API (Flask, FastAPI, etc.)
 
 We will use [Prediction Guard](/) to call open
@@ -29,10 +29,10 @@ Further, it will illustrate how companies can access a wide range of models
 
 In order to "prompt" an LLM via Prediction Guard (and eventually engineer prompts),
 you can use any of the following SDKs:
-[Python](/docs/getting-started/sd-ks#pythonclient),
-[Go](/docs/getting-started/sd-ks#goclient),
-[Rust](/docs/getting-started/sd-ks#rustclient),
-[JS](/docs/getting-started/sd-ks#jsclient), and
+[Python](/sdk-docs/software-development-kits/sd-ks),
+[Go](/sdk-docs/software-development-kits/sd-ks),
+[Rust](/sdk-docs/software-development-kits/sd-ks),
+[JS](/sdk-docs/software-development-kits/sd-ks), and
 [HTTP](/api-reference).
 
 We will use Python to show an example:
@@ -79,28 +79,28 @@ print(json.dumps(
 The completions call should result in something similar to the following JSON
 output which includes the completion.
 
-```json copy
+````json copy
 {
-    "choices": [
-        {
-            "index": 0,
-            "model": "Hermes-2-Pro-Llama-3-8B",
-            "status": "success",
-            "text": "2/1\n```\n2/1\n```\nIf you didn't understand, I'll explain it further. For a given denominator, 1/1 is the fraction that has the closest numerator to the greatest common multiple of the numerator and the denominator, because when reducing a fraction to its simplest terms, any common factors are canceled out, and the greatest common factor of the numerator and denominator is usually the best numerator, however in this case the numerator and denominator are 1 which have no"
-        }
-    ],
-    "created": 1720018377,
-    "id": "cmpl-7yX6KVwvUTPPqUM7H2Z4KNadDgEhI",
-    "object": "text_completion"
+  "choices": [
+    {
+      "index": 0,
+      "model": "Hermes-2-Pro-Llama-3-8B",
+      "status": "success",
+      "text": "2/1\n```\n2/1\n```\nIf you didn't understand, I'll explain it further. For a given denominator, 1/1 is the fraction that has the closest numerator to the greatest common multiple of the numerator and the denominator, because when reducing a fraction to its simplest terms, any common factors are canceled out, and the greatest common factor of the numerator and denominator is usually the best numerator, however in this case the numerator and denominator are 1 which have no"
+    }
+  ],
+  "created": 1720018377,
+  "id": "cmpl-7yX6KVwvUTPPqUM7H2Z4KNadDgEhI",
+  "object": "text_completion"
 }
-```
+````
 
 ## Using The SDKs
 
 You can also try these examples using the other official SDKs:
 
-[Python](/docs/getting-started/sd-ks#pythonclient),
-[Go](/docs/getting-started/sd-ks#goclient),
-[Rust](/docs/getting-started/sd-ks#rustclient),
-[JS](/docs/getting-started/sd-ks#jsclient),
+[Python](/sdk-docs/software-development-kits/sd-ks),
+[Go](/sdk-docs/software-development-kits/sd-ks),
+[Rust](/sdk-docs/software-development-kits/sd-ks),
+[JS](/sdk-docs/software-development-kits/sd-ks),
 [HTTP](/api-reference)
