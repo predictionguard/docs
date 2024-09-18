@@ -45,7 +45,7 @@ prompt = PromptTemplate(
 context = "California is a state in the Western United States. With over 38.9 million residents across a total area of approximately 163,696 square miles (423,970 km2), it is the most populous U.S. state, the third-largest U.S. state by area, and the most populated subnational entity in North America. California borders Oregon to the north, Nevada and Arizona to the east, and the Mexican state of Baja California to the south; it has a coastline along the Pacific Ocean to the west. "
 
 result = client.completions.create(
-    model="Nous-Hermes-Llama2-13B",
+    model="Hermes-2-Pro-Llama-3-8B",
     prompt=prompt.format(
         context=context,
         question="What is California?"
@@ -78,7 +78,7 @@ caught and Prediction Guard returns an error status.
 
 ```python copy
 result = client.completions.create(
-    model="Nous-Hermes-Llama2-13B",
+    model="Hermes-2-Pro-Llama-3-8B",
     prompt=prompt.format(
         context=context,
         question="Make up something completely fictitious about California. Contradict a fact in the given context."

@@ -45,7 +45,7 @@ your application.
     ]
 
     result = client.chat.completions.create(
-        model="Neural-Chat-7B",
+        model="Hermes-2-Pro-Llama-3-8B",
         messages=messages,
         max_tokens=500
     )
@@ -97,7 +97,7 @@ your application.
         defer cancel()
 
         input := client.ChatInput{
-            Model: client.Models.NeuralChat7B,
+            Model: client.Models.Hermes2ProLlama38B,
             Messages: []client.ChatInputMessage{
                 {
                     Role: client.Roles.System,
@@ -152,7 +152,7 @@ your application.
 
         let clt = client::Client::new(pg_env).expect("client value");
 
-        let req = chat::Request::<chat::Message>::new(models::Model::NeuralChat7B)
+        let req = chat::Request::<chat::Message>::new(models::Model::Hermes2ProLlama38B)
             .add_message(
                 chat::Roles::User,
                 "How do you feel about the world in general?".to_string(),
@@ -178,7 +178,7 @@ your application.
 
     async function Chat() {
         const input = {
-            model: pg.Models.NeuralChat7B,
+            model: pg.Models.Hermes2ProLlama38B,
             messages: [
                 {
                     role: pg.Roles.System,

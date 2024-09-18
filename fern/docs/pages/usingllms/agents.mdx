@@ -58,8 +58,8 @@ generate a response:
 # In LangChain, "tools" are like resources that are available to your agent to
 # execute certain actions (like a Google Search) while trying to complete a
 # set of tasks. An "agent" is the object that you "run" to try and get a "Final Answer."
-tools = load_tools(["serpapi"], llm=PredictionGuard(model="Neural-Chat-7B"))
-agent = initialize_agent(tools, PredictionGuard(model="Neural-Chat-7B"),
+tools = load_tools(["serpapi"], llm=PredictionGuard(model="neural-chat-7b-v3-3"))
+agent = initialize_agent(tools, PredictionGuard(model="neural-chat-7b-v3-3"),
                          agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True)
 
 agent.run("How are Domino's gift cards delivered?")

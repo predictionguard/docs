@@ -96,7 +96,7 @@ prompt = PromptTemplate(
 )
 
 result = client.completions.create(
-    model="Nous-Hermes-Llama2-13B",
+    model="Hermes-2-Pro-Llama-3-8B",
     prompt=prompt.format(query="What is the population of LA?")
 )
 
@@ -238,7 +238,7 @@ def response_chain(message, convo_context, info_context):
 
     # Handle the informational request.
     result = client.completions.create(
-        model="Nous-Hermes-Llama2-13B",
+        model="Hermes-2-Pro-Llama-3-8B",
         prompt=qa_prompt.format(context=info_context, query=message)
     )
     completion = result['choices'][0]['text'].split('#')[0].strip()
@@ -257,7 +257,7 @@ def response_chain(message, convo_context, info_context):
 
     # Handle the chat message.
     result = client.completions.create(
-        model="Nous-Hermes-Llama2-13B",
+        model="Hermes-2-Pro-Llama-3-8B",
         prompt=chat_prompt.format(context=convo_context, query=message),
         output={
             "toxicity": True
@@ -332,7 +332,7 @@ question = "How are gift cards delivered?"
 myprompt = prompt.format(context=context, question=question)
 
 result = client.completions.create(
-    model="Nous-Hermes-Llama2-13B",
+    model="Hermes-2-Pro-Llama-3-8B",
     prompt=myprompt
 )
 result['choices'][0]['text'].split('#')[0].strip()
@@ -567,7 +567,7 @@ def rag_answer(message):
 
   # Get a response
   result = client.completions.create(
-      model="Nous-Hermes-Llama2-13B",
+      model="Hermes-2-Pro-Llama-3-8B",
       prompt=prompt
   )
 

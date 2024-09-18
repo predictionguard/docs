@@ -46,7 +46,7 @@ df=df.head(5)
 
 ## Summarize the data
 
-When processing uniquely formatted, unstructured text with LLMs, it is sometimes useful to summarize the input text into a coherent and well-structured paragraph. The code below defines a prompt for summarization, creates a prompt template using LangChain, and uses the `Nous-Hermes-Llama2-13B` to generate summaries for each transcript. The generated summaries are added as a new column in the DataFrame, and we save them to a CSV file (in case we want them later).
+When processing uniquely formatted, unstructured text with LLMs, it is sometimes useful to summarize the input text into a coherent and well-structured paragraph. The code below defines a prompt for summarization, creates a prompt template using LangChain, and uses the `Hermes-2-Pro-Llama-3-8B` to generate summaries for each transcript. The generated summaries are added as a new column in the DataFrame, and we save them to a CSV file (in case we want them later).
 
 ```python copy
 # Define the summarization prompt
@@ -67,7 +67,7 @@ summary_prompt = PromptTemplate(template=summarize_template,
 summaries = []
 for i,row in df.iterrows():
     result=client.completions.create(
-        model="Nous-Hermes-Llama2-13B",
+        model="Hermes-2-Pro-Llama-3-8B",
         prompt=summary_prompt.format(
             transcript=row['transcript']
         ),
@@ -123,7 +123,7 @@ for i, row in df.iterrows():
 
         # Extract the information
         result = client.completions.create(
-            model="Nous-Hermes-Llama2-13B",
+            model="Hermes-2-Pro-Llama-3-8B",
             prompt=q_and_a_prompt.format(
                 question=q, transcript_summary=row["summary"]
             ),

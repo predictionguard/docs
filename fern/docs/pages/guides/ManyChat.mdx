@@ -46,7 +46,7 @@ The body should look something like this (make sure to add the user question fie
 
 ```json
 {
-  "model": "Neural-Chat-7B",
+  "model": "neural-chat-7b-v3-3",
   "messages": [
     {
       "role": "system",
@@ -145,7 +145,7 @@ exports.handler = async (event) => {
       .filter((msg) => msg.content), // Filter out undefined content
   ];
 
-  const apiData = JSON.stringify({ model: "Neural-Chat-7B", messages });
+  const apiData = JSON.stringify({ model: "neural-chat-7b-v3-3", messages });
 
   const options = {
     hostname: "api.predictionguard.com",

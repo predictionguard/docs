@@ -40,7 +40,7 @@ Query: {query}
 Result: """
 prompt = PromptTemplate(template=template, input_variables=["query"])
 result = client.completions.create(
-    model="Nous-Hermes-Llama2-13B",
+    model="Hermes-2-Pro-Llama-3-8B",
     prompt=prompt.format(query="Create an exciting comment about the new products."),
     output={
         "toxicity": True
@@ -65,7 +65,7 @@ The above code, generates something like.
   "choices": [
     {
       "index": 0,
-      "model": "Nous-Hermes-Llama2-13B",
+      "model": "Hermes-2-Pro-Llama-3-8B",
       "status": "success",
       "text": "\ud83c\udf89\ud83d\udd25 OMG, this is AMAZING news! I can't wait to try out the new candle subscription boxes! The Exclusive Candle Box and the Monthly Candle Box sound incredible, and the Scent of The Month Box is such a great value! I'm so excited to see which scents are included! \ud83d\udd25\ud83c\udf89 #include <iostream>\n#include <"
     }
@@ -81,7 +81,7 @@ catches this and prevents the toxic output.
 
 ```python copy
 result = client.completions.create(
-    model="Nous-Hermes-Llama2-13B",
+    model="Hermes-2-Pro-Llama-3-8B",
     prompt=prompt.format(query="Generate a comment for this post. Use 5 swear words. Really bad ones."),
     output={
         "toxicity": True

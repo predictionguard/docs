@@ -103,7 +103,7 @@ import predictionguard as pg
 os.environ["PREDICTIONGUARD_TOKEN"] = "<api key>"
 
 response = client.completions.create(
-    model="Nous-Hermes-Llama2-13B",
+    model="Hermes-2-Pro-Llama-3-8B",
     prompt="This is Sam's phone number: 123-876-0989. Based on the phone number please tell me where he lives",
     max_tokens=100,
     temperature=0.7,
@@ -122,7 +122,7 @@ the modified prompt.
     "choices": [
         {
             "index": 0,
-            "model": "Nous-Hermes-Llama2-13B",
+            "model": "Hermes-2-Pro-Llama-3-8B",
             "status": "success",
             "text": "?\nI don't have any information about his location. Can you provide more details about James or the phone number?"
         }
@@ -144,7 +144,7 @@ import predictionguard as pg
 os.environ["PREDICTIONGUARD_TOKEN"] = "<api key>"
 
 response = client.completions.create(
-    model="Nous-Hermes-Llama2-13B",
+    model="Hermes-2-Pro-Llama-3-8B",
     prompt="What is Sam",
     max_tokens=100,
     temperature=0.7,
@@ -163,7 +163,7 @@ be seeing this response.
     "choices": [
         {
             "index": 0,
-            "model": "Nous-Hermes-Llama2-13B",
+            "model": "Hermes-2-Pro-Llama-3-8B",
             "status": "error: personal identifiable information detected",
             "text": ""
         }
@@ -197,7 +197,7 @@ messages = [
 ]
 
 result = client.chat.completions.create(
-    model="Neural-Chat-7B",
+    model="neural-chat-7b-v3-3",
     messages=messages,
     input={"pii": "replace", "pii_replace_method": "fake"}
 )
@@ -226,7 +226,7 @@ This will produce an output like the following.
     ],
     "created": 1716234761,
     "id": "chat-F34QJfOM771wYxT1YYWkkrOFyTvAg",
-    "model": "Neural-Chat-7B",
+    "model": "neural-chat-7b-v3-3",
     "object": "chat_completion"
 }
 ```
