@@ -207,6 +207,8 @@ paths:
               examples:
                 example1:
                   value:
+                    - "Hermes-3-Llama-3.1-70B"
+                    - "Hermes-3-Llama-3.1-8B"
                     - "Hermes-2-Pro-Mistral-7B"
                     - "Neural-Chat-7B"
                     - "llama-3-sqlcoder-8b"
@@ -736,6 +738,8 @@ paths:
               examples:
                 example1:
                   value:
+                    - "Hermes-3-Llama-3.1-70B"
+                    - "Hermes-3-Llama-3.1-8B"
                     - "Hermes-2-Pro-Mistral-7B"
                     - "Nous-Hermes-Llama2-13B"
                     - "Neural-Chat-7B"
