@@ -228,7 +228,7 @@ your application.
         -H "Authorization: Bearer ${PREDICTIONGUARD_API_KEY}" \
         -H "Content-Type: application/json" \
         -d '{
-            "model": "Neural-Chat-7B",
+            "model": "Hermes-2-Pro-Llama-3-8B",
             "messages": [
                 {
                     "role": "system",
@@ -247,7 +247,7 @@ your application.
                     "content": "Haha. Good one."
                 }
             ],
-            "max_tokens": 1000,
+            "max_tokens": 100,
             "temperature": 1.1,
             "top_p": 0.1,
             "top_k": 50,
@@ -268,22 +268,19 @@ The output will look something like this.
 
 ```json
 {
-   "id":"chat-SUZNF22Qn7uq22Ciez0AfhmnVlKF0",
-   "object":"chat_completion",
-   "created":1717780456,
-   "model":"Neural-Chat-7B",
-   "choices":[
-      {
-         "index":0,
-         "message":{
-            "role":"assistant",
-            "content":"Thanks, but if you're looking for something more serious, I'm here to help with any questions or tasks you might have. Just let me know!",
-            "output":null
-         },
-         "status":"success"
-      }
-   ]
-}
+    "id":"2066fdff-ff3c-4d02-9429-25155b0a62ce",
+    "choices":[
+        {
+            "index":0,
+            "message":{
+                "role":"assistant",
+                "content":"I'm here to make your day a little brighter, one joke at a time!"
+            }
+        }
+        ],
+    "created":1726862877,
+    "model":"Hermes-3-Llama-3.1-8B",
+    "object":"chat.completion"}
 ```
 
 This approach presents a straightforward way for readers to choose and apply the

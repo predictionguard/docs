@@ -95,7 +95,7 @@ paths:
               basic:
                 summary: A basic example of using the API.
                 value:
-                  model: "Neural-Chat-7B"
+                  model: "Hermes-2-Pro-Llama-3-8B"
                   messages:
                     - role: "user"
                       content: "How do you feel about the world in general?"
@@ -162,9 +162,6 @@ paths:
                         index:
                           type: integer
                           description: The index position in the collection.
-                        status:
-                          type: string
-                          description: The response if this choice was successful.
                         message:
                           type: object
                           description: A result choice.
@@ -175,21 +172,16 @@ paths:
                             content:
                               type: string
                               description: The content of the message.
-                            output:
-                              type: string
-                              description: The output of the message.
               example:
                 id: "chat-IMT9tc2a3mqN5BabtfdjeFH1t1GAn"
                 object: "chat_completion"
                 created: 1717602741
-                model: "Neural-Chat-7B"
+                model: "Hermes-2-Pro-Llama-3-8B"
                 choices:
                   - index: 0
                     message:
                       role: "assistant"
                       content: "I feel that the world in general is a complex and ever-evolving place. It has its fair share of beauty, challenges, and opportunities. There are moments of joy, connection, and growth, as well as pain, conflict, and loss. The world is a reflection of the people who inhabit it, and it's essential to maintain a balance between appreciating its wonders and working towards making it a better place for all. It's a constant journey of learning, adapting, and striving for a more harmonious existence."
-                      output: "null"
-                    status: "success"
       security:
         - bearerAuth: []
     get:
@@ -207,12 +199,15 @@ paths:
               examples:
                 example1:
                   value:
-                    - "Hermes-2-Pro-Mistral-7B"
-                    - "Neural-Chat-7B"
-                    - "llama-3-sqlcoder-8b"
-                    - "deepseek-coder-6.7b-instruct"
-                    - "Hermes-2-Pro-Llama-3-8B"
-                    - "llava-1.5-7b-hf"
+                    - "deepseek-coder-6.7b-instruct",
+                    - "llava-1.5-7b-hf",
+                    - "Hermes-3-Llama-3.1-70B",
+                    - "Hermes-2-Pro-Mistral-7B",
+                    - "neural-chat-7b-v3-3",
+                    - "llama-3-sqlcoder-8b",
+                    - "Hermes-3-Llama-3.1-8B",
+                    - "Hermes-2-Pro-Llama-3-8B",
+                    - "llava-v1.6-mistral-7b-hf"
       security:
         - bearerAuth: []
 
@@ -370,7 +365,7 @@ paths:
                     id: "chat-QTBHDiLvhW6XJJKn4skhBDADZTIgd"
                     object: "chat.completion.chunk"
                     created: 1717678791
-                    model: "Neural-Chat-7B"
+                    model: "Hermes-2-Pro-Llama-3-8B"
                     choices:
                       - index: 0
                         delta: { content: " I" }
@@ -381,7 +376,7 @@ paths:
                     id: "chat-BZvsPJsNvcIK0TfPOvC6UObFIsGSy"
                     object: "chat.completion.chunk"
                     created: 1717678792
-                    model: "Neural-Chat-7B"
+                    model: "Hermes-2-Pro-Llama-3-8B"
                     choices:
                       - index: 0
                         delta: {}
@@ -550,9 +545,6 @@ paths:
                         index:
                           type: integer
                           description: The index position in the collection.
-                        status:
-                          type: string
-                          description: The response if this choice was successful.
                         message:
                           type: object
                           description: A result choice.
@@ -563,9 +555,6 @@ paths:
                             content:
                               type: string
                               description: The content of the message.
-                            output:
-                              type: string
-                              description: The output of the message.
               example:
                 id: "chat-8qptYQ1EC1cPhHIKh7ArD5OxKN01N"
                 object: "chat_completion"
@@ -576,8 +565,6 @@ paths:
                     message:
                       role: "assistant"
                       content: "No, there is no deer in this picture. The image features a man wearing a hat and glasses, smiling for the camera."
-                      output: "null"
-                    status: "success"
       security:
         - bearerAuth: []
 
@@ -704,9 +691,6 @@ paths:
                         model:
                           type: string
                           description: The model used for generating the result.
-                        status:
-                          type: string
-                          description: The response if this choice was successful.
                         text:
                           type: string
                           description: The generated text.
@@ -716,9 +700,8 @@ paths:
                 created: 1717613547
                 choices:
                   - index: 0
-                    model: "Neural-Chat-7B"
+                    model: "Hermes-2-Pro-Llama-8B"
                     text: "if I get a hair transplant?\n\nHair transplant is a surgical procedure that involves moving hair follicles from one part of the head to another. The procedure is designed to address hair loss and restore a fuller, more natural-looking head of hair. While hair transplant does not cause hair loss, it is essential to understand that the underlying cause of hair loss must be addressed to ensure long-term success.\n\nIn some cases, hair loss may be temporary due to the stress of the surgery or the use of certain medications. However, this is usually short-lived and will resolve on its own. To minimize the risk of temporary hair loss, it is crucial to follow your surgeon's post-operative instructions carefully and maintain a healthy lifestyle.\n\nIn summary, hair transplant does not cause hair loss, but it is essential to address the underlying cause of hair loss to achieve the best results. Temporary hair loss may occur, but it is typically short-lived and resolves on its own."
-                    status: "success"
       security:
         - bearerAuth: []
     get:
@@ -736,12 +719,16 @@ paths:
               examples:
                 example1:
                   value:
-                    - "Hermes-2-Pro-Mistral-7B"
-                    - "Nous-Hermes-Llama2-13B"
-                    - "Neural-Chat-7B"
+                    - "Hermes-2-Pro-Llama-3-8B",
+                    - "Hermes-2-Pro-Mistral-7B",
+                    - "neural-chat-7b-v3-3",
+                    - "Nous-Hermes-Llama2-13b",
+                    - "deepseek-coder-6.7b-instruct",
+                    - "llava-v1.6-mistral-7b-hf",
+                    - "Hermes-3-Llama-3.1-8B",
+                    - "Hermes-3-Llama-3.1-70B",
+                    - "llava-1.5-7b-hf",
                     - "llama-3-sqlcoder-8b"
-                    - "deepseek-coder-6.7b-instruct"
-                    - "Hermes-2-Pro-Llama-3-8B"
       security:
         - bearerAuth: []
 
@@ -834,9 +821,6 @@ paths:
                         index:
                           type: integer
                           description: The index position in the collection.
-                        status:
-                          type: string
-                          description: The response if this choice was successful.
                         embedding:
                           type: array
                           description: The array of vector values.
@@ -849,7 +833,6 @@ paths:
                 model: "bridgetower-large-itm-mlm-itc"
                 data:
                   - index: 0
-                    status: "success"
                     embedding: [-0.04457271471619606, -0.007496959064155817]
       security:
         - bearerAuth: []
@@ -950,9 +933,6 @@ paths:
                         score:
                           type: number
                           description: The factuality score.
-                        status:
-                          type: string
-                          description: The response if this choice was successful.
               example:
                 id: "fact-JJtvGAUpioXgzwBGpwWiRVb3DSWgo"
                 object: "factuality_check"
@@ -960,7 +940,6 @@ paths:
                 checks:
                   - index: 0
                     score: 0.7879657745361328
-                    status: "success"
       security:
         - bearerAuth: []
 
@@ -1226,9 +1205,6 @@ paths:
                         score:
                           type: number
                           description: The toxicity score.
-                        status:
-                          type: string
-                          description: The response if this choice was successful.
               example:
                 id: "toxi-bcUAQEaWhMweS3Jpi3nT9SJys28XN"
                 object: "toxicity_check"
@@ -1236,7 +1212,6 @@ paths:
                 checks:
                   - index: 0
                     score: 0.7072361707687378
-                    status: "success"
       security:
         - bearerAuth: []
 

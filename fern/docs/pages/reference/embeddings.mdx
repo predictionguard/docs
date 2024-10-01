@@ -207,25 +207,46 @@ The output will look something like this.
 
 ```json
 {
-    "created": 1722607307,
     "data": [
         {
             "embedding": [
-                0.0073536476120352745,
-                -0.08882588893175125,
+                -0.010075676254928112,
+                -0.024130256846547127,
+                -0.017985647544264793,
                 ...
             ],
             "index": 0,
-            "object": "embedding",
-            "status": "success"
+            "object": "embedding"
         }
     ],
-    "id": "emb-weuRKl9D1kN4rzbM3mX29cqtdH3Cj",
+    "id": "emb-c8159360-feaf-4fc8-8275-1cab8b790f8d",
+    "object": "list",
+    "created": 1727795282,
     "model": "bridgetower-large-itm-mlm-itc",
-    "object": "embedding_batch"
 }
 ```
 
 This approach presents a straightforward way for readers to choose and apply the
 code example that best suits their needs for generating text completions using
 either Python, Go, Rust, JS, or cURL.
+
+curl -O 'https://farm4.staticflickr.com/3300/3497460990_11dfb95dd1_z.jpg'
+
+base64_img="$(base64 -i 3497460990_11dfb95dd1_z.jpg)"
+
+cat <<EOF > input.json
+{
+    "model": "bridgetower-large-itm-mlm-itc",
+	"input": [
+    	{
+		"text": "Tell me a joke.",
+        "image": "$base64_img"
+      	}
+	]
+}
+EOF
+
+curl -i -X POST https://stage.predictionguard.com/embeddings \
+-H "Authorization: Bearer ${PREDICTIONGUARD_API_KEY}" \
+-H "Content-Type: application/json" \
+-d @input.json

@@ -234,24 +234,19 @@ The output will look something like:
 
 ```json
 {
-   "id":"chat-zstjj2MKpRdKfBmCMILK9wgx7I09N",
-   "object":"chat_completion",
-   "created":1723228682,
-   "model":"llava-1.5-7b-hf",
-   "choices":[
-      {
-         "index":0,
-         "message":{
-            "role":"assistant",
-            "content":"In the image, there is a person standing on the back of a vehicle in a city. The vehicle is situated next to a taxi on the street. Another car can be seen approaching, and there is also a traffic light visible in the scene. The person standing on the vehicle could be a man drying his clothes, creating a unique and eye-catching sight. Additionally, a handbag is present near the person riding on the vehicle, likely belonging to them.",
-            "output":null
-         },
-         "status":"success"
-      }
-   ]
+    "choices": [
+        {
+        "index": 0,
+        "text": " Why did the chicken cross the playground?  To get to the other slide.\n\nI'm a software engineer and I'm passionate about creating things that make people's lives easier. I'm also a bit of a nerd when it comes to technology and I love learning about new tools and techniques. In my free time, I enjoy hiking, playing video games, and spending time with my family. I'm always looking for new challenges and opportunities to learn and grow, so if you have any ideas or projects"
+        }
+    ],
+    "id": "cmpl-27dc83fb-1ef4-48f0-8931-59c812d5a12c",
+    "object": "text.completion",
+    "created": 1727795491
 }
 ```
 
 This approach presents a straightforward way for readers to choose and apply the
 code example that best suits their needs for generating text completions using
 either Python, Go, Rust, JS, or cURL.
+
