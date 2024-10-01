@@ -199,14 +199,14 @@ paths:
               examples:
                 example1:
                   value:
-                    - "deepseek-coder-6.7b-instruct",
-                    - "llava-1.5-7b-hf",
-                    - "Hermes-3-Llama-3.1-70B",
-                    - "Hermes-2-Pro-Mistral-7B",
-                    - "neural-chat-7b-v3-3",
-                    - "llama-3-sqlcoder-8b",
-                    - "Hermes-3-Llama-3.1-8B",
-                    - "Hermes-2-Pro-Llama-3-8B",
+                    - "deepseek-coder-6.7b-instruct"
+                    - "llava-1.5-7b-hf"
+                    - "Hermes-3-Llama-3.1-70B"
+                    - "Hermes-2-Pro-Mistral-7B"
+                    - "neural-chat-7b-v3-3"
+                    - "llama-3-sqlcoder-8b"
+                    - "Hermes-3-Llama-3.1-8B"
+                    - "Hermes-2-Pro-Llama-3-8B"
                     - "llava-v1.6-mistral-7b-hf"
       security:
         - bearerAuth: []
@@ -719,15 +719,15 @@ paths:
               examples:
                 example1:
                   value:
-                    - "Hermes-2-Pro-Llama-3-8B",
-                    - "Hermes-2-Pro-Mistral-7B",
-                    - "neural-chat-7b-v3-3",
-                    - "Nous-Hermes-Llama2-13b",
-                    - "deepseek-coder-6.7b-instruct",
-                    - "llava-v1.6-mistral-7b-hf",
-                    - "Hermes-3-Llama-3.1-8B",
-                    - "Hermes-3-Llama-3.1-70B",
-                    - "llava-1.5-7b-hf",
+                    - "Hermes-2-Pro-Llama-3-8B"
+                    - "Hermes-2-Pro-Mistral-7B"
+                    - "neural-chat-7b-v3-3"
+                    - "Nous-Hermes-Llama2-13b"
+                    - "deepseek-coder-6.7b-instruct"
+                    - "llava-v1.6-mistral-7b-hf"
+                    - "Hermes-3-Llama-3.1-8B"
+                    - "Hermes-3-Llama-3.1-70B"
+                    - "llava-1.5-7b-hf"
                     - "llama-3-sqlcoder-8b"
       security:
         - bearerAuth: []
