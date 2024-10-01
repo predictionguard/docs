@@ -96,7 +96,7 @@ method for your application.
         defer cancel()
 
         input := client.ChatSSEInput{
-            Model: client.Models.Hermes2ProLlama38B,
+            Model: "Hermes-2-Pro-Llama-3-8B",
             Messages: []client.ChatInputMessage{
                 {
                     Role: client.Roles.System,
@@ -185,7 +185,7 @@ method for your application.
 
     async function ChatSSE() {
         const input = {
-            model: pg.Models.Hermes2ProLlama38B,
+            model: "Hermes-2-Pro-Llama-3-8B",
             messages: [
                 {
                     role: pg.Roles.System,

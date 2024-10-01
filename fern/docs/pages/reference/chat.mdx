@@ -97,7 +97,7 @@ your application.
         defer cancel()
 
         input := client.ChatInput{
-            Model: client.Models.Hermes2ProLlama38B,
+            Model: "Hermes-2-Pro-Llama-3-8B",
             Messages: []client.ChatInputMessage{
                 {
                     Role: client.Roles.System,
@@ -178,7 +178,7 @@ your application.
 
     async function Chat() {
         const input = {
-            model: pg.Models.Hermes2ProLlama38B,
+            model: "Hermes-2-Pro-Llama-3-8B",
             messages: [
                 {
                     role: pg.Roles.System,
@@ -280,7 +280,8 @@ The output will look something like this.
         ],
     "created":1726862877,
     "model":"Hermes-3-Llama-3.1-8B",
-    "object":"chat.completion"}
+    "object":"chat.completion"
+}
 ```
 
 This approach presents a straightforward way for readers to choose and apply the

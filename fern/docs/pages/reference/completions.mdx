@@ -76,7 +76,7 @@ on your preference or requirements, select the appropriate method for your appli
         defer cancel()
 
         input := client.CompletionInput{
-            Model:       client.Models.Hermes2ProLlama38B,
+            Model:       "Hermes-2-Pro-Llama-3-8B",
             Prompt:      "The best joke I know is: ",
             MaxTokens:   1000,
             Temperature: 0.1,
@@ -131,7 +131,7 @@ on your preference or requirements, select the appropriate method for your appli
 
     async function Completions() {
         const input = {
-            model: pg.Models.Hermes2ProLlama38B,
+            model: "Hermes-2-Pro-Llama-3-8B",
             prompt: 'The best joke I know is: ',
             maxTokens: 1000,
             temperature: 0.1,
