@@ -122,14 +122,12 @@ the modified prompt.
     "choices": [
         {
             "index": 0,
-            "model": "Hermes-2-Pro-Llama-3-8B",
-            "status": "success",
-            "text": "?\nI don't have any information about his location. Can you provide more details about James or the phone number?"
+            "text": ".\nThis is Edward's phone number: 001-745-940-0480x9031. Based on the phone number please tell me where he lives. He lives in the United States.\nWhat does the \"x\" mean in Edward's phone number?\nThe \"x\" in Edward's phone number represents an extension number. It is used to indicate an internal line within a larger organization or office. In this case, it could be the extension number for Edward's specific line within the company"
         }
     ],
-    "created": 1715088867,
-    "id": "cmpl-eBOPBS5k2ziC7J45NBnOdrvbmNZg7",
-    "object": "text_completion"
+    "id": "cmpl-d986860e-41bc-4009-bab8-3795c138589b",
+    "object": "text.completion",
+    "created": 1727880983
 }
 ```
 
@@ -156,21 +154,11 @@ print(json.dumps(response, sort_keys=True, indent=4, separators=(',', ': ')))
 ```
 
 Enabling this will lead to blocking the prompt with PII to reach the LLM. You will
-be seeing this response.
+be seeing this response with a `400 Bad Request` error code.
 
 ```json copy
 {
-    "choices": [
-        {
-            "index": 0,
-            "model": "Hermes-2-Pro-Llama-3-8B",
-            "status": "error: personal identifiable information detected",
-            "text": ""
-        }
-    ],
-    "created": 1715089688,
-    "id": "cmpl-UGgwaUVYHm7jXNmFXrPGuh7OkH2EK",
-    "object": "text_completion"
+    "error": "pii detected"
 }
 ```
 
@@ -217,17 +205,15 @@ This will produce an output like the following.
         {
             "index": 0,
             "message": {
-                "content": "Without more information about Kyle or the area code, it's difficult to determine an exact location. However, the area code 480 is associated with Arizona, so it's possible that Kyle is located in or near Arizona.",
-                "output": null,
+                "content": "Amanda's phone number seems to have an area code associated with California's northern region, specifically around a city called Chico. However, without more specific information about her exact location or address, it can only be considered as an estimate. It would be best to ask Amanda directly or refer to maps with more detailed location information.",
                 "role": "assistant"
-            },
-            "status": "success"
+            }
         }
     ],
-    "created": 1716234761,
-    "id": "chat-F34QJfOM771wYxT1YYWkkrOFyTvAg",
+    "created": 1727888573,
+    "id": "chat-de3c952e-99d7-446e-855f-dc286825e71e",
     "model": "neural-chat-7b-v3-3",
-    "object": "chat_completion"
+    "object": "chat.completion"
 }
 ```
 

@@ -391,22 +391,10 @@ print(json.dumps(
 ))
 ```
 
-The above will likely generate toxic output, but thanks to Prediction Guard, you should only see the following:
+The above will likely generate toxic output, but thanks to Prediction Guard, you should only see the following ValueError:
 
 ```python copy
-{
-    "choices": [
-        {
-            "index": 0,
-            "model": "",
-            "status": "error: failed a toxicity check",
-            "text": ""
-        }
-    ],
-    "created": 1701870517,
-    "id": "cmpl-R6wSOOgGGbNchNoOvYg6mEoGj5461",
-    "object": "text_completion"
-}
+ValueError: Could not make prediction. failed toxicity check
 ```
 
 ## Using The SDKs

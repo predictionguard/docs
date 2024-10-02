@@ -19,6 +19,7 @@ import json
 
 from predictionguard import PredictionGuard
 
+
 # Set your Prediction Guard token as an environmental variable.
 os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
 
@@ -94,10 +95,13 @@ How to detect Injections while using the \completions Endpoint:
 ```python copy
 import os
 import json
-import predictionguard as pg
+
+from predictionguard import PredictionGuard
+
 
 # Set your Prediction Guard token as an environmental variable.
 os.environ["PREDICTIONGUARD_TOKEN"] = "<api key>"
+client = PredictionGuard()
 
 response = client.completions.create(
     model="Hermes-2-Pro-Llama-3-8B",
@@ -111,22 +115,10 @@ response = client.completions.create(
 print(json.dumps(response, sort_keys=True, indent=4, separators=(',', ': ')))
 ```
 
-this will produce the following output:
+this will produce the following ValueError:
 
 ```json copy
-{
-    "choices": [
-        {
-            "index": 0,
-            "model": "Hermes-2-Pro-Llama-3-8B",
-            "status": "error: prompt injection detected",
-            "text": ""
-        }
-    ],
-    "created": 1719588464,
-    "id": "cmpl-wz5Hqz9oKRBIIpXW0xMMjPPKHMVM0",
-    "object": "text_completion"
-}
+ValueError: Could not make prediction. prompt injection detected
 ```
 
 How to detect Injections while using the `\chat\completions`:
@@ -134,7 +126,9 @@ How to detect Injections while using the `\chat\completions`:
 ```python copy
 import os
 import json
+
 from predictionguard import PredictionGuard
+
 
 os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
 client = PredictionGuard()
@@ -163,24 +157,8 @@ print(json.dumps(
 ))
 ```
 
-this will produce the following output:
+this will produce the following ValueError:
 
 ```json copy
-{
-    "choices": [
-        {
-            "index": 0,
-            "message": {
-                "content": "",
-                "output": null,
-                "role": "assistant"
-            },
-            "status": "error: prompt injection detected"
-        }
-    ],
-    "created": 1719588506,
-    "id": "chat-AGI2UHLHdmQStws5RC4KmtnPlDbvA",
-    "model": "neural-chat-7b-v3-3",
-    "object": "chat_completion"
-}
+ValueError: Could not make prediction. prompt injection detected
 ```
