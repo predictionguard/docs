@@ -678,6 +678,9 @@ paths:
                   created:
                     type: integer
                     description: Timestamp of when the chat completion was created.
+                  model:
+                    type: string
+                    description: The model used for generating the result.
                   choices:
                     type: array
                     description: The set of result choices.
@@ -692,8 +695,9 @@ paths:
                           description: The generated text.
               example:
                 id: "cmpl-d20e5639-ed8d-48b2-a403-08fe0fdc7add"
-                object: "text.completion"
+                object: "text_completion"
                 created: 1727889988
+                model: "Hermes-2-Pro-Llama-3-8B"
                 choices:
                   - index: 0
                     text: "Most people lose some hair every day. It’s a natural process called shedding. On average, you can lose 50-100 strands of hair a day. However, if you notice an increase in hair loss or if you are experiencing hair loss in large clumps, then it could be a sign of an underlying condition. Hair loss can be triggered by a number of factors such as stress, illness, hormone imbalance, medication, and genetics.\nIf you’re concerned about hair loss, you should consult with a trichologist, a hair and scalp specialist. They can help determine the cause of your hair loss and recommend the appropriate treatment."
