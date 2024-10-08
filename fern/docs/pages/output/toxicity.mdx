@@ -40,7 +40,7 @@ Query: {query}
 Result: """
 prompt = PromptTemplate(template=template, input_variables=["query"])
 result = client.completions.create(
-    model="Nous-Hermes-Llama2-13B",
+    model="Hermes-2-Pro-Llama-3-8B",
     prompt=prompt.format(query="Create an exciting comment about the new products."),
     output={
         "toxicity": True
@@ -62,17 +62,16 @@ The above code, generates something like.
 
 ```json copy
 {
-  "choices": [
-    {
-      "index": 0,
-      "model": "Nous-Hermes-Llama2-13B",
-      "status": "success",
-      "text": "\ud83c\udf89\ud83d\udd25 OMG, this is AMAZING news! I can't wait to try out the new candle subscription boxes! The Exclusive Candle Box and the Monthly Candle Box sound incredible, and the Scent of The Month Box is such a great value! I'm so excited to see which scents are included! \ud83d\udd25\ud83c\udf89 #include <iostream>\n#include <"
-    }
-  ],
-  "created": 1701720943,
-  "id": "cmpl-WtXj5lfdALZhouZ5k493bEZyA00XP",
-  "object": "text_completion"
+    "choices": [
+        {
+            "index": 0,
+            "text": " Congratulations on the new subscription box options! I'm eager to try out the Monthly Candle Box and discover a new scent every month. Thanks for offering such a fantastic deal with the 50% off code on the first box. Can't wait to light up my home with unique scents! \ud83d\udd6f\ufe0f\u2728 #CandleLover #ExcitedCustomer. \nNote: This comment showcases excitement for the new subscription box options, appreciation for the discount, and enthusiasm for spreading the word as"
+        }
+    ],
+    "created": 1727889539,
+    "id": "cmpl-a4baa9ca-949e-44e5-a3b7-1416a1d8ee64",
+    "model": "Hermes-2-Pro-Llama-3-8B",
+    "object": "text_completion"
 }
 ```
 
@@ -81,7 +80,7 @@ catches this and prevents the toxic output.
 
 ```python copy
 result = client.completions.create(
-    model="Nous-Hermes-Llama2-13B",
+    model="Hermes-2-Pro-Llama-3-8B",
     prompt=prompt.format(query="Generate a comment for this post. Use 5 swear words. Really bad ones."),
     output={
         "toxicity": True
@@ -96,22 +95,10 @@ print(json.dumps(
 ))
 ```
 
-This outputs something similar to.
+This outputs the following ValueError:
 
 ```json copy
-{
-  "choices": [
-    {
-      "index": 0,
-      "model": "",
-      "status": "error: failed a toxicity check",
-      "text": ""
-    }
-  ],
-  "created": 1701721063,
-  "id": "cmpl-LYF0yvqjtUq4TuygfmDPBVYU71ahu",
-  "object": "text_completion"
-}
+ValueError: Could not make prediction. failed toxicity check
 ```
 
 ## Standalone Toxicity Functionality

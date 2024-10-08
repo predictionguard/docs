@@ -278,7 +278,7 @@ slurs, hate speech, etc.
 To ensure self-consistency:
 
 ```python copy
-client.completions.create(model="Neural-Chat-7B",
+client.completions.create(model="neural-chat-7b-v3-3",
     prompt="""### Instruction:
 Respond with a sentiment label for the input text below. Use the label NEU for neutral sentiment, NEG for negative sentiment, and POS for positive sentiment.
 
@@ -391,22 +391,10 @@ print(json.dumps(
 ))
 ```
 
-The above will likely generate toxic output, but thanks to Prediction Guard, you should only see the following:
+The above will likely generate toxic output, but thanks to Prediction Guard, you should only see the following ValueError:
 
 ```python copy
-{
-    "choices": [
-        {
-            "index": 0,
-            "model": "",
-            "status": "error: failed a toxicity check",
-            "text": ""
-        }
-    ],
-    "created": 1701870517,
-    "id": "cmpl-R6wSOOgGGbNchNoOvYg6mEoGj5461",
-    "object": "text_completion"
-}
+ValueError: Could not make prediction. failed toxicity check
 ```
 
 ## Using The SDKs

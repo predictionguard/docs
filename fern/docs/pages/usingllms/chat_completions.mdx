@@ -74,7 +74,7 @@ messages = [
 ]
 
 result = client.chat.completions.create(
-    model="Neural-Chat-7B",
+    model="neural-chat-7b-v3-3",
     messages=messages
 )
 
@@ -109,7 +109,7 @@ while True:
         })
 
         response = client.chat.completions.create(
-            model="Neural-Chat-7B",
+            model="neural-chat-7b-v3-3",
             messages=messages
         )['choices'][0]['message']['content'].split('\n')[0].strip()
 

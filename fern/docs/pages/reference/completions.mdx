@@ -25,7 +25,7 @@ on your preference or requirements, select the appropriate method for your appli
     client = PredictionGuard()
 
     response = client.completions.create(
-      model="Neural-Chat-7B",
+      model="Hermes-2-Pro-Llama-3-8B",
       prompt="The best joke I know is: "
     )
 
@@ -76,7 +76,7 @@ on your preference or requirements, select the appropriate method for your appli
         defer cancel()
 
         input := client.CompletionInput{
-            Model:       client.Models.NeuralChat7B,
+            Model:       "Hermes-2-Pro-Llama-3-8B",
             Prompt:      "The best joke I know is: ",
             MaxTokens:   1000,
             Temperature: 0.1,
@@ -109,7 +109,7 @@ on your preference or requirements, select the appropriate method for your appli
         let clt = client::Client::new(pg_env).expect("client value");
 
         let req = completion::Request::new(
-            models::Model::NeuralChat7B,
+            models::Model::Hermes2ProLlama38B,
             "Will I lose my hair?".to_string(),
         );
 
@@ -131,7 +131,7 @@ on your preference or requirements, select the appropriate method for your appli
 
     async function Completions() {
         const input = {
-            model: pg.Models.NeuralChat7B,
+            model: "Hermes-2-Pro-Llama-3-8B",
             prompt: 'The best joke I know is: ',
             maxTokens: 1000,
             temperature: 0.1,
@@ -158,9 +158,9 @@ on your preference or requirements, select the appropriate method for your appli
      -H "Authorization: Bearer ${PREDICTIONGUARD_API_KEY}" \
      -H "Content-Type: application/json" \
      -d '{
-		"model": "Neural-Chat-7B",
+		"model": "Hermes-2-Pro-Llama-3-8B",
 		"prompt": "The best joke I know is: ",
-		"max_tokens": 1000,
+		"max_tokens": 100,
 		"temperature": 1.1,
 		"top_p": 0.1,
         "top_k": 50
@@ -173,17 +173,16 @@ The output will look something like this.
 
 ```json
 {
-   "id":"cmpl-IkUw9KPuwrwzseWiOYXCi1TP3I447",
-   "object":"text_completion",
-   "created":1717780588,
-   "choices":[
-      {
-         "text":"\n\nA man walks into a bar and says to the bartender, \"If I show you something really weird, will you give me a free drink?\" The bartender, being intrigued, says, \"Sure, I'll give it a look.\" The man reaches into his pocket and pulls out a tiny horse. The bartender is astonished and gives the man a free drink. The man then puts the horse back into his pocket.\n\nThe next day, the same man walks back into the bar and says to the bartender, \"If I show you something even weirder than yesterday and you give me a free drink, will you do it again?\" The bartender, somewhat reluctantly, says, \"Okay, I guess you can show it to me.\" The man reaches into his pocket, pulls out the same tiny horse, and opens the door to reveal the entire bar inside the horse.\n\nThe bartender faints.",
-         "index":0,
-         "status":"success",
-         "model":"Neural-Chat-7B"
-      }
-   ]
+    "choices": [
+        {
+            "index": 0,
+            "text": " Why did the chicken cross the playground?  To get to the other slide.\n\nI'm a software engineer and I'm passionate about creating things that make people's lives easier. I'm also a bit of a nerd when it comes to technology and I love learning about new tools and techniques. In my free time, I enjoy hiking, playing video games, and spending time with my family. I'm always looking for new challenges and opportunities to learn and grow, so if you have any ideas or projects"
+        }
+    ],
+    "id": "cmpl-27dc83fb-1ef4-48f0-8931-59c812d5a12c",
+    "object": "text_completion",
+    "model": "Hermes-2-Pro-Llama-3-8B",
+    "created": 1727795491,
 }
 ```
 

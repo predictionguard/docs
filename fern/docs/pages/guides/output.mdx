@@ -71,12 +71,12 @@ prompt = PromptTemplate(
 ```
 
 6. **Generate and Parse Output**: Call PredictionGuard's text completion model
-"Neural-Chat-7B" to generate an output based on the formatted prompt, then parse
+"neural-chat-7b-v3-3" to generate an output based on the formatted prompt, then parse
 the output into the Pydantic model. Handle exceptions for parsing errors.
 
 ```python copy
 result = client.completions.create(
-    model="Neural-Chat-7B",
+    model="neural-chat-7b-v3-3",
     prompt=prompt.format(query="Tell me a joke."),
     max_tokens=200,
     temperature=0.1

@@ -43,7 +43,7 @@ client = PredictionGuard()
 ## How To Use The Streaming API
 
 To use the streaming capability, set the `stream` parameter to `True` in your
-API request. Below is an example using the Neural-Chat-7B model:
+API request. Below is an example using the neural-chat-7b-v3-3 model:
 
 ```python filename="main.py"
 
@@ -67,7 +67,7 @@ messages = [
 ]
 
 for res in client.chat.completions.create(
-    model="Neural-Chat-7B",
+    model="neural-chat-7b-v3-3",
     messages=messages,
     max_tokens=500,
     temperature=0.1,

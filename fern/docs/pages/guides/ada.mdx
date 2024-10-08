@@ -9,7 +9,7 @@ Large Language Models (LLMs) like 'deepseek-coder-6.7B-instruct' have demonstrat
 impressive capabilities for understanding natural language and generating SQL.
 We can leverage these skills for data analysis by having them automatically
 generate SQL queries against known database structures. And then rephrase these
-sql outputs using state of the art text/chat completion models like 'Neural-Chat-7B'
+sql outputs using state of the art text/chat completion models like 'neural-chat-7b-v3-3'
 to get well written answers to user questions.
 
 Unlike code generation interfaces that attempt to produce executable code from
@@ -320,7 +320,7 @@ def get_answer(question, data, sql_query):
 
   # Respond to the user
   output = client.completions.create(
-      model="Neural-Chat-7B",
+      model="neural-chat-7b-v3-3",
       prompt=prompt_filled,
       max_tokens=200,
       temperature=0.1
