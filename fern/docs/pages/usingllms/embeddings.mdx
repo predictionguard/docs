@@ -38,8 +38,6 @@ This will yield a json object with the embedding.
 
 The Bridgetower model is a cross-modal encoder that handles both images and text. Here is a simple illustration of how to make a call to the embeddings endpoint with both image and text inputs. This endpoint accepts image URL, local image files, data URIs, and base64 encoded image strings as input.
 
-## Embeddings for text and image
-
 ```Python
 import os
 import json
@@ -71,37 +69,7 @@ print(json.dumps(
 
 This will yield a json object with the embedding.
 
-## Embeddings for text only
-
-```Python
-import os
-import json
-
-from predictionguard import PredictionGuard
-
-# Set your Prediction Guard token as an environmental variable.
-os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
-
-client = PredictionGuard()
-
-response = client.embeddings.create(
-  model="bridgetower-large-itm-mlm-itc",
-  input=[
-    {
-        "text": "Tell me a joke.",
-    }
-  ]
-)
-
-print(json.dumps(
-    response,
-    sort_keys=True,
-    indent=4,
-    separators=(',', ': ')
-))
-```
-
-## Embeddings for Image only
+### Embeddings for Image only
 
 ```Python
 import os

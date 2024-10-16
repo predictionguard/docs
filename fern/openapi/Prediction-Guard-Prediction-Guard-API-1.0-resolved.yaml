@@ -760,13 +760,14 @@ paths:
                           - type: string
                             description: A string of text to be embedded.
                           - type: object
-                            properties:
-                              text:
-                                type: string
-                                description: The text to vectorize. You can choose to provide this or not.
-                              image:
-                                type: string
-                                description: The base64 encoding of an image. You can choose to provide this or not.
+                            object:
+                              properties:
+                                text:
+                                  type: string
+                                  description: The text to vectorize. You can choose to provide this or not.
+                                image:
+                                  type: string
+                                  description: The base64 encoding of an image. You can choose to provide this or not.
             examples:
               basic:
                 summary: A text example of using the API.
