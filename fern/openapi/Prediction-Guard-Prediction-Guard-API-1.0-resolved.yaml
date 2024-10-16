@@ -42,20 +42,23 @@ paths:
                   type: string
                   description: The chat model to use for generating completions.
                 messages:
-                  type: array
-                  description: An array of messages used for generating completions.
-                  items:
-                    required:
-                      - role
-                      - content
-                    type: object
-                    properties:
-                      role:
-                        type: string
-                        description: The role of the sender (user or assistant).
-                      content:
-                        type: string
-                        description: The content of the message.
+                  oneOf:
+                  - type: string
+                    description: A string of the message used for generating completions.
+                  - type: array
+                    description: An array of messages used for generating completions.
+                    items:
+                      required:
+                        - role
+                        - content
+                      type: object
+                      properties:
+                        role:
+                          type: string
+                          description: The role of the sender (user or assistant).
+                        content:
+                          type: string
+                          description: The content of the message.
                 max_tokens:
                   type: integer
                   description: The maximum number of tokens in the generated completion.
@@ -204,7 +207,6 @@ paths:
                     - "Hermes-3-Llama-3.1-70B"
                     - "Hermes-2-Pro-Mistral-7B"
                     - "neural-chat-7b-v3-3"
-                    - "llama-3-sqlcoder-8b"
                     - "Hermes-3-Llama-3.1-8B"
                     - "Hermes-2-Pro-Llama-3-8B"
       security:
@@ -227,20 +229,23 @@ paths:
                   type: string
                   description: The chat model to use for generating completions.
                 messages:
-                  type: array
-                  description: An array of messages used for generating completions.
-                  items:
-                    required:
-                      - role
-                      - content
-                    type: object
-                    properties:
-                      role:
-                        type: string
-                        description: The role of the sender (user or assistant).
-                      content:
-                        type: string
-                        description: The content of the message.
+                  oneOf:
+                    - type: string
+                      description: A string of the message used for generating completions.
+                    - type: array
+                      description: An array of messages used for generating completions.
+                      items:
+                        required:
+                          - role
+                          - content
+                        type: object
+                        properties:
+                          role:
+                            type: string
+                            description: The role of the sender (user or assistant).
+                          content:
+                            type: string
+                            description: The content of the message.
                 max_tokens:
                   type: integer
                   description: The maximum number of tokens in the generated completion.
@@ -725,7 +730,6 @@ paths:
                     - "deepseek-coder-6.7b-instruct"
                     - "Hermes-3-Llama-3.1-8B"
                     - "Hermes-3-Llama-3.1-70B"
-                    - "llama-3-sqlcoder-8b"
       security:
         - bearerAuth: []
 
@@ -744,22 +748,33 @@ paths:
               properties:
                 model:
                   type: string
-                  description: The model to use for generating vectors. Must be `bridgetower-large-itm-mlm-itc` for now.
+                  description: The model to use for generating vectors.
                 input:
-                  type: array
-                  description: An array of text and or images.
-                  items:
-                    type: object
-                    properties:
-                      text:
-                        type: string
-                        description: The text to vectorize. You can choose to provide this or not.
-                      image:
-                        type: string
-                        description: The base64 encoding of an image. You can choose to provide this or not.
+                  oneOf:
+                    - type: string
+                      description: A string of text to be embedded.
+                    - type: array
+                      description: An array of strings or objects containing the text and/or images to be embedded.
+                      items:
+                        oneOf:
+                          - type: string
+                            description: A string of text to be embedded.
+                          - type: object
+                            properties:
+                              text:
+                                type: string
+                                description: The text to vectorize. You can choose to provide this or not.
+                              image:
+                                type: string
+                                description: The base64 encoding of an image. You can choose to provide this or not.
             examples:
               basic:
-                summary: A basic example of using the API.
+                summary: A text example of using the API.
+                value:
+                  model: "multilingual-e5-large-instruct"
+                  input: "A person is ironing something while standing on the back of a taxi."
+              multimodal:
+                summary: A multimodal example of using the API.
                 value:
                   model: "bridgetower-large-itm-mlm-itc"
                   input:
@@ -824,13 +839,13 @@ paths:
                           items:
                             type: number
               example:
-                id: "emb-71da76cc-73a0-46be-a965-5159e8c47a1d"
+                id: "emb-5b310173-3cc9-4470-aa3b-7503aacb4f38"
                 object: "list"
-                created: 1727891112
-                model: "bridgetower-large-itm-mlm-itc"
+                created: 1729115349
+                model: "multilingual-e5-large-instruct"
                 data:
                   - index: 0
-                    embedding: [-0.04457271471619606, -0.007496959064155817]
+                    embedding: [0.0150606595, 0.04376322]
       security:
         - bearerAuth: []
     get:
@@ -849,6 +864,7 @@ paths:
                 example1:
                   value:
                     - "bridgetower-large-itm-mlm-itc"
+                    - "multilingual-e5-large-instruct"
       security:
         - bearerAuth: []
 

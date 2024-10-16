@@ -14,9 +14,9 @@ with an improved focus on longer context lengths. This allows for more accuracy 
 in areas that require a longer context window, along with being an improved version of the previous
 Hermes and Llama line of models.
 
-**Type**: Chat   
-**Use Case**: Instruction Following or Chat-Like Applications   
-**Prompt Format**: [ChatML](/options/prompts#chatml)
+**Type:** Chat
+**Use Case:** Instruction Following or Chat-Like Applications
+**Prompt Format:** [ChatML](/options/prompts#chatml)
 
 https://huggingface.co/NousResearch/Hermes-3-Llama-3.1-8B
 
@@ -37,9 +37,9 @@ A general use model that maintains excellent general task and conversation
 capabilities while excelling at JSON Structured Outputs and improving on several
 other metrics.
 
-**Type**: Chat  
-**Use Case**: Instruction Following or Chat-Like Applications  
-**Prompt Format**: [ChatML](/options/prompts#chatml)
+**Type:** Chat
+**Use Case:** Instruction Following or Chat-Like Applications
+**Prompt Format:** [ChatML](/options/prompts#chatml)
 
 https://huggingface.co/NousResearch/Hermes-2-Pro-Llama-3-8B
 
@@ -64,9 +64,9 @@ billion parameter count, enabling it to perform in-depth data analysis and
 support complex decision-making processes. This model is designed to process
 large volumes of data, uncover hidden patterns, and provide actionable insights.
 
-**Type**: Text Generation  
-**Use Case**: Generating Output in Response to Arbitrary Instructions  
-**Prompt Format**: [Alpaca](/options/prompts#alpaca)
+**Type:** Text Generation
+**Use Case:** Generating Output in Response to Arbitrary Instructions
+**Prompt Format:** [Alpaca](/options/prompts#alpaca)
 
 https://huggingface.co/NousResearch/Nous-Hermes-Llama2-13b
 
@@ -92,9 +92,9 @@ excels in delivering accurate and contextually relevant responses, making it ide
 for a wide range of applications, including chatbots, language translation,
 content creation, and more.
 
-**Type**: Chat  
-**Use Case**: Instruction Following or Chat-Like Applications  
-**Prompt Format**: [ChatML](/options/prompts#chatml)
+**Type:** Chat
+**Use Case:** Instruction Following or Chat-Like Applications
+**Prompt Format:** [ChatML](/options/prompts#chatml)
 
 https://huggingface.co/NousResearch/Hermes-2-Pro-Mistral-7B
 
@@ -114,11 +114,11 @@ reliable and easy to parse. Learn more about prompting below.
 
 ## neural-chat-7b-v3-3
 
-A revolutionary AI model for perfoming digital conversations.
+A revolutionary AI model for performing digital conversations.
 
-**Type**: Chat  
-**Use Case**: Instruction Following or Chat-Like Applications  
-**Prompt Format**: [Neural Chat](/options/prompts#neural-chat)
+**Type:** Chat
+**Use Case:** Instruction Following or Chat-Like Applications
+**Prompt Format:** [Neural Chat](/options/prompts#neural-chat)
 
 https://huggingface.co/Intel/neural-chat-7b-v3-3
 
@@ -130,27 +130,14 @@ from mistralai/Mistral-7B-v-0.1. For more information, refer to the blog
 
 [The Practice of Supervised Fine-tuning and Direct Preference Optimization on Intel Gaudi2](https://medium.com/@NeuralCompressor/the-practice-of-supervised-finetuning-and-direct-preference-optimization-on-habana-gaudi2-a1197d8a3cd3)
 
-## llama-3-sqlcoder-8b
-
-A state of the art AI model for generating SQL queries from natural language.
-
-**Type**: SQL Query Generation  
-**Use Case**: Generating SQL Queries  
-**Prompt Format**: [Llama-3-SQLCoder](/options/prompts#llama-3-sqlcoder)
-
-https://huggingface.co/defog/llama-3-sqlcoder-8b
-
-A capable language model for text to SQL generation for Postgres, Redshift and
-Snowflake that is on-par with the most capable generalist frontier models.
-
 ## deepseek-coder-6.7b-instruct
 
 DeepSeek Coder is a capable coding model trained on two trillion code and natural
 language tokens.
 
-**Type**: Code Generation  
-**Use Case**: Generating Computer Code or Answering Tech Questions  
-**Prompt Format**: [Deepseek](/options/prompts#deepseek)
+**Type:** Code Generation
+**Use Case:** Generating Computer Code or Answering Tech Questions
+**Prompt Format:** [Deepseek](/options/prompts#deepseek)
 
 https://huggingface.co/deepseek-ai/deepseek-coder-6.7b-instruct
 
@@ -163,16 +150,40 @@ support project-level code completion and infilling. For coding capabilities,
 Deepseek Coder achieves state-of-the-art performance among open-source code models
 on multiple programming languages and various benchmarks.
 
+## multilingual-e5-large-instruct
+
+Multilingual-e5 is a multilingual model for creating text embeddings in multiple languages.
+
+**Type:** Embedding Generation
+**Use Case:** Used for Generating Text Embeddings
+
+https://huggingface.co/intfloat/multilingual-e5-large-instruct
+
+multilingual-e5-large-instruct is a robust, multilingual embedding model with
+560 million parameters and a dimensionality of 1024, capable of processing
+inputs with up to 512 tokens. This model builds on the xlm-roberta-large
+architecture and is designed to excel in multilingual text embedding tasks
+across 100 languages. Trained through a two-stage process, it first undergoes
+contrastive pre-training on one billion weakly supervised text pairs, followed
+by fine-tuning on diverse multilingual datasets from the E5-mistral paper.
+
+With state-of-the-art performance in text retrieval and semantic similarity,
+this model demonstrates impressive results on the BEIR and MTEB benchmarks.
+Users should note that task instructions are crucial for optimal performance,
+as the model leverages these to customize embeddings for various scenarios.
+Although the model generally supports 100 languages, performance may vary
+for low-resource languages.
+
+With a training approach that mirrors the English E5 model recipe, it achieves
+comparable quality to leading English-only models while offering a multilingual edge.
+
 ## bridgetower-large-itm-mlm-itc
 
 BridgeTower is a multimodal model for creating joint embeddings between images
 and text.
 
-_**Note: This Model is required to be used with the `/embeddings` endpoint. Most of the
-SDKs will not ask you to provide model because it's using this one.**_
-
-**Type**: Embedding Generation  
-**Use Case**: Used for Generating Text and Image Embedding  
+**Type:** Embedding Generation
+**Use Case:** Used for Generating Text and Image Embedding
 
 https://huggingface.co/BridgeTower/bridgetower-large-itm-mlm-itc
 
@@ -196,8 +207,8 @@ LLaVa is a multimodal model that supports vision and language models combined.
 _**This Model is required to be used with the `/chat/completions` vision endpoint.
 Most of the SDKs will not ask you to provide model because it's using this one.**_
 
-**Type**: Vision Text Generation  
-**Use Case**: Used for Generating Text from Text and Image Inputs  
+**Type:** Vision Text Generation
+**Use Case:** Used for Generating Text from Text and Image Inputs
 
 https://huggingface.co/llava-hf/llava-1.5-7b-hf
 
@@ -214,9 +225,9 @@ with an improved focus on longer context lengths. This allows for more accuracy 
 in areas that require a longer context window, along with being an improved version of the previous
 Hermes and Llama line of models.
 
-**Type**: Chat   
-**Use Case**: Instruction Following or Chat-Like Applications   
-**Prompt Format**: [ChatML](/options/prompts#chatml)
+**Type:** Chat
+**Use Case:** Instruction Following or Chat-Like Applications
+**Prompt Format:** [ChatML](/options/prompts#chatml)
 
 https://huggingface.co/NousResearch/Hermes-3-Llama-3.1-8B
 
