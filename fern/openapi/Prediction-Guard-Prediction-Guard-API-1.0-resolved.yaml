@@ -744,8 +744,6 @@ paths:
               required:
                 - model
                 - input
-                - truncate
-                - truncation_direction
               type: object
               properties:
                 model:
@@ -771,7 +769,7 @@ paths:
                                 type: string
                                 description: The base64 encoding of an image. You can choose to provide this or not.
                 truncate:
-                  type: bool
+                  type: boolean
                   description: Boolean setting whether to truncate inputs. Not supported by bridgetower.
                 truncation_direction:
                   type: string
