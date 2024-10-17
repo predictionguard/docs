@@ -744,6 +744,8 @@ paths:
               required:
                 - model
                 - input
+                - truncate
+                - truncation_direction
               type: object
               properties:
                 model:
@@ -768,12 +770,20 @@ paths:
                               image:
                                 type: string
                                 description: The base64 encoding of an image. You can choose to provide this or not.
+                truncate:
+                  type: bool
+                  description: Boolean setting whether to truncate inputs. Not supported by bridgetower.
+                truncation_direction:
+                  type: string
+                  description: Which direction to truncate, "Left" or "Right". Not supported by bridgetower.
             examples:
               basic:
                 summary: A text example of using the API.
                 value:
                   model: "multilingual-e5-large-instruct"
                   input: "A person is ironing something while standing on the back of a taxi."
+                  truncate: true
+                  truncation_direction: "Right"
               multimodal:
                 summary: A multimodal example of using the API.
                 value:
