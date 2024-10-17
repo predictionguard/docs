@@ -94,6 +94,10 @@ navigation:
     layout:
       - api: API Reference
         display-errors: true
+      - section: Valid Inputs
+        contents:
+          - page: Enumerations for API
+            path: ./docs/pages/options/enumerations.mdx
       - section: SDK Reference
         contents:
           - page: Chat

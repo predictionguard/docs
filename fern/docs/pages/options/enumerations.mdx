@@ -25,13 +25,13 @@ This page provides the list of enumerations used by the Prediction Guard API.
 | Nous-Hermes-Llama2-13b       | Text Generation      | Generating output in response to arbitrary instructions | [Alpaca](/options/prompts#alpaca)                      | 4096           | [link](/options/models#nous-hermes-llama2-13b)      |
 | Hermes-2-Pro-Mistral-7B      | Chat                 | Instruction following or chat-like applications         | [ChatML](/options/prompts#chatml)                      | 4096           | [link](/options/models#hermes-2-pro-mistral-7b)     |
 | neural-chat-7b-v3-3          | Chat                 | Instruction following or chat-like applications         | [Neural Chat](/options/prompts#neural-chat)            | 4096           | [link](/options/models#neural-chat-7b)              |
-| llama-3-sqlcoder-8b          | SQL Query Generation | Generating SQL queries                                  | [Llama-3-SQLCoder](/options/prompts#llama-3-sqlcoder)  | 4096           | [link](/options/models#llama-3-sqlcoder-8b)         |
 | deepseek-coder-6.7b-instruct | Code Generation      | Generating computer code or answering tech questions    | [Deepseek](/options/prompts#deepseek)                  | 4096           | [link](/options/models#deepseek-coder-67b-instruct) |
 
 ### This Model is required in the `/embeddings` endpoint:
 
 | Model Name                        | Type                  | Use Case                                        | Context Length | More Info                                             |
 | --------------------------------- | --------------------- | ----------------------------------------------- | -------------- | ------------------------------------------------------|
+| multilingual-e5-large-instruct    | Embedding Generation  | Used for generating text embeddings             | 512            | [link](/options/models#multilingual-e5-large-instruct) |
 | bridgetower-large-itm-mlm-itc     | Embedding Generation  | Used for generating text and image embedding    | 100            | [link](/options/models#bridgetower-large-itm-mlm-itc) |
 
 ### This Model is required in the `/chat/completions` vision endpoint:
