@@ -759,12 +759,19 @@ paths:
                         oneOf:
                           - type: string
                             description: A string of text to be embedded.
+                          - type: integer
+                            description: A token to be embedded.
+                          - type: array
+                            description: An array of tokens to be embedded.
+                            items:
+                              type: integer
+                              description: A token to be embedded.
                           - type: object
                             description: Use this option for multimodal input.
                             properties:
                               text:
                                 type: string
-                                description: The text to vectorize. You can choose to provide this or not.
+                                description: The text to embed. You can choose to provide this or not.
                               image:
                                 type: string
                                 description: The base64 encoding of an image. You can choose to provide this or not.
@@ -1253,7 +1260,7 @@ paths:
               properties:
                 text:
                   type: string
-                  description: The text to check for toxicity.
+                  description: The text to translate.
                 source_lang:
                   type: string
                   description: The source language of the text.
@@ -1305,13 +1312,13 @@ paths:
                 properties:
                   id:
                     type: string
-                    description: Unique ID for the chat completion.
+                    description: Unique ID for the translation.
                   object:
                     type: string
-                    description: Type of object (chat completion).
+                    description: Type of object (translation).
                   created:
                     type: integer
-                    description: Timestamp of when the chat completion was created.
+                    description: Timestamp of when the translation was created.
                   best_translation:
                     type: string
                     description: The best translation of the input text.
@@ -1367,6 +1374,134 @@ paths:
                     translation: "Le ciel est bleu."
                     model: "google"
                     status: "success"
+      security:
+        - bearerAuth: []
+
+  /tokenize:
+    post:
+      summary: Tokenize
+      description: Generates tokens for a string using a model's tokenizer.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - model
+                - input
+              type: object
+              properties:
+                model:
+                  type: string
+                  description: The name of the model to use for tokenization.
+                input:
+                  type: string
+                  description: The text to tokenize.
+            examples:
+              basic:
+                summary: A basic example of using the API.
+                value:
+                  model: "Hermes-3-Llama-3.1-8B"
+                  input: "Tell me a joke."
+      responses:
+        "403":
+          description: Failed auth response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "api understands the request but refuses to authorize it"
+        "400":
+          description: General error response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "required fields are missing"
+        "200":
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Unique ID for the token.
+                  object:
+                    type: string
+                    description: Type of object (tokens).
+                  created:
+                    type: integer
+                    description: Timestamp of when the tokens were generated.
+                  model:
+                    type: string
+                    description: The name of the model used.
+                  tokens:
+                    type: array
+                    description: An array of token data.
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: The converted token.
+                        start:
+                          type: integer
+                          description: The index the token starts at.
+                        stop:
+                          type: integer
+                          description: The index the token ends at.
+                        text:
+                          type: string
+                          description: The token as text.
+              example:
+                id: "token-ab046fcf-945f-421c-b9f0-1c75ff355203"
+                object: "tokens"
+                created: 1729871708
+                model: "Hermes-2-Pro-Mistral-7B"
+                tokens:
+                  - id: 1
+                    start: 0
+                    stop: 0
+                    text: ""
+                  - id: 851
+                    start: 0
+                    stop: 4
+                    text: "This"
+                  - id: 349
+                    start: 4
+                    stop: 7
+                    text: " is"
+                  - id: 264
+                    start: 7
+                    stop: 9
+                    text: " a"
+                  - id: 6029
+                    start: 9
+                    stop: 15
+                    text: " token"
+                  - id: 653
+                    start: 15
+                    stop: 18
+                    text: "ize"
+                  - id: 2757
+                    start: 18
+                    stop: 26
+                    text: " example"
+                  - id: 28723
+                    start: 26
+                    stop: 27
+                    text: "."
       security:
         - bearerAuth: []
 

@@ -120,6 +120,8 @@ navigation:
             path: ./docs/pages/reference/toxicity.mdx
           - page: Translate
             path: ./docs/pages/reference/translate.mdx
+          - page: Tokenize
+            path: ./docs/pages/reference/tokenize.mdx
 
   - tab: sdk
     layout:
@@ -151,6 +153,8 @@ navigation:
             path: ./docs/pages/reference/toxicity.mdx
           - page: Translate
             path: ./docs/pages/reference/translate.mdx
+          - page: Tokenize
+            path: ./docs/pages/reference/tokenize.mdx
 
 navbar-links:
   - type: secondary
