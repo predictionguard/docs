@@ -110,6 +110,8 @@ navigation:
             path: ./docs/pages/reference/completions.mdx
           - page: Embeddings
             path: ./docs/pages/reference/embeddings.mdx
+          - page: Tokenize
+            path: ./docs/pages/reference/tokenize.mdx
           - page: Factuality
             path: ./docs/pages/reference/factuality.mdx
           - page: Injection
@@ -118,10 +120,8 @@ navigation:
             path: ./docs/pages/reference/PII.mdx
           - page: Toxicity
             path: ./docs/pages/reference/toxicity.mdx
-          - page: Translate
-            path: ./docs/pages/reference/translate.mdx
-          - page: Tokenize
-            path: ./docs/pages/reference/tokenize.mdx
+          # - page: Translate
+          #   path: ./docs/pages/reference/translate.mdx
 
   - tab: sdk
     layout:
@@ -143,6 +143,8 @@ navigation:
             path: ./docs/pages/reference/completions.mdx
           - page: Embeddings
             path: ./docs/pages/reference/embeddings.mdx
+          - page: Tokenize
+            path: ./docs/pages/reference/tokenize.mdx
           - page: Factuality
             path: ./docs/pages/reference/factuality.mdx
           - page: Injection
@@ -151,10 +153,8 @@ navigation:
             path: ./docs/pages/reference/PII.mdx
           - page: Toxicity
             path: ./docs/pages/reference/toxicity.mdx
-          - page: Translate
-            path: ./docs/pages/reference/translate.mdx
-          - page: Tokenize
-            path: ./docs/pages/reference/tokenize.mdx
+          # - page: Translate
+          #   path: ./docs/pages/reference/translate.mdx
 
 navbar-links:
   - type: secondary
