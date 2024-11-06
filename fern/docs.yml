@@ -120,8 +120,10 @@ navigation:
             path: ./docs/pages/reference/PII.mdx
           - page: Toxicity
             path: ./docs/pages/reference/toxicity.mdx
-          # - page: Translate
-          #   path: ./docs/pages/reference/translate.mdx
+          - page: Translate
+            path: ./docs/pages/reference/translate.mdx
+          - page: Models
+            path: ./docs/pages/reference/models.mdx
 
   - tab: sdk
     layout:
@@ -153,8 +155,10 @@ navigation:
             path: ./docs/pages/reference/PII.mdx
           - page: Toxicity
             path: ./docs/pages/reference/toxicity.mdx
-          # - page: Translate
-          #   path: ./docs/pages/reference/translate.mdx
+          - page: Translate
+            path: ./docs/pages/reference/translate.mdx
+          - page: Models
+            path: ./docs/pages/reference/models.mdx
 
 navbar-links:
   - type: secondary
