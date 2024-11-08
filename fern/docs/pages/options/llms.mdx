@@ -1,42 +1,23 @@
 ---
-title: Models
+title: LLMs
 description: Reliable, future proof AI predictions
-slug: options/models
+slug: options/llms
 ---
 
-This page provides information about the different models used by the Prediction
-Guard API.
+This page provides information on the LLMs that are available in the Prediction Guard API.
+These models are designed for text inference, and are used in the `/completions` and `/chat/completions` endpoints.
 
-## LLMs
-
-These models are available in the `/completions` and `/chat/completions` endpoints, and allow you to perform text inference.
+## Models
 
 | Model Name                   | Type                 | Use Case                                                | Prompt Format                                          | Context Length | More Info                                           |
 | ---------------------------- | -------------------- | ------------------------------------------------------- | -----------------------------------------------------  | -------------- | ----------------------------------------------------|
-| Hermes-3-Llama-3.1-70B       | Chat                 | Instruction following or chat-like applications         | [ChatML](/options/prompts#chatml)                      | 20480           | [link](/options/models#hermes-3-llama-3.1-70b)     |
-| Hermes-3-Llama-3.1-8B        | Chat                 | Instruction following or chat-like applications         | [ChatML](/options/prompts#chatml)                      | 10240           | [link](/options/models#hermes-3-llama-3.1-8b)     |
-| Hermes-2-Pro-Llama-3-8B      | Chat                 | Instruction following or chat-like applications         | [ChatML](/options/prompts#chatml)                      | 4096           | [link](/options/models#hermes-2-pro-llama-3-8b)     |
-| Nous-Hermes-Llama2-13b       | Text Generation      | Generating output in response to arbitrary instructions | [Alpaca](/options/prompts#alpaca)                      | 4096           | [link](/options/models#nous-hermes-llama2-13b)      |
-| Hermes-2-Pro-Mistral-7B      | Chat                 | Instruction following or chat-like applications         | [ChatML](/options/prompts#chatml)                      | 4096           | [link](/options/models#hermes-2-pro-mistral-7b)     |
-| neural-chat-7b-v3-3          | Chat                 | Instruction following or chat-like applications         | [Neural Chat](/options/prompts#neural-chat)            | 4096           | [link](/options/models#neural-chat-7b)              |
-| deepseek-coder-6.7b-instruct | Code Generation      | Generating computer code or answering tech questions    | [Deepseek](/options/prompts#deepseek)                  | 4096           | [link](/options/models#deepseek-coder-67b-instruct) |
-
-## LVLMs
-
-These models are available in the `/chat/completions` endpoint, and allow you to perform text inference with images.
-
-| Model Name                        | Type                    | Use Case                                               | Context Length  | More Info                              |
-| --------------------------------- | ----------------------- | ------------------------------------------------------ | --------------- | -------------------------------------- |
-| llava-1.5-7b-hf                   | Vision Text Generation  | Used for generating text from text and image inputs    | 4096            | [link](/options/models#llava-15-7b-hf) |
-
-## Embeddings
-
-These models are available in the `/embeddings` endpoint and allow you to generate embeddings from text and images.
-
-| Model Name                        | Type                  | Use Case                                        | Context Length | More Info                                             |
-| --------------------------------- | --------------------- | ----------------------------------------------- | -------------- | ------------------------------------------------------|
-| multilingual-e5-large-instruct    | Embedding Generation  | Used for generating text embeddings             | 512            | [link](/options/models#multilingual-e5-large-instruct) |
-| bridgetower-large-itm-mlm-itc     | Embedding Generation  | Used for generating text and image embedding    | 100            | [link](/options/models#bridgetower-large-itm-mlm-itc) |
+| Hermes-3-Llama-3.1-70B       | Chat                 | Instruction following or chat-like applications         | [ChatML](/options/prompts#chatml)                      | 20480           | [link](/options/llms#hermes-3-llama-3.1-70b)     |
+| Hermes-3-Llama-3.1-8B        | Chat                 | Instruction following or chat-like applications         | [ChatML](/options/prompts#chatml)                      | 10240           | [link](/options/llms#hermes-3-llama-3.1-8b)     |
+| Hermes-2-Pro-Llama-3-8B      | Chat                 | Instruction following or chat-like applications         | [ChatML](/options/prompts#chatml)                      | 4096           | [link](/options/llms#hermes-2-pro-llama-3-8b)     |
+| Nous-Hermes-Llama2-13b       | Text Generation      | Generating output in response to arbitrary instructions | [Alpaca](/options/prompts#alpaca)                      | 4096           | [link](/options/llms#nous-hermes-llama2-13b)      |
+| Hermes-2-Pro-Mistral-7B      | Chat                 | Instruction following or chat-like applications         | [ChatML](/options/prompts#chatml)                      | 4096           | [link](/options/llms#hermes-2-pro-mistral-7b)     |
+| neural-chat-7b-v3-3          | Chat                 | Instruction following or chat-like applications         | [Neural Chat](/options/prompts#neural-chat)            | 4096           | [link](/options/llms#neural-chat-7b)              |
+| deepseek-coder-6.7b-instruct | Code Generation      | Generating computer code or answering tech questions    | [Deepseek](/options/prompts#deepseek)                  | 4096           | [link](/options/llms#deepseek-coder-67b-instruct) |
 
 ## Model Descriptions
 
@@ -206,69 +187,3 @@ corpus by employing a window size of 16K and a extra fill-in-the-blank task, to
 support project-level code completion and infilling. For coding capabilities,
 Deepseek Coder achieves state-of-the-art performance among open-source code models
 on multiple programming languages and various benchmarks.
-
-### multilingual-e5-large-instruct
-
-Multilingual-e5 is a multilingual model for creating text embeddings in multiple languages.
-
-**Type:** Embedding Generation\
-**Use Case:** Used for Generating Text Embeddings
-
-https://huggingface.co/intfloat/multilingual-e5-large-instruct
-
-multilingual-e5-large-instruct is a robust, multilingual embedding model with
-560 million parameters and a dimensionality of 1024, capable of processing
-inputs with up to 512 tokens. This model builds on the xlm-roberta-large
-architecture and is designed to excel in multilingual text embedding tasks
-across 100 languages. Trained through a two-stage process, it first undergoes
-contrastive pre-training on one billion weakly supervised text pairs, followed
-by fine-tuning on diverse multilingual datasets from the E5-mistral paper.
-
-With state-of-the-art performance in text retrieval and semantic similarity,
-this model demonstrates impressive results on the BEIR and MTEB benchmarks.
-Users should note that task instructions are crucial for optimal performance,
-as the model leverages these to customize embeddings for various scenarios.
-Although the model generally supports 100 languages, performance may vary
-for low-resource languages.
-
-With a training approach that mirrors the English E5 model recipe, it achieves
-comparable quality to leading English-only models while offering a multilingual edge.
-
-### bridgetower-large-itm-mlm-itc
-
-BridgeTower is a multimodal model for creating joint embeddings between images
-and text.
-
-**Type:** Embedding Generation\
-**Use Case:** Used for Generating Text and Image Embedding
-
-https://huggingface.co/BridgeTower/bridgetower-large-itm-mlm-itc
-
-BridgeTower introduces multiple bridge layers that build a connection between
-the top layers of uni-modal encoders and each layer of the cross-modal encoder.
-This enables effective bottom-up cross-modal alignment and fusion between visual
-and textual representations of different semantic levels of pre-trained uni-modal
-encoders in the cross-modal encoder. Pre-trained with only 4M images, BridgeTower
-achieves state-of-the-art performance on various downstream vision-language tasks.
-In particular, on the VQAv2 test-std set, BridgeTower achieves an accuracy of
-78.73%, outperforming the previous state-of-the-art model METER by 1.09% with
-the same pre-training data and almost negligible additional parameters and
-computational costs. Notably, when further scaling the model, BridgeTower
-achieves an accuracy of 81.15%, surpassing models that are pre-trained on
-orders-of-magnitude larger datasets.
-
-### llava-1.5-7b-hf
-
-LLaVa is a multimodal model that supports vision and language models combined.
-
-_**This Model is required to be used with the `/chat/completions` vision endpoint.
-Most of the SDKs will not ask you to provide model because it's using this one.**_
-
-**Type:** Vision Text Generation\
-**Use Case:** Used for Generating Text from Text and Image Inputs
-
-https://huggingface.co/llava-hf/llava-1.5-7b-hf
-
-LLaVA is an open-source chatbot trained by fine-tuning LLaMA/Vicuna on
-GPT-generated multimodal instruction-following data. It is an auto-regressive
-language model, based on the transformer architecture.

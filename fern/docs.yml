@@ -35,8 +35,12 @@ navigation:
             path: ./docs/pages/quick_start.mdx
       - section: Input Requirements
         contents:
-          - page: Models
-            path: ./docs/pages/options/models.mdx
+          - page: LLMs
+            path: ./docs/pages/options/llms.mdx
+          - page: LVMs
+            path: ./docs/pages/options/lvms.mdx
+          - page: Embedding Models
+            path: ./docs/pages/options/embedding_models.mdx
           - page: Enumerations
             path: ./docs/pages/options/enumerations.mdx
           - page: Prompt Formatting
