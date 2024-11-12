@@ -160,6 +160,12 @@ navigation:
           - page: Translate
             path: ./docs/pages/reference/translate.mdx
 
+redirects:
+  - source: "/options/models"
+    destination: "/options/llms"
+
+
+
 navbar-links:
   - type: secondary
     text: Contact us
