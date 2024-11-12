@@ -5,12 +5,10 @@ title: Data Chat With LLMs
 (Run this example in Google Colab
 [here](https://colab.research.google.com/drive/1RhQpyG9lgXk4aErlcuTOASLsU4zq5IgT?usp=sharing#scrollTo=VTwxTNIFWeZX))
 
-Large Language Models (LLMs) like 'deepseek-coder-6.7B-instruct' have demonstrated
+Large Language Models (LLMs) like 'Hermes-3-Llama-3.1-8B' have demonstrated
 impressive capabilities for understanding natural language and generating SQL.
 We can leverage these skills for data analysis by having them automatically
-generate SQL queries against known database structures. And then rephrase these
-sql outputs using state of the art text/chat completion models like 'neural-chat-7b-v3-3'
-to get well written answers to user questions.
+generate SQL queries against known database structures.
 
 Unlike code generation interfaces that attempt to produce executable code from
 scratch, our approach focuses strictly on generating industry-standard SQL from
@@ -259,7 +257,7 @@ def generate_sql_query(question, injected_schema):
 
   try:
       result = client.completions.create(
-          model="deepseek-coder-6.7b-instruct",
+          model="Hermes-3-Llama-3.1-8B",
           prompt=prompt_filled,
           max_tokens=300,
           temperature=0.1
@@ -320,7 +318,7 @@ def get_answer(question, data, sql_query):
 
   # Respond to the user
   output = client.completions.create(
-      model="neural-chat-7b-v3-3",
+      model="Hermes-3-Llama-3.1-8B",
       prompt=prompt_filled,
       max_tokens=200,
       temperature=0.1
@@ -369,13 +367,13 @@ Output:
 
 Assuming that your database fits one of the following scenarios:
 
--has many tables
+- has many tables
 
--has tables with many columns
+- has tables with many columns
 
--includes fields with "unexpected" formats for values
+- includes fields with "unexpected" formats for values
 
--includes columns with non-semantically meaningful names etc.
+- includes columns with non-semantically meaningful names etc.
 
 We need to go beyond the simple, naive SQL generation method. We will need to
 integrate a vector database to store schema information along with data dictionary
@@ -390,25 +388,6 @@ You can go through this code to replicate for your various use cases :
 
 (Run this example in Google Colab
 [here](https://colab.research.google.com/drive/1RhQpyG9lgXk4aErlcuTOASLsU4zq5IgT?usp=sharing#scrollTo=VTwxTNIFWeZX))
-
-## For An Interactive UI
-
-In this case we will be using a streamlit based web application to create an
-appealing chat interface.
-
-You can go through this code to replicate for your various use cases :
-
-(Find relevant codes and details for this in our github
-repo [here](https://github.com/predictionguard/datachat-streamlit))
-
-### Chatbot in action
-
-  <iframe
-    src="https://www.loom.com/embed/7f35885e57f14c1daf0af1c71e019c06"
-    width="100%"
-    height="500px"
-    title="SWR-States"
-  />
 
 ## Conclusion
 
