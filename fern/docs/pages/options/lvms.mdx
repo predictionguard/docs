@@ -1,0 +1,32 @@
+---
+title: LVMs
+description: Reliable, future proof AI predictions
+slug: options/lvms
+---
+
+This page provides information on the Large Vision Models (LVMs) that are available in the Prediction Guard API.
+These multimodal models are designed for inference using text and images, and are used in the `/chat/completions` endpoint.
+
+## Models
+
+| Model Name                        | Type                    | Use Case                                               | Context Length  | More Info                              |
+| --------------------------------- | ----------------------- | ------------------------------------------------------ | --------------- | -------------------------------------- |
+| llava-1.5-7b-hf                   | Vision Text Generation  | Used for generating text from text and image inputs    | 4096            | [link](/options/lvms#llava-15-7b-hf) |
+
+## Model Descriptions
+
+### llava-1.5-7b-hf
+
+LLaVa is a multimodal model that supports vision and language models combined.
+
+_**This Model is required to be used with the `/chat/completions` vision endpoint.
+Most of the SDKs will not ask you to provide model because it's using this one.**_
+
+**Type:** Vision Text Generation\
+**Use Case:** Used for Generating Text from Text and Image Inputs
+
+https://huggingface.co/llava-hf/llava-1.5-7b-hf
+
+LLaVA is an open-source chatbot trained by fine-tuning LLaMA/Vicuna on
+GPT-generated multimodal instruction-following data. It is an auto-regressive
+language model, based on the transformer architecture.

@@ -13,32 +13,7 @@ This page provides the list of enumerations used by the Prediction Guard API.
 | Assistant | assistant | - | Random         | random   | - | Block    | block   |
 | User      | user      | - | Fake           | fake     | - | Replace  | replace |
 | System    | system    | - | Category       | category | - |          |         | 
-|           |           | - | Mask           | mask     | - |          |         | 
-
-### These Models are required in `/completions` and `/chat/completions` endpoints:
-
-| Model Name                   | Type                 | Use Case                                                | Prompt Format                                          | Context Length | More Info                                           |
-| ---------------------------- | -------------------- | ------------------------------------------------------- | -----------------------------------------------------  | -------------- | ----------------------------------------------------|
-| Hermes-3-Llama-3.1-70B       | Chat                 | Instruction following or chat-like applications         | [ChatML](/options/prompts#chatml)                      | 20480           | [link](/options/models#hermes-3-llama-3.1-70b)     |
-| Hermes-3-Llama-3.1-8B        | Chat                 | Instruction following or chat-like applications         | [ChatML](/options/prompts#chatml)                      | 10240           | [link](/options/models#hermes-3-llama-3.1-8b)     |
-| Hermes-2-Pro-Llama-3-8B      | Chat                 | Instruction following or chat-like applications         | [ChatML](/options/prompts#chatml)                      | 4096           | [link](/options/models#hermes-2-pro-llama-3-8b)     |
-| Nous-Hermes-Llama2-13b       | Text Generation      | Generating output in response to arbitrary instructions | [Alpaca](/options/prompts#alpaca)                      | 4096           | [link](/options/models#nous-hermes-llama2-13b)      |
-| Hermes-2-Pro-Mistral-7B      | Chat                 | Instruction following or chat-like applications         | [ChatML](/options/prompts#chatml)                      | 4096           | [link](/options/models#hermes-2-pro-mistral-7b)     |
-| neural-chat-7b-v3-3          | Chat                 | Instruction following or chat-like applications         | [Neural Chat](/options/prompts#neural-chat)            | 4096           | [link](/options/models#neural-chat-7b)              |
-| deepseek-coder-6.7b-instruct | Code Generation      | Generating computer code or answering tech questions    | [Deepseek](/options/prompts#deepseek)                  | 4096           | [link](/options/models#deepseek-coder-67b-instruct) |
-
-### This Model is required in the `/embeddings` endpoint:
-
-| Model Name                        | Type                  | Use Case                                        | Context Length | More Info                                             |
-| --------------------------------- | --------------------- | ----------------------------------------------- | -------------- | ------------------------------------------------------|
-| multilingual-e5-large-instruct    | Embedding Generation  | Used for generating text embeddings             | 512            | [link](/options/models#multilingual-e5-large-instruct) |
-| bridgetower-large-itm-mlm-itc     | Embedding Generation  | Used for generating text and image embedding    | 100            | [link](/options/models#bridgetower-large-itm-mlm-itc) |
-
-### This Model is required in the `/chat/completions` vision endpoint:
-
-| Model Name                        | Type                    | Use Case                                               | Context Length  | More Info                              |
-| --------------------------------- | ----------------------- | ------------------------------------------------------ | --------------- | -------------------------------------- |
-| llava-1.5-7b-hf                   | Vision Text Generation  | Used for generating text from text and image inputs    | 4096            | [link](/options/models#llava-15-7b-hf) |
+|           |           | - | Mask           | mask     | - |          |         |
 
 ### These Languages are required in `/translate` endpoint:
 

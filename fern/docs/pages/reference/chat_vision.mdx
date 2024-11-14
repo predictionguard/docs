@@ -3,7 +3,7 @@ title: Chat Vision
 ---
 
 You can get vision text completions from any of the vision enabled
-[models](/options/enumerations) using the `/chat/completions` REST API endpoint
+[models](/options/lvms) using the `/chat/completions` REST API endpoint
 or any of the official SDKs (Python, Go, Rust, JS, or cURL).
 
 ## Generate a Vision Text Completion
@@ -39,7 +39,7 @@ images that are base64 encoded represented by a data uri.
                 {
                     "type": "image_url",
                     "image_url": {
-                        "url": "https://pbs.twimg.com/media/GKLN4qPXEAArqoK.png",
+                        "url": "https://farm4.staticflickr.com/3300/3497460990_11dfb95dd1_z.jpg",
                     }
                 }
             ]
@@ -97,7 +97,7 @@ images that are base64 encoded represented by a data uri.
         ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
         defer cancel()
 
-        image, err := client.NewImageNetwork("https://pbs.twimg.com/media/GKLN4qPXEAArqoK.png")
+        image, err := client.NewImageNetwork("https://farm4.staticflickr.com/3300/3497460990_11dfb95dd1_z.jpg")
         if err != nil {
             return fmt.Errorf("ERROR: %w", err)
         }
@@ -167,7 +167,7 @@ images that are base64 encoded represented by a data uri.
     const client = new pg.Client('https://api.predictionguard.com', process.env.PREDICTIONGUARD_API_KEY);
 
     async function ChatVision() {
-        const image = new pg.ImageNetwork('https://pbs.twimg.com/media/GKLN4qPXEAArqoK.png');
+        const image = new pg.ImageNetwork('https://farm4.staticflickr.com/3300/3497460990_11dfb95dd1_z.jpg');
 
         const input = {
             role: pg.Roles.User,
@@ -194,7 +194,7 @@ images that are base64 encoded represented by a data uri.
 
     <CodeBlock title="cURL">
     ```bash
-    curl -O 'https://pbs.twimg.com/media/GKLN4qPXEAArqoK.png'
+    curl -O 'https://farm4.staticflickr.com/3300/3497460990_11dfb95dd1_z.jpg'
         
     base64_img="$(base64 -i GKLN4qPXEAArqoK.png)"
 

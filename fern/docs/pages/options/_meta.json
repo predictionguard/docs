@@ -1,5 +1,7 @@
 {
-    "models": "Model Options",
+    "llms": "LLMs",
+    "lvms": "LVMS",
+    "embedding_models": "Embedding Models",
     "languages": "Language Options",
     "prompts": "Prompt Formats"
 }

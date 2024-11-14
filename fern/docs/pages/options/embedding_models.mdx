@@ -1,0 +1,67 @@
+---
+title: Embedding Models
+description: Reliable, future proof AI predictions
+slug: options/embeddings_models
+---
+
+This page provides information on the Embedding models that are available in the Prediction Guard API.
+These models are designed for embeddings generation using text and images, and are used in the `/embeddings` endpoint.
+
+## Models
+
+| Model Name                        | Type                  | Use Case                                        | Context Length | More Info                                             |
+| --------------------------------- | --------------------- | ----------------------------------------------- | -------------- | ------------------------------------------------------|
+| multilingual-e5-large-instruct    | Embedding Generation  | Used for generating text embeddings             | 512            | [link](/options/embeddings_models#multilingual-e5-large-instruct) |
+| bridgetower-large-itm-mlm-itc     | Embedding Generation  | Used for generating text and image embedding    | 100            | [link](/options/embeddings_models#bridgetower-large-itm-mlm-itc) |
+
+## Model Descriptions
+
+### multilingual-e5-large-instruct
+
+Multilingual-e5 is a multilingual model for creating text embeddings in multiple languages.
+
+**Type:** Embedding Generation\
+**Use Case:** Used for Generating Text Embeddings
+
+https://huggingface.co/intfloat/multilingual-e5-large-instruct
+
+multilingual-e5-large-instruct is a robust, multilingual embedding model with
+560 million parameters and a dimensionality of 1024, capable of processing
+inputs with up to 512 tokens. This model builds on the xlm-roberta-large
+architecture and is designed to excel in multilingual text embedding tasks
+across 100 languages. Trained through a two-stage process, it first undergoes
+contrastive pre-training on one billion weakly supervised text pairs, followed
+by fine-tuning on diverse multilingual datasets from the E5-mistral paper.
+
+With state-of-the-art performance in text retrieval and semantic similarity,
+this model demonstrates impressive results on the BEIR and MTEB benchmarks.
+Users should note that task instructions are crucial for optimal performance,
+as the model leverages these to customize embeddings for various scenarios.
+Although the model generally supports 100 languages, performance may vary
+for low-resource languages.
+
+With a training approach that mirrors the English E5 model recipe, it achieves
+comparable quality to leading English-only models while offering a multilingual edge.
+
+### bridgetower-large-itm-mlm-itc
+
+BridgeTower is a multimodal model for creating joint embeddings between images
+and text.
+
+**Type:** Embedding Generation\
+**Use Case:** Used for Generating Text and Image Embedding
+
+https://huggingface.co/BridgeTower/bridgetower-large-itm-mlm-itc
+
+BridgeTower introduces multiple bridge layers that build a connection between
+the top layers of uni-modal encoders and each layer of the cross-modal encoder.
+This enables effective bottom-up cross-modal alignment and fusion between visual
+and textual representations of different semantic levels of pre-trained uni-modal
+encoders in the cross-modal encoder. Pre-trained with only 4M images, BridgeTower
+achieves state-of-the-art performance on various downstream vision-language tasks.
+In particular, on the VQAv2 test-std set, BridgeTower achieves an accuracy of
+78.73%, outperforming the previous state-of-the-art model METER by 1.09% with
+the same pre-training data and almost negligible additional parameters and
+computational costs. Notably, when further scaling the model, BridgeTower
+achieves an accuracy of 81.15%, surpassing models that are pre-trained on
+orders-of-magnitude larger datasets.
