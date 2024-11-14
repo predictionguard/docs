@@ -126,8 +126,8 @@ navigation:
             path: ./docs/pages/reference/toxicity.mdx
           - page: Translate
             path: ./docs/pages/reference/translate.mdx
-          - page: Models
-            path: ./docs/pages/reference/models.mdx
+          # - page: Models
+          #   path: ./docs/pages/reference/models.mdx
 
   - tab: sdk
     layout:
@@ -161,8 +161,8 @@ navigation:
             path: ./docs/pages/reference/toxicity.mdx
           - page: Translate
             path: ./docs/pages/reference/translate.mdx
-          - page: Models
-            path: ./docs/pages/reference/models.mdx
+          # - page: Models
+          #   path: ./docs/pages/reference/models.mdx
 
 redirects:
   - source: "/options/models"
