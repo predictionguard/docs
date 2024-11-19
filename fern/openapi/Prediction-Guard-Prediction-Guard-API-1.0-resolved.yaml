@@ -844,7 +844,7 @@ paths:
                     type: string
                     description: Documents to rank.
                 return_documents:
-                  type: bool
+                  type: boolean
                   description: Boolean setting whether to return documents in output.
             examples:
               basic:
