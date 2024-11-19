@@ -910,7 +910,7 @@ paths:
                           type: integer
                           description: The index position in the collection.
                         relevance_score:
-                          type: float
+                          type: number
                           description: The relevance ranking score.
                         text:
                           type: string
@@ -1240,7 +1240,7 @@ paths:
 
   /PII:
     post:
-      summary: Replace Personal Information
+      summary: PII
       description: Replace personal information such as names, SSNs, and emails in a given text.
       requestBody:
         content:
