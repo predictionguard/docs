@@ -1,0 +1,36 @@
+---
+title: Reranker Models
+description: Reliable, future proof AI predictions
+slug: options/reranker_models
+---
+
+This page provides information on the Reranker models that are available in the Prediction Guard API.
+These models are designed for semantically ranking text, and are used in the `/rerank` endpoint.
+
+## Models
+
+| Model Name             | Type         | Use Case                                        | Context Length | More Info                                             |
+| ---------------------- | ------------ | ----------------------------------------------- | -------------- | ------------------------------------------------------|
+| bge-reranker-v2-m3     | Reranker     | Used for semantically ranking queries           | 512            | [link](/options/reranker_models#bge-reranker-v2-m3)   |
+
+## Model Descriptions
+
+### bge-reranker-v2-m3
+
+BAAI/bge-reranker-v2-m3 is a lightweight, multilingual reranker model designed for efficient and accurate text retrieval tasks.
+
+**Type:** Reranker\
+**Use Case:** Used for Semantically Ranking Documents
+
+https://huggingface.co/BAAI/bge-reranker-v2-m3
+
+Unlike embedding models, rerankers take a query and document (or passage) as input and directly output a similarity score.
+The output relevance score can be converted to a float value in the range [0,1] using a sigmoid function.
+
+Key Features:
+•	Multilingual Support: Excels across multiple languages with strong cross-lingual capabilities.
+•	Efficiency: Lightweight design ensures fast inference and easy deployment.
+•	Versatility: Supports a range of use cases and scenarios.
+
+This model offers an excellent balance between performance and deployment efficiency,
+making it a powerful choice for a wide range of text retrieval scenarios.

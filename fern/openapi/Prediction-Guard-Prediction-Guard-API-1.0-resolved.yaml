@@ -817,6 +817,119 @@ paths:
       security:
         - bearerAuth: []
 
+  /rerank:
+    post:
+      summary: Rerank
+      description: Rerank sorts text inputs by semantic relevance to a specified query.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - model
+                - query
+                - documents
+              type: object
+              properties:
+                model:
+                  type: string
+                  description: The model to use for reranking.
+                query:
+                  type: string
+                  description: The query to rank against.
+                documents:
+                  type: array
+                  description: Array of documents to rank.
+                  items:
+                    type: string
+                    description: Documents to rank.
+                return_documents:
+                  type: boolean
+                  description: Boolean setting whether to return documents in output.
+            examples:
+              basic:
+                summary: A text example of using the API.
+                value:
+                  model: "bge-reranker-v2-m3"
+                  query: "What is Deep Learning?"
+                  documents:
+                    - "Deep Learning is pizza."
+                    - "Deep Learning is not pizza."
+                  return_documents: true
+      responses:
+        "403":
+          description: Failed auth response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "api understands the request but refuses to authorize it"
+        "400":
+          description: General error response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "required fields are missing"
+        "200":
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Unique ID for the rerank response.
+                  object:
+                    type: string
+                    description: Type of object (list).
+                  created:
+                    type: integer
+                    description: Timestamp of when the rerank response was created.
+                  model:
+                    type: string
+                    description: The rerank model used.
+                  results:
+                    type: array
+                    description: The set of rankings.
+                    items:
+                      type: object
+                      properties:
+                        index:
+                          type: integer
+                          description: The index position in the collection.
+                        relevance_score:
+                          type: number
+                          description: The relevance ranking score.
+                        text:
+                          type: string
+                          description: The returned document
+              example:
+                id: "rerank-39bf1cf3-66cd-43d5-9185-b52baf742414"
+                object: "list"
+                created: 1732039610
+                model: "bge-reranker-v2-m3"
+                results:
+                  - index: 0
+                    relevance_score: 0.25128007
+                    text: "Deep Learning is not pizza."
+                  - index: 1
+                    relevance_score: 0.5100618
+                    text: "Deep Learning is not pizza."
+      security:
+        - bearerAuth: []
+
   /tokenize:
      post:
        summary: Tokenize
@@ -1127,7 +1240,7 @@ paths:
 
   /PII:
     post:
-      summary: Replace Personal Information
+      summary: PII
       description: Replace personal information such as names, SSNs, and emails in a given text.
       requestBody:
         content:
