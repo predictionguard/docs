@@ -104,32 +104,6 @@ navigation:
         contents:
           - page: Enumerations for API
             path: ./docs/pages/options/enumerations.mdx
-#      - section: SDK Reference
-#        contents:
-#          - page: Chat
-#            path: ./docs/pages/reference/chat.mdx
-#          - page: Chat SSE (Streaming)
-#            path: ./docs/pages/reference/chat_sse.mdx
-#          - page: Chat Vision
-#            path: ./docs/pages/reference/chat_vision.mdx
-#          - page: Completions
-#            path: ./docs/pages/reference/completions.mdx
-#          - page: Embeddings
-#            path: ./docs/pages/reference/embeddings.mdx
-#          - page: Tokenize
-#            path: ./docs/pages/reference/tokenize.mdx
-#          - page: Factuality
-#            path: ./docs/pages/reference/factuality.mdx
-#          - page: Injection
-#            path: ./docs/pages/reference/injection.mdx
-#          - page: PII
-#            path: ./docs/pages/reference/PII.mdx
-#          - page: Toxicity
-#            path: ./docs/pages/reference/toxicity.mdx
-#          - page: Translate
-#            path: ./docs/pages/reference/translate.mdx
-#          - page: Models
-#            path: ./docs/pages/reference/models.mdx
 
   - tab: sdk
     layout:
@@ -139,32 +113,6 @@ navigation:
             path: ./docs/pages/sdks.mdx
           - page: Quick Start
             path: ./docs/pages/sdkquickstart.mdx
-#      - section: SDK Reference
-#        contents:
-#          - page: Chat
-#            path: ./docs/pages/reference/chat.mdx
-#          - page: Chat SSE (Streaming)
-#            path: ./docs/pages/reference/chat_sse.mdx
-#          - page: Chat Vision
-#            path: ./docs/pages/reference/chat_vision.mdx
-#          - page: Completions
-#            path: ./docs/pages/reference/completions.mdx
-#          - page: Embeddings
-#            path: ./docs/pages/reference/embeddings.mdx
-#          - page: Tokenize
-#            path: ./docs/pages/reference/tokenize.mdx
-#          - page: Factuality
-#            path: ./docs/pages/reference/factuality.mdx
-#          - page: Injection
-#            path: ./docs/pages/reference/injection.mdx
-#          - page: PII
-#            path: ./docs/pages/reference/PII.mdx
-#          - page: Toxicity
-#            path: ./docs/pages/reference/toxicity.mdx
-#          - page: Translate
-#            path: ./docs/pages/reference/translate.mdx
-#          - page: Models
-#            path: ./docs/pages/reference/models.mdx
 
 redirects:
   - source: "/options/models"

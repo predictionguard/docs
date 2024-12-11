@@ -71,7 +71,7 @@ for i,row in df.iterrows():
         prompt=summary_prompt.format(
             transcript=row['transcript']
         ),
-        max_tokens=200,
+        max_completion_tokens=200,
         temperature=0.1
     )
     print(result['choices'][0]['text'])
@@ -127,7 +127,7 @@ for i, row in df.iterrows():
             prompt=q_and_a_prompt.format(
                 question=q, transcript_summary=row["summary"]
             ),
-            max_tokens=200,
+            max_completion_tokens=200,
             temperature=0.1,
 
         )

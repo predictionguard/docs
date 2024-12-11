@@ -249,7 +249,7 @@ def response_chain(message, convo_context, info_context):
     result = client.completions.create(
         model="deepseek-coder-6.7b-instruct",
         prompt=code_prompt.format(query=message),
-        max_tokens=500
+        max_completion_tokens=500
     )
     completion = result['choices'][0]['text']
 
