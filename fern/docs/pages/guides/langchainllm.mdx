@@ -12,7 +12,7 @@ helps you "Build applications with LLMs through composability." LangChain doesn'
 
 There exists a Prediction Guard partner package, which you can access with
 ```python
-from langchain-predictionguard import PredictionGuard
+from langchain_predictionguard import PredictionGuard
 ```
 
 You can provide the name of the Prediction Guard model as an argument when initializing the LLM:
@@ -36,7 +36,7 @@ Basic usage of the controlled or guarded LLM wrapper:
 ```python
 import os
 
-from langchain-predictionguard import PredictionGuard
+from langchain_predictionguard import PredictionGuard
 from langchain import PromptTemplate, LLMChain
 
 # Define a prompt template
@@ -66,7 +66,7 @@ Basic LLM Chaining with the Prediction Guard wrapper:
 import os
 
 from langchain import PromptTemplate, LLMChain
-from langchain-predictionguard import PredictionGuard
+from langchain_predictionguard import PredictionGuard
 
 # Your Prediction Guard API key. Get one at predictionguard.com
 os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
