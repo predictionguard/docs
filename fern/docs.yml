@@ -91,6 +91,8 @@ navigation:
             path: ./docs/pages/guides/langchainllm.mdx
           - page: Many Chat with LLMs
             path: ./docs/pages/guides/ManyChat.mdx
+          - page: Prediction Guard powered code assistant
+            path: ./docs/pages/guides/code-assistant.mdx
       - section: Support
         contents:
           - page: Contact Us

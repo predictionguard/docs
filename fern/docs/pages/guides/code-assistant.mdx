@@ -1,0 +1,30 @@
+---
+title: Predicition Guard powered Code Assistant
+---
+[Continue.dev] (https://www.continue.dev/) is an open-source AI code assistant available as an extension for both VS Code and JetBrains. It is flexible, supporting various model providers. The best part? You can quickly and easily set up Prediction Guard as a provider by following these simple steps:
+
+## Step 1: Install the Continue.dev extension
+You can install the Continue.dev extension from the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=Continue.continue) or from the [JetBrains Plugins Marketplace](https://plugins.jetbrains.com/plugin/22707-continue).
+
+## Step 2: Add a provider
+Open the Continue.dev chat interface by clicking the Continue.dev icon on the left panel in VS Code. In the chat tab, locate the dropdown that lists all the available providers. 	Click on + Add Chat Model. This will open a new tab to configure your custom provider.
+
+## Step 3: Modify config.json 
+In the newly opened tab, click on the config file hyperlink to open the file in VS Code. Add the following configuration to the file::
+```
+{
+      "title": "Prediction Guard",
+      "provider": "openai",
+      "model": "<Model>",
+      "systemMessage": "You are an expert software developer. You give helpful and concise responses.",
+      "apiKey": "<Your API key>",
+      "apiBase": "https://api.predictionguard.com"
+    }
+```
+Replace <Model> with the model you want to use and <Your API key> with your Prediction Guard API key. A list of models supported by [Prediciton Guard] (https://docs.predictionguard.com/options/llms) can be found in the documentation.
+Replace `<Model>` with the model you want to use and `<Your API key>` with your API key. Save the file.
+
+## Start Coding
+Once saved, Prediction Guard will be available as a provider in Continue.dev, and you can start using it right away.
+
+Happy Coding!
