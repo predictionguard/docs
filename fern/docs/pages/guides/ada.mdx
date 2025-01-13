@@ -259,7 +259,7 @@ def generate_sql_query(question, injected_schema):
       result = client.completions.create(
           model="Hermes-3-Llama-3.1-8B",
           prompt=prompt_filled,
-          max_tokens=300,
+          max_completion_tokens=300,
           temperature=0.1
       )
       sql_query = result["choices"][0]["text"]
@@ -320,7 +320,7 @@ def get_answer(question, data, sql_query):
   output = client.completions.create(
       model="Hermes-3-Llama-3.1-8B",
       prompt=prompt_filled,
-      max_tokens=200,
+      max_completion_tokens=200,
       temperature=0.1
   )
   completion = output['choices'][0]['text']

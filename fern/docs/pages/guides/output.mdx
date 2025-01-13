@@ -78,7 +78,7 @@ the output into the Pydantic model. Handle exceptions for parsing errors.
 result = client.completions.create(
     model="neural-chat-7b-v3-3",
     prompt=prompt.format(query="Tell me a joke."),
-    max_tokens=200,
+    max_completion_tokens=200,
     temperature=0.1
 )
 

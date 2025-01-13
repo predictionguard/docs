@@ -59,7 +59,7 @@ paths:
                           content:
                             type: string
                             description: The content of the message.
-                max_tokens:
+                max_completion_tokens:
                   type: integer
                   description: The maximum number of tokens in the generated completion.
                 temperature:
@@ -94,6 +94,9 @@ paths:
                     pii_replace_method:
                       type: string
                       description: Set to either 'random', 'fake', 'category', 'mask'.
+                max_tokens:
+                  type: integer
+                  description: Deprecated. Please use max_completion_tokens.
             examples:
               basic:
                 summary: A basic example of using the API.
@@ -102,7 +105,7 @@ paths:
                   messages:
                     - role: "user"
                       content: "How do you feel about the world in general?"
-                  max_tokens: 1000
+                  max_completion_tokens: 1000
                   temperature: 1.0
                   top_p: 1.0
                   top_k: 50
@@ -222,7 +225,7 @@ paths:
                           content:
                             type: string
                             description: The content of the message.
-                max_tokens:
+                max_completion_tokens:
                   type: integer
                   description: The maximum number of tokens in the generated completion.
                 temperature:
@@ -250,6 +253,9 @@ paths:
                     pii_replace_method:
                       type: string
                       description: Set to either 'random', 'fake', 'category', 'mask'.
+                max_tokens:
+                  type: integer
+                  description: Deprecated. Please use max_completion_tokens.
             examples:
               basic:
                 summary: A basic example of using the API.
@@ -258,7 +264,7 @@ paths:
                   messages:
                     - role: "user"
                       content: "How do you feel about the world in general?"
-                  max_tokens: 1000
+                  max_completion_tokens: 1000
                   temperature: 1.0
                   top_p: 1.0
                   top_k: 50
@@ -414,7 +420,7 @@ paths:
                                 url:
                                   type: string
                                   description: The base64 content with this prefix `data:image/jpeg;base64,`
-                max_tokens:
+                max_completion_tokens:
                   type: integer
                   description: The maximum number of tokens in the generated completion.
                 temperature:
@@ -449,6 +455,9 @@ paths:
                     pii_replace_method:
                       type: string
                       description: Set to either 'random', 'fake', 'category', 'mask'.
+                max_tokens:
+                  type: integer
+                  description: Deprecated. Please use max_completion_tokens.
             examples:
               basic:
                 summary: A basic example of using the API.
@@ -462,7 +471,7 @@ paths:
                         - type: "image_url"
                           image_url:
                             url: "data:image/jpeg;base64,<DATA>"
-                  max_tokens: 1000
+                  max_completion_tokens: 1000
                   temperature: 1.0
                   top_p: 1.0
                   top_k: 50
@@ -567,7 +576,7 @@ paths:
                 prompt:
                   type: string
                   description: The prompt to use for generating completions.
-                max_tokens:
+                max_completion_tokens:
                   type: integer
                   description: The maximum number of tokens in the generated completion.
                 temperature:
@@ -602,13 +611,16 @@ paths:
                     pii_replace_method:
                       type: string
                       description: Set to either 'random', 'fake', 'category', 'mask'.
+                max_tokens:
+                  type: integer
+                  description: Deprecated. Please use max_completion_tokens.
             examples:
               basic:
                 summary: A basic example of using the API.
                 value:
                   model: "Hermes-2-Pro-Llama-3-8B"
                   prompt: "Will I lose my hair?"
-                  max_tokens: 1000
+                  max_completion_tokens: 1000
                   temperature: 1.0
                   top_p: 1.0
                   top_k: 50
