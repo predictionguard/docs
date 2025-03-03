@@ -24,6 +24,21 @@ In the newly opened tab, click on the config file hyperlink to open the file in 
 A list of models supported by [Prediction Guard](https://docs.predictionguard.com/options/llms) can be found in the documentation.
 Replace `Model` with the model you want to use and `Your API key` with your API key. Save the file.
 
+For `tabautocomplete` modify the config.json like this:
+
+```
+"tabAutocompleteModel": {
+    "title": "Prediction Guard",
+    "provider": "openai",
+    "model": "",
+    "apiKey": "",
+    "apiBase": "https://api.predictionguard.com",
+    "useLegacyCompletionsEndpoint": false
+  }
+```
+
+Ensure that the `Autocomplete` is enabled in the settings. 
+
 ## Start Coding
 Once saved, Prediction Guard will be available as a provider in Continue.dev, and you can start using it right away.
 
