@@ -151,6 +151,7 @@ paths:
                   logit_bias:
                     128000: 10
                   presence_penalty: 0.1
+                  stop: "hello"
                   temperature: 1.0
                   top_p: 1.0
                   top_k: 50
@@ -272,9 +273,31 @@ paths:
                           content:
                             type: string
                             description: The content of the message.
+                frequency_penalty:
+                  type: number
+                  description: A value between -2.0 and 2.0, with positive values increasingly penalizing new tokens based on their frequency so far in order to decrease further occurrences.
+                logit_bias:
+                  type: map
+                  description: Modifies the likelihood of specified tokens appearing in a response.
+                  properties:
+                    token:
+                      type: string
+                      description: A string of the chosen token ID. Value is an int from -100 to 100.
                 max_completion_tokens:
                   type: integer
                   description: The maximum number of tokens in the generated completion.
+                presence_penalty:
+                  type: number
+                  description: A value between -2.0 and 2.0, with positive values causing a flat reduction of new tokens based on their existing presence so far in order to decrease further occurrences.
+                stop:
+                  oneOf:
+                    - type: string
+                      description: A string representing the token to stop generation.
+                    - type: array
+                      description: An array representing the token to stop generation.
+                      items:
+                        type: string
+                        description: A string representing the token to stop generation.
                 temperature:
                   type: number
                   description: The temperature parameter for controlling randomness in completions.
@@ -287,15 +310,6 @@ paths:
                 stream:
                   type: boolean
                   description: Turn streaming on.
-                stop:
-                  oneOf:
-                    - type: string
-                      description: A string representing the token to stop generation.
-                    - type: array
-                      description: An array representing the token to stop generation.
-                      items:
-                        type: string
-                        description: A string representing the token to stop generation.
                 input:
                   type: object
                   description: Options to affect the input of the request.
@@ -321,6 +335,11 @@ paths:
                     - role: "user"
                       content: "How do you feel about the world in general?"
                   max_completion_tokens: 1000
+                  frequency_penalty: 0.1
+                  logit_bias:
+                    128000: 10
+                  presence_penalty: 0.1
+                  stop: "hello"
                   temperature: 1.0
                   top_p: 1.0
                   top_k: 50
@@ -411,8 +430,6 @@ paths:
                     choices:
                       - index: 0
                         delta: { content: " I" }
-                        generated_text: "null"
-                        logprobs: 0
                         finish_reason: "null"
                 - data:
                     id: "chat-6c8c291f-5a06-46e5-94fa-2b0b1e6444c7"
@@ -510,7 +527,12 @@ paths:
                 value:
                   model: "Hermes-2-Pro-Llama-3-8B"
                   prompt: "Will I lose my hair?"
-                  max_completion_tokens: 1000
+                  max_tokens: 1000
+                  frequency_penalty: 0.1
+                  logit_bias:
+                    128000: 10
+                  presence_penalty: 0.1
+                  stop: "hello"
                   temperature: 1.0
                   top_p: 1.0
                   top_k: 50
@@ -674,7 +696,12 @@ paths:
                 value:
                   model: "Hermes-2-Pro-Llama-3-8B"
                   prompt: "Will I lose my hair?"
-                  max_completion_tokens: 1000
+                  max_tokens: 1000
+                  frequency_penalty: 0.1
+                  logit_bias:
+                    128000: 10
+                  presence_penalty: 0.1
+                  stop: "hello"
                   temperature: 1.0
                   top_p: 1.0
                   top_k: 50
