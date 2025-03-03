@@ -430,6 +430,7 @@ paths:
                     choices:
                       - index: 0
                         delta: { content: " I" }
+                        generated_text: "null"
                         finish_reason: "null"
                 - data:
                     id: "chat-6c8c291f-5a06-46e5-94fa-2b0b1e6444c7"
@@ -438,10 +439,9 @@ paths:
                     model: "Hermes-2-Pro-Llama-3-8B"
                     choices:
                       - index: 0
-                        delta: {}
-                        generated_text: "I feel that the world is a complex and dynamic place. It has its fair share of challenges and difficulties, but also offers numerous opportunities for growth, learning, and connection. The world is constantly evolving, and as individuals, we must adapt and find ways to contribute positively to society. It's essential to maintain a balance between acknowledging the problems and celebrating the progress and achievements, while also remembering the importance of compassion, empathy, and understanding towards one another. Overall, I believe it's essential to stay optimistic and work together towards a better future for all."
-                        logprobs: 0
-                        finish_reason: "stop"
+                        delta: { content: " feel"}
+                        generated_text: "null"
+                        finish_reason: "length"
       security:
         - bearerAuth: []
 
