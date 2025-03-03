@@ -904,6 +904,12 @@ paths:
               required:
                 - file
                 - model
+            examples:
+              basic:
+                summary: A text example of using the API.
+                value:
+                  model: "whisper-3-large"
+                  file: "jfk.wav"
       responses:
         "403":
           description: Failed auth response.
@@ -947,17 +953,10 @@ paths:
       security:
         - bearerAuth: []
 
-  /documents:
+  /documents/extract:
     post:
-      summary: Documents
+      summary: Documents Extract
       description: This endpoint allows you to parse text from documents using OCR.
-      parameters:
-        - name: engine
-          in: query
-          description: The OCR engine to use. Options are `doclink` and `markitdown`
-          required: false
-          schema:
-            type: string
       requestBody:
         required: true
         content:
@@ -971,6 +970,11 @@ paths:
                   description: The document file to upload
               required:
                 - file
+            examples:
+              multipart/form-data:
+                summary: A text example of using the API.
+                value:
+                  file: "sample.pdf"
       responses:
         "403":
           description: Failed auth response.

@@ -149,3 +149,6 @@ layout:
   content-width: 54rem
 
 css: ./styles.css
+
+experimental:
+  openapi-parser-v2: true

@@ -8,4 +8,5 @@ groups:
           location: local-file-system
           path: ../sdks/typescript
 api:
-  path: openapi\Prediction-Guard-Prediction-Guard-API-1.0-resolved.yaml
+  specs:
+    - openapi: openapi\Prediction-Guard-Prediction-Guard-API-1.0-resolved.yaml
