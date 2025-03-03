@@ -25,6 +25,7 @@ paths:
               examples:
                 example1:
                   value: "The Prediction Guard API is healthy!"
+                  
   /chat/completions:
     post:
       summary: Chat Completions
@@ -57,11 +58,51 @@ paths:
                             type: string
                             description: The role of the sender (user or assistant).
                           content:
-                            type: string
-                            description: The content of the message.
+                            oneOf:
+                              - type: string
+                                description: A string of the message content
+                              - type: array
+                                description: The content of the message, used for file inputs.
+                                items:
+                                  type: object
+                                  properties:
+                                    type:
+                                      type: string
+                                      description: The type of content ('text', 'image_url').
+                                    text:
+                                      type: string
+                                      description: The text to provide.
+                                    image_url:
+                                      type: object
+                                      properties:
+                                        url:
+                                          type: string
+                                          description: The base64 content with this prefix `data:image/jpeg;base64,`
+                frequency_penalty:
+                  type: number
+                  description: A value between -2.0 and 2.0, with positive values increasingly penalizing new tokens based on their frequency so far in order to decrease further occurrences.
+                logit_bias:
+                  type: map
+                  description: Modifies the likelihood of specified tokens appearing in a response.
+                  properties:
+                    token:
+                      type: string
+                      description: A string of the chosen token ID. Value is an int from -100 to 100.
                 max_completion_tokens:
                   type: integer
                   description: The maximum number of tokens in the generated completion.
+                presence_penalty:
+                  type: number
+                  description: A value between -2.0 and 2.0, with positive values causing a flat reduction of new tokens based on their existing presence so far in order to decrease further occurrences.
+                stop:
+                  oneOf:
+                    - type: string
+                      description: A string representing the token to stop generation.
+                    - type: array
+                      description: An array representing the token to stop generation.
+                      items:
+                        type: string
+                        description: A string representing the token to stop generation.
                 temperature:
                   type: number
                   description: The temperature parameter for controlling randomness in completions.
@@ -106,6 +147,10 @@ paths:
                     - role: "user"
                       content: "How do you feel about the world in general?"
                   max_completion_tokens: 1000
+                  frequency_penalty: 0.1
+                  logit_bias:
+                    128000: 10
+                  presence_penalty: 0.1
                   temperature: 1.0
                   top_p: 1.0
                   top_k: 50
@@ -191,9 +236,11 @@ paths:
       security:
         - bearerAuth: []
 
-  /chat/completions - Streaming Version:
+  /chat/completions with Streaming:
     post:
-      summary: Chat Completions Streaming
+      x-fern-streaming:
+        format: sse
+      summary: Chat Completions with Streaming
       description: Generate chat completions based on a conversation history with streaming support.
       requestBody:
         content:
@@ -240,6 +287,15 @@ paths:
                 stream:
                   type: boolean
                   description: Turn streaming on.
+                stop:
+                  oneOf:
+                    - type: string
+                      description: A string representing the token to stop generation.
+                    - type: array
+                      description: An array representing the token to stop generation.
+                      items:
+                        type: string
+                        description: A string representing the token to stop generation.
                 input:
                   type: object
                   description: Options to affect the input of the request.
@@ -372,57 +428,50 @@ paths:
       security:
         - bearerAuth: []
 
-  /chat/completions - Vision Version:
+  /completions:
     post:
-      summary: Chat Completions Vision
-      description: Generate chat completions based on text and images.
+      summary: Completions
+      description: Retrieve text completions based on the provided input.
       requestBody:
         content:
           application/json:
             schema:
               required:
                 - model
-                - messages
+                - prompt
               type: object
               properties:
                 model:
                   type: string
                   description: The chat model to use for generating completions.
-                messages:
-                  type: array
-                  description: An array of messages used for generating completions.
-                  items:
-                    required:
-                      - role
-                      - content
-                    type: object
-                    properties:
-                      role:
-                        type: string
-                        description: The role of the sender (user or assistant).
-                      content:
-                        type: array
-                        description: The content of the message.
-                        items:
-                          required:
-                            - type
-                          type: object
-                          properties:
-                            type:
-                              type: string
-                              description: The type of content ('text', 'image_url').
-                            text:
-                              type: string
-                              description: The text to provide.
-                            image_url:
-                              type: object
-                              properties:
-                                url:
-                                  type: string
-                                  description: The base64 content with this prefix `data:image/jpeg;base64,`
-                max_completion_tokens:
+                prompt:
+                  type: string
+                  description: The prompt to use for generating completions.
+                frequency_penalty:
+                  type: number
+                  description: A value between -2.0 and 2.0, with positive values increasingly penalizing new tokens based on their frequency so far in order to decrease further occurrences.
+                logit_bias:
+                  type: map
+                  description: Modifies the likelihood of specified tokens appearing in a response.
+                  properties:
+                    token:
+                      type: string
+                      description: A string of the chosen token ID. Value is an int from -100 to 100.
+                max_tokens:
                   type: integer
                   description: The maximum number of tokens in the generated completion.
+                presence_penalty:
+                  type: number
+                  description: A value between -2.0 and 2.0, with positive values causing a flat reduction of new tokens based on their existing presence so far in order to decrease further occurrences.
+                stop:
+                  oneOf:
+                    - type: string
+                      description: A string representing the token to stop generation.
+                    - type: array
+                      description: An array representing the token to stop generation.
+                      items:
+                        type: string
+                        description: A string representing the token to stop generation.
                 temperature:
                   type: number
                   description: The temperature parameter for controlling randomness in completions.
@@ -455,22 +504,12 @@ paths:
                     pii_replace_method:
                       type: string
                       description: Set to either 'random', 'fake', 'category', 'mask'.
-                max_tokens:
-                  type: integer
-                  description: Deprecated. Please use max_completion_tokens.
             examples:
               basic:
                 summary: A basic example of using the API.
                 value:
-                  model: "llava-1.5-7b-hf"
-                  messages:
-                    - role: "user"
-                      content:
-                        - type: "text"
-                          text: input.question
-                        - type: "image_url"
-                          image_url:
-                            url: "data:image/jpeg;base64,<DATA>"
+                  model: "Hermes-2-Pro-Llama-3-8B"
+                  prompt: "Will I lose my hair?"
                   max_completion_tokens: 1000
                   temperature: 1.0
                   top_p: 1.0
@@ -515,16 +554,16 @@ paths:
                 properties:
                   id:
                     type: string
-                    description: Unique ID for the chat completion.
+                    description: Unique ID for the completion.
                   object:
                     type: string
-                    description: Type of object (chat completion).
+                    description: Type of object (completion).
                   created:
                     type: integer
-                    description: Timestamp of when the chat completion was created.
+                    description: Timestamp of when the completion was created.
                   model:
                     type: string
-                    description: The chat model used for generating completions.
+                    description: The model used for generating the result.
                   choices:
                     type: array
                     description: The set of result choices.
@@ -534,32 +573,25 @@ paths:
                         index:
                           type: integer
                           description: The index position in the collection.
-                        message:
-                          type: object
-                          description: A result choice.
-                          properties:
-                            role:
-                              type: string
-                              description: The role of the sender (user or assistant).
-                            content:
-                              type: string
-                              description: The content of the message.
+                        text:
+                          type: string
+                          description: The generated text.
               example:
-                id: "chat-554c4c24-a1ea-4c9f-b91c-612bbac34f4e"
-                object: "chat.completion"
-                created: 1727890364
-                model: "llava-1.5-7b-hf"
+                id: "cmpl-d20e5639-ed8d-48b2-a403-08fe0fdc7add"
+                object: "text_completion"
+                created: 1727889988
+                model: "Hermes-2-Pro-Llama-3-8B"
                 choices:
                   - index: 0
-                    message:
-                      role: "assistant"
-                      content: "No, there is no deer in this picture. The image features a man wearing a hat and glasses, smiling for the camera."
+                    text: "Most people lose some hair every day. It’s a natural process called shedding. On average, you can lose 50-100 strands of hair a day. However, if you notice an increase in hair loss or if you are experiencing hair loss in large clumps, then it could be a sign of an underlying condition. Hair loss can be triggered by a number of factors such as stress, illness, hormone imbalance, medication, and genetics.\nIf you’re concerned about hair loss, you should consult with a trichologist, a hair and scalp specialist. They can help determine the cause of your hair loss and recommend the appropriate treatment."
       security:
         - bearerAuth: []
 
-  /completions:
+  /completions with Streaming:
     post:
-      summary: Completions
+      x-fern-streaming:
+        format: sse
+      summary: Completions with Streaming
       description: Retrieve text completions based on the provided input.
       requestBody:
         content:
@@ -576,9 +608,34 @@ paths:
                 prompt:
                   type: string
                   description: The prompt to use for generating completions.
-                max_completion_tokens:
+                frequency_penalty:
+                  type: number
+                  description: A value between -2.0 and 2.0, with positive values increasingly penalizing new tokens based on their frequency so far in order to decrease further occurrences.
+                logit_bias:
+                  type: map
+                  description: Modifies the likelihood of specified tokens appearing in a response.
+                  properties:
+                    token:
+                      type: string
+                      description: A string of the chosen token ID. Value is an int from -100 to 100.
+                max_tokens:
                   type: integer
                   description: The maximum number of tokens in the generated completion.
+                presence_penalty:
+                  type: number
+                  description: A value between -2.0 and 2.0, with positive values causing a flat reduction of new tokens based on their existing presence so far in order to decrease further occurrences.
+                stream:
+                  type: boolean
+                  description: Turn streaming on.
+                stop:
+                  oneOf:
+                    - type: string
+                      description: A string representing the token to stop generation.
+                    - type: array
+                      description: An array representing the token to stop generation.
+                      items:
+                        type: string
+                        description: A string representing the token to stop generation.
                 temperature:
                   type: number
                   description: The temperature parameter for controlling randomness in completions.
@@ -611,9 +668,6 @@ paths:
                     pii_replace_method:
                       type: string
                       description: Set to either 'random', 'fake', 'category', 'mask'.
-                max_tokens:
-                  type: integer
-                  description: Deprecated. Please use max_completion_tokens.
             examples:
               basic:
                 summary: A basic example of using the API.
@@ -826,6 +880,145 @@ paths:
                 data:
                   - index: 0
                     embedding: [0.0150606595, 0.04376322]
+      security:
+        - bearerAuth: []
+
+  /audio/transcriptions:
+    post:
+      summary: Audio Transcription
+      description: This endpoint allows you to transcribe audio.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                model:
+                  type: string
+                  description: The transcription model to use.
+                file:
+                  type: string
+                  format: binary
+                  description: The audio file to upload.
+              required:
+                - file
+                - model
+      responses:
+        "403":
+          description: Failed auth response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "api understands the request but refuses to authorize it"
+        "400":
+          description: General error response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "required fields are missing"
+        "200":
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  text:
+                    type: string
+                    description: The transcribed audio.
+              examples:
+                successExample:
+                  summary: Successful Response Example
+                  value:
+                    text: "And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country."
+      security:
+        - bearerAuth: []
+
+  /documents:
+    post:
+      summary: Documents
+      description: This endpoint allows you to parse text from documents using OCR.
+      parameters:
+        - name: engine
+          in: query
+          description: The OCR engine to use. Options are `doclink` and `markitdown`
+          required: false
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The document file to upload
+              required:
+                - file
+      responses:
+        "403":
+          description: Failed auth response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "api understands the request but refuses to authorize it"
+        "400":
+          description: General error response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "required fields are missing"
+        "200":
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                    description: The parsed document title.
+                  contents:
+                    type: string
+                    description: The parsed document contents.
+                  count:
+                    type: integer
+                    description: The word count for the document.
+              examples:
+                successExample:
+                  summary: Successful Response Example
+                  value:
+                    title: "sample.pdf"
+                    contents: "## Sample PDF\n\n## This is a simple PDF file. Fun fun fun.\n\nLorem ipsum dolor sit amet,  consectetuer adipiscing elit. Phasellus facilisis odio sed mi. Curabitur suscipit..."
+                    count: 3041
       security:
         - bearerAuth: []
 
