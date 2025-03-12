@@ -935,7 +935,7 @@ paths:
               basic:
                 summary: A text example of using the API.
                 value:
-                  model: "whisper-3-large"
+                  model: "whisper-3-base"
                   file: "jfk.wav"
       responses:
         "403":
