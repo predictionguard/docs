@@ -11,11 +11,11 @@ These models are designed for text inference, and are used in the `/completions`
 
 | Model Name                   | Type                 | Use Case                                                        | Prompt Format                                          | Context Length | More Info                                           |
 | ---------------------------- | -------------------- | --------------------------------------------------------------- | -----------------------------------------------------  | -------------- | ----------------------------------------------------|
-| Hermes-3-Llama-3.1-70B       | Chat                 | Instruction following or chat-like applications                 | [ChatML](/options/prompts#chatml)                      | 20480           | [link](/options/llms#hermes-3-llama-3.1-70b)     |
-| DeepSeek-R1-Distill-Qwen-32B | Chat/ Reasoning      | Instruction following or chat-like applications with reasoning  | [ChatML](/options/prompts#chatml)                      | 20480           | [link](/options/llms#deepSeek-r1-distill-qwen-32b)     |
-| Qwen2.5-Coder-14B-Instruct   | Code Generation      | Generating computer code or answering tech questions            | [ChatML](/options/prompts#chatml)                      | 8192           | [link](/options/llms#deepSeek-r1-distill-qwen-32b)     |
-| Hermes-3-Llama-3.1-8B        | Chat                 | Instruction following or chat-like applications                 | [ChatML](/options/prompts#chatml)                      | 20480           | [link](/options/llms#hermes-3-llama-3.1-8b)     |
-| neural-chat-7b-v3-3          | Chat                 | Instruction following or chat-like applications                 | [Neural Chat](/options/prompts#neural-chat)            | 8192           | [link](/options/llms#neural-chat-7b)              |
+| Hermes-3-Llama-3.1-70B       | Chat                 | Instruction following or chat-like applications                 | [ChatML](/options/prompts#chatml)                      | 20480           | [link](/options/llms#hermes-3-llama-3.1-70b)       |
+| DeepSeek-R1-Distill-Qwen-32B | Chat/Reasoning       | Instruction following or chat-like applications with reasoning  | [ChatML](/options/prompts#chatml)                      | 20480           | [link](/options/llms#deepSeek-r1-distill-qwen-32b) |
+| Qwen2.5-Coder-14B-Instruct   | Code Generation      | Generating computer code or answering tech questions            | [ChatML](/options/prompts#chatml)                      | 8192            | [link](/options/llms#qwen2.5-coder-14b-instruct)   |
+| Hermes-3-Llama-3.1-8B        | Chat                 | Instruction following or chat-like applications                 | [ChatML](/options/prompts#chatml)                      | 20480           | [link](/options/llms#hermes-3-llama-3.1-8b)        |
+| neural-chat-7b-v3-3          | Chat                 | Instruction following or chat-like applications                 | [Neural Chat](/options/prompts#neural-chat)            | 8192            | [link](/options/llms#neural-chat-7b)               |
 
 ## Model Descriptions
 
@@ -45,27 +45,53 @@ generalist assistant capabilities, and improved code generation skills.
 
 ### DeepSeek-R1-Distill-Qwen-32B
 
-**DELETE AND ADD SUMMARY**\
+DeepSeek-R1-Distill-Qwen-32B is a distilled reasoning model derived from DeepSeek-R1,  
+achieving state-of-the-art performance for dense models.
 
-**Type:** Chat\
-**Use Case:** Instruction Following or Chat-Like Applications\
-**Prompt Format:** [ChatML](/options/prompts#chatml)
+**Type:** Chat/Reasoning\  
+**Use Case:** Instruction following or chat-like applications with reasoning\  
+**Prompt Format:** [ChatML](/options/prompts#chatml)  
 
 https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-32B
 
-**DELETE AND ADD INFO**\
+DeepSeek-R1 is a first-generation reasoning model developed through large-scale reinforcement learning (RL).  
+The process involved training DeepSeek-R1-Zero purely with RL, without supervised fine-tuning (SFT),  
+allowing it to develop emergent reasoning behaviors such as self-verification, reflection,  
+and generating long chain-of-thought (CoT) reasoning steps. To improve readability, coherence, and overall performance, DeepSeek-R1 was further trained  
+with cold-start data before RL. 
+
+- DeepSeek-R1’s reasoning capabilities were distilled into smaller models, significantly improving  
+  their performance compared to models trained from scratch with RL.  
+- Several dense models were fine-tuned using DeepSeek-R1’s reasoning data, leading to state-of-the-art  
+  performance in benchmarks.  
+- Open-source checkpoints are available in multiple sizes: **1.5B, 7B, 8B, 14B, 32B, and 70B**,  
+  based on **Qwen2.5** and **Llama3** series.  
 
 ### Qwen2.5-Coder-14B-Instruct
 
-**DELETE AND ADD SUMMARY**\
+Qwen2.5-Coder is the latest series of code-specific Qwen large language models  
+(formerly known as CodeQwen). It is designed to enhance code generation,  
+reasoning, and fixing, making it a powerful tool for developers.  
 
-**Type:** Code Generation\
-**Use Case:** Generating computer code or answering tech questions\
-**Prompt Format:** [ChatML](/options/prompts#chatml)
+**Type:** Code Generation\  
+**Use Case:** Generating computer code or answering tech questions\  
+**Prompt Format:** N/A  
 
 https://huggingface.co/Qwen/Qwen2.5-Coder-14B-Instruct
 
-**DELETE AND ADD INFO**\
+Qwen2.5-Coder builds on the strong foundation of **Qwen2.5**, scaling up training tokens  
+to **5.5 trillion**, incorporating diverse data sources such as source code, text-code grounding,  
+and synthetic data.  
+
+### **Key Improvements Over CodeQwen1.5**
+- **Enhanced Code Abilities:** Significant improvements in **code generation, reasoning, and fixing**.  
+- **State-of-the-Art Performance:** Qwen2.5-Coder-32B achieves coding performance on par with **GPT-4o**.  
+- **Real-World Application Support:** Designed to power **Code Agents**, with strengths in coding,  
+  mathematics, and general reasoning.  
+
+Qwen2.5-Coder-14B-Instruct balances model size and performance, offering strong coding capabilities  
+with instruction tuning for better usability.  
+
 
 ### Hermes-3-Llama-3.1-8B
 
