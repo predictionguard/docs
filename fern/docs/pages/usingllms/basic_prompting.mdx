@@ -22,7 +22,7 @@ You will need to install Prediction Guard into your Python environment.
 $ pip install predictionguard
 ```
 
-Now import PredictionGuard, setup your API Key, and create the client.
+Now import PredictionGuard, set up your API Key, and create the client.
 
 ```python copy
 import os
@@ -50,7 +50,7 @@ scenario or plot.
 
 ```python copy
 result = client.completions.create(
-    model="neural-chat-7b-v3-3",
+    model="Hermes-3-Llama-3.1-70B",
     prompt="Daniel Whitenack, a long forgotten wizard from the Lord of the Rings, entered into Mordor to"
 )
 
@@ -70,14 +70,14 @@ SQL statements):
 
 ```python copy
 result = client.completions.create(
-    model="neural-chat-7b-v3-3",
+    model="Hermes-3-Llama-3.1-70B",
     prompt="Today I inspected the engine mounting equipment. I found a problem in one of the brackets so"
 )
 
 print(result['choices'][0]['text'])
 
 result = client.completions.create(
-    model="Hermes-2-Pro-Llama-3-8B",
+    model="Hermes-3-Llama-3.1-70B",
     prompt="""CREATE TABLE llm_queries(id SERIAL PRIMARY KEY, name TEXT NOT NULL, value REAL);
 INSERT INTO llm_queries('Daniel Whitenack', 'autocomplete')
 SELECT"""
@@ -120,7 +120,7 @@ Here is a zero-shot prompt for performing sentiment analysis:
 
 ```python copy
 client.completions.create(
-    model="Hermes-2-Pro-Llama-3-8B",
+    model="Hermes-3-Llama-3.1-70B",
     prompt="""### Instruction:
 Respond with a sentiment label for the text included in the below user input. Use the label NEU for neutral sentiment, NEG for negative sentiment, and POS for positive sentiment. Respond only with one of these labels and no other text.
 
@@ -141,14 +141,14 @@ in the tutorials.
 
 **Note** - We are using a very specific prompt format (with the `### Instruction:`
 etc. markers). This is the alpaca prompt format that is preferred by the
-`Hermes-2-Pro-Llama-3-8B` model. Each model might have a different preferred prompt
+`Hermes-3-Llama-3.1-70B` model. Each model might have a different preferred prompt
 format, and you can find out more about that [here](../models).
 
 Another example of zero-shot prompting is the following for question and answer:
 
 ```python copy
 client.completions.create(
-    model="Hermes-2-Pro-Llama-3-8B",
+    model="Hermes-3-Llama-3.1-70B",
     prompt=prompt
 )['choices'][0]['text'].split('.')[0].strip()
 ```
@@ -202,7 +202,7 @@ Text: The flight is boring.
 Sentiment: """
 
 result = client.completions.create(
-    model="Hermes-2-Pro-Llama-3-8B",
+    model="Hermes-3-Llama-3.1-70B",
     prompt=prompt
 )
 
@@ -232,7 +232,7 @@ Human: muje lgta hai ki yeh kewal personal pasand ke bare mai hai meri pasandida
 AI: """
 
 output = client.completions.create(
-    model="Hermes-2-Pro-Llama-3-8B",
+    model="Hermes-3-Llama-3.1-70B",
     prompt=prompt
 )['choices'][0]['text'].split('\n')[0]
 
@@ -258,7 +258,7 @@ Respond with a English translation of the following input Hinglish text.
 """.format(hinglish=output)
 
 client.completions.create(
-    model="Hermes-2-Pro-Llama-3-8B",
+    model="Hermes-3-Llama-3.1-70B",
     prompt=prompt
 )['choices'][0]['text'].split('import')[0].strip()
 ```

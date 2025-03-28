@@ -15,10 +15,10 @@ machine translation using LLMs.
 **As you solve problems with LLMs, do NOT always think about your task as a
 single prompt.** Decompose your problem into multiple steps. Just like programming
 which uses multiple functions, classes, etc. LLM integration is a new kind of
-reasoning engine that you can "program" in a multi-step, conditional, control
+reasoning engine that you can "program" in a multistep, conditional, control
 flow sort of fashion.
 
-Further, enterprise LLM appllications need reliability, trust, and consistency.
+Further, enterprise LLM applications need reliability, trust, and consistency.
 **Because LLMs only predict probable text, they have no understanding or connection
 to reality.** This produces **hallucinations** that can be part of a coherent
 text block but factually (or otherwise) wrong. To deal with this we need to
@@ -35,7 +35,7 @@ dependencies in you Python environment.
 $ pip install langchain predictionguard lancedb html2text sentence-transformers
 ```
 
-Now import PredictionGuard and the other dependencies, setup your API Key, and
+Now import PredictionGuard and the other dependencies, set up your API Key, and
 create the client.
 
 ```python copy
@@ -96,7 +96,7 @@ prompt = PromptTemplate(
 )
 
 result = client.completions.create(
-    model="Hermes-2-Pro-Llama-3-8B",
+    model="Hermes-3-Llama-3.1-70B",
     prompt=prompt.format(query="What is the population of LA?")
 )
 
@@ -238,7 +238,7 @@ def response_chain(message, convo_context, info_context):
 
     # Handle the informational request.
     result = client.completions.create(
-        model="Hermes-2-Pro-Llama-3-8B",
+        model="Hermes-3-Llama-3.1-70B",
         prompt=qa_prompt.format(context=info_context, query=message)
     )
     completion = result['choices'][0]['text'].split('#')[0].strip()
@@ -257,7 +257,7 @@ def response_chain(message, convo_context, info_context):
 
     # Handle the chat message.
     result = client.completions.create(
-        model="Hermes-2-Pro-Llama-3-8B",
+        model="Hermes-3-Llama-3.1-70B",
         prompt=chat_prompt.format(context=convo_context, query=message),
         output={
             "toxicity": True
@@ -332,7 +332,7 @@ question = "How are gift cards delivered?"
 myprompt = prompt.format(context=context, question=question)
 
 result = client.completions.create(
-    model="Hermes-2-Pro-Llama-3-8B",
+    model="Hermes-3-Llama-3.1-70B",
     prompt=myprompt
 )
 result['choices'][0]['text'].split('#')[0].strip()
@@ -567,7 +567,7 @@ def rag_answer(message):
 
   # Get a response
   result = client.completions.create(
-      model="Hermes-2-Pro-Llama-3-8B",
+      model="Hermes-3-Llama-3.1-70B",
       prompt=prompt
   )
 

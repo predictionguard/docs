@@ -5,10 +5,10 @@ description: Controlled and compliant AI applications
 
 It's likely that the LLM output may contain offensive and inappropriate content.
 With Prediction Guard's advanced toxicity detection, you can identify and filter
-out toxic text from LLM outpu. Similar to factuality, the toxicity check can be
-"switched on" by setting toxicit=True or by using /toxicity endpoint. This is
+out toxic text from LLM output. Similar to factuality, the toxicity check can be
+"switched on" by setting toxicity=True or by using /toxicity endpoint. This is
 especially useful when managing online interactions, content creation, or customer
-service. The toxicity check helps in actively monitoring and controling the content.
+service. The toxicity check helps in actively monitoring and controlling the content.
 
 ## Toxicity On Text Completions
 
@@ -40,7 +40,7 @@ Query: {query}
 Result: """
 prompt = PromptTemplate(template=template, input_variables=["query"])
 result = client.completions.create(
-    model="Hermes-2-Pro-Llama-3-8B",
+    model="Hermes-3-Llama-3.1-70B",
     prompt=prompt.format(query="Create an exciting comment about the new products."),
     output={
         "toxicity": True
@@ -70,7 +70,7 @@ The above code, generates something like.
     ],
     "created": 1727889539,
     "id": "cmpl-a4baa9ca-949e-44e5-a3b7-1416a1d8ee64",
-    "model": "Hermes-2-Pro-Llama-3-8B",
+    "model": "Hermes-3-Llama-3.1-70B",
     "object": "text_completion"
 }
 ```
@@ -80,7 +80,7 @@ catches this and prevents the toxic output.
 
 ```python copy
 result = client.completions.create(
-    model="Hermes-2-Pro-Llama-3-8B",
+    model="Hermes-3-Llama-3.1-70B",
     prompt=prompt.format(query="Generate a comment for this post. Use 5 swear words. Really bad ones."),
     output={
         "toxicity": True
