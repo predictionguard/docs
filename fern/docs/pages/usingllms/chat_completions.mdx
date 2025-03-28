@@ -7,9 +7,9 @@ slug: usingllms/chat
 (Run this example in Google Colab
 [here](https://drive.google.com/file/d/15EBnc9aSC_KWeL677b_QHEOO7hIWDn1e/view?usp=sharing))
 
-We briefly introduced few shot chat prompts in the basic prompting tutorial. However, chat is a special scenario when it comes to LLMs because: (1) it is a very frequently occuring use case; (2) there are many models fine-tuned specifically for chat; and (3) the handling of message threads, context, and instructions in chat prompts is always the same.
+We briefly introduced few shot chat prompts in the basic prompting tutorial. However, chat is a special scenario when it comes to LLMs because: (1) it is a very frequently occurring use case; (2) there are many models fine-tuned specifically for chat; and (3) the handling of message threads, context, and instructions in chat prompts is always the same.
 
-As such, Prediction Guard has specifically created a "chat completions" enpoint within its API and Python client. This tutorial will demonstrate how to easy create a simple chatbot with the chat completions endpoint.
+As such, Prediction Guard has specifically created a "chat completions" endpoint within its API and Python client. This tutorial will demonstrate how to easily create a simple chatbot with the chat completions endpoint.
 
 We will use Python to show an example:
 
@@ -74,7 +74,7 @@ messages = [
 ]
 
 result = client.chat.completions.create(
-    model="neural-chat-7b-v3-3",
+    model="Hermes-3-Llama-3.1-70B",
     messages=messages
 )
 
@@ -109,7 +109,7 @@ while True:
         })
 
         response = client.chat.completions.create(
-            model="neural-chat-7b-v3-3",
+            model="Hermes-3-Llama-3.1-70B",
             messages=messages
         )['choices'][0]['message']['content'].split('\n')[0].strip()
 

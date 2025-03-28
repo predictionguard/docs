@@ -60,12 +60,12 @@ client = PredictionGuard()
 
 Generating text with one of these models is then just single request for a
 “Completion” (note, we also support chat completions). Here we will call the
-Hermes-2-Pro-Llama-3-8B model and try to have it autocomplete a joke.
+Hermes-3-Llama-3.1-70B model and try to have it autocomplete a joke.
 
 You can find out more about the available [Models](options/enumerations) in the docs.
 
 ```python copy
-response = client.completions.create(model="Hermes-2-Pro-Llama-3-8B",
+response = client.completions.create(model="Hermes-3-Llama-3.1-70B",
                           prompt="The best joke I know is: ")
 
 print(json.dumps(
@@ -90,7 +90,7 @@ output which includes the completion.
   "created": 1720018377,
   "id": "cmpl-27dc83fb-1ef4-48f0-8931-59c812d5a15a",
   "object": "text_completion",
-  "model": "Hermes-2-Pro-Llama-3-8B"
+  "model": "Hermes-3-Llama-3.1-70B"
 }
 ````
 

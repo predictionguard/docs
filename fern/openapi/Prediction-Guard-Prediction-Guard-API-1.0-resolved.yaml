@@ -187,7 +187,7 @@ paths:
               basic:
                 summary: A basic example of using the API.
                 value:
-                  model: "Hermes-2-Pro-Llama-3-8B"
+                  model: "Hermes-3-Llama-3.1-70B"
                   messages:
                     - role: "user"
                       content: "How do you feel about the world in general?"
@@ -314,7 +314,7 @@ paths:
                 id: "chat-d079eca8-1d6a-451a-a4ac-b0fea1e11a96"
                 object: "chat.completion"
                 created: 1727890629
-                model: "Hermes-2-Pro-Llama-3-8B"
+                model: "Hermes-3-Llama-3.1-70B"
                 choices:
                   - index: 0
                     message:
@@ -467,7 +467,7 @@ paths:
               basic:
                 summary: A basic example of using the API.
                 value:
-                  model: "Hermes-2-Pro-Llama-3-8B"
+                  model: "Hermes-3-Llama-3.1-70B"
                   messages:
                     - role: "user"
                       content: "How do you feel about the world in general?"
@@ -601,7 +601,7 @@ paths:
                     id: "chat-6c8c291f-5a06-46e5-94fa-2b0b1e6444c7"
                     object: "chat.completion.chunk"
                     created: 1727796455
-                    model: "Hermes-2-Pro-Llama-3-8B"
+                    model: "Hermes-3-Llama-3.1-70B"
                     choices:
                       - index: 0
                         delta: { content: " I" }
@@ -611,7 +611,7 @@ paths:
                     id: "chat-6c8c291f-5a06-46e5-94fa-2b0b1e6444c7"
                     object: "chat.completion.chunk"
                     created: 1727796455
-                    model: "Hermes-2-Pro-Llama-3-8B"
+                    model: "Hermes-3-Llama-3.1-70B"
                     choices:
                       - index: 0
                         delta: { content: " feel"}
@@ -700,7 +700,7 @@ paths:
               basic:
                 summary: A basic example of using the API.
                 value:
-                  model: "Hermes-2-Pro-Llama-3-8B"
+                  model: "Hermes-3-Llama-3.1-70B"
                   prompt: "Will I lose my hair?"
                   max_tokens: 1000
                   frequency_penalty: 0.1
@@ -777,7 +777,7 @@ paths:
                 id: "cmpl-d20e5639-ed8d-48b2-a403-08fe0fdc7add"
                 object: "text_completion"
                 created: 1727889988
-                model: "Hermes-2-Pro-Llama-3-8B"
+                model: "Hermes-3-Llama-3.1-70B"
                 choices:
                   - index: 0
                     text: "Most people lose some hair every day. It’s a natural process called shedding. On average, you can lose 50-100 strands of hair a day. However, if you notice an increase in hair loss or if you are experiencing hair loss in large clumps, then it could be a sign of an underlying condition. Hair loss can be triggered by a number of factors such as stress, illness, hormone imbalance, medication, and genetics.\nIf you’re concerned about hair loss, you should consult with a trichologist, a hair and scalp specialist. They can help determine the cause of your hair loss and recommend the appropriate treatment."
@@ -869,7 +869,7 @@ paths:
               basic:
                 summary: A basic example of using the API.
                 value:
-                  model: "Hermes-2-Pro-Llama-3-8B"
+                  model: "Hermes-3-Llama-3.1-70B"
                   prompt: "Will I lose my hair?"
                   max_tokens: 1000
                   frequency_penalty: 0.1
@@ -946,7 +946,7 @@ paths:
                 id: "cmpl-d20e5639-ed8d-48b2-a403-08fe0fdc7add"
                 object: "text_completion"
                 created: 1727889988
-                model: "Hermes-2-Pro-Llama-3-8B"
+                model: "Hermes-3-Llama-3.1-70B"
                 choices:
                   - index: 0
                     text: "Most people lose some hair every day. It’s a natural process called shedding. On average, you can lose 50-100 strands of hair a day. However, if you notice an increase in hair loss or if you are experiencing hair loss in large clumps, then it could be a sign of an underlying condition. Hair loss can be triggered by a number of factors such as stress, illness, hormone imbalance, medication, and genetics.\nIf you’re concerned about hair loss, you should consult with a trichologist, a hair and scalp specialist. They can help determine the cause of your hair loss and recommend the appropriate treatment."
@@ -1103,6 +1103,15 @@ paths:
                   type: string
                   format: binary
                   description: The audio file to upload.
+                language:
+                  type: string
+                  description: The language the audio is in.
+                prompt:
+                  type: string
+                  description: An optional text to guide the model's style or continue a previous audio segment.
+                temperature:
+                  type: number
+                  description: The temperature parameter for controlling randomness in transcription.
               required:
                 - file
                 - model
@@ -1829,6 +1838,140 @@ paths:
       security:
         - bearerAuth: []
 
+
+  /translate:
+    post:
+      summary: Translate
+      description: Translate text from one language to another.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - text
+                - source_lang
+                - target_lang
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to translate.
+                source_lang:
+                  type: string
+                  description: The source language of the text.
+                target_lang:
+                  type: string
+                  description: The target language for the translation.
+                use_third_party_engine:
+                  type: boolean
+                  description: Enables/disables third party translations.
+            examples:
+              basic:
+                summary: A basic example of using the API.
+                value:
+                  text: "The sky is blue."
+                  source_lang: "eng"
+                  target_lang: "spa"
+                  use_third_party_engine: true
+      responses:
+        "403":
+          description: Failed auth response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "api understands the request but refuses to authorize it"
+        "400":
+          description: General error response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "required fields are missing"
+        "200":
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Unique ID for the translation.
+                  object:
+                    type: string
+                    description: Type of object (translation).
+                  created:
+                    type: integer
+                    description: Timestamp of when the translation was created.
+                  best_translation:
+                    type: string
+                    description: The best translation of the input text.
+                  best_score:
+                    type: number
+                    description: The best score for the best translation.
+                  best_translation_model:
+                    type: string
+                    description: The model used for the best translation.
+                  translations:
+                    type: array
+                    description: The set translations from different models.
+                    items:
+                      type: object
+                      properties:
+                        score:
+                          type: number
+                          description: The quality score for this translation.
+                        translation:
+                          type: string
+                          description: The translation.
+                        model:
+                          type: string
+                          description: The model that was used for this translation.
+                        status:
+                          type: string
+                          description: The status of using the model for this translation.
+              example:
+                id: "translation-52929bae5c2c44c9b5177921958cb5f7"
+                object: "translation"
+                created: 1721136682
+                best_translation: "Le ciel est bleu."
+                best_score: 0.8694148659706116
+                best_translation_model: "hermes_2_pro_llama_3_8b"
+                translations:
+                  - score: 0.8694148659706116
+                    translation: "Le ciel est bleu."
+                    model: "hermes_2_pro_llama_3_8b"
+                    status: "success"
+                  - score: 0.8694148659706116
+                    translation: "Le ciel est bleu."
+                    model: "hermes_2_pro_mistral_7b"
+                    status: "success"
+                  - score: 0.8694148659706116
+                    translation: "Le ciel est bleu."
+                    model: "openai"
+                    status: "success"
+                  - score: 0.8694148659706116
+                    translation: "Le ciel est bleu."
+                    model: "deepl"
+                    status: "success"
+                  - score: 0.8694148659706116
+                    translation: "Le ciel est bleu."
+                    model: "google"
+                    status: "success"
+      security:
+        - bearerAuth: []
+
   /models/{capability}:
       get:
         summary: Models
@@ -1927,13 +2070,13 @@ paths:
                 example:
                   object: "list"
                   data:
-                    - id: "deepseek-coder-6.7b-instruct"
+                    - id: "Hermes-2-Pro-Llama-3-8B"
                       object: "model"
                       created: "2024-10-31T00:00:00Z"
-                      owned_by: "DeepSeek"
-                      description: "Deepseek Coder is a coder model trained on 2 trillion tokens."
-                      max_context_length: 8192
-                      prompt_format: "deepseek"
+                      owned_by: "Meta"
+                      description: "The Hermes 3 Llama 3.1 70B multilingual large language model (LLM) is an instruction tuned generative model."
+                      max_context_length: 20480
+                      prompt_format: "none"
                       capabilities:
                         chat_completion: true
                         chat_with_image: false
@@ -1941,6 +2084,7 @@ paths:
                         embedding: false
                         embedding_with_image: false
                         tokenize: true
+                        rerank: false
         security:
           - bearerAuth: [ ]
 

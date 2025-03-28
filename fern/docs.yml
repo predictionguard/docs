@@ -41,6 +41,8 @@ navigation:
             path: ./docs/pages/options/lvms.mdx
           - page: Embedding Models
             path: ./docs/pages/options/embedding_models.mdx
+          - page: Audio Models
+            path: ./docs/pages/options/audio_models.mdx
           - page: Reranker Models
             path: ./docs/pages/options/reranker_models.mdx
           - page: Enumerations

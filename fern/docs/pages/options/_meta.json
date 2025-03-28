@@ -2,6 +2,8 @@
     "llms": "LLMs",
     "lvms": "LVMS",
     "embedding_models": "Embedding Models",
-    "languages": "Language Options",
+    "audio_models": "Audio Models",
+    "reranker_models": "Reranker Models",
+    "enumerations": "Enumerations",
     "prompts": "Prompt Formats"
 }

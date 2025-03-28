@@ -9,41 +9,15 @@ These models are designed for text inference, and are used in the `/completions`
 
 ## Models
 
-| Model Name                   | Type                 | Use Case                                                | Prompt Format                                          | Context Length | More Info                                           |
-| ---------------------------- | -------------------- | ------------------------------------------------------- | -----------------------------------------------------  | -------------- | ----------------------------------------------------|
-| Hermes-3-Llama-3.1-70B       | Chat                 | Instruction following or chat-like applications         | [ChatML](/options/prompts#chatml)                      | 10240           | [link](/options/llms#hermes-3-llama-3.1-70b)     |
-| Hermes-3-Llama-3.1-8B        | Chat                 | Instruction following or chat-like applications         | [ChatML](/options/prompts#chatml)                      | 10240           | [link](/options/llms#hermes-3-llama-3.1-8b)     |
-| Hermes-2-Pro-Llama-3-8B      | Chat                 | Instruction following or chat-like applications         | [ChatML](/options/prompts#chatml)                      | 4096           | [link](/options/llms#hermes-2-pro-llama-3-8b)     |
-| Nous-Hermes-Llama2-13b       | Text Generation      | Generating output in response to arbitrary instructions | [Alpaca](/options/prompts#alpaca)                      | 4096           | [link](/options/llms#nous-hermes-llama2-13b)      |
-| Hermes-2-Pro-Mistral-7B      | Chat                 | Instruction following or chat-like applications         | [ChatML](/options/prompts#chatml)                      | 4096           | [link](/options/llms#hermes-2-pro-mistral-7b)     |
-| neural-chat-7b-v3-3          | Chat                 | Instruction following or chat-like applications         | [Neural Chat](/options/prompts#neural-chat)            | 4096           | [link](/options/llms#neural-chat-7b)              |
-| deepseek-coder-6.7b-instruct | Code Generation      | Generating computer code or answering tech questions    | [Deepseek](/options/prompts#deepseek)                  | 4096           | [link](/options/llms#deepseek-coder-67b-instruct) |
+| Model Name                   | Type                 | Use Case                                                        | Prompt Format                                          | Context Length | More Info                                           |
+| ---------------------------- | -------------------- | --------------------------------------------------------------- | -----------------------------------------------------  | -------------- | ----------------------------------------------------|
+| Hermes-3-Llama-3.1-70B       | Chat                 | Instruction following or chat-like applications                 | [ChatML](/options/prompts#chatml)                      | 20480           | [link](/options/llms#hermes-3-llama-31-70b)       |
+| DeepSeek-R1-Distill-Qwen-32B | Chat/Reasoning       | Instruction following or chat-like applications with reasoning  | [ChatML](/options/prompts#chatml)                      | 20480           | [link](/options/llms#deepseek-r1-distill-qwen-32b) |
+| Qwen2.5-Coder-14B-Instruct   | Code Generation      | Generating computer code or answering tech questions            | [ChatML](/options/prompts#chatml)                      | 8192            | [link](/options/llms#qwen25-coder-14b-instruct)   |
+| Hermes-3-Llama-3.1-8B        | Chat                 | Instruction following or chat-like applications                 | [ChatML](/options/prompts#chatml)                      | 20480           | [link](/options/llms#hermes-3-llama-31-8b)        |
+| neural-chat-7b-v3-3          | Chat                 | Instruction following or chat-like applications                 | [Neural Chat](/options/prompts#neural-chat)            | 8192            | [link](/options/llms#neural-chat-7b-v3-3)               |
 
 ## Model Descriptions
-
-### Hermes-3-Llama-3.1-8B
-
-This is a general use model that excels at reasoning and multi-turn conversations,
-with an improved focus on longer context lengths. This allows for more accuracy and recall
-in areas that require a longer context window, along with being an improved version of the previous
-Hermes and Llama line of models.
-
-**Type:** Chat\
-**Use Case:** Instruction Following or Chat-Like Applications\
-**Prompt Format:** [ChatML](/options/prompts#chatml)
-
-https://huggingface.co/NousResearch/Hermes-3-Llama-3.1-8B
-
-Hermes 3 is a generalist language model with many improvements over Hermes 2,
-including advanced agentic capabilities, much better roleplaying, reasoning,
-multi-turn conversation, long context coherence, and improvements across the board.
-
-The ethos of the Hermes series of models is focused on aligning LLMs to the user,
-with powerful steering capabilities and control given to the end user.
-
-The Hermes 3 series builds and expands on the Hermes 2 set of capabilities,
-including more powerful and reliable function calling and structured output capabilities,
-generalist assistant capabilities, and improved code generation skills.
 
 ### Hermes-3-Llama-3.1-70B
 
@@ -69,86 +43,77 @@ The Hermes 3 series builds and expands on the Hermes 2 set of capabilities,
 including more powerful and reliable function calling and structured output capabilities,
 generalist assistant capabilities, and improved code generation skills.
 
-### Hermes-2-Pro-Llama-3-8B
+### DeepSeek-R1-Distill-Qwen-32B
 
-A general use model that maintains excellent general task and conversation
-capabilities while excelling at JSON Structured Outputs and improving on several
-other metrics.
+DeepSeek-R1-Distill-Qwen-32B is a distilled reasoning model derived from DeepSeek-R1 achieving state-of-the-art 
+performance for dense models.
 
-**Type:** Chat\
-**Use Case:** Instruction Following or Chat-Like Applications\
-**Prompt Format:** [ChatML](/options/prompts#chatml)
+**Type:** Chat/Reasoning  
+**Use Case:** Instruction following or chat-like applications with reasoning  
+**Prompt Format:** [ChatML](/options/prompts#chatml)  
 
-https://huggingface.co/NousResearch/Hermes-2-Pro-Llama-3-8B
+https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-32B
 
-Hermes 2 Pro is an upgraded, retrained version of Nous Hermes 2, consisting of
-an updated and cleaned version of the OpenHermes 2.5 Dataset, as well as a newly
-introduced Function Calling and JSON Mode dataset developed in-house.
+DeepSeek-R1 is a first-generation reasoning model developed through large-scale reinforcement learning (RL).  
+The process involved training DeepSeek-R1-Zero purely with RL, without supervised fine-tuning (SFT)  
+allowing it to develop emergent reasoning behaviors such as self-verification, reflection, and generating 
+long chain-of-thought (CoT) reasoning steps. To improve readability, coherence, and overall performance, 
+DeepSeek-R1 was further trained with cold-start data before RL. 
 
-This new version of Hermes maintains its excellent general task and conversation
-capabilities - but also excels at Function Calling, JSON Structured Outputs,
-and has improved on several other metrics as well, scoring a 90% on our function
-calling evaluation built in partnership with Fireworks.AI, and an 84% on our
-structured JSON Output evaluation.
+- DeepSeek-R1’s reasoning capabilities were distilled into smaller models, significantly improving  
+  their performance compared to models trained from scratch with RL.  
+- Several dense models were fine-tuned using DeepSeek-R1’s reasoning data, leading to state-of-the-art  
+  performance in benchmarks.  
+- Open-source checkpoints are available in multiple sizes: **1.5B, 7B, 8B, 14B, 32B, and 70B**,  
+  based on **Qwen2.5** and **Llama3** series.  
 
-Hermes Pro takes advantage of a special system prompt and multi-turn function
-calling structure with a new chatml role in order to make function calling
-reliable and easy to parse.
+### Qwen2.5-Coder-14B-Instruct
 
-### Nous-Hermes-Llama2-13b
+Qwen2.5-Coder is the latest series of code-specific Qwen large language models (formerly known as CodeQwen). 
+It is designed to enhance code generation, reasoning, and fixing, making it a powerful tool for developers.  
 
-A general use model that combines advanced analytics capabilities with a vast 13
-billion parameter count, enabling it to perform in-depth data analysis and
-support complex decision-making processes. This model is designed to process
-large volumes of data, uncover hidden patterns, and provide actionable insights.
+**Type:** Code Generation
+**Use Case:** Generating computer code or answering tech questions 
+**Prompt Format:** [ChatML](/options/prompts#chatml)   
 
-**Type:** Text Generation\
-**Use Case:** Generating Output in Response to Arbitrary Instructions\
-**Prompt Format:** [Alpaca](/options/prompts#alpaca)
+https://huggingface.co/Qwen/Qwen2.5-Coder-14B-Instruct
 
-https://huggingface.co/NousResearch/Nous-Hermes-Llama2-13b
+Qwen2.5-Coder builds on the strong foundation of **Qwen2.5**, scaling up training tokens  
+to **5.5 trillion**, incorporating diverse data sources such as source code, text-code grounding  
+and synthetic data.  
 
-Nous-Hermes-Llama2-13b is a state-of-the-art language model fine-tuned on over
-300,000 instructions. This model was fine-tuned by Nous Research, with Teknium
-and Emozilla leading the fine tuning process and dataset curation, Redmond AI
-sponsoring the compute, and several other contributors.
+### **Key Improvements Over CodeQwen1.5**
+- **Enhanced Code Abilities:** Significant improvements in **code generation, reasoning, and fixing**.  
+- **State-of-the-Art Performance:** Qwen2.5-Coder-32B achieves coding performance on par with **GPT-4o**.  
+- **Real-World Application Support:** Designed to power **Code Agents**, with strengths in coding,  
+  mathematics, and general reasoning.  
 
-This Hermes model uses the exact same dataset as Hermes on Llama-1. This is to
-ensure consistency between the old Hermes and new, for anyone who wanted to keep
-Hermes as similar to the old one, just more capable.
+Qwen2.5-Coder-14B-Instruct balances model size and performance, offering strong coding capabilities  
+with instruction tuning for better usability.  
 
-This model stands out for its long responses, lower hallucination rate, and
-absence of OpenAI censorship mechanisms. The fine-tuning process was performed
-with a 4096 sequence length on an 8x a100 80GB DGX machine.
+### Hermes-3-Llama-3.1-8B
 
-### Hermes-2-Pro-Mistral-7B
-
-A general use model that offers advanced natural language understanding and
-generation capabilities, empowering applications with high-performance
-text-processing functionalities across diverse domains and languages. The model
-excels in delivering accurate and contextually relevant responses, making it ideal
-for a wide range of applications, including chatbots, language translation,
-content creation, and more.
+This is a general use model that excels at reasoning and multi-turn conversations,
+with an improved focus on longer context lengths. This allows for more accuracy and recall
+in areas that require a longer context window, along with being an improved version of the previous
+Hermes and Llama line of models.
 
 **Type:** Chat\
 **Use Case:** Instruction Following or Chat-Like Applications\
 **Prompt Format:** [ChatML](/options/prompts#chatml)
 
-https://huggingface.co/NousResearch/Hermes-2-Pro-Mistral-7B
+https://huggingface.co/NousResearch/Hermes-3-Llama-3.1-8B
 
-Hermes 2 Pro is an upgraded, retrained version of Nous Hermes 2, consisting of
-an updated and cleaned version of the OpenHermes 2.5 Dataset, as well as a newly
-introduced Function Calling and JSON Mode dataset developed in-house.
+Hermes 3 is a generalist language model with many improvements over Hermes 2,
+including advanced agentic capabilities, much better roleplaying, reasoning,
+multi-turn conversation, long context coherence, and improvements across the board.
 
-This new version of Hermes maintains its excellent general task and conversation
-capabilities - but also excels at Function Calling, JSON Structured Outputs, and
-has improved on several other metrics as well, scoring a 90% on our function
-calling evaluation built in partnership with Fireworks.AI, and an 84% on our
-structured JSON Output evaluation.
+The ethos of the Hermes series of models is focused on aligning LLMs to the user,
+with powerful steering capabilities and control given to the end user.
 
-Hermes Pro takes advantage of a special system prompt and multi-turn function
-calling structure with a new chatml role in order to make function calling
-reliable and easy to parse. Learn more about prompting below.
+The Hermes 3 series builds and expands on the Hermes 2 set of capabilities,
+including more powerful and reliable function calling and structured output capabilities,
+generalist assistant capabilities, and improved code generation skills.
 
 ### neural-chat-7b-v3-3
 
@@ -167,23 +132,3 @@ Intel/orca_dpo_pairs. The Intel/neural-chat-7b-v3-1 was originally fine-tuned
 from mistralai/Mistral-7B-v-0.1. For more information, refer to the blog
 
 [The Practice of Supervised Fine-tuning and Direct Preference Optimization on Intel Gaudi2](https://medium.com/@NeuralCompressor/the-practice-of-supervised-finetuning-and-direct-preference-optimization-on-habana-gaudi2-a1197d8a3cd3)
-
-### deepseek-coder-6.7b-instruct
-
-DeepSeek Coder is a capable coding model trained on two trillion code and natural
-language tokens.
-
-**Type:** Code Generation\
-**Use Case:** Generating Computer Code or Answering Tech Questions\
-**Prompt Format:** [Deepseek](/options/prompts#deepseek)
-
-https://huggingface.co/deepseek-ai/deepseek-coder-6.7b-instruct
-
-Deepseek Coder is composed of a series of code language models, each trained
-from scratch on 2T tokens, with a composition of 87% code and 13% natural
-language in both English and Chinese. We provide various sizes of the code model,
-ranging from 1B to 33B versions. Each model is pre-trained on project-level code
-corpus by employing a window size of 16K and a extra fill-in-the-blank task, to
-support project-level code completion and infilling. For coding capabilities,
-Deepseek Coder achieves state-of-the-art performance among open-source code models
-on multiple programming languages and various benchmarks.
