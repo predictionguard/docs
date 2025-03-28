@@ -19,10 +19,10 @@ These models are designed for embeddings generation using text and images, and a
 
 ### bge-m3
 
-BGE-M3 is a highly versatile retrieval model excelling in **Multi-Functionality, Multi-Linguality, and Multi-Granularity**, 
+BGE-M3 is a highly versatile retrieval model excelling in **Multi-Functionality, Multi-Linguality, and Multi-Granularity** 
 making it a powerful choice for retrieval-based AI applications.  
 
-**Type:** Embedding Generation\
+**Type:** Embedding Generation
 **Use Case:** Used for generating text embeddings : Dense Retrieval, Multi-Vector Retrieval, Sparse Retrieval, RAG Pipelines  
 
 https://huggingface.co/BAAI/bge-m3
@@ -30,15 +30,15 @@ https://huggingface.co/BAAI/bge-m3
 BGE-M3 is designed to enhance **retrieval accuracy** by seamlessly supporting multiple retrieval methods,  
 handling multiple languages, and processing inputs of varying lengths.  
 
-- **Multi-Functionality:** Supports **dense retrieval, multi-vector retrieval, and sparse retrieval** simultaneously.  
-- **Multi-Linguality:** Capable of processing **100+ languages**, making it suitable for global applications.  
-- **Multi-Granularity:** Handles different input sizes, from **short sentences to long documents (up to 8192 tokens)**.  
+- **Multi-Functionality:** Supports **dense retrieval, multi-vector retrieval, and sparse retrieval** simultaneously  
+- **Multi-Linguality:** Capable of processing **100+ languages**, making it suitable for global applications 
+- **Multi-Granularity:** Handles different input sizes, from **short sentences to long documents (up to 8192 tokens)**
 
 **Recommended Retrieval Pipeline for RAG**
 To maximize retrieval performance, the following approach is suggested:  
 
-- **Hybrid Retrieval:** Combines **embedding retrieval** with **sparse retrieval** (e.g., BM25) for higher accuracy and generalization.  
-- **Re-Ranking:** Utilize bge-reranker-v2-m3, a model supported on our platform, for enhanced retrieval accuracy.
+- **Hybrid Retrieval:** Combines **embedding retrieval** with **sparse retrieval** (e.g., BM25) for higher accuracy and generalization  
+- **Re-Ranking:** Utilize bge-reranker-v2-m3, a model supported on our platform, for enhanced retrieval accuracy
 
 ### multilingual-e5-large-instruct
 
