@@ -1089,6 +1089,31 @@ paths:
     post:
       summary: Audio Transcription
       description: This endpoint allows you to transcribe audio.
+      parameters:
+        - name: Toxicity
+          in: header
+          description: Whether to check the output for toxicity.
+          schema:
+            type: boolean
+          example: true
+        - name: Pii
+          in: header
+          description: Whether to check the output for Pii, and what to do if found. Supported values are 'replace' and 'block'.
+          schema:
+            type: string
+          example: "replace"
+        - name: Replace-Method
+          in: header
+          description: Method to replace any found PII. Supported values are 'category', 'fake', 'mask', and 'random'.
+          schema:
+            type: string
+          example: "category"
+        - name: Injection
+          in: header
+          description: Whether to check the output for a prompt injection.
+          schema:
+            type: boolean
+          example: true
       requestBody:
         required: true
         content:
@@ -1168,6 +1193,31 @@ paths:
     post:
       summary: Documents Extract
       description: This endpoint allows you to parse text from documents using OCR.
+      parameters:
+        - name: Toxicity
+          in: header
+          description: Whether to check the output for toxicity.
+          schema:
+            type: boolean
+          example: true
+        - name: Pii
+          in: header
+          description: Whether to check the output for Pii, and what to do if found. Supported values are 'replace' and 'block'.
+          schema:
+            type: string
+          example: "replace"
+        - name: Replace-Method
+          in: header
+          description: Method to replace any found PII. Supported values are 'category', 'fake', 'mask', and 'random'.
+          schema:
+            type: string
+          example: "category"
+        - name: Injection
+          in: header
+          description: Whether to check the output for a prompt injection.
+          schema:
+            type: boolean
+          example: true
       requestBody:
         required: true
         content:
@@ -1178,14 +1228,35 @@ paths:
                 file:
                   type: string
                   format: binary
-                  description: The document file to upload
+                  description: The document file to upload.
+                embedImages:
+                  type: boolean
+                  description: Whether to embed images from the document.
+                outputFormat:
+                  type: string
+                  description: The output format for the content of the document.
+                chunkDocument:
+                  type: boolean
+                  description: Whether to separate the document into chunks.
+                chunkSize:
+                  type: integer
+                  description: The size of chunks for the documents.
               required:
                 - file
             examples:
+#              headers:
+#                Toxicity: true
+#                Pii: "replace"
+#                Replace-Method: "mask"
+#                Injection: true
               multipart/form-data:
                 summary: A text example of using the API.
                 value:
                   file: "sample.pdf"
+                  embedImages: false
+                  outputFormat: "markdown"
+                  chunkDocument: true
+                  chunkSize: 1000
       responses:
         "403":
           description: Failed auth response.
