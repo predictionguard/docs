@@ -1,0 +1,492 @@
+---
+title: Tool Calling
+subtitle: Invoke external functions from PredictionGuard's `/chat/completions` endpoint
+description: Learn how to define tools, tell the model when to use them, and handle tool-call responses.
+slug: tool-calling
+---
+
+<Note>
+Please use the [/models endpoint](https://chat.predictionguard.com/api-reference/api-reference/models) to see which models support tool calling.
+</Note>
+
+## Overview
+
+Tool calling extends your model's capabilities beyond static text generation. With tool calling, models can:
+
+- Request real-time information (weather, stock prices)
+- Execute business workflows (create tickets, send emails)
+- Chain multiple operations together
+- Integrate with your existing APIs and services
+
+---
+
+## Core Concepts
+
+### Tools
+Functions you expose to the model, defined using JSON Schema. Each tool includes:
+- **Name**: Unique identifier for the function
+- **Description**: Clear explanation of what the tool does
+- **Parameters**: Expected inputs with types and constraints
+
+### Tool Calls
+When the model determines a tool would help answer a query, it generates a tool call with:
+- The tool name to invoke
+- Arguments formatted as JSON
+- A unique call ID for tracking
+
+### Tool Choice Strategy
+Controls how the model decides whether to use tools:
+
+| Strategy | Type | Behavior | Use Case |
+|----------|------|----------|----------|
+| `"auto"` | string | Model decides if tools would help | General assistants |
+| `"none"` | string | Tools disabled for this request | Pure text generation |
+| `"required"` | string | Must use at least one tool | Data-dependent queries |
+
+---
+
+## Quick Start
+
+### 1. Define Your Tool
+
+Create a JSON schema describing your function:
+
+```json
+{
+  "type": "function",
+  "function": {
+    "name": "get_current_weather",
+    "description": "Get current weather conditions for a specific location",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "location": {
+          "type": "string",
+          "description": "City and state, e.g., 'San Francisco, CA'"
+        },
+        "unit": {
+          "type": "string",
+          "enum": ["celsius", "fahrenheit"],
+          "description": "Temperature unit preference"
+        }
+      },
+      "required": ["location"],
+      "additionalProperties": false
+    },
+    "strict": false
+  }
+}
+```
+
+<Tip>
+Write clear, specific descriptions for both the tool and its parameters. This helps the model understand when and how to use your tools correctly. Set `strict: true` to enforce exact schema adherence.
+</Tip>
+
+### 2. Make a Request with Tools
+
+Include your tool definitions in the API request:
+
+```bash
+curl -X POST https://api.predictionguard.com/chat/completions \
+  -H "Authorization: Bearer $PREDICTIONGUARD_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "Hermes-3-Llama-3.1-70B",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What'\''s the weather like in San Francisco?"
+      }
+    ],
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "get_current_weather",
+          "description": "Get current weather conditions for a specific location",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "location": {
+                "type": "string",
+                "description": "City and state, e.g., '\''San Francisco, CA'\''"
+              },
+              "unit": {
+                "type": "string",
+                "enum": ["celsius", "fahrenheit"]
+              }
+            },
+            "required": ["location"]
+          },
+          "strict": false
+        }
+      }
+    ],
+    "tool_choice": "auto"
+  }'
+```
+
+### 3. Handle the Tool Call
+
+When the model requests a tool, you'll receive:
+
+```json
+{
+  "id": "chatcmpl-123",
+  "choices": [{
+    "index": 0,
+    "message": {
+      "role": "assistant",
+      "content": null,
+      "tool_calls": [{
+        "id": "call_abc123",
+        "type": "function",
+        "function": {
+          "name": "get_current_weather",
+          "arguments": "{\"location\":\"San Francisco, CA\",\"unit\":\"fahrenheit\"}"
+        }
+      }]
+    },
+    "finish_reason": "tool_calls"
+  }]
+}
+```
+
+### 4. Execute and Return Results
+
+Parse the arguments, execute your function, and send back the result:
+
+```python
+# Parse the tool call
+import json
+tool_call = response["choices"][0]["message"]["tool_calls"][0]
+args = json.loads(tool_call["function"]["arguments"])
+
+# Execute your function
+weather_data = get_weather(args["location"], args.get("unit", "fahrenheit"))
+
+# Continue the conversation with the result
+messages.append({
+    "role": "assistant",
+    "content": None,
+    "tool_calls": [tool_call]
+})
+messages.append({
+    "role": "tool",
+    "tool_call_id": tool_call["id"],
+    "name": tool_call["function"]["name"],
+    "content": json.dumps(weather_data)
+})
+```
+
+### 5. Get the Final Response
+
+The model incorporates the tool result and provides a natural language response:
+
+```json
+{
+  "role": "assistant",
+  "content": "The current weather in San Francisco is 68°F with partly cloudy skies. It's a pleasant day with light winds from the west at 10 mph."
+}
+```
+
+---
+
+## Best Practices
+
+### Tool Design
+
+**Keep tools focused**: Each tool should have a single, clear purpose
+```json
+✅ get_user_profile(user_id)
+❌ get_user_data_and_posts_and_friends(user_id)
+```
+
+**Use explicit parameters**: Avoid ambiguous or overly flexible inputs
+```json
+✅ "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]}
+❌ "unit": {"type": "string", "description": "any temperature unit"}
+```
+
+**Provide clear descriptions**: Help the model understand when to use each tool
+```json
+✅ "description": "Retrieves real-time stock price for a given ticker symbol"
+❌ "description": "Gets data"
+```
+
+### Error Handling
+
+Build robust error handling for production use:
+
+```python
+try:
+    # Parse arguments safely
+    args = json.loads(tool_call["function"]["arguments"])
+    
+    # Validate required parameters
+    if "location" not in args:
+        raise ValueError("Missing required parameter: location")
+    
+    # Execute with timeout
+    result = await asyncio.wait_for(
+        get_weather(args["location"]), 
+        timeout=5.0
+    )
+    
+except json.JSONDecodeError:
+    result = {"error": "Invalid arguments provided"}
+except asyncio.TimeoutError:
+    result = {"error": "Weather service timeout"}
+except Exception as e:
+    result = {"error": f"Service error: {str(e)}"}
+```
+
+### Security Considerations
+
+**Validate all inputs**: Never trust model-generated arguments
+```python
+# Sanitize and validate
+location = args.get("location", "").strip()
+if not location or len(location) > 100:
+    raise ValueError("Invalid location")
+```
+
+**Check for prompt injections**: Use PredictionGuard's injection detection API
+```python
+# Check user input for potential prompt injection
+injection_check = client.injection.check(
+    prompt=user_message,
+    detect=True
+)
+
+if injection_check["checks"][0]["probability"] > 0.5:
+    # High probability of injection attack
+    return {"error": "Invalid input detected"}
+```
+
+<Tip>
+PredictionGuard provides a dedicated [Injection API](https://docs.predictionguard.com/api-reference/api-reference/injection) to detect prompt injection attacks. Consider checking user inputs before processing them with tool-enabled models to prevent malicious attempts to manipulate tool behavior.
+</Tip>
+
+**Implement access controls**: Verify permissions before execution
+```python
+if not user_has_permission(user_id, "weather_api"):
+    return {"error": "Access denied"}
+```
+
+**Never expose sensitive data**: Keep API keys and secrets server-side
+```python
+# ❌ Don't include in tool results
+{"api_key": "sk-123", "temperature": 72}
+
+# ✅ Return only necessary data
+{"temperature": 72, "condition": "sunny"}
+```
+
+---
+
+## Common Patterns
+
+### Multi-Step Workflows
+
+Chain multiple tool calls for complex operations:
+
+```python
+# Step 1: Get user preferences
+preferences = get_user_preferences(user_id)
+
+# Step 2: Search with preferences
+results = search_products(
+    category=preferences["favorite_category"],
+    max_price=preferences["budget"]
+)
+
+# Step 3: Send notification
+send_email(
+    user_id=user_id,
+    subject="New products match your preferences!",
+    products=results[:5]
+)
+```
+
+### Conditional Tool Usage
+
+Let the model decide when tools are needed:
+
+```python
+messages = [
+    {"role": "user", "content": "What's 2+2?"},  # No tool needed
+    {"role": "user", "content": "What's the weather?"}  # Tool required
+]
+```
+
+### Tool Composition
+
+Combine multiple tools for richer functionality:
+
+```json
+[
+  {
+    "name": "search_products",
+    "description": "Search product catalog"
+  },
+  {
+    "name": "check_inventory",
+    "description": "Check real-time stock levels"
+  },
+  {
+    "name": "calculate_shipping",
+    "description": "Calculate shipping costs and delivery time"
+  }
+]
+```
+
+---
+
+## Troubleshooting
+
+### Model Skips Required Tools
+
+If `tool_choice: "required"` isn't working:
+- Add explicit instructions in the user message
+- Use named tool forcing
+- Ensure tool descriptions are clear
+
+### Invalid Arguments
+
+Common causes and solutions:
+- **Missing parameters**: Add them to `required` array
+- **Wrong types**: Use `enum` for constrained values
+- **Complex objects**: Flatten nested structures
+
+### Performance Issues
+
+Optimize tool calling performance:
+- Cache frequently requested data
+- Set reasonable timeouts
+
+---
+
+## Examples
+
+### Weather Assistant
+
+```python
+tools = [{
+    "type": "function",
+    "function": {
+        "name": "get_weather",
+        "description": "Get current weather for a location",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "location": {"type": "string"},
+                "unit": {"type": "string", "enum": ["C", "F"]}
+            },
+            "required": ["location"]
+        }
+    }
+}]
+
+response = client.chat.completions.create(
+    model="Hermes-3-Llama-3.1-70B",
+    messages=[{"role": "user", "content": "Is it raining in Seattle?"}],
+    tools=tools
+)
+```
+
+### Customer Support Bot
+
+```python
+tools = [
+    {
+        "type": "function",
+        "function": {
+            "name": "create_ticket",
+            "description": "Create a support ticket",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "title": {"type": "string"},
+                    "priority": {"type": "string", "enum": ["low", "medium", "high"]},
+                    "category": {"type": "string"}
+                },
+                "required": ["title", "category"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "search_knowledge_base",
+            "description": "Search help articles",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {"type": "string"}
+                },
+                "required": ["query"]
+            }
+        }
+    }
+]
+```
+
+---
+
+## API Reference
+
+### Request Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `tools` | Array of objects | No | List of available tool definitions |
+| `tool_choice` | String or Object | No | Tool selection strategy (default: "auto") |
+
+### Tool Definition Schema
+
+```typescript
+interface Tool {
+  type: "function";  // Only "function" is currently supported
+  function: {
+    name: string;
+    description: string;
+    parameters: {
+      // JSON Schema object
+      type: "object";
+      properties: Record<string, any>;
+      required?: string[];
+      additionalProperties?: boolean;
+    };
+    strict?: boolean;  // Enforce strict schema adherence
+  };
+}
+```
+
+### Tool Call Response
+
+```typescript
+interface ToolCall {
+  id: string;
+  type: "function";
+  function: {
+    name: string;
+    arguments: string;  // JSON-encoded arguments
+  };
+}
+```
+
+---
+
+## Next Steps
+
+- Explore our [SDK examples](https://github.com/predictionguard/sdk-docs/software-development-kits/sd-ks) for language-specific implementations
+
+---
+
+## Support
+
+Need help with tool calling?
+
+- 📚 **API Reference**: [docs.predictionguard.com](https://docs.predictionguard.com/api-reference/api-reference/chat-completions)
+- 📧 **Join Our Discord**: [Discord](https://discord.gg/TFHgnhAFKd)

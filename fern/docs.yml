@@ -61,6 +61,8 @@ navigation:
             path: ./docs/pages/usingllms/chat_completions.mdx
           - page: Chaining and Retrieval
             path: ./docs/pages/usingllms/chaining_retrieval.mdx
+          - page: Tool Calling
+            path: ./docs/pages/usingllms/tool_calling.mdx
           - page: Agents
             path: ./docs/pages/usingllms/agents.mdx
           - page: Streaming
