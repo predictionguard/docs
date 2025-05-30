@@ -285,69 +285,11 @@ if not user_has_permission(user_id, "weather_api"):
 
 ---
 
-## Common Patterns
-
-### Multi-Step Workflows
-
-Chain multiple tool calls for complex operations:
-
-```python
-# Step 1: Get user preferences
-preferences = get_user_preferences(user_id)
-
-# Step 2: Search with preferences
-results = search_products(
-    category=preferences["favorite_category"],
-    max_price=preferences["budget"]
-)
-
-# Step 3: Send notification
-send_email(
-    user_id=user_id,
-    subject="New products match your preferences!",
-    products=results[:5]
-)
-```
-
-### Conditional Tool Usage
-
-Let the model decide when tools are needed:
-
-```python
-messages = [
-    {"role": "user", "content": "What's 2+2?"},  # No tool needed
-    {"role": "user", "content": "What's the weather?"}  # Tool required
-]
-```
-
-### Tool Composition
-
-Combine multiple tools for richer functionality:
-
-```json
-[
-  {
-    "name": "search_products",
-    "description": "Search product catalog"
-  },
-  {
-    "name": "check_inventory",
-    "description": "Check real-time stock levels"
-  },
-  {
-    "name": "calculate_shipping",
-    "description": "Calculate shipping costs and delivery time"
-  }
-]
-```
-
----
-
 ## Troubleshooting
 
 ### Model Skips Required Tools
 
-If `tool_choice: "required"` isn't working:
+If `tool_choice: "auto"` isn't working:
 - Add explicit instructions in the user message
 - Use named tool forcing
 - Ensure tool descriptions are clear
@@ -430,50 +372,6 @@ tools = [
         }
     }
 ]
-```
-
----
-
-## API Reference
-
-### Request Parameters
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `tools` | Array of objects | No | List of available tool definitions |
-| `tool_choice` | String or Object | No | Tool selection strategy (default: "auto") |
-
-### Tool Definition Schema
-
-```typescript
-interface Tool {
-  type: "function";  // Only "function" is currently supported
-  function: {
-    name: string;
-    description: string;
-    parameters: {
-      // JSON Schema object
-      type: "object";
-      properties: Record<string, any>;
-      required?: string[];
-      additionalProperties?: boolean;
-    };
-    strict?: boolean;  // Enforce strict schema adherence
-  };
-}
-```
-
-### Tool Call Response
-
-```typescript
-interface ToolCall {
-  id: string;
-  type: "function";
-  function: {
-    name: string;
-    arguments: string;  // JSON-encoded arguments
-  };
-}
 ```
 
 ---
