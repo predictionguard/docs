@@ -1241,14 +1241,12 @@ paths:
                 chunkSize:
                   type: integer
                   description: The size of chunks for the documents.
+                enableOCR:
+                  type: boolean
+                  description: Whether to enable OCR for document parsing.
               required:
                 - file
             examples:
-#              headers:
-#                Toxicity: true
-#                Pii: "replace"
-#                Replace-Method: "mask"
-#                Injection: true
               multipart/form-data:
                 summary: A text example of using the API.
                 value:
@@ -1257,6 +1255,7 @@ paths:
                   outputFormat: "markdown"
                   chunkDocument: true
                   chunkSize: 1000
+                  enableOCR: true
       responses:
         "403":
           description: Failed auth response.
