@@ -75,7 +75,7 @@ messages = [
 ]
 
 result = client.chat.completions.create(
-model={{TEXT_MODEL}},
+model="{{TEXT_MODEL}}",
 messages=messages,
 max_completion_tokens=100
 )
@@ -252,7 +252,7 @@ Chat();
 <CodeBlock title="cURL">
 ```bash
 curl -i -X POST https://api.predictionguard.com/chat/completions     -H "Authorization: Bearer ${PREDICTIONGUARD_API_KEY}"     -H "Content-Type: application/json"     -d '{
-    "model": {{TEXT_MODEL}},
+    "model": "{{TEXT_MODEL}}",
     "messages": [
         {
             "role": "system",
