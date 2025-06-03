@@ -27,16 +27,16 @@ jobs:
           
           // Your model variables
           const MODELS = {
-            TEXT_MODEL: "Hermes-3-Llama-3.1-70B",
-            CODE_MODEL: "Qwen2.5-Coder-14B-Instruct",
-            VISION_MODEL: "llava-1.5-7b-hf",
-            TEXT_EMBED: "bge-m3",
-            IMAGE_EMBED: "bridgetower-large-itm-mlm-itc",
-            RERANK_MODEL: "bge-reranker-v2-m3",
-            AUDIO_MODEL: "base",
-            GO_MODEL: "Hermes3Llama3170B",
-            JS_MODEL: "Hermes3Llama3170B",
-            RUST_MODEL: "Hermes3Llama3170B"
+            TEXT_MODEL: "${{ vars.TEXT_MODEL }}",
+            CODE_MODEL: "${{ vars.CODE_MODEL }}",
+            VISION_MODEL: "${{ vars.VISION_MODEL }}",
+            TEXT_EMBED: "${{ vars.TEXT_EMBED }}",
+            IMAGE_EMBED: "${{ vars.IMAGE_EMBED }}",
+            RERANK_MODEL: "${{ vars.RERANK_MODEL }}",
+            AUDIO_MODEL: "${{ vars.AUDIO_MODEL }}",
+            GO_MODEL: "${{ vars.GO_MODEL }}",
+            JS_MODEL: "${{ vars.JS_MODEL }}",
+            RUST_MODEL: "${{ vars.RUST_MODEL }}"
           };
           
           function replaceVariables(content) {
