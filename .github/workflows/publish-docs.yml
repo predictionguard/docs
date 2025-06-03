@@ -58,7 +58,7 @@ jobs:
           
               if (stat.isDirectory()) {
                 processFiles(itemPath);
-              } else if (item.endsWith('.mdx') || item.endsWith('.md')) {
+              } else if (item.endsWith('.mdx') || item.endsWith('.md') || item.endsWith('.yaml')) {
                 const content = fs.readFileSync(itemPath, 'utf8');
                 const processedContent = replaceVariables(content);
           
