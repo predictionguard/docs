@@ -4,10 +4,6 @@ instances:
 
 title: Prediction Guard | Docs
 
-js:
-  - path: ./models.js
-    strategy: afterInteractive
-
 tabs:
   home:
     display-name: Home
