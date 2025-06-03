@@ -74,7 +74,7 @@ messages = [
 ]
 
 result = client.chat.completions.create(
-    model="Hermes-3-Llama-3.1-70B",
+    model="{{TEXT_MODEL}}",
     messages=messages
 )
 
@@ -109,7 +109,7 @@ while True:
         })
 
         response = client.chat.completions.create(
-            model="Hermes-3-Llama-3.1-70B",
+            model="{{TEXT_MODEL}}",
             messages=messages
         )['choices'][0]['message']['content'].split('\n')[0].strip()
 

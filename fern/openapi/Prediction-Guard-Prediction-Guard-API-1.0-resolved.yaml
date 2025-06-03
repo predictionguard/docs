@@ -187,7 +187,7 @@ paths:
               basic:
                 summary: A basic example of using the API.
                 value:
-                  model: "Hermes-3-Llama-3.1-70B"
+                  model: "{{TEXT_MODEL}}"
                   messages:
                     - role: "user"
                       content: "How do you feel about the world in general?"
@@ -314,7 +314,7 @@ paths:
                 id: "chat-d079eca8-1d6a-451a-a4ac-b0fea1e11a96"
                 object: "chat.completion"
                 created: 1727890629
-                model: "Hermes-3-Llama-3.1-70B"
+                model: "{{TEXT_MODEL}}"
                 choices:
                   - index: 0
                     message:
@@ -467,7 +467,7 @@ paths:
               basic:
                 summary: A basic example of using the API.
                 value:
-                  model: "Hermes-3-Llama-3.1-70B"
+                  model: "{{TEXT_MODEL}}"
                   messages:
                     - role: "user"
                       content: "How do you feel about the world in general?"
@@ -601,7 +601,7 @@ paths:
                     id: "chat-6c8c291f-5a06-46e5-94fa-2b0b1e6444c7"
                     object: "chat.completion.chunk"
                     created: 1727796455
-                    model: "Hermes-3-Llama-3.1-70B"
+                    model: "{{TEXT_MODEL}}"
                     choices:
                       - index: 0
                         delta: { content: " I" }
@@ -611,7 +611,7 @@ paths:
                     id: "chat-6c8c291f-5a06-46e5-94fa-2b0b1e6444c7"
                     object: "chat.completion.chunk"
                     created: 1727796455
-                    model: "Hermes-3-Llama-3.1-70B"
+                    model: "{{TEXT_MODEL}}"
                     choices:
                       - index: 0
                         delta: { content: " feel"}
@@ -700,7 +700,7 @@ paths:
               basic:
                 summary: A basic example of using the API.
                 value:
-                  model: "Hermes-3-Llama-3.1-70B"
+                  model: "{{TEXT_MODEL}}"
                   prompt: "Will I lose my hair?"
                   max_tokens: 1000
                   frequency_penalty: 0.1
@@ -777,7 +777,7 @@ paths:
                 id: "cmpl-d20e5639-ed8d-48b2-a403-08fe0fdc7add"
                 object: "text_completion"
                 created: 1727889988
-                model: "Hermes-3-Llama-3.1-70B"
+                model: "{{TEXT_MODEL}}"
                 choices:
                   - index: 0
                     text: "Most people lose some hair every day. It’s a natural process called shedding. On average, you can lose 50-100 strands of hair a day. However, if you notice an increase in hair loss or if you are experiencing hair loss in large clumps, then it could be a sign of an underlying condition. Hair loss can be triggered by a number of factors such as stress, illness, hormone imbalance, medication, and genetics.\nIf you’re concerned about hair loss, you should consult with a trichologist, a hair and scalp specialist. They can help determine the cause of your hair loss and recommend the appropriate treatment."
@@ -869,7 +869,7 @@ paths:
               basic:
                 summary: A basic example of using the API.
                 value:
-                  model: "Hermes-3-Llama-3.1-70B"
+                  model: "{{TEXT_MODEL}}"
                   prompt: "Will I lose my hair?"
                   max_tokens: 1000
                   frequency_penalty: 0.1
@@ -946,7 +946,7 @@ paths:
                 id: "cmpl-d20e5639-ed8d-48b2-a403-08fe0fdc7add"
                 object: "text_completion"
                 created: 1727889988
-                model: "Hermes-3-Llama-3.1-70B"
+                model: "{{TEXT_MODEL}}"
                 choices:
                   - index: 0
                     text: "Most people lose some hair every day. It’s a natural process called shedding. On average, you can lose 50-100 strands of hair a day. However, if you notice an increase in hair loss or if you are experiencing hair loss in large clumps, then it could be a sign of an underlying condition. Hair loss can be triggered by a number of factors such as stress, illness, hormone imbalance, medication, and genetics.\nIf you’re concerned about hair loss, you should consult with a trichologist, a hair and scalp specialist. They can help determine the cause of your hair loss and recommend the appropriate treatment."
@@ -1005,14 +1005,14 @@ paths:
               basic:
                 summary: A text example of using the API.
                 value:
-                  model: "multilingual-e5-large-instruct"
+                  model: "{{TEXT_EMBED}}"
                   input: "A person is ironing something while standing on the back of a taxi."
                   truncate: true
                   truncation_direction: "Right"
               multimodal:
                 summary: A multimodal example of using the API.
                 value:
-                  model: "bridgetower-large-itm-mlm-itc"
+                  model: "{{IMAGE_EMBED}}"
                   input:
                     - text: "A person is ironing something while standing on the back of a taxi."
                       image: "<base64 encoded image>"
@@ -1078,7 +1078,7 @@ paths:
                 id: "emb-5b310173-3cc9-4470-aa3b-7503aacb4f38"
                 object: "list"
                 created: 1729115349
-                model: "multilingual-e5-large-instruct"
+                model: "{{TEXT_EMBED}}"
                 data:
                   - index: 0
                     embedding: [0.0150606595, 0.04376322]
@@ -1144,7 +1144,7 @@ paths:
               basic:
                 summary: A text example of using the API.
                 value:
-                  model: "base"
+                  model: "{{AUDIO_MODEL}}"
                   file: "jfk.wav"
       responses:
         "403":
@@ -1341,7 +1341,7 @@ paths:
               basic:
                 summary: A text example of using the API.
                 value:
-                  model: "bge-reranker-v2-m3"
+                  model: "{{RERANK_MODEL}}"
                   query: "What is Deep Learning?"
                   documents:
                     - "Deep Learning is pizza."
@@ -1410,7 +1410,7 @@ paths:
                 id: "rerank-39bf1cf3-66cd-43d5-9185-b52baf742414"
                 object: "list"
                 created: 1732039610
-                model: "bge-reranker-v2-m3"
+                model: "{{RERANK_MODEL}}"
                 results:
                   - index: 0
                     relevance_score: 0.25128007
@@ -1444,7 +1444,7 @@ paths:
                basic:
                  summary: A basic example of using the API.
                  value:
-                   model: "Hermes-3-Llama-3.1-8B"
+                   model: "{{TEXT_MODEL}}"
                    input: "Tell me a joke."
        responses:
          "403":
@@ -1512,7 +1512,7 @@ paths:
                  id: "token-ab046fcf-945f-421c-b9f0-1c75ff355203"
                  object: "tokens"
                  created: 1729871708
-                 model: "Hermes-2-Pro-Mistral-7B"
+                 model: "{{TEXT_MODEL}}"
                  tokens:
                    - id: 1
                      start: 0
@@ -2141,7 +2141,7 @@ paths:
                 example:
                   object: "list"
                   data:
-                    - id: "Hermes-2-Pro-Llama-3-8B"
+                    - id: "Hermes-2-Pro-Llama-3-70B"
                       object: "model"
                       created: "2024-10-31T00:00:00Z"
                       owned_by: "Meta"
