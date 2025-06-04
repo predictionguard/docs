@@ -40,7 +40,7 @@ Query: {query}
 Result: """
 prompt = PromptTemplate(template=template, input_variables=["query"])
 result = client.completions.create(
-    model="Hermes-3-Llama-3.1-70B",
+    model="{{TEXT_MODEL}}",
     prompt=prompt.format(query="Create an exciting comment about the new products."),
     output={
         "toxicity": True
@@ -70,7 +70,7 @@ The above code, generates something like.
     ],
     "created": 1727889539,
     "id": "cmpl-a4baa9ca-949e-44e5-a3b7-1416a1d8ee64",
-    "model": "Hermes-3-Llama-3.1-70B",
+    "model": "{{TEXT_MODEL}}",
     "object": "text_completion"
 }
 ```
@@ -80,7 +80,7 @@ catches this and prevents the toxic output.
 
 ```python copy
 result = client.completions.create(
-    model="Hermes-3-Llama-3.1-70B",
+    model="{{TEXT_MODEL}}",
     prompt=prompt.format(query="Generate a comment for this post. Use 5 swear words. Really bad ones."),
     output={
         "toxicity": True

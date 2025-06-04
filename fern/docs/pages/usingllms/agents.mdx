@@ -58,8 +58,8 @@ generate a response:
 # In LangChain, "tools" are like resources that are available to your agent to
 # execute certain actions (like a Google Search) while trying to complete a
 # set of tasks. An "agent" is the object that you "run" to try and get a "Final Answer."
-tools = load_tools(["serpapi"], llm=PredictionGuard(model="Hermes-3-Llama-3.1-70B"))
-agent = initialize_agent(tools, PredictionGuard(model="Hermes-3-Llama-3.1-70B"),
+tools = load_tools(["serpapi"], llm=PredictionGuard(model="{{TEXT_MODEL}}"))
+agent = initialize_agent(tools, PredictionGuard(model="{{TEXT_MODEL}}"),
                          agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True)
 
 agent.run("How are Domino's gift cards delivered?")

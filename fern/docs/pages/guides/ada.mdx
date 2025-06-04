@@ -5,7 +5,7 @@ title: Data Chat With LLMs
 (Run this example in Google Colab
 [here](https://colab.research.google.com/drive/1RhQpyG9lgXk4aErlcuTOASLsU4zq5IgT?usp=sharing#scrollTo=VTwxTNIFWeZX))
 
-Large Language Models (LLMs) like 'Hermes-3-Llama-3.1-8B' have demonstrated
+Large Language Models (LLMs) like '{{TEXT_MODEL}}' have demonstrated
 impressive capabilities for understanding natural language and generating SQL.
 We can leverage these skills for data analysis by having them automatically
 generate SQL queries against known database structures.
@@ -25,7 +25,7 @@ schema, the system can translate simple natural language queries into precise SQ
 for fast and reliable data analysis. This makes surfacing insights more accessible
 compared to manual SQL writing or hopelessly broad code generation.
 
-For this demo we have selecteed a public dataset from Kaggle - Jobs and Salaries
+For this demo we have selected a public dataset from Kaggle - Jobs and Salaries
 in Data Science
 (Find the dataset [here](https://www.kaggle.com/datasets/hummaamqaasim/jobs-in-data?resource=download))
 
@@ -155,7 +155,7 @@ relevant SQL query and injecting the schema information in the prompt for contex
 The problem in this case is that the schema information is quite long. In reality,
 production DBs might have 100's of tables, views, etc.
 
-All of this schema information addeded into the prompt can create issues with:
+All of this schema information added into the prompt can create issues with:
 
 - Model context windows
 - Model performance
@@ -257,7 +257,7 @@ def generate_sql_query(question, injected_schema):
 
   try:
       result = client.completions.create(
-          model="Hermes-3-Llama-3.1-8B",
+          model="{{TEXT_MODEL}}",
           prompt=prompt_filled,
           max_completion_tokens=300,
           temperature=0.1
@@ -318,7 +318,7 @@ def get_answer(question, data, sql_query):
 
   # Respond to the user
   output = client.completions.create(
-      model="Hermes-3-Llama-3.1-8B",
+      model="{{TEXT_MODEL}}",
       prompt=prompt_filled,
       max_completion_tokens=200,
       temperature=0.1
