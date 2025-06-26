@@ -78,6 +78,9 @@ paths:
                                         url:
                                           type: string
                                           description: The base64 content with this prefix `data:image/jpeg;base64,`
+                                        detail:
+                                          type: string
+                                          description: Specifies the detail level of the image. Defaults to `auto`.
                 frequency_penalty:
                   type: number
                   description: A value between -2.0 and 2.0, with positive values increasingly penalizing new tokens based on their frequency so far in order to decrease further occurrences.
@@ -240,6 +243,7 @@ paths:
                         - type: "image_url"
                           image_url:
                             url: "data:image/jpeg;base64,<DATA>"
+                            detail: "auto"
                   max_completion_tokens: 1000
                   frequency_penalty: 0.1
                   logit_bias:
