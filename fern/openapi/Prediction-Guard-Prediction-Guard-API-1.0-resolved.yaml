@@ -717,6 +717,46 @@ paths:
                   input:
                     pii: "replace"
                     pii_replace_method: "random"
+              multimodal:
+                summary: A basic example of using the API.
+                value:
+                  model: "Hermes-3-Llama-3.1-70B"
+                  prompt: "Will I lose my hair?"
+                  max_tokens: 1000
+                  frequency_penalty: 0.1
+                  logit_bias:
+                    128000: 10
+                  presence_penalty: 0.1
+                  stop: "hello"
+                  temperature: 1.0
+                  top_p: 1.0
+                  top_k: 50
+                  output:
+                    factuality: true
+                    toxicity: true
+                  input:
+                    pii: "replace"
+                    pii_replace_method: "random"
+              streaming:
+                summary: A basic example of using the API.
+                value:
+                  model: "Hermes-3-Llama-3.1-70B"
+                  prompt: "Will I lose my hair?"
+                  max_tokens: 1000
+                  frequency_penalty: 0.1
+                  logit_bias:
+                    128000: 10
+                  presence_penalty: 0.1
+                  stop: "hello"
+                  temperature: 1.0
+                  top_p: 1.0
+                  top_k: 50
+                  output:
+                    factuality: true
+                    toxicity: true
+                  input:
+                    pii: "replace"
+                    pii_replace_method: "random"
       responses:
         "403":
           description: Failed auth response.
@@ -1074,14 +1114,23 @@ paths:
                           description: The array of vector values.
                           items:
                             type: number
-              example:
-                id: "emb-5b310173-3cc9-4470-aa3b-7503aacb4f38"
-                object: "list"
-                created: 1729115349
-                model: "multilingual-e5-large-instruct"
-                data:
-                  - index: 0
-                    embedding: [0.0150606595, 0.04376322]
+              examples:
+                basic:
+                  id: "emb-5b310173-3cc9-4470-aa3b-7503aacb4f38"
+                  object: "list"
+                  created: 1729115349
+                  model: "multilingual-e5-large-instruct"
+                  data:
+                    - index: 0
+                      embedding: [0.0150606595, 0.04376322]
+                multimodal:
+                  id: "emb-5b310173-3cc9-4470-aa3b-7503aacb4f38"
+                  object: "list"
+                  created: 1729115349
+                  model: "bridgetower-large-itm-mlm-itc"
+                  data:
+                    - index: 0
+                      embedding: [ 0.0150606595, 0.04376322 ]
       security:
         - bearerAuth: []
 
@@ -1909,139 +1958,6 @@ paths:
       security:
         - bearerAuth: []
 
-
-  /translate:
-    post:
-      summary: Translate
-      description: Translate text from one language to another.
-      requestBody:
-        content:
-          application/json:
-            schema:
-              required:
-                - text
-                - source_lang
-                - target_lang
-              type: object
-              properties:
-                text:
-                  type: string
-                  description: The text to translate.
-                source_lang:
-                  type: string
-                  description: The source language of the text.
-                target_lang:
-                  type: string
-                  description: The target language for the translation.
-                use_third_party_engine:
-                  type: boolean
-                  description: Enables/disables third party translations.
-            examples:
-              basic:
-                summary: A basic example of using the API.
-                value:
-                  text: "The sky is blue."
-                  source_lang: "eng"
-                  target_lang: "spa"
-                  use_third_party_engine: true
-      responses:
-        "403":
-          description: Failed auth response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Description of the error.
-              example:
-                error: "api understands the request but refuses to authorize it"
-        "400":
-          description: General error response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Description of the error.
-              example:
-                error: "required fields are missing"
-        "200":
-          description: Successful response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    description: Unique ID for the translation.
-                  object:
-                    type: string
-                    description: Type of object (translation).
-                  created:
-                    type: integer
-                    description: Timestamp of when the translation was created.
-                  best_translation:
-                    type: string
-                    description: The best translation of the input text.
-                  best_score:
-                    type: number
-                    description: The best score for the best translation.
-                  best_translation_model:
-                    type: string
-                    description: The model used for the best translation.
-                  translations:
-                    type: array
-                    description: The set translations from different models.
-                    items:
-                      type: object
-                      properties:
-                        score:
-                          type: number
-                          description: The quality score for this translation.
-                        translation:
-                          type: string
-                          description: The translation.
-                        model:
-                          type: string
-                          description: The model that was used for this translation.
-                        status:
-                          type: string
-                          description: The status of using the model for this translation.
-              example:
-                id: "translation-52929bae5c2c44c9b5177921958cb5f7"
-                object: "translation"
-                created: 1721136682
-                best_translation: "Le ciel est bleu."
-                best_score: 0.8694148659706116
-                best_translation_model: "hermes_2_pro_llama_3_8b"
-                translations:
-                  - score: 0.8694148659706116
-                    translation: "Le ciel est bleu."
-                    model: "hermes_2_pro_llama_3_8b"
-                    status: "success"
-                  - score: 0.8694148659706116
-                    translation: "Le ciel est bleu."
-                    model: "hermes_2_pro_mistral_7b"
-                    status: "success"
-                  - score: 0.8694148659706116
-                    translation: "Le ciel est bleu."
-                    model: "openai"
-                    status: "success"
-                  - score: 0.8694148659706116
-                    translation: "Le ciel est bleu."
-                    model: "deepl"
-                    status: "success"
-                  - score: 0.8694148659706116
-                    translation: "Le ciel est bleu."
-                    model: "google"
-                    status: "success"
-      security:
-        - bearerAuth: []
 
   /models/{capability}:
       get:
