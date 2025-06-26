@@ -11,22 +11,20 @@ These multimodal models are designed for inference using text and images, and ar
 
 | Model Name                        | Type                    | Use Case                                               | Context Length  | More Info                              |
 | --------------------------------- | ----------------------- | ------------------------------------------------------ | --------------- | -------------------------------------- |
-| llava-1.5-7b-hf                   | Vision Text Generation  | Used for generating text from text and image inputs    | 8192            | [link](/options/lvms#llava-15-7b-hf) |
+| Qwen2.5-VL-7B-Instruct                   | Vision Text Generation  | Used for generating text from text and image inputs    | 16384            | [link](/options/lvms#qwen25-vl-32b-instruct) |
 
 ## Model Descriptions
 
-### llava-1.5-7b-hf
+### Qwen2.5-VL-7B-Instruct
 
-LLaVa is a multimodal model that supports vision and language models combined.
+This is a powerful vision-language model designed for complex multimodal understanding and instruction following. It excels at image, video, and document comprehension while maintaining strong capabilities in reasoning and code generation.
 
-_**This Model is required to be used with the `/chat/completions` vision endpoint.
-Most of the SDKs will not ask you to provide model because it's using this one.**_
+**Type:** Chat
+**Use Case:** Vision-Language Understanding, Instruction Following, Tool Use
+**Prompt Format:** ChatML
 
-**Type:** Vision Text Generation\
-**Use Case:** Used for Generating Text from Text and Image Inputs
+https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct
 
-https://huggingface.co/llava-hf/llava-1.5-7b-hf
-
-LLaVA is an open-source chatbot trained by fine-tuning LLaMA/Vicuna on
-GPT-generated multimodal instruction-following data. It is an auto-regressive
-language model, based on the transformer architecture.
+Qwen2.5-VL is the latest generation in the Qwen series of vision-language models, offering major improvements in structured visual understanding, agentic tool use, and long-context video reasoning. The 32B instruction-tuned variant is optimized for following user intent across both textual and visual inputs.
+Key enhancements include advanced multimodal reasoning, dynamic tool use, visual localization, and the ability to generate structured outputs from documents, forms, and images. It also introduces robust capabilities in understanding and summarizing long videos—over an hour in length—with temporal alignment and event capture.
+Qwen2.5-VL-7B-Instruct is built on an optimized ViT-based vision encoder with enhancements like SwiGLU and RMSNorm, and dynamic resolution sampling for efficient video comprehension. The model supports reliable JSON outputs and coordinates for grounded visual tasks, making it suitable for enterprise and applied AI use cases across finance, commerce, and logistics.
