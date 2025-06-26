@@ -9,7 +9,7 @@ servers:
   - url: https://api.predictionguard.com
 
 paths:
-  "":
+  "/":
     get:
       summary: Check API Health
       description: A simple endpoint to check if the Prediction Guard API is healthy.
@@ -21,7 +21,7 @@ paths:
               schema:
                 type: string
                 items:
-                  type: text
+                  type: string
               examples:
                 example1:
                   value: "The Prediction Guard API is healthy!"
@@ -199,6 +199,78 @@ paths:
                   presence_penalty: 0.1
                   stop: "hello"
                   temperature: 1.0
+                  top_p: 1.0
+                  top_k: 50
+                  output:
+                    factuality: true
+                    toxicity: true
+                  input:
+                    pii: "replace"
+                    pii_replace_method: "random"
+              streaming:
+                summary: An example of using the API with streaming.
+                value:
+                  model: "{{TEXT_MODEL}}"
+                  messages:
+                    - role: "user"
+                      content: "How do you feel about the world in general?"
+                  max_completion_tokens: 1000
+                  frequency_penalty: 0.1
+                  logit_bias:
+                    128000: 10
+                  parallel_tool_calls: false
+                  presence_penalty: 0.1
+                  stop: "hello"
+                  temperature: 1.0
+                  top_p: 1.0
+                  top_k: 50
+                  stream: true
+                  input:
+                    pii: "replace"
+                    pii_replace_method: "random"
+              image input:
+                summary: An example of using the API with images.
+                value:
+                  model: "{{VISION_MODEL}}"
+                  messages:
+                    - role: "user"
+                      content:
+                        - type: "text"
+                          text: "What is in this image?"
+                        - type: "image_url"
+                          image_url:
+                            url: "data:image/jpeg;base64,<DATA>"
+                  max_completion_tokens: 1000
+                  frequency_penalty: 0.1
+                  logit_bias:
+                    128000: 10
+                  parallel_tool_calls: false
+                  presence_penalty: 0.1
+                  stop: "hello"
+                  temperature: 1.0
+                  top_p: 1.0
+                  top_k: 50
+                  output:
+                    factuality: true
+                    toxicity: true
+                  input:
+                    pii: "replace"
+                    pii_replace_method: "random"
+              function call:
+                summary: An example of using the API to call functions.
+                value:
+                  model: "{{TEXT_MODEL}}"
+                  messages:
+                    - role: "user"
+                      content: "How do you feel about the world in general?"
+                  max_completion_tokens: 1000
+                  frequency_penalty: 0.1
+                  logit_bias:
+                    128000: 10
+                  parallel_tool_calls: false
+                  presence_penalty: 0.1
+                  stop: "hello"
+                  temperature: 1.0
                   tool_choice:
                     type: "function"
                     function:
@@ -310,315 +382,67 @@ paths:
                                     arguments:
                                       type: string
                                       description: The function arguments.
-              example:
-                id: "chat-d079eca8-1d6a-451a-a4ac-b0fea1e11a96"
-                object: "chat.completion"
-                created: 1727890629
-                model: "{{TEXT_MODEL}}"
-                choices:
-                  - index: 0
-                    message:
-                      role: "assistant"
-                      content: "I feel that the world in general is a complex and ever-evolving place. It has its fair share of beauty, challenges, and opportunities. There are moments of joy, connection, and growth, as well as pain, conflict, and loss. The world is a reflection of the people who inhabit it, and it's essential to maintain a balance between appreciating its wonders and working towards making it a better place for all. It's a constant journey of learning, adapting, and striving for a more harmonious existence."
-                      tool_calls:
-                        id: "chatcmpl-tool-d8429654d03945c2b70a4a8d05eb7c6d"
-                        type: "function"
-                        function:
-                          name: "get_current_weather"
-                          arguments: "{\n    \"location\": \"celsius\"\n}"
+              examples:
+                basic:
+                  id: "chat-d079eca8-1d6a-451a-a4ac-b0fea1e11a96"
+                  object: "chat.completion"
+                  created: 1727890629
+                  model: "{{TEXT_MODEL}}"
+                  choices:
+                    - index: 0
+                      message:
+                        role: "assistant"
+                        content: "I feel that the world in general is a complex and ever-evolving place. It has its fair share of beauty, challenges, and opportunities. There are moments of joy, connection, and growth, as well as pain, conflict, and loss. The world is a reflection of the people who inhabit it, and it's essential to maintain a balance between appreciating its wonders and working towards making it a better place for all. It's a constant journey of learning, adapting, and striving for a more harmonious existence."
+                image input:
+                  id: "chat-554c4c24-a1ea-4c9f-b91c-612bbac34f4e"
+                  object: "chat.completion"
+                  created: 1727890364
+                  model: "{{VISION_MODEL}}"
+                  choices:
+                    - index: 0
+                      message:
+                        role: "assistant"
+                        content: "No, there is no deer in this picture. The image features a man wearing a hat and glasses, smiling for the camera."
+                streaming:
+                  format: sse
+                  value:
+                    - id: "chat-6c8c291f-5a06-46e5-94fa-2b0b1e6444c7"
+                      object: "chat.completion.chunk"
+                      created: 1727796455
+                      model: "{{TEXT_MODEL}}"
+                      choices:
+                        - index: 0
+                          delta: { content: " I" }
+                          generated_text: "null"
+                          finish_reason: "null"
+                    - id: "chat-6c8c291f-5a06-46e5-94fa-2b0b1e6444c7"
+                      object: "chat.completion.chunk"
+                      created: 1727796455
+                      model: "{{TEXT_MODEL}}"
+                      choices:
+                        - index: 0
+                          delta: { content: " feel" }
+                          generated_text: "null"
+                          finish_reason: "length"
+                function call:
+                  id: "chat-d079eca8-1d6a-451a-a4ac-b0fea1e11a96"
+                  object: "chat.completion"
+                  created: 1727890629
+                  model: "{{TEXT_MODEL}}"
+                  choices:
+                    - index: 0
+                      message:
+                        role: "assistant"
+                        content: "I feel that the world in general is a complex and ever-evolving place. It has its fair share of beauty, challenges, and opportunities. There are moments of joy, connection, and growth, as well as pain, conflict, and loss. The world is a reflection of the people who inhabit it, and it's essential to maintain a balance between appreciating its wonders and working towards making it a better place for all. It's a constant journey of learning, adapting, and striving for a more harmonious existence."
+                        tool_calls:
+                          id: "chatcmpl-tool-d8429654d03945c2b70a4a8d05eb7c6d"
+                          type: "function"
+                          function:
+                            name: "get_current_weather"
+                            arguments: "{\n    \"location\": \"celsius\"\n}"
       security:
         - bearerAuth: []
 
-  /chat/completions with Streaming:
-    post:
-      x-fern-streaming:
-        format: sse
-      summary: Chat Completions with Streaming
-      description: Generate chat completions based on a conversation history with streaming support.
-      requestBody:
-        content:
-          application/json:
-            schema:
-              required:
-                - model
-                - messages
-              type: object
-              properties:
-                model:
-                  type: string
-                  description: The chat model to use for generating completions.
-                messages:
-                  oneOf:
-                    - type: string
-                      description: A string of the message used for generating completions.
-                    - type: array
-                      description: An array of messages used for generating completions.
-                      items:
-                        required:
-                          - role
-                          - content
-                        type: object
-                        properties:
-                          role:
-                            type: string
-                            description: The role of the sender (user or assistant).
-                          content:
-                            type: string
-                            description: The content of the message.
-                frequency_penalty:
-                  type: number
-                  description: A value between -2.0 and 2.0, with positive values increasingly penalizing new tokens based on their frequency so far in order to decrease further occurrences.
-                logit_bias:
-                  type: map
-                  description: Modifies the likelihood of specified tokens appearing in a response.
-                  properties:
-                    token:
-                      type: string
-                      description: A string of the chosen token ID. Value is an int from -100 to 100.
-                max_completion_tokens:
-                  type: integer
-                  description: The maximum number of tokens in the generated completion.
-                parallel_tool_calls:
-                  type: boolean
-                  description: Whether to enable parallel function calling during tool use.
-                presence_penalty:
-                  type: number
-                  description: A value between -2.0 and 2.0, with positive values causing a flat reduction of new tokens based on their existing presence so far in order to decrease further occurrences.
-                stop:
-                  oneOf:
-                    - type: string
-                      description: A string representing the token to stop generation.
-                    - type: array
-                      description: An array representing the token to stop generation.
-                      items:
-                        type: string
-                        description: A string representing the token to stop generation.
-                temperature:
-                  type: number
-                  description: The temperature parameter for controlling randomness in completions.
-                tool_choice:
-                  oneOf:
-                    - type: string
-                      description: A string representing a tool choice. Options are 'none', 'auto', or 'required'.
-                    - type: object
-                      description: An object representing the tool to be chosen
-                      items:
-                        type: object
-                        properties:
-                          type:
-                            type: string
-                            description: The type of tool.
-                          function:
-                            type: object
-                            description: An object containing the name of the function
-                            properties:
-                              name: string
-                tools:
-                  type: array
-                  description: The content of the tool call.
-                  items:
-                    type: object
-                    properties:
-                      type:
-                        type: string
-                        description: The type of tool to call. Only 'function' is currently supported.
-                      function:
-                        type: object
-                        description: The tool information.
-                        properties:
-                          name:
-                            type: string
-                            description: The name of the function to be called.
-                          description:
-                            type: string
-                            description: A description of what the function does.
-                          parameters:
-                            type: object
-                            description: The parameters the function accepts, described as a JSON Schema object.
-                          strict:
-                            type: boolean
-                            description: Whether to enable strict schema adherence when generating the function call.
-                top_p:
-                  type: number
-                  description: The diversity of the generated text based on nucleus sampling.
-                top_k:
-                  type: integer
-                  description: The diversity of the generated text based on top-k sampling.
-                stream:
-                  type: boolean
-                  description: Turn streaming on.
-                input:
-                  type: object
-                  description: Options to affect the input of the request.
-                  properties:
-                    block_prompt_injection:
-                      type: boolean
-                      description: Set to true to detect prompt injection attacks.
-                    pii:
-                      type: string
-                      description: Set to either 'block' or 'replace'.
-                    pii_replace_method:
-                      type: string
-                      description: Set to either 'random', 'fake', 'category', 'mask'.
-                max_tokens:
-                  type: integer
-                  description: Deprecated. Please use max_completion_tokens.
-            examples:
-              basic:
-                summary: A basic example of using the API.
-                value:
-                  model: "{{TEXT_MODEL}}"
-                  messages:
-                    - role: "user"
-                      content: "How do you feel about the world in general?"
-                  max_completion_tokens: 1000
-                  frequency_penalty: 0.1
-                  logit_bias:
-                    128000: 10
-                  parallel_tool_calls: false
-                  presence_penalty: 0.1
-                  stop: "hello"
-                  temperature: 1.0
-                  tool_choice:
-                    type: "function"
-                    function:
-                      name: "get_current_weather"
-                  tools:
-                    - type: "function"
-                      function:
-                        name: "get_current_weather"
-                        description: "Get the current weather in a given location"
-                        strict: false
-                        parameters:
-                          type: "object"
-                          properties:
-                            location:
-                              type: "string"
-                              enum:
-                                - "celsius"
-                                - "fahrenheit"
-                          required:
-                            - "location"
-                  top_p: 1.0
-                  top_k: 50
-                  stream: true
-                  input:
-                    pii: "replace"
-                    pii_replace_method: "random"
-      responses:
-        "403":
-          description: Failed auth response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Description of the error.
-              example:
-                error: "api understands the request but refuses to authorize it"
-        "400":
-          description: General error response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Description of the error.
-              example:
-                error: "required fields are missing"
-        "200":
-          description: Successful response.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          description: Unique ID for the chat completion.
-                        object:
-                          type: string
-                          description: Type of object (chat completion).
-                        created:
-                          type: integer
-                          description: Timestamp of when the chat completion was created.
-                        model:
-                          type: string
-                          description: The chat model used for generating completions.
-                        choices:
-                          type: array
-                          description: The set of result choices.
-                          items:
-                            type: object
-                            properties:
-                              index:
-                                type: integer
-                                description: The index position in the collection.
-                              generated_text:
-                                type: string
-                                description: The final completed chat response which is provided when this is the last choice.
-                              finish_reason:
-                                type: string
-                                description: The reason the response has finished
-                              delta:
-                                type: object
-                                description: The partial content for this choice.
-                                properties:
-                                  content:
-                                    type: string
-                                    description: The partial content response for a choice.
-                                  tool_calls:
-                                    type: array
-                                    description: The tool call function.
-                                    properties:
-                                      index:
-                                        type: string
-                                        description: The index of the function.
-                                      type:
-                                        type: string
-                                        description: The type of tool called.
-                                      function:
-                                        type: object
-                                        description: The tool call function data.
-                                        properties:
-                                          name:
-                                            type: string
-                                            description: The name of the function.
-                                          arguments:
-                                            type: string
-                                            description: The function arguments.
-              example:
-                - data:
-                    id: "chat-6c8c291f-5a06-46e5-94fa-2b0b1e6444c7"
-                    object: "chat.completion.chunk"
-                    created: 1727796455
-                    model: "{{TEXT_MODEL}}"
-                    choices:
-                      - index: 0
-                        delta: { content: " I" }
-                        generated_text: "null"
-                        finish_reason: "null"
-                - data:
-                    id: "chat-6c8c291f-5a06-46e5-94fa-2b0b1e6444c7"
-                    object: "chat.completion.chunk"
-                    created: 1727796455
-                    model: "{{TEXT_MODEL}}"
-                    choices:
-                      - index: 0
-                        delta: { content: " feel"}
-                        generated_text: "null"
-                        finish_reason: "length"
-      security:
-        - bearerAuth: []
 
   /completions:
     post:
@@ -717,196 +541,7 @@ paths:
                   input:
                     pii: "replace"
                     pii_replace_method: "random"
-              multimodal:
-                summary: A basic example of using the API.
-                value:
-                  model: "Hermes-3-Llama-3.1-70B"
-                  prompt: "Will I lose my hair?"
-                  max_tokens: 1000
-                  frequency_penalty: 0.1
-                  logit_bias:
-                    128000: 10
-                  presence_penalty: 0.1
-                  stop: "hello"
-                  temperature: 1.0
-                  top_p: 1.0
-                  top_k: 50
-                  output:
-                    factuality: true
-                    toxicity: true
-                  input:
-                    pii: "replace"
-                    pii_replace_method: "random"
               streaming:
-                summary: A basic example of using the API.
-                value:
-                  model: "Hermes-3-Llama-3.1-70B"
-                  prompt: "Will I lose my hair?"
-                  max_tokens: 1000
-                  frequency_penalty: 0.1
-                  logit_bias:
-                    128000: 10
-                  presence_penalty: 0.1
-                  stop: "hello"
-                  temperature: 1.0
-                  top_p: 1.0
-                  top_k: 50
-                  output:
-                    factuality: true
-                    toxicity: true
-                  input:
-                    pii: "replace"
-                    pii_replace_method: "random"
-      responses:
-        "403":
-          description: Failed auth response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Description of the error.
-              example:
-                error: "api understands the request but refuses to authorize it"
-        "400":
-          description: General error response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Description of the error.
-              example:
-                error: "required fields are missing"
-        "200":
-          description: Successful response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    description: Unique ID for the completion.
-                  object:
-                    type: string
-                    description: Type of object (completion).
-                  created:
-                    type: integer
-                    description: Timestamp of when the completion was created.
-                  model:
-                    type: string
-                    description: The model used for generating the result.
-                  choices:
-                    type: array
-                    description: The set of result choices.
-                    items:
-                      type: object
-                      properties:
-                        index:
-                          type: integer
-                          description: The index position in the collection.
-                        text:
-                          type: string
-                          description: The generated text.
-              example:
-                id: "cmpl-d20e5639-ed8d-48b2-a403-08fe0fdc7add"
-                object: "text_completion"
-                created: 1727889988
-                model: "{{TEXT_MODEL}}"
-                choices:
-                  - index: 0
-                    text: "Most people lose some hair every day. It’s a natural process called shedding. On average, you can lose 50-100 strands of hair a day. However, if you notice an increase in hair loss or if you are experiencing hair loss in large clumps, then it could be a sign of an underlying condition. Hair loss can be triggered by a number of factors such as stress, illness, hormone imbalance, medication, and genetics.\nIf you’re concerned about hair loss, you should consult with a trichologist, a hair and scalp specialist. They can help determine the cause of your hair loss and recommend the appropriate treatment."
-      security:
-        - bearerAuth: []
-
-  /completions with Streaming:
-    post:
-      x-fern-streaming:
-        format: sse
-      summary: Completions with Streaming
-      description: Retrieve text completions based on the provided input.
-      requestBody:
-        content:
-          application/json:
-            schema:
-              required:
-                - model
-                - prompt
-              type: object
-              properties:
-                model:
-                  type: string
-                  description: The chat model to use for generating completions.
-                prompt:
-                  type: string
-                  description: The prompt to use for generating completions.
-                frequency_penalty:
-                  type: number
-                  description: A value between -2.0 and 2.0, with positive values increasingly penalizing new tokens based on their frequency so far in order to decrease further occurrences.
-                logit_bias:
-                  type: map
-                  description: Modifies the likelihood of specified tokens appearing in a response.
-                  properties:
-                    token:
-                      type: string
-                      description: A string of the chosen token ID. Value is an int from -100 to 100.
-                max_tokens:
-                  type: integer
-                  description: The maximum number of tokens in the generated completion.
-                presence_penalty:
-                  type: number
-                  description: A value between -2.0 and 2.0, with positive values causing a flat reduction of new tokens based on their existing presence so far in order to decrease further occurrences.
-                stream:
-                  type: boolean
-                  description: Turn streaming on.
-                stop:
-                  oneOf:
-                    - type: string
-                      description: A string representing the token to stop generation.
-                    - type: array
-                      description: An array representing the token to stop generation.
-                      items:
-                        type: string
-                        description: A string representing the token to stop generation.
-                temperature:
-                  type: number
-                  description: The temperature parameter for controlling randomness in completions.
-                top_p:
-                  type: number
-                  description: The diversity of the generated text based on nucleus sampling.
-                top_k:
-                  type: integer
-                  description: The diversity of the generated text based on top-k sampling.
-                output:
-                  type: object
-                  description: Options to affect the output of the response.
-                  properties:
-                    factuality:
-                      type: boolean
-                      description: Set to true to turn on factuality processing.
-                    toxicity:
-                      type: boolean
-                      description: Set to true to turn on toxicity processing.
-                input:
-                  type: object
-                  description: Options to affect the input of the request.
-                  properties:
-                    block_prompt_injection:
-                      type: boolean
-                      description: Set to true to detect prompt injection attacks.
-                    pii:
-                      type: string
-                      description: Set to either 'block' or 'replace'.
-                    pii_replace_method:
-                      type: string
-                      description: Set to either 'random', 'fake', 'category', 'mask'.
-            examples:
-              basic:
                 summary: A basic example of using the API.
                 value:
                   model: "{{TEXT_MODEL}}"
@@ -917,6 +552,7 @@ paths:
                     128000: 10
                   presence_penalty: 0.1
                   stop: "hello"
+                  stream: true
                   temperature: 1.0
                   top_p: 1.0
                   top_k: 50
@@ -982,16 +618,38 @@ paths:
                         text:
                           type: string
                           description: The generated text.
-              example:
-                id: "cmpl-d20e5639-ed8d-48b2-a403-08fe0fdc7add"
-                object: "text_completion"
-                created: 1727889988
-                model: "{{TEXT_MODEL}}"
-                choices:
-                  - index: 0
-                    text: "Most people lose some hair every day. It’s a natural process called shedding. On average, you can lose 50-100 strands of hair a day. However, if you notice an increase in hair loss or if you are experiencing hair loss in large clumps, then it could be a sign of an underlying condition. Hair loss can be triggered by a number of factors such as stress, illness, hormone imbalance, medication, and genetics.\nIf you’re concerned about hair loss, you should consult with a trichologist, a hair and scalp specialist. They can help determine the cause of your hair loss and recommend the appropriate treatment."
+              examples:
+                basic:
+                  id: "cmpl-d20e5639-ed8d-48b2-a403-08fe0fdc7add"
+                  object: "text_completion"
+                  created: 1727889988
+                  model: "{{TEXT_MODEL}}"
+                  choices:
+                    - index: 0
+                      text: "Most people lose some hair every day. It’s a natural process called shedding. On average, you can lose 50-100 strands of hair a day. However, if you notice an increase in hair loss or if you are experiencing hair loss in large clumps, then it could be a sign of an underlying condition. Hair loss can be triggered by a number of factors such as stress, illness, hormone imbalance, medication, and genetics.\nIf you’re concerned about hair loss, you should consult with a trichologist, a hair and scalp specialist. They can help determine the cause of your hair loss and recommend the appropriate treatment."
+                streaming:
+                  value:
+                    - id": "cmpl-4b78eda0a81145b495fc13c2b3da2041"
+                      object: "text_completion"
+                      created: 1750950603
+                      model: "{{TEXT_MODEL}}"
+                      choices:
+                        - index: 0
+                          text: " please"
+                          finish_reason: null
+                          stop_reason: null
+                    - id: "cmpl-4b78eda0a81145b495fc13c2b3da2041"
+                      object: "text_completion"
+                      created: 1750950603
+                      model: "{{TEXT_MODEL}}"
+                      choices:
+                        - index: 0
+                          text: "!\n"
+                          finish_reason: null
+                          stop_reason: null
       security:
         - bearerAuth: []
+
 
   /embeddings:
     post:
@@ -1049,7 +707,7 @@ paths:
                   input: "A person is ironing something while standing on the back of a taxi."
                   truncate: true
                   truncation_direction: "Right"
-              multimodal:
+              image input:
                 summary: A multimodal example of using the API.
                 value:
                   model: "{{IMAGE_EMBED}}"
@@ -1114,28 +772,20 @@ paths:
                           description: The array of vector values.
                           items:
                             type: number
-              example:
-                id: "emb-5b310173-3cc9-4470-aa3b-7503aacb4f38"
-                object: "list"
-                created: 1729115349
-                model: "{{TEXT_EMBED}}"
-                data:
-                  - index: 0
-                    embedding: [0.0150606595, 0.04376322]
               examples:
                 basic:
                   id: "emb-5b310173-3cc9-4470-aa3b-7503aacb4f38"
                   object: "list"
                   created: 1729115349
-                  model: "multilingual-e5-large-instruct"
+                  model: "{{TEXT_EMBED}}"
                   data:
                     - index: 0
                       embedding: [0.0150606595, 0.04376322]
-                multimodal:
+                image input:
                   id: "emb-5b310173-3cc9-4470-aa3b-7503aacb4f38"
                   object: "list"
                   created: 1729115349
-                  model: "bridgetower-large-itm-mlm-itc"
+                  model: "{{IMAGE_EMBED}}"
                   data:
                     - index: 0
                       embedding: [ 0.0150606595, 0.04376322 ]
@@ -1298,14 +948,12 @@ paths:
                 chunkSize:
                   type: integer
                   description: The size of chunks for the documents.
+                enableOCR:
+                  type: boolean
+                  description: Whether to enable OCR for document parsing.
               required:
                 - file
             examples:
-#              headers:
-#                Toxicity: true
-#                Pii: "replace"
-#                Replace-Method: "mask"
-#                Injection: true
               multipart/form-data:
                 summary: A text example of using the API.
                 value:
@@ -1314,6 +962,7 @@ paths:
                   outputFormat: "markdown"
                   chunkDocument: true
                   chunkSize: 1000
+                  enableOCR: true
       responses:
         "403":
           description: Failed auth response.
@@ -1963,140 +1612,6 @@ paths:
                 checks:
                   - index: 0
                     score: 0.7072361707687378
-      security:
-        - bearerAuth: []
-
-
-  /translate:
-    post:
-      summary: Translate
-      description: Translate text from one language to another.
-      requestBody:
-        content:
-          application/json:
-            schema:
-              required:
-                - text
-                - source_lang
-                - target_lang
-              type: object
-              properties:
-                text:
-                  type: string
-                  description: The text to translate.
-                source_lang:
-                  type: string
-                  description: The source language of the text.
-                target_lang:
-                  type: string
-                  description: The target language for the translation.
-                use_third_party_engine:
-                  type: boolean
-                  description: Enables/disables third party translations.
-            examples:
-              basic:
-                summary: A basic example of using the API.
-                value:
-                  text: "The sky is blue."
-                  source_lang: "eng"
-                  target_lang: "spa"
-                  use_third_party_engine: true
-      responses:
-        "403":
-          description: Failed auth response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Description of the error.
-              example:
-                error: "api understands the request but refuses to authorize it"
-        "400":
-          description: General error response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Description of the error.
-              example:
-                error: "required fields are missing"
-        "200":
-          description: Successful response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    description: Unique ID for the translation.
-                  object:
-                    type: string
-                    description: Type of object (translation).
-                  created:
-                    type: integer
-                    description: Timestamp of when the translation was created.
-                  best_translation:
-                    type: string
-                    description: The best translation of the input text.
-                  best_score:
-                    type: number
-                    description: The best score for the best translation.
-                  best_translation_model:
-                    type: string
-                    description: The model used for the best translation.
-                  translations:
-                    type: array
-                    description: The set translations from different models.
-                    items:
-                      type: object
-                      properties:
-                        score:
-                          type: number
-                          description: The quality score for this translation.
-                        translation:
-                          type: string
-                          description: The translation.
-                        model:
-                          type: string
-                          description: The model that was used for this translation.
-                        status:
-                          type: string
-                          description: The status of using the model for this translation.
-              example:
-                id: "translation-52929bae5c2c44c9b5177921958cb5f7"
-                object: "translation"
-                created: 1721136682
-                best_translation: "Le ciel est bleu."
-                best_score: 0.8694148659706116
-                best_translation_model: "hermes_2_pro_llama_3_8b"
-                translations:
-                  - score: 0.8694148659706116
-                    translation: "Le ciel est bleu."
-                    model: "hermes_2_pro_llama_3_8b"
-                    status: "success"
-                  - score: 0.8694148659706116
-                    translation: "Le ciel est bleu."
-                    model: "hermes_2_pro_mistral_7b"
-                    status: "success"
-                  - score: 0.8694148659706116
-                    translation: "Le ciel est bleu."
-                    model: "openai"
-                    status: "success"
-                  - score: 0.8694148659706116
-                    translation: "Le ciel est bleu."
-                    model: "deepl"
-                    status: "success"
-                  - score: 0.8694148659706116
-                    translation: "Le ciel est bleu."
-                    model: "google"
-                    status: "success"
       security:
         - bearerAuth: []
 
