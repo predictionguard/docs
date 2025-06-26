@@ -10,8 +10,71 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
       - name: Install Fern
         run: npm install -g fern-api
+
+      - name: Process MDX variables
+        run: |
+          # Create a simple Node.js script to replace variables
+          cat > process_variables.mjs << 'EOF'
+          import fs from 'fs';
+          import path from 'path';
+          
+          // Your model variables
+          const MODELS = {
+            TEXT_MODEL: "${{ vars.TEXT_MODEL }}",
+            CODE_MODEL: "${{ vars.CODE_MODEL }}",
+            VISION_MODEL: "${{ vars.VISION_MODEL }}",
+            TEXT_EMBED: "${{ vars.TEXT_EMBED }}",
+            IMAGE_EMBED: "${{ vars.IMAGE_EMBED }}",
+            RERANK_MODEL: "${{ vars.RERANK_MODEL }}",
+            AUDIO_MODEL: "${{ vars.AUDIO_MODEL }}",
+            GO_MODEL: "${{ vars.GO_MODEL }}",
+            JS_MODEL: "${{ vars.JS_MODEL }}",
+            RUST_MODEL: "${{ vars.RUST_MODEL }}"
+          };
+          
+          function replaceVariables(content) {
+            return content.replace(/\{\{(\w+)\}\}/g, (match, varName) => {
+              return MODELS[varName] !== undefined ? MODELS[varName] : match;
+            });
+          }
+          
+          function processFiles(directory) {
+            if (!fs.existsSync(directory)) return;
+          
+            const items = fs.readdirSync(directory);
+            items.forEach(item => {
+              const itemPath = path.join(directory, item);
+              const stat = fs.statSync(itemPath);
+          
+              if (stat.isDirectory()) {
+                processFiles(itemPath);
+              } else if (item.endsWith('.mdx') || item.endsWith('.md') || item.endsWith('.yaml')) {
+                const content = fs.readFileSync(itemPath, 'utf8');
+                const processedContent = replaceVariables(content);
+          
+                if (content !== processedContent) {
+                  fs.writeFileSync(itemPath, processedContent);
+                  console.log(`✓ Processed: ${itemPath}`);
+                }
+              }
+            });
+          }
+          
+          console.log('🔄 Processing variables in MDX files...');
+          processFiles('pages');
+          processFiles('fern');
+          console.log('✅ Variable processing complete!');
+          EOF
+          
+          # Run the processing script
+          node process_variables.mjs
 
       - name: Generate preview URL
         id: generate-docs

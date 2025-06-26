@@ -31,7 +31,7 @@ messages = [
 ]
 
 result = client.chat.completions.create(
-    model="llava-1.5-7b-hf",
+    model="{{VISION_MODEL}}",
     messages=messages
 )
 
@@ -76,7 +76,7 @@ messages = [
 ]
 
 result = client.chat.completions.create(
-    model="llava-1.5-7b-hf",
+    model="{{VISION_MODEL}}",
     messages=messages
 )
 
@@ -131,7 +131,7 @@ messages = [
 ]
 
 result = client.chat.completions.create(
-    model="llava-1.5-7b-hf",
+    model="{{VISION_MODEL}}",
     messages=messages
 )
 
@@ -167,7 +167,7 @@ messages = [
 ]
 
 result = client.chat.completions.create(
-    model="llava-1.5-7b-hf",
+    model="{{VISION_MODEL}}",
     messages=messages
 )
 
@@ -194,7 +194,7 @@ The output of these will be similar to this:
     ],
     "created": 1727889823,
     "id": "chat-3f0f1b98-448a-4818-a7c4-a28f94eed05d",
-    "model": "llava-1.5-7b-hf",
+    "model": "{{VISION_MODEL}}",
     "object": "chat.completion"
 }
 ```

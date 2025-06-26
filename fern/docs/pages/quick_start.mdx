@@ -75,7 +75,7 @@ messages = [
 ]
 
 result = client.chat.completions.create(
-model="Hermes-3-Llama-3.1-70B",
+model="{{TEXT_MODEL}}",
 messages=messages,
 max_completion_tokens=100
 )
@@ -128,7 +128,7 @@ func run() error {
 	defer cancel()
 
 	input := client.ChatInput{
-		Model: client.Models.Hermes3Llama3170B,
+		Model: client.Models.{{GO_MODEL}},
 		Messages: []client.ChatInputMessage{
 			{
 				Role:    client.Roles.System,
@@ -177,7 +177,7 @@ let pg_env = client::PgEnvironment::from_env().expect("env keys");
 
     let clt = client::Client::new(pg_env).expect("client value");
 
-    let req = chat::Request::<chat::Message>::new(models::Model::Hermes3Llama3170B)
+    let req = chat::Request::<chat::Message>::new(models::Model::{{RUST_MODEL}})
         .add_message(
             chat::Roles::System,
             "You are a helpful assistant. Your model is hosted by Prediction Guard, a leading AI company.".to_string(),
@@ -212,7 +212,7 @@ const client = new pg.Client('https://api.predictionguard.com', process.env.PRED
 
 async function Chat() {
     const input = {
-        model: pg.Models.Hermes3Llama3170B,
+        model: pg.Models.{{JS_MODEL}},
         messages: [
             {
                 role: pg.Roles.System,
@@ -252,7 +252,7 @@ Chat();
 <CodeBlock title="cURL">
 ```bash
 curl -i -X POST https://api.predictionguard.com/chat/completions     -H "Authorization: Bearer ${PREDICTIONGUARD_API_KEY}"     -H "Content-Type: application/json"     -d '{
-    "model": "Hermes-3-Llama-3.1-70B",
+    "model": "{{TEXT_MODEL}}",
     "messages": [
         {
             "role": "system",

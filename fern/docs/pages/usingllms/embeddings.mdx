@@ -6,7 +6,7 @@ At Prediction Guard, we offer an embedding endpoint capable of generating embedd
 
 ## Text
 
-The multilingual-e5-large-instruct model is a lightweight embeddings model capable of embedding text. It supports 100 languages and a context length of 512. Here is a simple example of how to make a call to the embeddings endpoint using this model.
+The {{TEXT_EMBED}} model is an embeddings model capable of embedding text. It supports 100 languages and a context length of 8192. Here is a simple example of how to make a call to the embeddings endpoint using this model.
 
 ```Python
 import os
@@ -20,7 +20,7 @@ os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
 client = PredictionGuard()
 
 response = client.embeddings.create(
-  model="multilingual-e5-large-instruct",
+  model="{{TEXT_EMBED}}",
   input="I love to learn and use LLMs."
 )
 
@@ -36,7 +36,7 @@ This will yield a json object with the embedding.
 
 ## Multimodal
 
-The Bridgetower model is a cross-modal encoder that handles both images and text. Here is a simple illustration of how to make a call to the embeddings endpoint with both image and text inputs. This endpoint accepts image URL, local image files, data URIs, and base64 encoded image strings as input.
+The {{IMAGE_EMBED}} model is a cross-modal encoder that handles both images and text. Here is a simple illustration of how to make a call to the embeddings endpoint with both image and text inputs. This endpoint accepts image URL, local image files, data URIs, and base64 encoded image strings as input.
 
 ```Python
 import os
@@ -50,7 +50,7 @@ os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
 client = PredictionGuard()
 
 response = client.embeddings.create(
-  model="bridgetower-large-itm-mlm-itc",
+  model="{{IMAGE_EMBED}}",
   input=[
     {
         "text": "Cool skateboarding tricks you can try this summer",
@@ -83,7 +83,7 @@ os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
 client = PredictionGuard()
 
 response = client.embeddings.create(
-  model="bridgetower-large-itm-mlm-itc",
+  model="{{IMAGE_EMBED}}",
   input=[
     {
          "image": "https://farm4.staticflickr.com/3300/3497460990_11dfb95dd1_z.jpg",
@@ -111,7 +111,7 @@ os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
 client = PredictionGuard()
 
 response1 = client.embeddings.create(
-  model="bridgetower-large-itm-mlm-itc",
+  model="{{IMAGE_EMBED}}",
   input=[
     {
          "image": "https://farm4.staticflickr.com/3300/3497460990_11dfb95dd1_z.jpg",
@@ -120,7 +120,7 @@ response1 = client.embeddings.create(
 )
 
 response2 = client.embeddings.create(
-  model="bridgetower-large-itm-mlm-itc",
+  model="{{IMAGE_EMBED}}",
   input=[
     {
          "image": "https://ichef.bbci.co.uk/news/976/cpsprodpb/10A6B/production/_133130286_gettyimages-1446849679.jpg",

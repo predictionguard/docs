@@ -17,17 +17,17 @@ from langchain_predictionguard import PredictionGuard
 
 You can provide the name of the Prediction Guard model as an argument when initializing the LLM:
 ```python
-pgllm = PredictionGuard(model="Hermes-2-Pro-Llama-3-8B")
+pgllm = PredictionGuard(model="{{TEXT_MODEL}}")
 ```
 
 You can also provide your api key directly as an argument:
 ```python
-pgllm = PredictionGuard(model="Hermes-2-Pro-Llama-3-8B", token="<api key>")
+pgllm = PredictionGuard(model="{{TEXT_MODEL}}", token="<api key>")
 ```
 
 Finally, you can provide an "output" argument that is used to validate the output of the LLM:
 ```python
-pgllm = PredictionGuard(model="Hermes-2-Pro-Llama-3-8B", output={"toxicity": True})
+pgllm = PredictionGuard(model="{{TEXT_MODEL}}", output={"toxicity": True})
 ```
 
 ## Example usage
@@ -57,7 +57,7 @@ prompt = PromptTemplate(template=template, input_variables=["query"])
 # Prediction Guard docs (https://docs.predictionguard.com) to learn how to 
 # control the output with integer, float, boolean, JSON, and other types and
 # structures.
-pgllm = PredictionGuard(model="Hermes-2-Pro-Llama-3-8B")
+pgllm = PredictionGuard(model="{{TEXT_MODEL}}")
 pgllm(prompt.format(query="What kind of post is this?"))
 ```
 
@@ -71,7 +71,7 @@ from langchain_predictionguard import PredictionGuard
 # Your Prediction Guard API key. Get one at predictionguard.com
 os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
 
-pgllm = PredictionGuard(model="Hermes-2-Pro-Llama-3-8B")
+pgllm = PredictionGuard(model="{{TEXT_MODEL}}")
 
 template = """Question: {question}
 
