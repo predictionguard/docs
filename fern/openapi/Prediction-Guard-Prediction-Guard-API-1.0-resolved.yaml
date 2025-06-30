@@ -106,6 +106,9 @@ paths:
                       items:
                         type: string
                         description: A string representing the token to stop generation.
+                stream:
+                  type: boolean
+                  description: Whether to stream back the model response.
                 temperature:
                   type: number
                   description: The temperature parameter for controlling randomness in completions.
@@ -488,6 +491,9 @@ paths:
                       items:
                         type: string
                         description: A string representing the token to stop generation.
+                stream:
+                  type: boolean
+                  description: Whether to stream back the model response.
                 temperature:
                   type: number
                   description: The temperature parameter for controlling randomness in completions.
