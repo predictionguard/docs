@@ -812,25 +812,25 @@ paths:
           description: Whether to check the output for toxicity.
           schema:
             type: boolean
-          example: true
+          example: false
         - name: Pii
           in: header
           description: Whether to check the output for Pii, and what to do if found. Supported values are 'replace' and 'block'.
           schema:
             type: string
-          example: "replace"
+          example: ""
         - name: Replace-Method
           in: header
           description: Method to replace any found PII. Supported values are 'category', 'fake', 'mask', and 'random'.
           schema:
             type: string
-          example: "category"
+          example: ""
         - name: Injection
           in: header
           description: Whether to check the output for a prompt injection.
           schema:
             type: boolean
-          example: true
+          example: false
       requestBody:
         required: true
         content:
@@ -854,6 +854,19 @@ paths:
                 temperature:
                   type: number
                   description: The temperature parameter for controlling randomness in transcription.
+                timestamps_granularities[]:
+                  description: Sets whether timestamps are returned and at what granularity. Not currently supported in multi-tenant environments.
+                  oneOf:
+                    - type: string
+                      description: The timestamp granularity to populate for this transcription. Values can be "word" or "segment".
+                    - type: array
+                      description: The timestamp granularities to populate for this transcription. Values can be "word" and/or "segment".
+                diarization:
+                  type: boolean
+                  description: Whether to diarize the audio and return speaker turns. Not currently supported in multi-tenant environments.
+                response_format:
+                  type: string
+                  description: The format for the response object. Defaults to "json" and must be set to "verbose_json" when using diarization or timestamp granularities.
               required:
                 - file
                 - model
@@ -863,6 +876,27 @@ paths:
                 value:
                   model: "{{AUDIO_MODEL}}"
                   file: "jfk.wav"
+              diarization:
+                summary: A diarization example using the API.
+                value:
+                  model: "{{AUDIO_MODEL}}"
+                  file: "jfk.wav"
+                  diarization: true
+                  response_format: "verbose_json"
+              word timestamps:
+                summary: A word level timestamp example using the API.
+                value:
+                  model: "{{AUDIO_MODEL}}"
+                  file: "jfk.wav"
+                  timestamps_granularities[]: "word"
+                  response_format: "verbose_json"
+              segment timestamps:
+                summary: A segment level timestamp example using the API.
+                value:
+                  model: "{{AUDIO_MODEL}}"
+                  file: "jsf.wav"
+                  timestamp_granularities[]: "segment"
+                  response_format: "verbose_json"
       responses:
         "403":
           description: Failed auth response.
@@ -898,11 +932,100 @@ paths:
                   text:
                     type: string
                     description: The transcribed audio.
+                  task:
+                    type: string
+                    description: The task used in the request
+                  language:
+                    type: string
+                    description: The language of the audio file
+                  segments:
+                    type: array
+                    description: An array containing objects with segment level data
+                    properties:
+                      id:
+                        type: integer
+                        description: The id of the segment
+                      text:
+                        type: string
+                        description: The text for the segment
+                      start:
+                        type: number
+                        description: The start time of the segment in seconds
+                      end:
+                        type: number
+                        description: The end time of the segment in seconds
+                      speaker:
+                        type: string
+                        description: The speaker of the segment
+                  words:
+                    type: array
+                    description: An array containing objects with word level data
+                    properties:
+                      text:
+                        type: string
+                        description: The text for the word
+                      start:
+                        type: number
+                        description: The start time of the word in seconds
+                      end:
+                        type: number
+                        description: The end time of the word in seconds
+                      speaker:
+                        type: string
+                        description: The speaker of the word
               examples:
-                successExample:
-                  summary: Successful Response Example
+                basic:
+                  summary: Successful Basic Response Example
                   value:
                     text: "And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country."
+                diarization:
+                  summary: Successful Diarization Response Example
+                  value:
+                    text: "And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country."
+                    task: "transcribe"
+                    language: "en"
+                    duration: 8.7
+                    segments:
+                      - id: 0
+                        text: "And so my fellow Americans,"
+                        start: 0.0
+                        end: 2.13
+                        speaker: "SPEAKER_00"
+                      - id: 1
+                        text: "ask not what your country can do for you,"
+                        start: 2.14
+                        end: 5.4
+                        speaker: "SPEAKER_00"
+                word timestamps:
+                  summary: Successful Timestamp Response Example
+                  value:
+                    text: "And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country."
+                    task: "transcribe"
+                    language: "en"
+                    duration: 8.7
+                    words:
+                      - text: "And"
+                        start: 0.0
+                        end: 0.1
+                      - text: "so"
+                        start: 0.11
+                        end: 0.2
+                segment timestamps:
+                  summary: Successful Segment Timestamps Response Example
+                  value:
+                    text: "And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country."
+                    task: "transcribe"
+                    language: "en"
+                    duration: 8.7
+                    segments:
+                      - id: 0
+                        text: "And so my fellow Americans,"
+                        start: 0.0
+                        end: 2.13
+                      - id: 1
+                        text: "ask not what your country can do for you,"
+                        start: 2.14
+                        end: 5.4
       security:
         - bearerAuth: []
 
@@ -1264,6 +1387,89 @@ paths:
                      text: "."
        security:
          - bearerAuth: []
+
+  /detokenize:
+    post:
+      summary: Detokenize
+      description: Generates text from tokens using a model's tokenizer.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - model
+                - tokens
+              type: object
+              properties:
+                model:
+                  type: string
+                  description: The name of the model to use for detokenization.
+                tokens:
+                  type: array
+                  description: The tokens to turn into text.
+                  items:
+                    type: integer
+            examples:
+              basic:
+                summary: A basic example of using the API.
+                value:
+                  model: "{{TEXT_MODEL}}"
+                  tokens: [1, 851, 349, 264, 6029, 653, 2757, 28723]
+      responses:
+        "403":
+          description: Failed auth response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "api understands the request but refuses to authorize it"
+        "400":
+          description: General error response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "required fields are missing"
+        "200":
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Unique ID for the token.
+                  object:
+                    type: string
+                    description: Type of object (tokens).
+                  created:
+                    type: integer
+                    description: Timestamp of when the tokens were generated.
+                  model:
+                    type: string
+                    description: The name of the model used.
+                  text:
+                    type: string
+                    description: The converted tokens
+              example:
+                id: "token-ab046fcf-945f-421c-b9f0-1c75ff355203"
+                object: "tokens"
+                created: 1729871708
+                model: "{{TEXT_MODEL}}"
+                text: "This is a tokenize example."
+      security:
+        - bearerAuth: []
 
   /factuality:
     post:
