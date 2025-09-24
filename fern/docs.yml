@@ -7,7 +7,7 @@ title: Prediction Guard | Docs
 tabs:
   deployment:
     display-name: Deployment & Administration
-    icon: fa-solid fa-server
+    icon: server
   home:
     display-name: Home
     icon: home
