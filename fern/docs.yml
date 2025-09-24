@@ -5,9 +5,6 @@ instances:
 title: Prediction Guard | Docs
 
 tabs:
-  deployment:
-    display-name: Deployment & Administration
-    icon: server
   home:
     display-name: Home
     icon: home
@@ -22,46 +19,6 @@ tabs:
     icon: fa-brands fa-codepen
 
 navigation:
-  - tab: deployment
-    layout:
-      - section: General Principles
-        contents:
-          - page: Overview
-            path: ./docs/pages/deployment/overview.mdx
-          - page: Architecture
-            path: ./docs/pages/deployment/architecture.mdx
-      - section: Admin Panel
-        contents:
-          - page: Getting Started
-            path: ./docs/pages/deployment/admin-panel.mdx
-          - page: Model Management
-            path: ./docs/pages/deployment/model-management.mdx
-          - page: API Key Management
-            path: ./docs/pages/deployment/api-keys.mdx
-      - section: Cloud Deployment
-        contents:
-          - page: AWS Deployment
-            path: ./docs/pages/deployment/aws.mdx
-          - page: Azure Deployment
-            path: ./docs/pages/deployment/azure.mdx
-          - page: GCP Deployment
-            path: ./docs/pages/deployment/gcp.mdx
-      - section: On-Premises
-        contents:
-          - page: Docker Deployment
-            path: ./docs/pages/deployment/docker.mdx
-          - page: Kubernetes
-            path: ./docs/pages/deployment/kubernetes.mdx
-      - section: Air Gapped
-        contents:
-          - page: Air Gapped Deployment
-            path: ./docs/pages/deployment/air-gapped.mdx
-      - section: Model Configuration
-        contents:
-          - page: Model Configuration
-            path: ./docs/pages/deployment/model-config.mdx
-          - page: Custom Models
-            path: ./docs/pages/deployment/custom-models.mdx
   - tab: home
     layout:
       - section: Getting Started
