@@ -1,0 +1,55 @@
+# Kubernetes Deployment
+
+Deploy Prediction Guard on Kubernetes for scalable, production-ready deployments.
+
+## Prerequisites
+
+- **Kubernetes cluster** (1.20+)
+- **kubectl** configured
+- **Helm** 3.0+ (optional)
+- **Persistent storage** provisioner
+
+## Deployment Options
+
+### Option 1: Helm Charts
+
+Quick deployment using our official Helm charts.
+
+### Option 2: Kubernetes Manifests
+
+Manual deployment using YAML manifests.
+
+### Option 3: Operator
+
+Advanced deployment using the Prediction Guard Operator.
+
+## Configuration
+
+### Resource Requirements
+
+- **CPU**: 2+ cores per API instance
+- **Memory**: 4GB+ per API instance
+- **Storage**: 100GB+ for models and data
+- **GPU**: Optional for GPU-accelerated inference
+
+### Scaling
+
+- **Horizontal Pod Autoscaler** (HPA)
+- **Vertical Pod Autoscaler** (VPA)
+- **Cluster Autoscaler** for node scaling
+
+## Security
+
+### Network Policies
+- **Pod-to-pod** communication restrictions
+- **Ingress/egress** traffic control
+- **Service mesh** integration (Istio)
+
+### RBAC
+- **Service accounts** for pods
+- **Role-based access** control
+- **Pod Security Standards**
+
+---
+
+**Complete documentation coming soon** - Detailed Kubernetes deployment guides, Helm charts, and operator documentation are being developed.

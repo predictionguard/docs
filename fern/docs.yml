@@ -8,8 +8,8 @@ tabs:
   home:
     display-name: Home
     icon: home
-  Guides:
-    display-name: Guides and concepts
+  development:
+    display-name: Development and Integration
     icon: book
   api:
     display-name: API Reference
@@ -27,17 +27,17 @@ navigation:
             path: ./docs/pages/welcome.mdx
           - page: Security
             path: ./docs/pages/security.mdx
-  - tab: Guides
+  - tab: development
     layout:
       - section: Getting Started
         contents:
           - page: Quick Start
             path: ./docs/pages/quick_start.mdx
-      - section: Input Requirements
+      - section: Available Models
         contents:
-          - page: LLMs
+          - page: Large Language Models (LLMs)
             path: ./docs/pages/options/llms.mdx
-          - page: LVMs
+          - page: Large Vision Models (LVMs)
             path: ./docs/pages/options/lvms.mdx
           - page: Embedding Models
             path: ./docs/pages/options/embedding_models.mdx
@@ -45,7 +45,7 @@ navigation:
             path: ./docs/pages/options/audio_models.mdx
           - page: Reranker Models
             path: ./docs/pages/options/reranker_models.mdx
-          - page: Enumerations
+          - page: Model Enumerations
             path: ./docs/pages/options/enumerations.mdx
           - page: Prompt Formatting
             path: ./docs/pages/options/prompts.mdx
@@ -71,31 +71,31 @@ navigation:
             path: ./docs/pages/usingllms/chat_vision.mdx
           - page: Embeddings
             path: ./docs/pages/usingllms/embeddings.mdx
-      - section: Process LLM Input
+      - section: Secure and Filter Inputs
         contents:
-          - page: PII
+          - page: PII Detection
             path: ./docs/pages/input/PII.mdx
-          - page: Injection
+          - page: Injection Prevention
             path: ./docs/pages/input/injection.mdx
-      - section: Validating LLM Output
+      - section: Secure and Filter Outputs
         contents:
-          - page: Factuality
+          - page: Factuality Checks
             path: ./docs/pages/output/factuality.mdx
-          - page: Toxicity
+          - page: Toxicity Detection
             path: ./docs/pages/output/toxicity.mdx
-      - section: Guides
+      - section: Integration Examples
         contents:
-          - page: Custom Output Structuring in LLMs
+          - page: Custom Output Structuring
             path: ./docs/pages/guides/output.mdx
           - page: Data Chat with LLMs
             path: ./docs/pages/guides/ada.mdx
-          - page: Data extraction + factuality checks
+          - page: Data Extraction + Factuality
             path: ./docs/pages/guides/data-extraction.mdx
-          - page: LangChain LLM Wrapper
+          - page: LangChain Integration
             path: ./docs/pages/guides/langchainllm.mdx
-          - page: Many Chat with LLMs
+          - page: ManyChat Integration
             path: ./docs/pages/guides/ManyChat.mdx
-          - page: Prediction Guard powered code assistant
+          - page: Code Assistant
             path: ./docs/pages/guides/code-assistant.mdx
       - section: Support
         contents:
