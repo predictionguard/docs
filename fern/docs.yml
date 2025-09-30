@@ -5,12 +5,12 @@ instances:
 title: Prediction Guard | Docs
 
 tabs:
-  deployment:
-    display-name: Prediction Guard
-    icon: server
   home:
     display-name: Home
     icon: home
+  deployment:
+    display-name: Deployment & Administration
+    icon: server
   development:
     display-name: Development and Integration
     icon: book
@@ -22,6 +22,14 @@ tabs:
     icon: fa-brands fa-codepen
 
 navigation:
+  - tab: home
+    layout:
+      - section: Getting Started
+        contents:
+          - page: Welcome
+            path: ./docs/pages/welcome.mdx
+          - page: Security
+            path: ./docs/pages/security.mdx
   - tab: deployment
     layout:
       - section: Overview
@@ -54,11 +62,11 @@ navigation:
         contents:
           - page: Admin Panel
             path: ./docs/pages/deployment/admin-panel.mdx
-          - page: Cluster Management
+          - page: Clusters
             path: ./docs/pages/deployment/cluster-management.mdx
-          - page: Model Management
+          - page: Models
             path: ./docs/pages/deployment/model-management.mdx
-          - page: API Key Management
+          - page: API Keys
             path: ./docs/pages/deployment/api-keys.mdx
           - page: Security & Monitoring
             path: ./docs/pages/deployment/security-monitoring.mdx
@@ -66,14 +74,6 @@ navigation:
             path: ./docs/pages/deployment/model-config.mdx
           - page: Custom Models
             path: ./docs/pages/deployment/custom-models.mdx
-  - tab: home
-    layout:
-      - section: Getting Started
-        contents:
-          - page: Welcome
-            path: ./docs/pages/welcome.mdx
-          - page: Security
-            path: ./docs/pages/security.mdx
   - tab: development
     layout:
       - section: Getting Started
@@ -82,9 +82,9 @@ navigation:
             path: ./docs/pages/quick_start.mdx
       - section: Available Models
         contents:
-          - page: Large Language Models (LLMs)
+          - page: LLMs
             path: ./docs/pages/options/llms.mdx
-          - page: Large Vision Models (LVMs)
+          - page: LVMs
             path: ./docs/pages/options/lvms.mdx
           - page: Embedding Models
             path: ./docs/pages/options/embedding_models.mdx
