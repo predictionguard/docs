@@ -79,14 +79,17 @@ appropriate information, and do not keep the curly braces)
 <|im_start|>assistant<|im_end|>
 ```
 
-## Deepseek
+## gpt-oss
+
+gpt-oss models use the ChatML format for optimal performance. The model is trained on the harmony response format and should be used with ChatML formatting.
 
 (Replace the portions of the prompt below in curly braces `{...}` with the
 appropriate information, and do not keep the curly braces)
 
 ```
-<|begin_of_sentence|>{prompt}
-### Instruction:
-{context or user message}
-### Response:
+<|im_start|>system
+{prompt}<|im_end|>
+<|im_start|>user
+{context or user message}<|im_end|>
+<|im_start|>assistant<|im_end|>
 ```
