@@ -1,8 +1,24 @@
 # Model Management
 
-Learn how to deploy, configure, and manage models in your self-hosted Prediction Guard instance.
+Deploy, configure, and manage any open model in your Prediction Guard platform. Support for LLMs, LVMs, embeddings, and fine-tuned models across various hardware including NVIDIA GPUs, Gaudi, and more.
 
 ## Model Deployment
+
+![Deploy New Model Page](./deploy-model-admin.png)
+
+### Supported Model Types
+
+- **Large Language Models (LLMs)**: Text generation, chat, completion
+- **Large Vision Models (LVMs)**: Image analysis, visual understanding
+- **Embedding Models**: Text embeddings, similarity search
+- **Fine-tuned Models**: Custom models for specific industries or use cases
+
+### Hardware Support
+
+- **NVIDIA GPUs**: A100, V100, RTX series, and more
+- **Intel Gaudi**: High-performance AI accelerators
+- **CPU-only**: For smaller models or development
+- **Multi-GPU**: Distributed inference across multiple GPUs
 
 ### From Hugging Face
 
@@ -19,6 +35,33 @@ Learn how to deploy, configure, and manage models in your self-hosted Prediction
 3. **Set resource requirements** (CPU, GPU, memory)
 4. **Deploy and test** the model
 5. **Make available** to API users
+
+## Model Security Scanning
+
+Prediction Guard automatically scans all models to identify potential security risks and vulnerabilities:
+
+### Security Risk Assessment
+
+- **PII Leak Susceptibility**: How likely the model is to leak personally identifiable information
+- **Prompt Injection Vulnerability**: Susceptibility to prompt injection attacks
+- **Toxicity Risk**: Potential for generating harmful or toxic content
+- **Bias Assessment**: Evaluation of potential bias in model outputs
+- **Data Privacy**: Assessment of data handling and privacy risks
+
+### Scanning Scores
+
+Each model receives security scores across multiple dimensions:
+- **Overall Security Score**: Composite score based on all risk factors
+- **Risk Level**: Low, Medium, High, or Critical
+- **Recommendations**: Specific actions to improve model security
+- **Compliance**: Alignment with security standards and regulations
+
+### Risk Mitigation
+
+- **Input Filtering**: Automatic filtering of potentially harmful inputs
+- **Output Sanitization**: Cleaning and validation of model outputs
+- **Access Controls**: Restricting model access based on risk levels
+- **Monitoring**: Continuous monitoring of model behavior and outputs
 
 ## Model Configuration
 

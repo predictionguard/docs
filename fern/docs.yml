@@ -6,7 +6,7 @@ title: Prediction Guard | Docs
 
 tabs:
   deployment:
-    display-name: Deployment & Administration
+    display-name: Prediction Guard
     icon: server
   home:
     display-name: Home
@@ -24,40 +24,44 @@ tabs:
 navigation:
   - tab: deployment
     layout:
-      - section: General Principles
+      - section: Overview
         contents:
-          - page: Overview
+          - page: Getting Started
             path: ./docs/pages/deployment/overview.mdx
           - page: Architecture
             path: ./docs/pages/deployment/architecture.mdx
-      - section: Admin Panel
+      - section: Installation
         contents:
-          - page: Getting Started
+          - section: On-Premises
+            contents:
+              - page: Docker
+                path: ./docs/pages/deployment/docker.mdx
+              - page: Kubernetes
+                path: ./docs/pages/deployment/kubernetes.mdx
+          - section: Cloud
+            contents:
+              - page: AWS
+                path: ./docs/pages/deployment/aws.mdx
+              - page: Azure
+                path: ./docs/pages/deployment/azure.mdx
+              - page: GCP
+                path: ./docs/pages/deployment/gcp.mdx
+          - section: Air Gapped
+            contents:
+              - page: Air Gapped
+                path: ./docs/pages/deployment/air-gapped.mdx
+      - section: Administration
+        contents:
+          - page: Admin Panel
             path: ./docs/pages/deployment/admin-panel.mdx
+          - page: Cluster Management
+            path: ./docs/pages/deployment/cluster-management.mdx
           - page: Model Management
             path: ./docs/pages/deployment/model-management.mdx
           - page: API Key Management
             path: ./docs/pages/deployment/api-keys.mdx
-      - section: Cloud Deployment
-        contents:
-          - page: AWS Deployment
-            path: ./docs/pages/deployment/aws.mdx
-          - page: Azure Deployment
-            path: ./docs/pages/deployment/azure.mdx
-          - page: GCP Deployment
-            path: ./docs/pages/deployment/gcp.mdx
-      - section: On-Premises
-        contents:
-          - page: Docker Deployment
-            path: ./docs/pages/deployment/docker.mdx
-          - page: Kubernetes
-            path: ./docs/pages/deployment/kubernetes.mdx
-      - section: Air Gapped
-        contents:
-          - page: Air Gapped Deployment
-            path: ./docs/pages/deployment/air-gapped.mdx
-      - section: Model Configuration
-        contents:
+          - page: Security & Monitoring
+            path: ./docs/pages/deployment/security-monitoring.mdx
           - page: Model Configuration
             path: ./docs/pages/deployment/model-config.mdx
           - page: Custom Models

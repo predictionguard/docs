@@ -4,6 +4,8 @@ Manage API keys for secure access to your self-hosted Prediction Guard instance.
 
 ## Creating API Keys
 
+![Create New API Key](./create-api-key-admin.png)
+
 ### Basic API Key Creation
 
 1. **Navigate to API Keys** in the admin panel
@@ -109,27 +111,42 @@ export PREDICTION_GUARD_URL="https://your-domain.com"
 
 ### Python SDK
 ```python
-import predictionguard as pg
+import os
+from predictionguard import PredictionGuard
 
-# Set API key
-pg.api_key = "your-api-key-here"
-pg.api_url = "https://your-domain.com"
+# Set API key as environment variable
+os.environ["PREDICTIONGUARD_API_KEY"] = "your-api-key-here"
+
+# Create client
+client = PredictionGuard()
 
 # Use the API
-result = pg.Completion.create(
-    model="llama-2-7b-chat",
-    prompt="Hello, world!"
+result = client.chat.completions.create(
+    model="{{TEXT_MODEL}}",
+    messages=[
+        {
+            "role": "user",
+            "content": "Hello, world!"
+        }
+    ],
+    max_completion_tokens=100
 )
 ```
 
 ### cURL Example
 ```bash
-curl -X POST "https://your-domain.com/v1/completions" \
+curl -X POST "https://api.predictionguard.com/chat/completions" \
   -H "Authorization: Bearer your-api-key-here" \
   -H "Content-Type: application/json" \
   -d '{
-    "model": "llama-2-7b-chat",
-    "prompt": "Hello, world!"
+    "model": "{{TEXT_MODEL}}",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Hello, world!"
+      }
+    ],
+    "max_completion_tokens": 100
   }'
 ```
 
