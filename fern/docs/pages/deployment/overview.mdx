@@ -1,54 +1,96 @@
-# Deployment & Administration Overview
+---
+title: Quick Start
+subtitle: Reliable, future-proof AI predictions
+description: Deploy and manage your own Prediction Guard platform
+---
 
-Welcome to Prediction Guard's self-hosted deployment documentation. This section covers everything you need to deploy and manage your own Prediction Guard instance.
-
-## What is Self-Hosted Prediction Guard?
-
-Self-hosted Prediction Guard allows you to:
-
-- **Deploy any model** you want through our admin panel
-- **Host on-premises** or on any cloud provider
-- **Maintain air-gapped** environments for maximum security
-- **Manage your own infrastructure** with full control
-- **Use any open model** from Hugging Face or other sources
+Deploy and manage your own Prediction Guard clusters with full control over your AI infrastructure. Choose from multiple deployment options to fit your security, compliance, and infrastructure requirements.
 
 ## Deployment Options
 
-### Cloud Deployment
-Deploy on major cloud providers with managed services:
+Prediction Guard supports flexible deployment across different environments:
+
+- **On-Premises**: Deploy in your own data center with Kubernetes or single-node binary
+- **Cloud**: Deploy on AWS, Azure, or Google Cloud with managed Kubernetes
+- **Air-Gapped**: Deploy in isolated environments with offline packages
+
+## Platform Capabilities
+
+Your deployed Prediction Guard platform provides:
+
+- **Model Management**: Deploy any open model from Hugging Face or your own repositories
+- **Cluster Management**: Create and manage multiple clusters across environments
+- **Security & Compliance**: Built-in security scanning, audit logs, and compliance features
+- **API Management**: Create and manage API keys with granular permissions
+- **Monitoring**: Real-time monitoring and alerting for your AI infrastructure
+
+## Getting Started
+
+<Steps toc={true}>
+  
+### Create your cluster in the admin panel
+
+Start by creating your cluster in the Prediction Guard admin panel:
+
+1. **Navigate to [admin.predictionguard.com](https://admin.predictionguard.com)** and log in
+2. **Click "Create Cluster"** from the dashboard
+3. **Choose your deployment type** (On-Premises, Cloud, or Air-Gapped)
+4. **Configure cluster settings** (name, resources, security)
+5. **Click "Create Cluster"** to generate your cluster configuration
+
+### Choose your deployment method
+
+Prediction Guard can be deployed anywhere that fits your needs. Choose the deployment method that works best for your environment:
+
+#### On-Premises
+Deploy in your own data center:
+- [Kubernetes Cluster](/deployment-administration/installation/on-premises/kubernetes) - Full Kubernetes deployment
+- [Zero Dependency Binary](/deployment-administration/installation/on-premises/binary) - Single node binary installation
+
+#### Cloud Deployment
+Deploy on major cloud providers:
 - [AWS Deployment](/deployment-administration/installation/cloud/aws) - Amazon Web Services
 - [Azure Deployment](/deployment-administration/installation/cloud/azure) - Microsoft Azure  
 - [GCP Deployment](/deployment-administration/installation/cloud/gcp) - Google Cloud Platform
 
-### On-Premises
-Deploy in your own data center:
-- [Docker Deployment](/deployment-administration/installation/on-premises/docker) - Container-based deployment
-- [Kubernetes](/deployment-administration/installation/on-premises/kubernetes) - Orchestrated container deployment
-
-### Air Gapped
+#### Air Gapped
 Deploy in isolated environments:
 - [Air Gapped Deployment](/deployment-administration/installation/air-gapped/air-gapped) - Offline deployment guide
 
-## Admin Panel Features
+### Deploy your Prediction Guard cluster
 
-Our admin panel provides:
+Follow the specific deployment guide for your chosen environment. The deployment process will:
 
-- **Model Management** - Deploy and configure any model
-- **API Key Management** - Control access and permissions
-- **Monitoring & Analytics** - Track usage and performance
-- **Configuration Management** - Customize your deployment
+1. **Download the installation package** for your environment
+2. **Run the installer** with pre-flight checks and configuration
+3. **Bootstrap your cluster** using the command from the admin panel
+4. **Verify the deployment** is working correctly
 
-## Getting Started
+### Access your Prediction Guard admin panel
 
-1. Choose your deployment method from the sections above
-2. Follow the specific deployment guide for your environment
-3. Access the admin panel to configure models and API keys
-4. Start using your self-hosted Prediction Guard instance
+Once deployed, access your Prediction Guard admin panel (your dashboard) to manage your cluster and deploy models.
 
-## Complete Documentation Coming Soon
+### Deploy your first model
 
-We're actively working on comprehensive documentation for all deployment scenarios. Some sections may contain placeholder content while we finalize the complete guides.
+From the admin panel dashboard, deploy your first model:
 
----
+1. **Navigate to Models** in the admin panel
+2. **Browse available models** from Hugging Face or upload your own
+3. **Configure model settings** (hardware requirements, parameters)
+4. **Deploy the model** to your cluster and verify it's running
+5. **Test the model** via API calls
 
-**Need help?** Contact our support team or join our Discord community for assistance with your deployment.
+### Create API keys and start building
+
+Set up access for your applications:
+
+1. **Create API keys** with appropriate permissions
+2. **Configure rate limits** and usage quotas
+3. **Test API access** with your deployed models
+4. **Start building** secure, compliant AI applications
+
+</Steps>
+
+<Callout type="info" emoji="ℹ️">
+  Need help with deployment? Contact our support team or join our Discord community for assistance.
+</Callout>

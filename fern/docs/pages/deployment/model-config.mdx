@@ -1,60 +1,56 @@
 # Model Configuration
 
-Configure and customize models in your self-hosted Prediction Guard deployment.
+Configure model deployment settings and resource allocation in your Prediction Guard platform.
 
-## Model Settings
+## Configuration Access
 
-### Basic Configuration
+### Via Admin Panel
+1. **Navigate to Models** in the admin panel
+2. **Select a deployed model** from your model list
+3. **Click "Configure"** to access model settings
+4. **Modify settings** and save changes
+5. **Restart model** to apply new configuration
 
-- **Model name** and description
-- **Temperature** and sampling parameters
-- **Maximum tokens** and context length
-- **Stop sequences** and special tokens
+## Model Deployment Settings
 
-### Advanced Settings
+### Resource Allocation
+- **Model CPU (millicores)**: CPU allocation for the model server
+- **Model Memory (GB)**: RAM allocation for the model
+- **Accelerator Cards**: Number of GPUs to allocate
+- **Card Type**: GPU type (NVIDIA, etc.)
+- **Hugepages (GB)**: Memory optimization settings
 
-- **Resource allocation** (CPU, GPU, memory)
-- **Scaling policies** and auto-scaling
-- **Caching configuration** for performance
-- **Security policies** and access controls
+### Scaling Configuration
+- **Replicas**: Number of model instances to run
+- **Auto-scaling**: Automatic scaling based on demand
+- **Min/Max instances**: Scaling boundaries
+- **Load balancing**: Request distribution across replicas
 
-## Model Types
+## Model Server Configuration
 
-### Large Language Models (LLMs)
-- **Text generation** models
-- **Conversation** models
-- **Instruction following** models
-- **Code generation** models
+### Container Settings
+- **Container Image URL**: Custom model server image
+- **Runtime Class Name**: Kubernetes runtime class
+- **Enable Model**: Toggle model availability
+- **Model Name**: Display name for the model
+- **Description**: Model description and capabilities
 
-### Large Vision Models (LVMs)
-- **Image understanding** models
-- **Multimodal** models
-- **Document analysis** models
+### Input/Output Limits
+- **Max Input Tokens**: Maximum input context length
+- **Max Output Tokens**: Maximum response length
+- **Request Timeout**: Maximum request processing time
+- **Concurrent Requests**: Maximum simultaneous requests
 
-### Embedding Models
-- **Text embeddings** for similarity
-- **Multilingual** embeddings
-- **Domain-specific** embeddings
+## Best Practices
 
-### Audio Models
-- **Speech recognition** models
-- **Text-to-speech** models
-- **Audio processing** models
+### Resource Planning
+- **Start with minimum requirements** and scale up as needed
+- **Monitor resource usage** after deployment
+- **Plan for peak loads** when setting scaling parameters
+- **Test configurations** in staging before production
 
-## Performance Tuning
-
-### Inference Optimization
-- **Model quantization** for faster inference
-- **Batch processing** for throughput
-- **Caching strategies** for repeated requests
-- **GPU optimization** for acceleration
-
-### Resource Management
-- **Memory optimization** for large models
-- **CPU utilization** tuning
-- **Storage optimization** for model files
-- **Network optimization** for distributed deployments
-
----
-
-**Complete documentation coming soon** - Detailed model configuration guides, performance tuning, and optimization techniques are being developed.
+### Security Considerations
+- **Set appropriate limits** for input/output tokens
+- **Configure timeouts** to prevent resource exhaustion
+- **Monitor concurrent requests** to prevent abuse
+- **Regularly review** and update configurations

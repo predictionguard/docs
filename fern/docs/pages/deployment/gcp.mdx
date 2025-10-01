@@ -1,49 +1,126 @@
 # GCP Deployment
 
-Deploy Prediction Guard on Google Cloud Platform using our managed deployment options.
+Deploy Prediction Guard on Google Cloud Platform using our managed Kubernetes deployment.
 
 ## Prerequisites
 
 - **Google Cloud Project** with billing enabled
 - **gcloud CLI** installed and configured
-- **Docker** installed locally
-- **kubectl** (for GKE deployment)
+- **kubectl** configured for your GKE cluster
+- **Access to admin panel** at admin.predictionguard.com
 
-## Deployment Options
+## Deployment Process
 
-### Option 1: Google Kubernetes Engine (GKE)
+### 1. Create GKE Cluster
 
-Production-ready deployment using managed Kubernetes.
+First, create a Google Kubernetes Engine cluster:
 
-### Option 2: Cloud Run
+```bash
+# Set project ID
+export PROJECT_ID=your-project-id
+gcloud config set project $PROJECT_ID
 
-Serverless deployment for variable workloads.
+# Create GKE cluster
+gcloud container clusters create predictionguard-cluster \
+    --zone us-central1-a \
+    --num-nodes 3 \
+    --machine-type e2-standard-2 \
+    --enable-autoscaling \
+    --min-nodes 1 \
+    --max-nodes 5
+```
 
-### Option 3: Compute Engine
+### 2. Configure kubectl
 
-Traditional VM-based deployment with full control.
+```bash
+# Get credentials
+gcloud container clusters get-credentials predictionguard-cluster --zone us-central1-a
 
-## Configuration
+# Verify connection
+kubectl get nodes
+```
 
-### GCP Services Integration
+### 3. Access Admin Panel
 
-- **Cloud Storage** - model storage and backups
-- **Cloud SQL** - PostgreSQL managed service
-- **Secret Manager** - secure key management
-- **Cloud Monitoring** - logging and monitoring
+Navigate to [admin.predictionguard.com](https://admin.predictionguard.com) and log in with your credentials.
 
-## Security
+### 4. Create Cluster in Admin Panel
 
-### Network Security
-- **VPC** configuration
-- **Firewall rules** for access control
-- **Private Google Access** for secure connectivity
+1. Click **"Create Cluster"** from the dashboard
+2. Select **"Advanced"** mode for full configuration
+3. Configure your cluster settings:
 
-### Access Control
-- **Identity and Access Management** (IAM)
-- **Service accounts** for authentication
-- **Organization policies** for compliance
+#### General Settings
+- **Cluster Name**: Choose a unique name (e.g., `gcp-production-cluster`)
+- **Air-Gapped Cluster**: Leave disabled for cloud deployment
+- **Image Registry**: Use Google Container Registry or your preferred registry
+- **Hugging Face API Token**: Provide your token for model access
+- **Enable Ingress**: Enable for external API access
+
+#### GCP-Specific Configuration
+- **Node Pools**: Configure your GKE node pools
+- **Storage Classes**: Use Google Persistent Disk CSI driver for persistent volumes
+- **Load Balancer**: Configure Google Cloud Load Balancer for ingress
+- **VPC**: Specify your VPC and subnet configuration
+
+### 5. Download Prediction Guard Package
+
+Download the Prediction Guard installation package:
+
+```bash
+# Download the GCP-specific package
+curl -f "https://storage.googleapis.com/temp_public_pg/prediction-guard-gcp.tgz?alt=media"
+```
+
+### 6. Install Prediction Guard
+
+```bash
+# Extract the package
+tar xvzf prediction-guard-gcp.tgz
+cd prediction-guard-gcp
+
+# Run the installer with GCP-specific configuration
+sudo ./prediction-guard-gcp install --license license.yaml --cluster-name predictionguard-cluster
+```
+
+### 7. Bootstrap Cluster
+
+Retrieve the bootstrap command from [admin.predictionguard.com](https://admin.predictionguard.com) by navigating to Clusters, then clicking the **Deploy** button for your cluster. Run the bootstrap command:
+
+```bash
+# Run the bootstrap command in your GKE cluster
+kubectl apply -f prediction-guard-manifests/
+```
+
+### 8. Verify Installation
+
+```bash
+# Check running pods
+kubectl get pods -n predictionguard
+
+# Verify cluster health
+kubectl get nodes
+```
+
+## Post-Deployment
+
+### Access Your Cluster
+
+Once deployed, your cluster will be accessible through:
+
+- **Admin Panel**: Monitor and manage from admin.predictionguard.com
+- **API Endpoints**: Access your deployed models via the configured endpoints
+- **Kubernetes Dashboard**: Use kubectl to manage cluster resources
+
+### GCP Integration
+
+Your deployment will automatically integrate with:
+
+- **Google Persistent Disk**: Persistent storage for models and data
+- **Google Cloud Load Balancer**: Load balancing for high availability
+- **Cloud Monitoring**: Monitoring and logging
+- **Identity and Access Management**: Service account and role management
 
 ---
 
-**Complete documentation coming soon** - Detailed GCP deployment guides, deployment manager templates, and Terraform configurations are being developed.
+**Need help?** Contact our support team for assistance with your GCP deployment.

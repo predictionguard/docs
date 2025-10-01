@@ -28,13 +28,28 @@ Air gapped deployments are designed for environments with strict security requir
 
 ## Installation Process
 
-### 1. Prepare Installation Media
+### 1. Create Cluster in Admin Panel
+
+On a machine with internet access, create your air-gapped cluster:
+
+1. Navigate to [admin.predictionguard.com](https://admin.predictionguard.com)
+2. Click **"Create Cluster"** from the dashboard
+3. Select **"Air-Gapped"** mode for offline deployment
+4. Configure your cluster settings:
+   - **Cluster Name**: Choose a unique name (e.g., `air-gapped-production`)
+   - **Air-Gapped Cluster**: Enable for offline deployment
+   - **Image Registry**: Use local registry or pre-downloaded images
+   - **Hugging Face API Token**: Not required for air-gapped (models pre-downloaded)
+   - **Enable Ingress**: Configure for internal network access
+5. Click **"Create Cluster"** to generate your cluster configuration
+
+### 2. Prepare Installation Media
 
 On a machine with internet access:
 
 ```bash
-# Download installation package
-wget https://releases.predictionguard.com/air-gapped/latest.tar.gz
+# Download air-gapped installation package
+curl -f "https://storage.googleapis.com/temp_public_pg/prediction-guard-air-gapped.tgz?alt=media"
 
 # Download model packages
 ./download-models.sh --offline-package
@@ -46,28 +61,28 @@ docker save postgres:15 > postgres.tar
 docker save redis:7 > redis.tar
 ```
 
-### 2. Transfer to Air Gapped Environment
+### 3. Transfer to Air Gapped Environment
 
 ```bash
 # Copy files to air gapped system
-scp -r installation-package/ user@air-gapped-server:/tmp/
+scp -r prediction-guard-air-gapped/ user@air-gapped-server:/tmp/
 scp -r models/ user@air-gapped-server:/opt/predictionguard/
 scp *.tar user@air-gapped-server:/tmp/
 ```
 
-### 3. Install on Air Gapped System
+### 4. Install Prediction Guard
 
 ```bash
 # Extract installation package
 cd /tmp
-tar -xzf predictionguard-air-gapped-latest.tar.gz
-cd predictionguard-air-gapped
+tar -xzf prediction-guard-air-gapped.tgz
+cd prediction-guard-air-gapped
 
-# Run installation script
-sudo ./install.sh --offline
+# Run the installer with air-gapped configuration
+sudo ./prediction-guard-air-gapped install --license license.yaml --offline
 ```
 
-### 4. Import Docker Images
+### 5. Import Docker Images
 
 ```bash
 # Import Docker images
@@ -78,6 +93,28 @@ docker load < /tmp/redis.tar
 
 # Verify images
 docker images | grep predictionguard
+```
+
+### 6. Bootstrap Cluster
+
+Retrieve the bootstrap command from [admin.predictionguard.com](https://admin.predictionguard.com) by navigating to Clusters, then clicking the **Deploy** button for your air-gapped cluster. Run the bootstrap command:
+
+```bash
+# Run the bootstrap command in your air-gapped environment
+sudo ./prediction-guard-air-gapped bootstrap --offline
+```
+
+### 7. Verify Installation
+
+```bash
+# Check running services
+docker ps | grep predictionguard
+
+# Verify cluster health
+./health-check.sh --offline
+
+# Check admin panel access
+curl -k https://localhost:8443/health
 ```
 
 ## Configuration

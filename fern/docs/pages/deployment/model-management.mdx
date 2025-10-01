@@ -1,130 +1,61 @@
 # Model Management
 
-Deploy, configure, and manage any open model in your Prediction Guard platform. Support for LLMs, LVMs, embeddings, and fine-tuned models across various hardware including NVIDIA GPUs, Gaudi, and more.
+Deploy and configure models in your Prediction Guard platform.
 
 ## Model Deployment
 
 ![Deploy New Model Page](./deploy-model-admin.png)
 
-### Supported Model Types
-
-- **Large Language Models (LLMs)**: Text generation, chat, completion
-- **Large Vision Models (LVMs)**: Image analysis, visual understanding
-- **Embedding Models**: Text embeddings, similarity search
-- **Fine-tuned Models**: Custom models for specific industries or use cases
-
-### Hardware Support
-
-- **NVIDIA GPUs**: A100, V100, RTX series, and more
-- **Intel Gaudi**: High-performance AI accelerators
-- **CPU-only**: For smaller models or development
-- **Multi-GPU**: Distributed inference across multiple GPUs
-
-### From Hugging Face
+### Deploy from Hugging Face
 
 1. **Browse the model library** in the admin panel
-2. **Search for models** by name, type, or capability
-3. **Review model details** including size, requirements, and performance
-4. **Click Deploy** and configure deployment settings
-5. **Monitor deployment progress** and resolve any issues
+2. **Search for models** by name or type
+3. **Click Deploy** and configure settings
+4. **Monitor deployment** progress
+5. **Test the model** via API
 
-### Custom Models
+### Upload Custom Models
 
-1. **Upload model files** to your instance
-2. **Configure model metadata** (name, description, capabilities)
+1. **Upload model files** to your platform
+2. **Configure model settings** (name, description, capabilities)
 3. **Set resource requirements** (CPU, GPU, memory)
 4. **Deploy and test** the model
 5. **Make available** to API users
 
-## Model Security Scanning
-
-Prediction Guard automatically scans all models to identify potential security risks and vulnerabilities:
-
-### Security Risk Assessment
-
-- **PII Leak Susceptibility**: How likely the model is to leak personally identifiable information
-- **Prompt Injection Vulnerability**: Susceptibility to prompt injection attacks
-- **Toxicity Risk**: Potential for generating harmful or toxic content
-- **Bias Assessment**: Evaluation of potential bias in model outputs
-- **Data Privacy**: Assessment of data handling and privacy risks
-
-### Scanning Scores
-
-Each model receives security scores across multiple dimensions:
-- **Overall Security Score**: Composite score based on all risk factors
-- **Risk Level**: Low, Medium, High, or Critical
-- **Recommendations**: Specific actions to improve model security
-- **Compliance**: Alignment with security standards and regulations
-
-### Risk Mitigation
-
-- **Input Filtering**: Automatic filtering of potentially harmful inputs
-- **Output Sanitization**: Cleaning and validation of model outputs
-- **Access Controls**: Restricting model access based on risk levels
-- **Monitoring**: Continuous monitoring of model behavior and outputs
-
 ## Model Configuration
 
-### Basic Settings
-- **Model name** and description
-- **Temperature** and sampling parameters
-- **Maximum tokens** and context length
-- **Stop sequences** and special tokens
+### General Settings
+- **Select from Catalog**: Choose from available model catalog
+- **Model Name**: Display name for the model
+- **Description**: Model description and capabilities
+- **Container Image URL**: Custom container image (optional)
+- **Replicas**: Number of model instances to run
+- **Enable Model**: Toggle model availability
+- **Runtime Class Name**: Kubernetes runtime class
 
-### Advanced Settings
-- **Resource allocation** (CPU cores, GPU memory)
-- **Scaling policies** (auto-scale based on demand)
-- **Caching configuration** for performance
-- **Security policies** and access controls
+### Model Parameters
+- **Model CPU (millicores)**: CPU allocation for the model server
+- **Model Memory (GB)**: RAM allocation for the model
+- **Accelerator Cards**: Number of GPUs to allocate
+- **Card Type**: GPU type (NVIDIA, etc.)
+- **Hugepages (GB)**: Memory optimization settings
+- **Max Input Tokens**: Maximum input context length
+- **Max Total Tokens**: Maximum total tokens per request
+- **Min Input Tokens**: Minimum input tokens required
+- **Max Client Batches**: Maximum concurrent client batches
+- **Aliases**: Model aliases (one per line)
 
-## Model Monitoring
+### Model Capabilities
+- **Streaming**: Enable streaming responses
+- **Tool Use**: Enable tool/function calling capabilities
+- **Image Input**: Enable image processing capabilities
+- **Image Formats**: Supported image formats (PNG, JPEG, etc.)
+- **Capabilities**: Model capabilities (embedding, chat, etc.)
 
-### Performance Metrics
-- **Inference latency** and throughput
-- **Resource utilization** (CPU, GPU, memory)
-- **Error rates** and failure analysis
-- **Usage statistics** and trends
-
-### Health Monitoring
-- **Model availability** and uptime
-- **Response quality** and accuracy
-- **Resource exhaustion** alerts
-- **Performance degradation** detection
-
-## Model Lifecycle
-
-### Versioning
-- **Model versioning** for updates and rollbacks
-- **A/B testing** between model versions
-- **Gradual rollout** of new versions
-- **Version comparison** and analysis
-
-### Updates and Maintenance
-- **Automatic updates** for security patches
-- **Manual updates** for new model versions
-- **Rollback procedures** for failed updates
-- **Maintenance windows** and scheduling
-
-## Best Practices
-
-### Deployment
-- **Test models** in staging before production
-- **Start with smaller models** for initial deployment
-- **Monitor resource usage** during deployment
-- **Document model configurations** for team members
-
-### Management
-- **Regular health checks** and monitoring
-- **Backup model configurations** and settings
-- **Plan for model updates** and maintenance
-- **Monitor costs** and resource usage
-
-### Security
-- **Validate model sources** before deployment
-- **Scan models** for security vulnerabilities
-- **Control access** to model management features
-- **Audit model changes** and deployments
-
----
-
-**Complete documentation coming soon** - Detailed guides for model deployment, configuration, and management are being developed.
+### Advanced Configuration
+- **Container Execution**: Define container command and arguments
+- **Environment Variables**: Set environment variables (YAML)
+- **K8s Resource Limits**: Configure Kubernetes resource limits (YAML)
+- **K8s Scheduling**: Control pod placement with selectors and affinity
+- **K8s Storage**: Configure and mount storage volumes
+- **K8s Health Probes**: Configure liveness and readiness probes

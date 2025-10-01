@@ -1,185 +1,58 @@
 # Security & Monitoring
 
-Comprehensive security monitoring, audit logging, and alerting capabilities for your Prediction Guard platform with OpenTelemetry integration.
+Track admin panel changes and integrate Prediction Guard's built-in security features with your monitoring dashboards.
 
 ## Audit Logs
 
-### Activity Tracking
+### Admin Panel Activity Tracking
 
-Prediction Guard maintains detailed audit logs of all activities across your platform:
+Prediction Guard tracks all changes made in the admin panel:
 
 - **User Actions**: Login attempts, configuration changes, model deployments
 - **API Usage**: All API calls, requests, and responses
 - **System Events**: Cluster changes, resource allocation, security events
 - **Model Activity**: Model deployments, updates, and usage patterns
-- **Security Events**: Failed authentications, suspicious activities, policy violations
 
-### Audit Log Features
-
-#### Comprehensive Logging
-- **Timestamp**: Precise timing of all events
+### Log Information
+- **Timestamp**: When the action occurred
 - **User Identity**: Who performed the action
-- **Action Details**: What was done and how
+- **Action Details**: What was changed
 - **Resource Information**: Which resources were affected
 - **Outcome**: Success or failure status
-- **IP Address**: Source of the action
-- **Session Information**: Related session data
 
-#### Log Categories
-- **Authentication**: Login/logout events, failed attempts
-- **Authorization**: Permission checks, access denials
-- **Data Access**: Model usage, data retrieval
-- **Configuration**: System and model configuration changes
-- **Security**: Security policy violations, threat detection
-- **Performance**: System performance and resource usage
+## Built-in Security Features
 
-## Security Alerts
+### Prediction Guard Guardrails
 
-### Real-time Monitoring
+Prediction Guard includes built-in security scanning and protection:
 
-Prediction Guard provides real-time security monitoring with immediate alerting:
+- **PII Detection**: Automatically detects and removes personally identifiable information
+- **Prompt Injection Protection**: Prevents malicious prompt injection attacks
+- **Toxicity Checks**: Identifies and filters harmful or toxic content
+- **Bias Detection**: Monitors for potential bias in model outputs
+- **Content Moderation**: Filters inappropriate or harmful content
 
-#### Threat Detection
-- **Suspicious Activity**: Unusual patterns in API usage or access
-- **Brute Force Attacks**: Multiple failed authentication attempts
-- **Data Exfiltration**: Unusual data access patterns
-- **Model Abuse**: Attempts to exploit model vulnerabilities
-- **System Intrusion**: Unauthorized system access attempts
+### Security Alerts
 
-#### Security Policy Violations
-- **Input Filtering**: Detection of malicious or inappropriate inputs
-- **Output Monitoring**: Identification of harmful or sensitive outputs
-- **Rate Limiting**: Excessive API usage or abuse
-- **Access Control**: Unauthorized access attempts
-- **Data Privacy**: Potential PII exposure or data leaks
+- **Real-time Monitoring**: Immediate alerts for security events
+- **Policy Violations**: Alerts when security policies are breached
+- **Unusual Activity**: Detection of suspicious patterns
+- **Failed Authentication**: Multiple failed login attempts
 
-### Alert Types
+## Dashboard Integration
 
-#### Critical Alerts
-- **Security Breaches**: Confirmed security incidents
-- **System Compromise**: Evidence of system intrusion
-- **Data Leaks**: Confirmed data exposure
-- **Model Exploitation**: Successful model attacks
+### OpenTelemetry Integration
 
-#### Warning Alerts
-- **Suspicious Activity**: Potential security threats
-- **Policy Violations**: Security policy breaches
-- **Unusual Patterns**: Anomalous behavior detection
-- **Resource Abuse**: Excessive resource usage
+Connect Prediction Guard to your existing monitoring stack:
 
-#### Information Alerts
-- **System Events**: Normal system activities
-- **Configuration Changes**: System modifications
-- **User Activities**: Standard user operations
-- **Performance Metrics**: System performance data
+- **Metrics Export**: Send metrics to Prometheus, Grafana, or other tools
+- **Log Aggregation**: Forward logs to ELK stack or similar
+- **Custom Dashboards**: Create dashboards in your preferred tool
+- **Alert Integration**: Connect to your existing alerting systems
 
-## OpenTelemetry Integration
+### Monitoring Setup
 
-### Observability Stack
-
-Prediction Guard integrates with OpenTelemetry for comprehensive observability:
-
-#### Metrics Collection
-- **System Metrics**: CPU, memory, disk, network usage
-- **Application Metrics**: API response times, error rates, throughput
-- **Business Metrics**: Model usage, user activity, cost tracking
-- **Custom Metrics**: User-defined metrics and KPIs
-
-#### Distributed Tracing
-- **Request Tracing**: End-to-end request tracking
-- **Service Dependencies**: Inter-service communication mapping
-- **Performance Analysis**: Bottleneck identification
-- **Error Propagation**: Error tracking across services
-
-#### Log Aggregation
-- **Centralized Logging**: All logs in one place
-- **Log Correlation**: Related events across services
-- **Search and Analysis**: Powerful log querying capabilities
-- **Retention Management**: Configurable log retention policies
-
-### Integration Examples
-
-#### Prometheus Integration
-```yaml
-# prometheus.yml
-scrape_configs:
-  - job_name: 'prediction-guard'
-    static_configs:
-      - targets: ['prediction-guard:8080']
-    metrics_path: '/metrics'
-    scrape_interval: 15s
-```
-
-#### Grafana Dashboards
-- **System Overview**: High-level system health
-- **API Performance**: Request rates, response times, errors
-- **Security Dashboard**: Security events and threats
-- **Model Usage**: Model performance and utilization
-- **Cost Tracking**: Resource usage and costs
-
-#### ELK Stack Integration
-```yaml
-# logstash.conf
-input {
-  beats {
-    port => 5044
-  }
-}
-
-filter {
-  if [fields][service] == "prediction-guard" {
-    grok {
-      match => { "message" => "%{TIMESTAMP_ISO8601:timestamp} %{WORD:level} %{GREEDYDATA:message}" }
-    }
-  }
-}
-
-output {
-  elasticsearch {
-    hosts => ["elasticsearch:9200"]
-    index => "prediction-guard-logs-%{+YYYY.MM.dd}"
-  }
-}
-```
-
-## Monitoring Best Practices
-
-### Security Monitoring
-- **Real-time Alerts**: Immediate notification of security events
-- **Baseline Establishment**: Normal behavior patterns
-- **Anomaly Detection**: Unusual activity identification
-- **Threat Intelligence**: Integration with threat feeds
-- **Incident Response**: Automated response procedures
-
-### Performance Monitoring
-- **SLA Tracking**: Service level agreement monitoring
-- **Capacity Planning**: Resource usage trends and forecasting
-- **Bottleneck Identification**: Performance issue detection
-- **Optimization**: Continuous performance improvement
-
-### Compliance Monitoring
-- **Audit Trail**: Complete activity documentation
-- **Compliance Reporting**: Automated compliance reports
-- **Data Governance**: Data handling and privacy monitoring
-- **Regulatory Requirements**: Industry-specific compliance
-
-## Alert Configuration
-
-### Alert Rules
-- **Threshold-based**: Alerts when metrics exceed thresholds
-- **Pattern-based**: Alerts based on behavior patterns
-- **Anomaly-based**: Alerts for unusual activity
-- **Composite**: Complex alert conditions
-
-### Notification Channels
-- **Email**: Email notifications for alerts
-- **Slack**: Slack integration for team notifications
-- **PagerDuty**: Incident management integration
-- **Webhooks**: Custom webhook notifications
-- **SMS**: Critical alert notifications
-
-### Alert Management
-- **Alert Routing**: Direct alerts to appropriate teams
-- **Escalation**: Automatic escalation procedures
-- **Suppression**: Alert suppression during maintenance
-- **Acknowledgment**: Alert acknowledgment and resolution
+1. **Configure OpenTelemetry** in your cluster settings
+2. **Set up metrics collection** for your monitoring stack
+3. **Create dashboards** to visualize Prediction Guard metrics
+4. **Configure alerts** for security events and performance issues

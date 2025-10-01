@@ -1,0 +1,69 @@
+# Zero Dependency Binary
+
+Deploy Prediction Guard using a single-binary installer on a single-node system.
+
+## Minimum Requirements
+
+These are the minimum recommended specifications for a Prediction Guard single-node cluster. Please keep in mind that actual hardware requirements may vary based on the models you choose to deploy. 
+
+- 32-cores CPU
+- 256 GB RAM
+- Minimum of 100 GB of free disk space
+- 1 NVIDIA GPU of a supported type: (L4, L40S, A10, A100, H100/200, B100/200) with installed drivers on host
+- Ubuntu or Debian Linux (LTS or newer)
+
+## Create Your Cluster in the Prediction Guard Admin
+
+1. Navigate and login to admin.predictionguard.com
+2. View the *Clusters* page and click on **+ Create Cluster** in the top-right.
+3. Provide a Cluster Name
+4. If you intend to use any models that are restricted by an API token on HuggingFace, be sure to ensure your HuggingFace API key.
+5. Click **Create Cluster.** 
+
+## Installation Instructions
+
+1. Download the installation package using the command below or from the link provided by your Prediction Guard account representative.
+
+```
+curl -f "https://storage.googleapis.com/temp_public_pg/prediction-guard-platform.tgz?alt=media"
+```
+
+1. Untar the installation file:
+
+```bash
+tar xvzf prediction-guard-platform.tgz
+```
+
+1. Run the installer, which will run pre-flight checks to ensure compatible environment:
+
+```bash
+sudo ./prediction-guard-platform install --license license.yaml
+```
+
+Provide a password for the local admin console. This is rarely used, but can be helpful for updating certain fields for offline clusters.
+
+The installer will run through a series of pre-flight checks to ensure compatibility. If any of the pre-flight checks fail, a message will be displayed regarding which checks are failing. Either attempt to address and resolve the issue (some are related to available disk space, performance, etc.) or reach out to your Prediction Guard account representative for assistance.
+
+Once the installer has completed, proceed to step 4.
+
+1. Shell into the cluster to run the bootstrap command:
+
+```bash
+sudo ./prediction-guard-platform shell
+```
+
+1. Retrieve the bootstrap command from [admin.predictionguard.com](http://admin.predictionguard.com) by navigating to Clusters, then clicking the **Deploy** button in the row of the cluster you wish to deploy. Click the **Copy** button above the deploy command and proceed to step 6.
+
+2. Paste the bootstrap command into the terminal where you are shelled into the cluster. This will install your authentication token and begin the initial bootstrapping of Prediction Guard services. After a few minutes, feel free to check the installation by checking the running pods in the `predictionguard` namespace:
+
+```bash
+kubectl get pods -n predictionguard
+```
+
+You should see running pods in the namespace, including `pg-inside` indicating that the cluster has been successfully installed. The cluster should also show as **Healthy** in the Prediction Guard admin.
+
+1. Deploy any desired AI models from the Models page in the Prediction Guard admin. Pay attention to any settings around number of AI accelerators, CPU and memory allocation to the model and ensure it fits within your VM/machine.
+
+## Configuring Ingress and Reverse Proxy
+
+Prediction Guard comes preconfigured for NGINX and a default Ingress which can be enabled on the cluster within the **Edit** section of the Clusters page. Here you can configure the desired domain names and have NGINX deploy into the `predictionguard` namespace with preconfigured settings for the Prediction Guard API. Then, simply ensure that your DNS entry is routable to the ingress IP on your VM/machine.

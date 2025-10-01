@@ -32,20 +32,18 @@ navigation:
             path: ./docs/pages/security.mdx
   - tab: deployment
     layout:
-      - section: Overview
+      - section: Getting Started
         contents:
-          - page: Getting Started
+          - page: Quick Start
             path: ./docs/pages/deployment/overview.mdx
-          - page: Architecture
-            path: ./docs/pages/deployment/architecture.mdx
       - section: Installation
         contents:
           - section: On-Premises
             contents:
-              - page: Docker
-                path: ./docs/pages/deployment/docker.mdx
               - page: Kubernetes
                 path: ./docs/pages/deployment/kubernetes.mdx
+              - page: Zero Dependency Binary
+                path: ./docs/pages/deployment/binary.mdx
           - section: Cloud
             contents:
               - page: AWS
@@ -70,10 +68,6 @@ navigation:
             path: ./docs/pages/deployment/api-keys.mdx
           - page: Security & Monitoring
             path: ./docs/pages/deployment/security-monitoring.mdx
-          - page: Model Configuration
-            path: ./docs/pages/deployment/model-config.mdx
-          - page: Custom Models
-            path: ./docs/pages/deployment/custom-models.mdx
   - tab: development
     layout:
       - section: Getting Started
