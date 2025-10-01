@@ -2,362 +2,56 @@
 
 Deploy Prediction Guard in completely isolated environments with no external internet access.
 
-## Overview
-
-Air gapped deployments are designed for environments with strict security requirements where no external network access is allowed. This includes:
-
-- **Government and military** installations
-- **Financial institutions** with strict compliance requirements
-- **Healthcare organizations** with HIPAA requirements
-- **Critical infrastructure** with security mandates
-
 ## Prerequisites
 
-### System Requirements
 - **Linux server** (Ubuntu 20.04+ or RHEL 8+)
 - **Minimum 32GB RAM** (64GB recommended for large models)
 - **500GB+ storage** (1TB+ recommended)
 - **Docker** pre-installed or installation package
 - **No internet access** required after initial setup
 
-### Offline Packages
-- **Prediction Guard installation package**
-- **Model packages** (pre-downloaded from Hugging Face)
-- **Docker images** (exported and imported)
-- **Dependencies** (Python packages, system libraries)
+## Create Your Cluster in the Prediction Guard Admin
 
-## Installation Process
+1. Navigate and login to admin.predictionguard.com
+2. View the *Clusters* page and click on **+ Create Cluster** in the top-right.
+3. Provide a Cluster Name
+4. Enable **Air-Gapped Cluster** option
+5. Click **Create Cluster.**
 
-### 1. Create Cluster in Admin Panel
+## Installation Instructions
 
-On a machine with internet access, create your air-gapped cluster:
-
-1. Navigate to [admin.predictionguard.com](https://admin.predictionguard.com)
-2. Click **"Create Cluster"** from the dashboard
-3. Select **"Air-Gapped"** mode for offline deployment
-4. Configure your cluster settings:
-   - **Cluster Name**: Choose a unique name (e.g., `air-gapped-production`)
-   - **Air-Gapped Cluster**: Enable for offline deployment
-   - **Image Registry**: Use local registry or pre-downloaded images
-   - **Hugging Face API Token**: Not required for air-gapped (models pre-downloaded)
-   - **Enable Ingress**: Configure for internal network access
-5. Click **"Create Cluster"** to generate your cluster configuration
-
-### 2. Prepare Installation Media
-
-On a machine with internet access:
+1. Download the air-gapped installation package using the command below or from the link provided by your Prediction Guard account representative.
 
 ```bash
-# Download air-gapped installation package
 curl -f "https://storage.googleapis.com/temp_public_pg/prediction-guard-air-gapped.tgz?alt=media"
-
-# Download model packages
-./download-models.sh --offline-package
-
-# Export Docker images
-docker save predictionguard/api:latest > predictionguard-api.tar
-docker save predictionguard/admin:latest > predictionguard-admin.tar
-docker save postgres:15 > postgres.tar
-docker save redis:7 > redis.tar
 ```
 
-### 3. Transfer to Air Gapped Environment
-
+2. Untar the installation file:
 ```bash
-# Copy files to air gapped system
-scp -r prediction-guard-air-gapped/ user@air-gapped-server:/tmp/
-scp -r models/ user@air-gapped-server:/opt/predictionguard/
-scp *.tar user@air-gapped-server:/tmp/
+tar xvzf prediction-guard-air-gapped.tgz
 ```
 
-### 4. Install Prediction Guard
-
+3. Run the installer, which will run pre-flight checks to ensure compatible environment:
 ```bash
-# Extract installation package
-cd /tmp
-tar -xzf prediction-guard-air-gapped.tgz
-cd prediction-guard-air-gapped
-
-# Run the installer with air-gapped configuration
-sudo ./prediction-guard-air-gapped install --license license.yaml --offline
+sudo ./prediction-guard-air-gapped install --license license.yaml
 ```
 
-### 5. Import Docker Images
+Provide a password for the local admin console. This is rarely used, but can be helpful for updating certain fields for offline clusters. The installer will run through a series of pre-flight checks to ensure compatibility. If any of the pre-flight checks fail, a message will be displayed regarding which checks are failing. Either attempt to address and resolve the issue (some are related to available disk space, performance, etc.) or reach out to your Prediction Guard account representative for assistance. Once the installer has completed, proceed to step 4.
 
+4. Shell into the cluster to run the bootstrap command:
 ```bash
-# Import Docker images
-docker load < /tmp/predictionguard-api.tar
-docker load < /tmp/predictionguard-admin.tar
-docker load < /tmp/postgres.tar
-docker load < /tmp/redis.tar
-
-# Verify images
-docker images | grep predictionguard
+sudo ./prediction-guard-air-gapped shell
 ```
 
-### 6. Bootstrap Cluster
+5. Retrieve the bootstrap command from [admin.predictionguard.com](https://admin.predictionguard.com) by navigating to Clusters, then clicking the **Deploy** button in the row of the cluster you wish to deploy. Click the **Copy** button above the deploy command and proceed to step 6.
 
-Retrieve the bootstrap command from [admin.predictionguard.com](https://admin.predictionguard.com) by navigating to Clusters, then clicking the **Deploy** button for your air-gapped cluster. Run the bootstrap command:
-
-```bash
-# Run the bootstrap command in your air-gapped environment
-sudo ./prediction-guard-air-gapped bootstrap --offline
-```
-
-### 7. Verify Installation
+6. Paste the bootstrap command into the terminal where you are shelled into the cluster. This will install your authentication token and begin the initial bootstrapping of Prediction Guard services. After a few minutes, feel free to check the installation by checking the running services:
 
 ```bash
-# Check running services
 docker ps | grep predictionguard
-
-# Verify cluster health
-./health-check.sh --offline
-
-# Check admin panel access
-curl -k https://localhost:8443/health
 ```
 
-## Configuration
+You should see running services, including `pg-inside` indicating that the cluster has been successfully installed. The cluster should also show as **Healthy** in the Prediction Guard admin.
 
-### Offline Configuration
+7. Deploy any desired AI models from the Models page in the Prediction Guard admin. Pay attention to any settings around number of AI accelerators, CPU and memory allocation to the model and ensure it fits within your air-gapped environment.
 
-```bash
-# Edit configuration for air gapped environment
-nano /opt/predictionguard/config/air-gapped.env
-```
-
-```bash
-# Air gapped specific settings
-OFFLINE_MODE=true
-NO_EXTERNAL_ACCESS=true
-MODEL_SOURCE=local
-UPDATE_SOURCE=manual
-BACKUP_LOCATION=/opt/backups
-```
-
-### Network Configuration
-
-```bash
-# Configure internal network
-sudo nano /etc/hosts
-```
-
-```
-# Add internal hostnames
-127.0.0.1 predictionguard.local
-127.0.0.1 admin.predictionguard.local
-127.0.0.1 api.predictionguard.local
-```
-
-### SSL Certificates
-
-```bash
-# Generate self-signed certificates
-openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
-
-# Copy certificates
-sudo cp cert.pem /opt/predictionguard/ssl/
-sudo cp key.pem /opt/predictionguard/ssl/
-```
-
-## Model Management
-
-### Pre-installed Models
-
-The air gapped package includes commonly used models:
-
-- **LLaMA 2 7B Chat** - General purpose conversation
-- **Mistral 7B Instruct** - Instruction following
-- **Code Llama 7B** - Code generation
-- **Embedding models** - Text embeddings
-
-### Adding Custom Models
-
-1. **Prepare model files** on external system
-2. **Transfer via secure media** (USB, DVD, etc.)
-3. **Import into model registry** via admin panel
-4. **Deploy and test** model functionality
-
-### Model Updates
-
-```bash
-# Manual model updates
-./update-models.sh --offline --model-package /path/to/new-models.tar.gz
-```
-
-## Security Configuration
-
-### Access Control
-
-```bash
-# Configure local authentication
-AUTH_METHOD=local
-ADMIN_USERS=admin1,admin2
-USER_DATABASE=/opt/predictionguard/data/users.db
-```
-
-### Network Security
-
-```bash
-# Disable external network interfaces
-sudo ip link set eth0 down
-
-# Configure firewall for internal only
-sudo ufw default deny incoming
-sudo ufw default allow outgoing
-sudo ufw allow from 127.0.0.1
-sudo ufw enable
-```
-
-### Data Encryption
-
-```bash
-# Enable full disk encryption
-sudo cryptsetup luksFormat /dev/sda2
-sudo cryptsetup luksOpen /dev/sda2 encrypted
-
-# Encrypt model storage
-sudo cryptsetup luksFormat /dev/sdb1
-sudo cryptsetup luksOpen /dev/sdb1 models-encrypted
-```
-
-## Monitoring and Logging
-
-### Local Monitoring
-
-```bash
-# Start monitoring services
-docker-compose -f monitoring.yml up -d
-
-# Access monitoring dashboard
-firefox http://localhost:3000
-```
-
-### Log Management
-
-```bash
-# Configure local log rotation
-sudo nano /etc/logrotate.d/predictionguard
-```
-
-```
-/opt/predictionguard/logs/*.log {
-    daily
-    rotate 30
-    compress
-    delaycompress
-    missingok
-    notifempty
-    create 644 predictionguard predictionguard
-}
-```
-
-### Health Checks
-
-```bash
-# Automated health checks
-./health-check.sh --offline
-
-# Manual system checks
-./system-check.sh --full
-```
-
-## Backup and Recovery
-
-### Local Backup
-
-```bash
-# Create full system backup
-./backup.sh --full --destination /opt/backups/$(date +%Y%m%d)
-
-# Backup specific components
-./backup.sh --models --destination /opt/backups/models/
-./backup.sh --database --destination /opt/backups/db/
-./backup.sh --config --destination /opt/backups/config/
-```
-
-### Recovery Procedures
-
-```bash
-# Full system recovery
-./restore.sh --backup /opt/backups/20240101 --full
-
-# Component recovery
-./restore.sh --backup /opt/backups/models/ --models-only
-```
-
-## Updates and Maintenance
-
-### Manual Updates
-
-```bash
-# Check for available updates
-./check-updates.sh --offline
-
-# Apply updates
-./apply-updates.sh --package /path/to/update.tar.gz
-```
-
-### Maintenance Windows
-
-```bash
-# Schedule maintenance
-./maintenance.sh --schedule "2024-01-15 02:00" --duration "2h"
-
-# Emergency maintenance
-./maintenance.sh --emergency --reason "security-patch"
-```
-
-## Compliance and Auditing
-
-### Audit Logging
-
-```bash
-# Enable comprehensive audit logging
-AUDIT_LEVEL=full
-AUDIT_DESTINATION=/opt/predictionguard/audit/
-AUDIT_RETENTION=7years
-```
-
-### Compliance Reports
-
-```bash
-# Generate compliance reports
-./compliance-report.sh --format pdf --output /opt/reports/
-
-# Security assessment
-./security-assessment.sh --full --output /opt/reports/security/
-```
-
-## Troubleshooting
-
-### Common Issues
-
-#### Service Startup
-```bash
-# Check service status
-systemctl status predictionguard
-
-# View service logs
-journalctl -u predictionguard -f
-```
-
-#### Model Loading
-```bash
-# Check model status
-./model-status.sh --all
-
-# Reload models
-./reload-models.sh --force
-```
-
-#### Network Issues
-```bash
-# Test internal connectivity
-ping predictionguard.local
-curl -k https://api.predictionguard.local/health
-```
-
----
-
-**Complete documentation coming soon** - Detailed installation guides, security hardening procedures, and compliance documentation are being developed.
