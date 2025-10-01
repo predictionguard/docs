@@ -58,13 +58,18 @@ from getpass import getpass
 
 ## Authenticate to Prediction Guard API
 
-Now setup your API Key, and create the client.
+Now setup your API Key, URL, and create the client.
 
 ```python copy
-# Set your Prediction Guard token as an environmental variable.
+# Set your Prediction Guard API key and URL as environmental variables.
 os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+os.environ["PREDICTIONGUARD_URL"] = "<pg url>"
 
-client = PredictionGuard()
+# You can also set them when initializing the client.
+client = PredictionGuard(
+    api_key="<Your PG API Key>",
+    url="<Your PG API URL>"
+)
 ```
 
 ## Create a SQLite Database
