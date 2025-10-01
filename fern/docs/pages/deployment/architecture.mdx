@@ -1,0 +1,110 @@
+# Architecture Overview
+
+This page provides an overview of the Prediction Guard self-hosted architecture and its components.
+
+## System Architecture
+
+Prediction Guard's self-hosted architecture is designed for flexibility, scalability, and security.
+
+### Core Components
+
+#### Admin Panel
+- **Web-based interface** for managing your deployment
+- **Model configuration** and deployment
+- **API key management** and access control
+- **Monitoring dashboard** with usage analytics
+
+#### Model Management System
+- **Dynamic model deployment** - deploy any model from Hugging Face
+- **Model versioning** and updates
+- **Resource allocation** and scaling
+- **Model health monitoring**
+
+#### API Gateway
+- **RESTful API** for all Prediction Guard services
+- **Authentication** and authorization
+- **Rate limiting** and usage tracking
+- **Load balancing** across model instances
+
+#### Security Layer
+- **Input filtering** and validation
+- **Output safeguarding** and content filtering
+- **PII detection** and redaction
+- **Injection prevention**
+
+### Deployment Patterns
+
+#### Single Instance
+- **Simple deployment** for development or small teams
+- **Docker container** with all services
+- **Local model storage** and management
+
+#### Distributed Deployment
+- **Microservices architecture** for production
+- **Separate containers** for each component
+- **Shared storage** and database
+- **Load balancing** and auto-scaling
+
+#### Air-Gapped Deployment
+- **Offline installation** packages
+- **Self-contained** model repositories
+- **No external dependencies** required
+- **Secure update mechanisms**
+
+## Security Considerations
+
+### Network Security
+- **Internal communication** over secure channels
+- **API authentication** with JWT tokens
+- **Network segmentation** for sensitive components
+- **Firewall configuration** guidelines
+
+### Data Security
+- **Encryption at rest** for model storage
+- **Encryption in transit** for API communication
+- **Secure key management** for API keys
+- **Audit logging** for all operations
+
+### Model Security
+- **Model validation** and integrity checks
+- **Sandboxed execution** environments
+- **Resource limits** and isolation
+- **Model access controls**
+
+## Scalability
+
+### Horizontal Scaling
+- **Multiple API instances** behind load balancer
+- **Model instance scaling** based on demand
+- **Database clustering** for high availability
+- **Distributed storage** for large models
+
+### Vertical Scaling
+- **Resource allocation** per model
+- **GPU memory management** for large models
+- **CPU optimization** for inference workloads
+- **Storage optimization** for model caching
+
+## Monitoring & Observability
+
+### Metrics Collection
+- **API usage statistics** and performance
+- **Model inference metrics** and latency
+- **Resource utilization** monitoring
+- **Error rates** and failure tracking
+
+### Logging
+- **Structured logging** across all components
+- **Audit trails** for security events
+- **Debug logging** for troubleshooting
+- **Centralized log aggregation**
+
+### Alerting
+- **Performance threshold** alerts
+- **Error rate** monitoring
+- **Resource exhaustion** warnings
+- **Security event** notifications
+
+---
+
+**Complete documentation coming soon** - We're working on detailed architecture diagrams and implementation guides for each deployment pattern.
