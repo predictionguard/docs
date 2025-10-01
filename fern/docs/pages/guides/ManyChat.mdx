@@ -148,7 +148,7 @@ exports.handler = async (event) => {
   const apiData = JSON.stringify({ model: "{{TEXT_MODEL}}", messages });
 
   const options = {
-    hostname: "api.predictionguard.com",
+    hostname: "<Your PG API URL>",
     path: "/chat/completions",
     method: "POST",
     headers: {

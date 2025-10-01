@@ -21,10 +21,16 @@ PredictionGuard API token is correctly set up in your environment variables.
 ```python copy
 from predictionguard import PredictionGuard
 
-# Set your Prediction Guard token as an environmental variable.
-os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
 
-client = PredictionGuard()
+# Set your Prediction Guard API key and URL as environmental variables.
+os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+os.environ["PREDICTIONGUARD_URL"] = "<pg url>"
+
+# You can also set them when initializing the client.
+client = PredictionGuard(
+    api_key="<Your PG API Key>",
+    url="<Your PG API URL>"
+)
 ```
 
 2. **Import Necessary Libraries**: Import PredictionGuard, Pydantic for data

@@ -19,11 +19,13 @@ import os
 
 from predictionguard import PredictionGuard
 
-# You can set you Prediction Guard API Key as an env variable named "PREDICTIONGUARD_API_KEY",
+
+# You can set you Prediction Guard API Key and URL as env variables named "PREDICTIONGUARD_API_KEY" and "PREDICTIONGUARD_URL"
 # or when creating the client object
 
 client = PredictionGuard(
-    api_key="<api key>"
+    api_key="<api key>",
+    url="<Your PG API URL>"
 )
 
 messages = [
@@ -70,7 +72,7 @@ You can find the SDK docs and package information using this link.
 import * as pg from "predictionguard";
 
 const client = new pg.Client(
-  "https://api.predictionguard.com",
+  "<Your PG API URL>",
   process.env.PREDICTIONGUARD_API_KEY
 );
 
@@ -184,7 +186,7 @@ func run() error {
 
 	// -------------------------------------------------------------------------
 
-	const url = "https://api.predictionguard.com/chat/completions"
+	const url = "<Your PG API URL>/chat/completions"
 
 	var resp client.Chat
 	if err := cln.Do(ctx, http.MethodPost, url, d, &resp); err != nil {

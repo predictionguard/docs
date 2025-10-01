@@ -14,10 +14,15 @@ import json
 
 from predictionguard import PredictionGuard
 
-# Set your Prediction Guard token as an environmental variable.
+# Set your Prediction Guard API key and URL as environmental variables.
 os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+os.environ["PREDICTIONGUARD_URL"] = "<pg url>"
 
-client = PredictionGuard()
+# You can also set them when initializing the client.
+client = PredictionGuard(
+    api_key="<Your PG API Key>",
+    url="<Your PG API URL>"
+)
 
 response = client.embeddings.create(
   model="{{TEXT_EMBED}}",
@@ -44,10 +49,15 @@ import json
 
 from predictionguard import PredictionGuard
 
-# Set your Prediction Guard token as an environmental variable.
+# Set your Prediction Guard API key and URL as environmental variables.
 os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+os.environ["PREDICTIONGUARD_URL"] = "<pg url>"
 
-client = PredictionGuard()
+# You can also set them when initializing the client.
+client = PredictionGuard(
+    api_key="<Your PG API Key>",
+    url="<Your PG API URL>"
+)
 
 response = client.embeddings.create(
   model="{{IMAGE_EMBED}}",
@@ -77,10 +87,15 @@ import json
 
 from predictionguard import PredictionGuard
 
-# Set your Prediction Guard token as an environmental variable.
+# Set your Prediction Guard API key and URL as environmental variables.
 os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+os.environ["PREDICTIONGUARD_URL"] = "<pg url>"
 
-client = PredictionGuard()
+# You can also set them when initializing the client.
+client = PredictionGuard(
+    api_key="<Your PG API Key>",
+    url="<Your PG API URL>"
+)
 
 response = client.embeddings.create(
   model="{{IMAGE_EMBED}}",
@@ -104,11 +119,21 @@ Once we have computed the embeddings, we can use them to calculate the similarit
 ```Python
 import os
 import json
+
 from predictionguard import PredictionGuard
 import torch
 import numpy
+
+
+# Set your Prediction Guard API key and URL as environmental variables.
 os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
-client = PredictionGuard()
+os.environ["PREDICTIONGUARD_URL"] = "<pg url>"
+
+# You can also set them when initializing the client.
+client = PredictionGuard(
+    api_key="<Your PG API Key>",
+    url="<Your PG API URL>"
+)
 
 response1 = client.embeddings.create(
   model="{{IMAGE_EMBED}}",

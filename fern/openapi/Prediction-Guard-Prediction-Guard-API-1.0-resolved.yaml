@@ -6,7 +6,7 @@ info:
   version: "1.2"
 
 servers:
-  - url: https://api.predictionguard.com
+  - url: https://{your-pg.api-domain}.com
 
 paths:
   "/":

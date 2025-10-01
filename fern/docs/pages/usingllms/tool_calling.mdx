@@ -87,7 +87,7 @@ Write clear, specific descriptions for both the tool and its parameters. This he
 Include your tool definitions in the API request:
 
 ```bash
-curl -X POST https://api.predictionguard.com/chat/completions \
+curl -X POST <Your PG API URL>/chat/completions \
   -H "Authorization: Bearer $PREDICTIONGUARD_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{

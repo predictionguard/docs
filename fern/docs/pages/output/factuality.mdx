@@ -21,10 +21,15 @@ import json
 from predictionguard import PredictionGuard
 from langchain.prompts import PromptTemplate
  
-# Set your Prediction Guard token as an environmental variable.
+# Set your Prediction Guard API key and URL as environmental variables.
 os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+os.environ["PREDICTIONGUARD_URL"] = "<pg url>"
 
-client = PredictionGuard()
+# You can also set them when initializing the client.
+client = PredictionGuard(
+    api_key="<Your PG API Key>",
+    url="<Your PG API URL>"
+)
 
 template = """### Instruction:
 Read the context below and respond with an answer to the question.
