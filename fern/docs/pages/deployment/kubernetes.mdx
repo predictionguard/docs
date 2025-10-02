@@ -23,39 +23,9 @@ These are the minimum recommended specifications for a Prediction Guard multi-no
 
 ## Installation Instructions
 
-1. Download the Kubernetes installation package using the command below or from the link provided by your Prediction Guard account representative.
+1. Copy the Kubernetes installation command from your Prediction Guard Admin portal using the Deploy button on the Clusters page.
 
-```
-curl -f "https://storage.googleapis.com/temp_public_pg/prediction-guard-kubernetes.tgz?alt=media"
-```
-
-1. Untar the installation file:
-
-```bash
-tar xvzf prediction-guard-kubernetes.tgz
-```
-
-1. Run the Kubernetes installer, which will run pre-flight checks to ensure compatible environment:
-
-```bash
-sudo ./prediction-guard-kubernetes install --license license.yaml
-```
-
-Provide a password for the local admin console. This is rarely used, but can be helpful for updating certain fields for offline clusters.
-
-The installer will run through a series of pre-flight checks to ensure compatibility with your Kubernetes cluster. If any of the pre-flight checks fail, a message will be displayed regarding which checks are failing. Either attempt to address and resolve the issue (some are related to available disk space, performance, etc.) or reach out to your Prediction Guard account representative for assistance.
-
-Once the installer has completed, proceed to step 4.
-
-1. Apply the Kubernetes manifests to your cluster:
-
-```bash
-kubectl apply -f prediction-guard-manifests/
-```
-
-1. Retrieve the bootstrap command from [admin.predictionguard.com](http://admin.predictionguard.com) by navigating to Clusters, then clicking the **Deploy** button in the row of the cluster you wish to deploy. Click the **Copy** button above the deploy command and proceed to step 6.
-
-2. Run the bootstrap command in your Kubernetes cluster. This will install your authentication token and begin the initial bootstrapping of Prediction Guard services. After a few minutes, feel free to check the installation by checking the running pods in the `predictionguard` namespace:
+2. Paste and run the command on a machine that can connect to your Kubernetes cluster API via `kubectl`.This will install your authentication token and begin the initial bootstrapping of Prediction Guard services. After a few minutes, feel free to check the installation by checking the running pods in the `predictionguard` namespace:
 
 ```bash
 kubectl get pods -n predictionguard
@@ -63,7 +33,7 @@ kubectl get pods -n predictionguard
 
 You should see running pods in the namespace, including `pg-inside` indicating that the cluster has been successfully installed. The cluster should also show as **Healthy** in the Prediction Guard admin.
 
-1. Deploy any desired AI models from the Models page in the Prediction Guard admin. Pay attention to any settings around number of AI accelerators, CPU and memory allocation to the model and ensure it fits within your Kubernetes cluster resources.
+3. Deploy any desired AI models from the Models page in the Prediction Guard admin. Pay attention to any settings around number of AI accelerators, CPU and memory allocation to the model and ensure it fits within your Kubernetes cluster resources.
 
 ## Configuring Ingress and Reverse Proxy
 

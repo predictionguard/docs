@@ -56,44 +56,21 @@ Navigate to [admin.predictionguard.com](https://admin.predictionguard.com) and l
 - **Load Balancer**: Configure Azure Load Balancer for ingress
 - **Virtual Network**: Specify your VNet and subnet configuration
 
-### 5. Download Prediction Guard Package
+### 5. Copy the Kubernetes installation command from your Prediction Guard Admin portal using the Deploy button on the Clusters page.
 
-Download the Prediction Guard installation package:
-
-```bash
-# Download the Azure-specific package
-curl -f "https://storage.googleapis.com/temp_public_pg/prediction-guard-azure.tgz?alt=media"
-```
-
-### 6. Install Prediction Guard
+### 6. Paste and run the command on a machine that can connect to your Kubernetes cluster API via `kubectl`.This will install your authentication token and begin the initial bootstrapping of Prediction Guard services. After a few minutes, feel free to check the installation by checking the running pods in the `predictionguard` namespace:
 
 ```bash
-# Extract the package
-tar xvzf prediction-guard-azure.tgz
-cd prediction-guard-azure
-
-# Run the installer with Azure-specific configuration
-sudo ./prediction-guard-azure install --license license.yaml --cluster-name predictionguard-cluster
-```
-
-### 7. Bootstrap Cluster
-
-Retrieve the bootstrap command from [admin.predictionguard.com](https://admin.predictionguard.com) by navigating to Clusters, then clicking the **Deploy** button for your cluster. Run the bootstrap command:
-
-```bash
-# Run the bootstrap command in your AKS cluster
-kubectl apply -f prediction-guard-manifests/
-```
-
-### 8. Verify Installation
-
-```bash
-# Check running pods
 kubectl get pods -n predictionguard
-
-# Verify cluster health
-kubectl get nodes
 ```
+
+You should see running pods in the namespace, including `pg-inside` indicating that the cluster has been successfully installed. The cluster should also show as **Healthy** in the Prediction Guard admin.
+
+### 7. Deploy any desired AI models from the Models page in the Prediction Guard admin. Pay attention to any settings around number of AI accelerators, CPU and memory allocation to the model and ensure it fits within your Kubernetes cluster resources.
+
+## Configuring Ingress and Reverse Proxy
+
+Prediction Guard comes preconfigured for NGINX and a default Ingress which can be enabled on the cluster within the **Edit** section of the Clusters page. Here you can configure the desired domain names and have NGINX deploy into the `predictionguard` namespace with preconfigured settings for the Prediction Guard API. Then, simply ensure that your DNS entry is routable to the ingress IP on your Kubernetes cluster or load balancer in Azure.
 
 ## Post-Deployment
 
