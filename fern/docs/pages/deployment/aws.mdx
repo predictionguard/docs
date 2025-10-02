@@ -1,0 +1,97 @@
+# AWS Deployment
+
+Deploy Prediction Guard on Amazon Web Services (AWS) using our managed Kubernetes deployment.
+
+## Prerequisites
+
+- **AWS Account** with appropriate permissions
+- **AWS CLI** configured with your credentials
+- **kubectl** configured for your EKS cluster
+- **Access to admin panel** at admin.predictionguard.com
+
+## Deployment Process
+
+### 1. Create EKS Cluster
+
+First, create an Amazon EKS cluster in your AWS account:
+
+```bash
+# Create EKS cluster
+eksctl create cluster --name predictionguard-cluster --region us-west-2 --nodegroup-name workers --node-type t3.large --nodes 3 --nodes-min 1 --nodes-max 5
+```
+
+### 2. Configure kubectl
+
+```bash
+# Update kubeconfig
+aws eks update-kubeconfig --region us-west-2 --name predictionguard-cluster
+
+# Verify connection
+kubectl get nodes
+```
+
+### 3. Access Admin Panel
+
+Navigate to [admin.predictionguard.com](https://admin.predictionguard.com) and log in with your credentials.
+
+### 4. Create Cluster in Admin Panel
+
+1. Click **"Create Cluster"** from the dashboard
+2. Select **"Advanced"** mode for full configuration
+3. Configure your cluster settings:
+
+#### General Settings
+- **Cluster Name**: Choose a unique name (e.g., `aws-production-cluster`)
+- **Air-Gapped Cluster**: Leave disabled for cloud deployment
+- **Image Registry**: Use AWS ECR or your preferred registry
+- **Hugging Face API Token**: Provide your token for model access
+- **Enable Ingress**: Enable for external API access
+
+#### AWS-Specific Configuration
+- **Node Groups**: Configure your EKS node groups
+- **Storage Classes**: Use EBS CSI driver for persistent volumes
+- **Load Balancer**: Configure ALB or NLB for ingress
+- **VPC**: Specify your VPC and subnet configuration
+
+
+### 5. Copy the Install command
+Copy the Kubernetes installation command from your Prediction Guard Admin portal using the Deploy button on the Clusters page.
+
+### 6. Execute the install
+Paste and run the command on a machine that can connect to your Kubernetes cluster API via `kubectl`.This will install your authentication token and begin the initial bootstrapping of Prediction Guard services. After a few minutes, feel free to check the installation by checking the running pods in the `predictionguard` namespace:
+
+```bash
+kubectl get pods -n predictionguard
+```
+
+You should see running pods in the namespace, including `pg-inside` indicating that the cluster has been successfully installed. The cluster should also show as **Healthy** in the Prediction Guard admin.
+
+### 7. Deploy any desired AI models 
+Select desired models from the Models page in the Prediction Guard admin. Pay attention to any settings around number of AI accelerators, CPU and memory allocation to the model and ensure it fits within your Kubernetes cluster resources.
+
+## Configuring Ingress and Reverse Proxy
+
+Prediction Guard comes preconfigured for NGINX and a default Ingress which can be enabled on the cluster within the **Edit** section of the Clusters page. Here you can configure the desired domain names and have NGINX deploy into the `predictionguard` namespace with preconfigured settings for the Prediction Guard API. Then, simply ensure that your DNS entry is routable to the ingress IP on your Kubernetes cluster or load balancer in AWS.
+
+## Post-Deployment
+
+### Access Your Cluster
+
+Once deployed, your cluster will be accessible through:
+
+- **Admin Panel**: Monitor and manage from admin.predictionguard.com
+- **API Endpoints**: Access your deployed models via the configured endpoints
+- **Kubernetes Dashboard**: Use kubectl to manage cluster resources
+
+### AWS Integration
+
+Your deployment will automatically integrate with:
+
+- **EBS**: Persistent storage for models and data
+- **ALB/NLB**: Load balancing for high availability
+- **CloudWatch**: Monitoring and logging
+- **IAM**: Service account and role management
+
+---
+
+**Need help?** Contact our support team for assistance with your AWS deployment.

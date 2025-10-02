@@ -1,0 +1,58 @@
+# Security & Monitoring
+
+Track admin panel changes and integrate Prediction Guard's built-in security features with your monitoring dashboards.
+
+## Audit Logs
+
+### Admin Panel Activity Tracking
+
+Prediction Guard tracks all changes made in the admin panel:
+
+- **User Actions**: Login attempts, configuration changes, model deployments
+- **API Usage**: All API calls, requests, and responses
+- **System Events**: Cluster changes, resource allocation, security events
+- **Model Activity**: Model deployments, updates, and usage patterns
+
+### Log Information
+- **Timestamp**: When the action occurred
+- **User Identity**: Who performed the action
+- **Action Details**: What was changed
+- **Resource Information**: Which resources were affected
+- **Outcome**: Success or failure status
+
+## Built-in Security Features
+
+### Prediction Guard Guardrails
+
+Prediction Guard includes built-in security scanning and protection:
+
+- **PII Detection**: Automatically detects and removes personally identifiable information
+- **Prompt Injection Protection**: Prevents malicious prompt injection attacks
+- **Toxicity Checks**: Identifies and filters harmful or toxic content
+- **Bias Detection**: Monitors for potential bias in model outputs
+- **Content Moderation**: Filters inappropriate or harmful content
+
+### Security Alerts
+
+- **Real-time Monitoring**: Immediate alerts for security events
+- **Policy Violations**: Alerts when security policies are breached
+- **Unusual Activity**: Detection of suspicious patterns
+- **Failed Authentication**: Multiple failed login attempts
+
+## Dashboard Integration
+
+### OpenTelemetry Integration
+
+Connect Prediction Guard to your existing monitoring stack:
+
+- **Metrics Export**: Send metrics to Prometheus, Grafana, or other tools
+- **Log Aggregation**: Forward logs to ELK stack or similar
+- **Custom Dashboards**: Create dashboards in your preferred tool
+- **Alert Integration**: Connect to your existing alerting systems
+
+### Monitoring Setup
+
+1. **Configure OpenTelemetry** in your cluster settings
+2. **Set up metrics collection** for your monitoring stack
+3. **Create dashboards** to visualize Prediction Guard metrics
+4. **Configure alerts** for security events and performance issues

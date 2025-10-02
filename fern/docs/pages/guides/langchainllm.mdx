@@ -20,9 +20,15 @@ You can provide the name of the Prediction Guard model as an argument when initi
 pgllm = PredictionGuard(model="{{TEXT_MODEL}}")
 ```
 
-You can also provide your api key directly as an argument:
+You can also provide your api key and url directly as an argument, or set them as environment variables:
 ```python
-pgllm = PredictionGuard(model="{{TEXT_MODEL}}", token="<api key>")
+os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+os.environ["PREDICTIONGUARD_URL"] = "<pg url>"
+
+pgllm = PredictionGuard(
+    model="{{TEXT_MODEL}}", 
+    predictionguard_api_key="<Your PG API Key>",
+    predictionguard_url="<Your PG API URL>")
 ```
 
 Finally, you can provide an "output" argument that is used to validate the output of the LLM:

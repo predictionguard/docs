@@ -1,0 +1,164 @@
+## Admin Panel Getting Started
+
+The Prediction Guard admin panel is your central hub for managing your Prediction Guard instance.
+
+## Accessing the Admin Panel
+
+Once your Prediction Guard instance is installed, you can access the admin panel at:
+
+```
+https://your-domain.com/admin
+```
+
+### Initial Setup
+
+1. **Login** with your admin credentials
+2. **Select your cluster** from the dropdown menu
+3. **Navigate to the Dashboard** to see system overview
+4. **Create your first cluster** if needed
+5. **Install your first model** and generate API keys
+
+## Admin Panel Interface
+
+### Cluster Selection
+- **Dropdown menu** to select which cluster you're managing
+- **Switch between clusters** for multi-cluster deployments
+- **Cluster-specific** settings and configurations
+
+### Dashboard Tab
+- **Total number of clusters** in your installation
+- **Number of models** installed across all clusters
+- **Number of active models** currently running
+- **System activity** and recent events
+- **Quick overview** of cluster health and status
+- **Security alerts and monitoring** with real-time risk detection
+- **Guardrails status** showing PII, prompt injection, factuality, and toxicity checks
+
+### Clusters Tab
+- **Manage existing clusters** and their configurations
+- **Create new clusters** by providing:
+  - Cluster name and description
+  - Resource specifications
+  - Network configuration
+  - Security settings
+- **Monitor cluster health** and performance
+- **Scale clusters** up or down as needed
+
+### Models Tab
+- **Manage models** installed in the selected cluster
+- **Configure and install models** with:
+  - Model parameters (temperature, max tokens, etc.)
+  - Hardware requirements (CPU, GPU, memory)
+  - Scaling policies and resource allocation
+  - Model versioning and updates
+- **Monitor model performance** and usage statistics
+
+### Audit Logs Tab
+- **View system activity logs** for security and compliance
+- **Track user actions** and administrative changes
+- **Monitor API usage** and access patterns
+- **Export logs** for analysis and reporting
+
+### API Keys Tab
+- **Manage API keys** for your production cluster
+- **Create and configure** new API keys
+- **Set permissions** and access controls
+- **Track usage** and monitor key activity
+
+## Security Monitoring & Alerts
+
+### Real-Time Risk Detection
+The admin panel includes a comprehensive security monitoring system that provides:
+
+- **PII Detection Alerts** - Real-time notifications when personally identifiable information is detected
+- **Prompt Injection Monitoring** - Immediate alerts for potential injection attacks
+- **Factuality Checks** - Monitoring for inaccurate or misleading outputs
+- **Toxicity Detection** - Alerts for harmful or inappropriate content
+- **Security Dashboard** - Centralized view of all security events and risk levels
+
+### Dashboard Integration
+Connect your Prediction Guard security logs to your existing dashboarding systems:
+
+- **Export security logs** in standard formats (JSON, CSV)
+- **API endpoints** for real-time log streaming
+- **Webhook integration** for instant alerts to your monitoring systems
+- **Compatible with** popular tools like Grafana, Datadog, Splunk, and custom dashboards
+- **Custom metrics** and KPIs for security monitoring
+
+> **📹 Video Tutorial**: [How to Set Up Security Monitoring and Dashboard Integration](placeholder-video-link)
+
+## Quick Start Guide
+
+### 1. Create Your First Cluster
+
+1. **Select cluster** from the dropdown (or create new)
+2. Navigate to **Clusters** tab
+3. Click **Create New Cluster**
+4. **Configure cluster settings**:
+   - Provide cluster name and description
+   - Set resource specifications
+   - Configure network and security settings
+5. **Install the cluster** and wait for completion
+
+> **📹 Video Tutorial**: [How to Create a New Cluster](placeholder-video-link)
+
+### 2. Install Your First Model
+
+1. Navigate to **Models** tab
+2. Click **Install New Model**
+3. **Configure model settings**:
+   - Select model from available options
+   - Set model parameters (temperature, max tokens, etc.)
+   - Configure hardware requirements
+   - Set scaling policies
+4. **Install the model** and monitor progress
+5. Test the model via API
+
+> **📹 Video Tutorial**: [How to Install and Configure Models](placeholder-video-link)
+
+### 3. Create API Keys
+
+1. Go to **API Keys** tab
+2. Click **Create New API Key**
+3. **Configure key settings**:
+   - Set name and description
+   - Configure permissions and access controls
+   - Set rate limits and usage quotas
+4. **Generate and copy** the API key securely
+5. Test with a simple API call
+
+> **📹 Video Tutorial**: [How to Create and Manage API Keys](placeholder-video-link)
+
+### 4. Monitor Your Installation
+
+1. **Check Dashboard** for system overview and security alerts
+2. **Review security monitoring** for PII, injection, factuality, and toxicity detection
+3. **Review Audit Logs** for security and compliance
+4. **Monitor model performance** in the Models tab
+5. **Track API usage** and system activity
+6. **Set up dashboard integration** to connect logs to your existing monitoring systems
+
+> **📹 Video Tutorial**: [How to Monitor and Audit Your Installation](placeholder-video-link)
+
+## Best Practices
+
+### Security
+- **Use strong passwords** for admin accounts
+- **Implement role-based access control** for users
+- **Regularly review audit logs** for suspicious activity
+- **Keep your Prediction Guard instance updated** to the latest versions
+- **Encrypt sensitive data** at rest and in transit
+
+### Performance
+- **Optimize resource allocation** for models
+- **Monitor system health** and resource utilization
+- **Implement caching strategies** for frequently accessed data
+
+### Scalability
+- **Design for horizontal scaling** of clusters
+- **Use load balancing** for high availability
+- **Plan for future growth** and capacity needs
+
+## Complete Documentation Coming Soon
+
+We're actively working on comprehensive documentation for all admin panel features. Some sections may contain placeholder content while we finalize the complete guides.

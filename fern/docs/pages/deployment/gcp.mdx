@@ -1,0 +1,108 @@
+# GCP Deployment
+
+Deploy Prediction Guard on Google Cloud Platform using our managed Kubernetes deployment.
+
+## Prerequisites
+
+- **Google Cloud Project** with billing enabled
+- **gcloud CLI** installed and configured
+- **kubectl** configured for your GKE cluster
+- **Access to admin panel** at admin.predictionguard.com
+
+## Deployment Process
+
+### 1. Create GKE Cluster
+
+First, create a Google Kubernetes Engine cluster:
+
+```bash
+# Set project ID
+export PROJECT_ID=your-project-id
+gcloud config set project $PROJECT_ID
+
+# Create GKE cluster
+gcloud container clusters create predictionguard-cluster \
+    --zone us-central1-a \
+    --num-nodes 3 \
+    --machine-type e2-standard-2 \
+    --enable-autoscaling \
+    --min-nodes 1 \
+    --max-nodes 5
+```
+
+### 2. Configure kubectl
+
+```bash
+# Get credentials
+gcloud container clusters get-credentials predictionguard-cluster --zone us-central1-a
+
+# Verify connection
+kubectl get nodes
+```
+
+### 3. Access Admin Panel
+
+Navigate to [admin.predictionguard.com](https://admin.predictionguard.com) and log in with your credentials.
+
+### 4. Create Cluster in Admin Panel
+
+1. Click **"Create Cluster"** from the dashboard
+2. Select **"Advanced"** mode for full configuration
+3. Configure your cluster settings:
+
+#### General Settings
+- **Cluster Name**: Choose a unique name (e.g., `gcp-production-cluster`)
+- **Air-Gapped Cluster**: Leave disabled for cloud deployment
+- **Image Registry**: Use Google Container Registry or your preferred registry
+- **Hugging Face API Token**: Provide your token for model access
+- **Enable Ingress**: Enable for external API access
+
+#### GCP-Specific Configuration
+- **Node Pools**: Configure your GKE node pools
+- **Storage Classes**: Use Google Persistent Disk CSI driver for persistent volumes
+- **Load Balancer**: Configure Google Cloud Load Balancer for ingress
+- **VPC**: Specify your VPC and subnet configuration
+
+
+### 5. Copy the Install command
+Copy the Kubernetes installation command from your Prediction Guard Admin portal using the Deploy button on the Clusters page.
+
+### 6. Execute the install
+Paste and run the command on a machine that can connect to your Kubernetes cluster API via `kubectl`.This will install your authentication token and begin the initial bootstrapping of Prediction Guard services. After a few minutes, feel free to check the installation by checking the running pods in the `predictionguard` namespace:
+
+```bash
+kubectl get pods -n predictionguard
+```
+
+You should see running pods in the namespace, including `pg-inside` indicating that the cluster has been successfully installed. The cluster should also show as **Healthy** in the Prediction Guard admin.
+
+### 7. Deploy any desired AI models 
+Select desired models from the Models page in the Prediction Guard admin. Pay attention to any settings around number of AI accelerators, CPU and memory allocation to the model and ensure it fits within your Kubernetes cluster resources.
+
+## Configuring Ingress and Reverse Proxy
+
+Prediction Guard comes preconfigured for NGINX and a default Ingress which can be enabled on the cluster within the **Edit** section of the Clusters page. Here you can configure the desired domain names and have NGINX deploy into the `predictionguard` namespace with preconfigured settings for the Prediction Guard API. Then, simply ensure that your DNS entry is routable to the ingress IP on your Kubernetes cluster or load balancer in GCP.
+
+
+## Post-Deployment
+
+### Access Your Cluster
+
+Once deployed, your cluster will be accessible through:
+
+- **Admin Panel**: Monitor and manage from admin.predictionguard.com
+- **API Endpoints**: Access your deployed models via the configured endpoints
+- **Kubernetes Dashboard**: Use kubectl to manage cluster resources
+
+### GCP Integration
+
+Your deployment will automatically integrate with:
+
+- **Google Persistent Disk**: Persistent storage for models and data
+- **Google Cloud Load Balancer**: Load balancing for high availability
+- **Cloud Monitoring**: Monitoring and logging
+- **Identity and Access Management**: Service account and role management
+
+---
+
+**Need help?** Contact our support team for assistance with your GCP deployment.

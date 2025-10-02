@@ -1,0 +1,40 @@
+# Kubernetes
+
+Deploy Prediction Guard on a multi-node Kubernetes cluster.
+
+## Minimum Requirements
+
+These are the minimum recommended specifications for a Prediction Guard multi-node cluster. Please keep in mind that actual hardware requirements may vary based on the models you choose to deploy. 
+
+- 32-cores CPU per node
+- 256 GB RAM per node
+- Minimum of 100 GB of free disk space per node
+- 1 NVIDIA GPU of a supported type: (L4, L40S, A10, A100, H100/200, B100/200) with installed drivers on each node
+- Ubuntu or Debian Linux (LTS or newer)
+- Kubernetes cluster (v1.24 or newer)
+
+## Create Your Cluster in the Prediction Guard Admin
+
+1. Navigate and login to admin.predictionguard.com
+2. View the *Clusters* page and click on **+ Create Cluster** in the top-right.
+3. Provide a Cluster Name
+4. If you intend to use any models that are restricted by an API token on HuggingFace, be sure to ensure your HuggingFace API key.
+5. Click **Create Cluster.** 
+
+## Installation Instructions
+
+1. Copy the Kubernetes installation command from your Prediction Guard Admin portal using the Deploy button on the Clusters page.
+
+2. Paste and run the command on a machine that can connect to your Kubernetes cluster API via `kubectl`.This will install your authentication token and begin the initial bootstrapping of Prediction Guard services. After a few minutes, feel free to check the installation by checking the running pods in the `predictionguard` namespace:
+
+```bash
+kubectl get pods -n predictionguard
+```
+
+You should see running pods in the namespace, including `pg-inside` indicating that the cluster has been successfully installed. The cluster should also show as **Healthy** in the Prediction Guard admin.
+
+3. Deploy any desired AI models from the Models page in the Prediction Guard admin. Pay attention to any settings around number of AI accelerators, CPU and memory allocation to the model and ensure it fits within your Kubernetes cluster resources.
+
+## Configuring Ingress and Reverse Proxy
+
+Prediction Guard comes preconfigured for NGINX and a default Ingress which can be enabled on the cluster within the **Edit** section of the Clusters page. Here you can configure the desired domain names and have NGINX deploy into the `predictionguard` namespace with preconfigured settings for the Prediction Guard API. Then, simply ensure that your DNS entry is routable to the ingress IP on your Kubernetes cluster.

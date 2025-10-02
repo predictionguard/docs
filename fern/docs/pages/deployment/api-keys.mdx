@@ -1,0 +1,112 @@
+# API Key Management
+
+Manage API keys for secure access to your Prediction Guard platform.
+
+## Creating API Keys
+
+![Create New API Key](./create-api-key-admin.png)
+
+### Basic API Key Creation
+
+1. **Navigate to API Keys** in the admin panel
+2. **Click "Create API Key"**
+3. **Enter key details**:
+   - Name (for identification)
+   - Key Type (Evaluation, Ultimate, Enterprise)
+   - Expiration date (optional)
+4. **Set rate limits**:
+   - Requests per second
+   - Burst capacity
+5. **Configure usage quota**:
+   - Quota amount
+   - Quota period (Day, Week, Month)
+6. **Click "Create API Key"** to generate the key
+
+
+## API Key Settings
+
+### Key Configuration
+- **Name**: Descriptive name for the API key
+- **Key Type**: Evaluation, Ultimate, or Enterprise
+- **Expiration**: Set expiration date or make it permanent
+- **Organization**: Automatically assigned to your organization
+- **Cluster**: Automatically assigned to your cluster
+
+### Rate Limits
+- **Requests Per Second**: Maximum API calls per second
+- **Burst**: Maximum burst capacity for traffic spikes
+- **Unlimited Requests**: Toggle for unlimited rate limits
+- **Unlimited Burst**: Toggle for unlimited burst capacity
+
+### Usage Quota
+- **Quota Amount**: Total usage limit (e.g., 10,000 requests)
+- **Quota Period**: Time period (Day, Week, Month)
+- **Unlimited Quota**: Toggle for unlimited usage
+
+## Managing API Keys
+
+### Basic Operations
+- **View Keys**: See all your API keys and their status
+- **Edit Settings**: Modify rate limits and quotas
+- **Regenerate**: Create new key with same settings
+- **Revoke**: Disable key access immediately
+- **Delete**: Permanently remove the key
+
+### Security Best Practices
+- **Store securely**: Use environment variables or secure vaults
+- **Rotate regularly**: Change keys periodically for security
+- **Monitor usage**: Track API key activity and usage patterns
+- **Revoke unused**: Remove keys that are no longer needed
+
+## Integration Examples
+
+### Environment Variables
+```bash
+export PREDICTIONGUARD_API_KEY="your-api-key-here"
+export PREDICTIONGUARD_URL="https://your-domain.com"
+```
+
+### Python SDK
+```python
+import os
+from predictionguard import PredictionGuard
+
+# Set API key as environment variable
+os.environ["PREDICTIONGUARD_API_KEY"] = "your-api-key-here"
+
+# Create client
+client = PredictionGuard()
+
+# Use the API
+result = client.chat.completions.create(
+    model="{{TEXT_MODEL}}",
+    messages=[
+        {
+            "role": "user",
+            "content": "Hello, world!"
+        }
+    ],
+    max_completion_tokens=100
+)
+```
+
+### cURL Example
+```bash
+curl -X POST "https://your-domain.com/chat/completions" \
+  -H "Authorization: Bearer your-api-key-here" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "{{TEXT_MODEL}}",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Hello, world!"
+      }
+    ],
+    "max_completion_tokens": 100
+  }'
+```
+
+---
+
+**Complete documentation coming soon** - Advanced API key management features and integration guides are being developed.

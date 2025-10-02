@@ -1,0 +1,56 @@
+# Model Configuration
+
+Configure model deployment settings and resource allocation in your Prediction Guard platform.
+
+## Configuration Access
+
+### Via Admin Panel
+1. **Navigate to Models** in the admin panel
+2. **Select a deployed model** from your model list
+3. **Click "Configure"** to access model settings
+4. **Modify settings** and save changes
+5. **Restart model** to apply new configuration
+
+## Model Deployment Settings
+
+### Resource Allocation
+- **Model CPU (millicores)**: CPU allocation for the model server
+- **Model Memory (GB)**: RAM allocation for the model
+- **Accelerator Cards**: Number of GPUs to allocate
+- **Card Type**: GPU type (NVIDIA, etc.)
+- **Hugepages (GB)**: Memory optimization settings
+
+### Scaling Configuration
+- **Replicas**: Number of model instances to run
+- **Auto-scaling**: Automatic scaling based on demand
+- **Min/Max instances**: Scaling boundaries
+- **Load balancing**: Request distribution across replicas
+
+## Model Server Configuration
+
+### Container Settings
+- **Container Image URL**: Custom model server image
+- **Runtime Class Name**: Kubernetes runtime class
+- **Enable Model**: Toggle model availability
+- **Model Name**: Display name for the model
+- **Description**: Model description and capabilities
+
+### Input/Output Limits
+- **Max Input Tokens**: Maximum input context length
+- **Max Output Tokens**: Maximum response length
+- **Request Timeout**: Maximum request processing time
+- **Concurrent Requests**: Maximum simultaneous requests
+
+## Best Practices
+
+### Resource Planning
+- **Start with minimum requirements** and scale up as needed
+- **Monitor resource usage** after deployment
+- **Plan for peak loads** when setting scaling parameters
+- **Test configurations** in staging before production
+
+### Security Considerations
+- **Set appropriate limits** for input/output tokens
+- **Configure timeouts** to prevent resource exhaustion
+- **Monitor concurrent requests** to prevent abuse
+- **Regularly review** and update configurations

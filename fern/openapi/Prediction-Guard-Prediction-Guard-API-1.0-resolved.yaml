@@ -6,7 +6,7 @@ info:
   version: "1.2"
 
 servers:
-  - url: https://api.predictionguard.com
+  - url: https://{your-pg.api-domain}.com
 
 paths:
   "/":
@@ -90,7 +90,7 @@ paths:
                   properties:
                     token:
                       type: string
-                      description: A string of the chosen token ID. Value is an int from -100 to 100.
+                      description: A string of the chosen token ID. Value is an int from -100 to 100. 
                 max_completion_tokens:
                   type: integer
                   description: The maximum number of tokens in the generated completion.

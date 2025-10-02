@@ -55,36 +55,39 @@ import os
 
 from predictionguard import PredictionGuard
 
-# You can set your Prediction Guard API Key as an env variable named "PREDICTIONGUARD_API_KEY",
 
-# or when creating the client object
+# Set your Prediction Guard API key and URL as environmental variables.
+os.environ["PREDICTIONGUARD_API_KEY"] = "<api key>"
+os.environ["PREDICTIONGUARD_URL"] = "<pg url>"
 
+# You can also set them when initializing the client.
 client = PredictionGuard(
-api_key="<api key>"
+    api_key="<Your PG API Key>",
+    url="<Your PG API URL>"
 )
 
 messages = [
-{
-"role": "system",
-"content": "You are a helpful chatbot that helps people learn."
-},
-{
-"role": "user",
-"content": "What is a good way to learn to code?"
-}
+    {
+        "role": "system",
+        "content": "You are a helpful chatbot that helps people learn."
+    },
+    {
+        "role": "user",
+        "content": "What is a good way to learn to code?"
+    }
 ]
 
 result = client.chat.completions.create(
-model="{{TEXT_MODEL}}",
-messages=messages,
-max_completion_tokens=100
+    model="{{TEXT_MODEL}}",
+    messages=messages,
+    max_completion_tokens=100
 )
 
 print(json.dumps(
-result,
-sort_keys=True,
-indent=4,
-separators=(',', ': ')
+    result,
+    sort_keys=True,
+    indent=4,
+    separators=(',', ': ')
 ))
 
 ````
@@ -146,7 +149,7 @@ func run() error {
 
 	// -------------------------------------------------------------------------
 
-	const url = "https://api.predictionguard.com/chat/completions"
+	const url = "<Your PG API URL>"
 
 	var resp client.Chat
 	if err := cln.Do(ctx, http.MethodPost, url, d, &resp); err != nil {
@@ -205,7 +208,7 @@ chat completion response:
 ```js
 import * as pg from 'predictionguard';
 
-const client = new pg.Client('https://api.predictionguard.com', process.env.PREDICTIONGUARD_API_KEY);
+const client = new pg.Client('<Your PG API URL>', process.env.PREDICTIONGUARD_API_KEY);
 
 async function Chat() {
     const input = {
@@ -248,7 +251,7 @@ Chat();
 
 <CodeBlock title="cURL">
 ```bash
-curl -i -X POST https://api.predictionguard.com/chat/completions     -H "Authorization: Bearer ${PREDICTIONGUARD_API_KEY}"     -H "Content-Type: application/json"     -d '{
+curl -i -X POST <Your PG API URL>/chat/completions     -H "Authorization: Bearer ${PREDICTIONGUARD_API_KEY}"     -H "Content-Type: application/json"     -d '{
     "model": "{{TEXT_MODEL}}",
     "messages": [
         {
