@@ -1,3 +1,4 @@
 # IDE Folders
 .idea
 .vscode
+.venv
