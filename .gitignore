@@ -1,2 +1,4 @@
-# JetBrains Folder
+# IDE Folders
 .idea
+.vscode
+.venv
