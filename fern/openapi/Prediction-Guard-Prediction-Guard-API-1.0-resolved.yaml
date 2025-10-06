@@ -400,16 +400,6 @@ paths:
                       message:
                         role: "assistant"
                         content: "I feel that the world in general is a complex and ever-evolving place. It has its fair share of beauty, challenges, and opportunities. There are moments of joy, connection, and growth, as well as pain, conflict, and loss. The world is a reflection of the people who inhabit it, and it's essential to maintain a balance between appreciating its wonders and working towards making it a better place for all. It's a constant journey of learning, adapting, and striving for a more harmonious existence."
-                image input:
-                  id: "chat-554c4c24-a1ea-4c9f-b91c-612bbac34f4e"
-                  object: "chat.completion"
-                  created: 1727890364
-                  model: "{{VISION_MODEL}}"
-                  choices:
-                    - index: 0
-                      message:
-                        role: "assistant"
-                        content: "No, there is no deer in this picture. The image features a man wearing a hat and glasses, smiling for the camera."
                 streaming:
                   format: sse
                   value:
@@ -431,6 +421,16 @@ paths:
                           delta: { content: " feel" }
                           generated_text: "null"
                           finish_reason: "length"
+                image input:
+                  id: "chat-554c4c24-a1ea-4c9f-b91c-612bbac34f4e"
+                  object: "chat.completion"
+                  created: 1727890364
+                  model: "{{VISION_MODEL}}"
+                  choices:
+                    - index: 0
+                      message:
+                        role: "assistant"
+                        content: "No, there is no deer in this picture. The image features a man wearing a hat and glasses, smiling for the camera."
                 function call:
                   id: "chat-d079eca8-1d6a-451a-a4ac-b0fea1e11a96"
                   object: "chat.completion"
@@ -1929,7 +1929,7 @@ paths:
                 example:
                   object: "list"
                   data:
-                    - id: "Hermes-2-Pro-Llama-3-70B"
+                    - id: "Hermes-3-Llama-3.1-70B"
                       object: "model"
                       created: "2024-10-31T00:00:00Z"
                       owned_by: "Meta"
