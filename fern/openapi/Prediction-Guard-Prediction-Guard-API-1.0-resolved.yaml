@@ -100,6 +100,9 @@ paths:
                 presence_penalty:
                   type: number
                   description: A value between -2.0 and 2.0, with positive values causing a flat reduction of new tokens based on their existing presence so far in order to decrease further occurrences.
+                reasoning_effort:
+                  type: string
+                  description: Constrains effort on reasoning for reasoning models. Currently supported values are `minimal`, `low`, `medium`, and `high`. Reducing reasoning effort can result in faster responses and fewer tokens used on reasoning in a response. Only supported by reasoning models.
                 stop:
                   oneOf:
                     - type: string
@@ -202,6 +205,7 @@ paths:
                     128000: 10
                   parallel_tool_calls: false
                   presence_penalty: 0.1
+                  reasoning_effort: "medium"
                   stop: "hello"
                   temperature: 1.0
                   top_p: 1.0
@@ -224,6 +228,7 @@ paths:
                     128000: 10
                   parallel_tool_calls: false
                   presence_penalty: 0.1
+                  reasoning_effort: "medium"
                   stop: "hello"
                   temperature: 1.0
                   top_p: 1.0
@@ -272,6 +277,7 @@ paths:
                     128000: 10
                   parallel_tool_calls: false
                   presence_penalty: 0.1
+                  reasoning_effort: "medium"
                   stop: "hello"
                   temperature: 1.0
                   tool_choice:
@@ -365,6 +371,9 @@ paths:
                             content:
                               type: string
                               description: The content of the message.
+                            Reasoning:
+                              type: string
+                              description: The reasoning content of the message.
                             tool_calls:
                               type: array
                               description: The tool call function.
@@ -399,6 +408,7 @@ paths:
                         message:
                           role: "assistant"
                           content: "I feel that the world in general is a complex and ever-evolving place. It has its fair share of beauty, challenges, and opportunities. There are moments of joy, connection, and growth, as well as pain, conflict, and loss. The world is a reflection of the people who inhabit it, and it's essential to maintain a balance between appreciating its wonders and working towards making it a better place for all. It's a constant journey of learning, adapting, and striving for a more harmonious existence."
+                          reasoning: "User is asking about how I feel about the world. This is a simple question. No tool call needed."
                 Streaming:
                   format: sse
                   value:
@@ -1844,6 +1854,10 @@ paths:
                 - embedding
                 - embedding-with-image
                 - tokenize
+                - detokenize
+                - rerank
+                - tool_calling
+                - reasoning
         description: Return available models for an endpoint and relevant metadata for them.
         responses:
           "403":
@@ -1893,7 +1907,7 @@ paths:
                             type: string
                             description: The object type (model).
                           created:
-                            type: string
+                            type: integer
                             description: The date the model was added.
                           owned_by:
                             type: string
@@ -1923,17 +1937,25 @@ paths:
                                 type: boolean
                               tokenize:
                                 type: boolean
+                              detokenize:
+                                type: boolean
+                              rerank:
+                                type: boolean
+                              tool_calling:
+                                type: boolean
+                              reasoning:
+                                type: boolean
                 examples:
                   Basic:
                     value:
                       object: "list"
                       data:
-                        - id: "Hermes-3-Llama-3.1-70B"
+                        - id: "gpt-oss-120b"
                           object: "model"
-                          created: "2024-10-31T00:00:00Z"
-                          owned_by: "Meta"
-                          description: "The Hermes 3 Llama 3.1 70B multilingual large language model (LLM) is an instruction tuned generative model."
-                          max_context_length: 20480
+                          created: 1730332800
+                          owned_by: "OpenAI"
+                          description: "GPT-OSS 120b is an OpenAI model for powerful reasoning, agentic tasks, and high reasoning use cases."
+                          max_context_length: 128000
                           prompt_format: "none"
                           capabilities:
                             chat_completion: true
@@ -1942,7 +1964,10 @@ paths:
                             embedding: false
                             embedding_with_image: false
                             tokenize: true
+                            detokenize: true
                             rerank: false
+                            tool_calling: true
+                            reasoning: true
         security:
           - bearerAuth: [ ]
 
