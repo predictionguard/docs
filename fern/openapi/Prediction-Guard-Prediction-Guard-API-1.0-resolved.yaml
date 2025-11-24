@@ -189,6 +189,12 @@ paths:
                     pii_replace_method:
                       type: string
                       description: Set to either 'random', 'fake', 'category', 'mask'.
+                    entity_list:
+                      type: array
+                      description: An array of entity types that the PII check should ignore.
+                      items:
+                        - type: string
+                          description: An entity type that the PII check should ignore.
                 max_tokens:
                   type: integer
                   description: Deprecated. Please use max_completion_tokens.
@@ -479,8 +485,14 @@ paths:
                   type: string
                   description: The chat model to use for generating completions.
                 prompt:
-                  type: string
-                  description: The prompt to use for generating completions.
+                  oneOf:
+                    - type: string
+                      description: The prompt to use for generating completions.
+                    - type: array
+                      description: An array of prompts to use for generating completions.
+                      items:
+                        type: string
+                        description: The prompt to use for generating completions.
                 frequency_penalty:
                   type: number
                   description: A value between -2.0 and 2.0, with positive values increasingly penalizing new tokens based on their frequency so far in order to decrease further occurrences.
@@ -541,6 +553,12 @@ paths:
                     pii_replace_method:
                       type: string
                       description: Set to either 'random', 'fake', 'category', 'mask'.
+                    entity_list:
+                      type: array
+                      description: An array of entity types that the PII check should ignore.
+                      items:
+                        - type: string
+                          description: An entity type that the PII check should ignore.
             examples:
               Basic:
                 value:
@@ -835,6 +853,15 @@ paths:
           schema:
             type: string
           example: ""
+        - name: Entity-List
+          in: header
+          description: An array of entity types that the PII check should ignore.
+          schema:
+            type: array
+            items:
+              type: string
+              description: An entity type that the PII check should ignore.
+          example: ["ADDRESS"]
         - name: Injection
           in: header
           description: Whether to check the output for a prompt injection.
@@ -1054,6 +1081,15 @@ paths:
           schema:
             type: string
           example: "category"
+        - name: Entity-List
+          in: header
+          description: An array of entity types that the PII check should ignore.
+          schema:
+            type: array
+            items:
+              type: string
+              description: An entity type that the PII check should ignore.
+          example: "ADDRESS"
         - name: Injection
           in: header
           description: Whether to check the output for a prompt injection.
@@ -1577,8 +1613,14 @@ paths:
               type: object
               properties:
                 prompt:
-                  type: string
-                  description: The prompt to check for injection attack.
+                  oneOf:
+                    - type: string
+                      description: The prompt to check for injection attack.
+                    - type: array
+                      description: An array of prompts to check for injection attacks.
+                      items:
+                        type: string
+                        description: The prompt to check for injection attack.
                 detect:
                   type: boolean
                   description: Whether to detect potential injection attacks.
@@ -1667,24 +1709,46 @@ paths:
               required:
                 - prompt
                 - replace
-                - replace_method
               type: object
               properties:
                 prompt:
-                  type: string
-                  description: The prompt to check for personal information.
+                  oneOf:
+                    - type: string
+                      description: The prompt to check for personal information.
+                    - type: array
+                      description: An array of prompts to check for personal information.
+                      items:
+                        type: string
+                        description: The prompt to check for personal information.
                 replace:
                   type: boolean
                   description: Whether to replace personal information.
                 replace_method:
                   type: string
                   description: The method to use (random, fake, category, mask).
+                entity_list:
+                  type: array
+                  description: An array of entity types that the PII check should ignore.
+                  items:
+                    - type: string
+                      description: An entity type that the PII check should ignore.
             examples:
-              Basic:
+              replace pii:
                 value:
                   prompt: "My email is frodo@predictionguard.com and my number is 954-123-4567."
                   replace: true
                   replace_method: "mask"
+              detect pii:
+                value:
+                  prompt: "My email is frodo@predictionguard.com and my number is 954-123-4567."
+                  replace: false
+              replace pii with entity list:
+                value:
+                  prompt: "My email is frodo@predictionguard.com and my number is 954-123-4567."
+                  replace: true
+                  replace_method: "random"
+                  entity_list:
+                    - "PHONE_NUMBER"
       responses:
         "403":
           description: Failed auth response.
@@ -1735,14 +1799,32 @@ paths:
                         index:
                           type: integer
                           description: The index position in the collection.
+                        prompt:
+                          type: string
+                          description: The prompt that was checked for PII. Only returned if no PII is present.
                         new_prompt:
                           type: string
                           description: The new prompt with the replaced information.
+                        pii_type_and_positions:
+                          type: array
+                          description: An array of PII metadata objects
+                          items:
+                            type: object
+                            properties:
+                              start:
+                                type: integer
+                                description: The starting index of the pii item.
+                              end:
+                                type: integer
+                                description: The ending index of the pii item.
+                              type:
+                                type: string
+                                description: The type of the pii item.
                         status:
                           type: string
                           description: The response if this choice was successful.
               examples:
-                Basic:
+                replace pii:
                   value:
                     id: "pii-MCZ68Tol2Laj0HgoJtvS5CaSljISkWN1"
                     object: "pii_check"
@@ -1750,6 +1832,33 @@ paths:
                     checks:
                       - index: 0
                         new_prompt: "My email is * and my number is *."
+                        status: "success"
+                detect pii:
+                  value:
+                    id: "pii-a62a4c76cde74deb-99b3c65e7366bf45"
+                    object: "pii_check"
+                    created: 1717675949
+                    checks:
+                      - index: 0
+                        pii_types_and_positions:
+                          - start: 12
+                            end: 37
+                            type: "EMAIL_ADDRESS"
+                          - start: 18
+                            end: 37
+                            type: "URL"
+                          - start: 55
+                            end: 67
+                            type: "PHONE_NUMBER"
+                        status: "success"
+                replace pii with entity list:
+                  value:
+                    id: "pii-MCZ68Tol2Laj0HgoJtvS5CaSljISkWN1"
+                    object: "pii_check"
+                    created: 1717675949
+                    checks:
+                      - index: 0
+                        new_prompt: "My email is * and my number is 954-123-4567."
                         status: "success"
       security:
         - bearerAuth: []
