@@ -11,37 +11,32 @@ These models are designed for text inference, and are used in the `/completions`
 
 | Model Name                   | Type                 | Use Case                                                        | Prompt Format                                          | Context Length | More Info                                           |
 | ---------------------------- | -------------------- | --------------------------------------------------------------- | -----------------------------------------------------  | -------------- | ----------------------------------------------------|
-| Hermes-3-Llama-3.1-70B       | Chat                 | Instruction following or chat-like applications                 | [ChatML](/options/prompts#chatml)                      | 20480             | [link](/options/llms#hermes-3-llama-31-70b)       |
-| gpt-oss-120b                  | Chat/Reasoning       | Instruction following or chat-like applications with reasoning  | [ChatML](/options/prompts#chatml)                      | 128000            | [link](/options/llms#gpt-oss-120b)                  |
-| Qwen2.5-Coder-14B-Instruct   | Code Generation      | Generating computer code or answering tech questions            | [ChatML](/options/prompts#chatml)                      | 20480             | [link](/options/llms#qwen25-coder-14b-instruct)   |
-| Hermes-3-Llama-3.1-8B        | Chat                 | Instruction following or chat-like applications                 | [ChatML](/options/prompts#chatml)                      | 32768             | [link](/options/llms#hermes-3-llama-31-8b)        |
-| neural-chat-7b-v3-3          | Chat                 | Instruction following or chat-like applications                 | [Neural Chat](/options/prompts#neural-chat)                 | 32768             | [link](/options/llms#neural-chat-7b-v3-3)               |
+| gemma-3-27b-it               | Chat                 | Instruction following or chat-like applications                 | [Gemma](/options/prompts#gemma)                      | 32000             | [link](/options/llms#gemma-3-27b-it)     |
+| gpt-oss-120b                 | Chat/Reasoning       | Instruction following or chat-like applications with reasoning  | [ChatML](/options/prompts#chatml)                      | 128000            | [link](/options/llms#gpt-oss-120b)     |
+| Qwen2.5-Coder-14B-Instruct   | Code Generation      | Generating computer code or answering tech questions            | [ChatML](/options/prompts#chatml)                      | 20480             | [link](/options/llms#qwen25-coder-14b-instruct)     |
+| Hermes-3-Llama-3.1-8B        | Chat                 | Instruction following or chat-like applications                 | [ChatML](/options/prompts#chatml)                      | 32768             | [link](/options/llms#hermes-3-llama-31-8b)     |
+| neural-chat-7b-v3-3          | Chat                 | Instruction following or chat-like applications                 | [Neural Chat](/options/prompts#neural-chat)                 | 32768             | [link](/options/llms#neural-chat-7b-v3-3)     |
 
 ## Model Descriptions
 
-### Hermes-3-Llama-3.1-70B
+### gemma-3-27b-it
 
-This is a general use model that excels at reasoning and multi-turn conversations,
-with an improved focus on longer context lengths. This allows for more accuracy and recall
-in areas that require a longer context window, along with being an improved version of the previous
-Hermes and Llama line of models.
+gemma-3-27b-it is Google's instruction-tuned open-weight model built for balanced performance across diverse tasks. This model offers strong instruction following and chat capabilities in a mid-size architecture.
 
-**Type:** Chat\
-**Use Case:** Instruction Following or Chat-Like Applications\
-**Prompt Format:** [ChatML](/options/prompts#chatml)
+**Type:** Chat/Instruction
+**Use Case:** Instruction following, chat applications, and general-purpose AI tasks
+**Prompt Format:** Gemma
 
-https://huggingface.co/NousResearch/Hermes-3-Llama-3.1-70B
+https://huggingface.co/google/gemma-3-27b-it
 
-Hermes 3 is a generalist language model with many improvements over Hermes 2,
-including advanced agentic capabilities, much better roleplaying, reasoning,
-multi-turn conversation, long context coherence, and improvements across the board.
+gemma-3-27b-it is part of Google's Gemma 3 family of open-weight models designed for accessible, high-quality AI applications. The model features:
 
-The ethos of the Hermes series of models is focused on aligning LLMs to the user,
-with powerful steering capabilities and control given to the end user.
-
-The Hermes 3 series builds and expands on the Hermes 2 set of capabilities,
-including more powerful and reliable function calling and structured output capabilities,
-generalist assistant capabilities, and improved code generation skills.
+- **Instruction-tuned performance:** Optimized specifically for following instructions and engaging in natural conversations with strong safety alignment.
+- **Efficient mid-size architecture:** 27 billion parameters provide a sweet spot between capability and computational efficiency for diverse deployment scenarios.
+- **Broad task versatility:** Capable across question answering, summarization, reasoning, code generation, and creative writing tasks.
+- **Gemma license:** Build with Google's permissive terms of use designed to support research and commercial applications while maintaining responsible AI practices.
+- **Multi-turn conversation:** Designed to maintain context and coherence across extended dialogues, making it suitable for chat applications and interactive agents.
+- **Community-driven ecosystem:** Benefits from extensive community fine-tuning, evaluation datasets, and integration with popular frameworks like Hugging Face Transformers.
 
 ### gpt-oss-120b
 
