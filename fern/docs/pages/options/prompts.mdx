@@ -1,6 +1,6 @@
 ---
 title: Prompt Formatting
-description: Reliable, future proof AI predictions
+description: Reliable, future-proof AI predictions
 slug: options/prompts
 ---
 
@@ -79,17 +79,14 @@ appropriate information, and do not keep the curly braces)
 <|im_start|>assistant<|im_end|>
 ```
 
-## gpt-oss
-
-gpt-oss models use the ChatML format for optimal performance. The model is trained on the harmony response format and should be used with ChatML formatting.
+## Gemma
 
 (Replace the portions of the prompt below in curly braces `{...}` with the
 appropriate information, and do not keep the curly braces)
 
 ```
-<|im_start|>system
-{prompt}<|im_end|>
-<|im_start|>user
-{context or user message}<|im_end|>
-<|im_start|>assistant<|im_end|>
+<start_of_turn>user
+{question or instruction here}<end_of_turn>
+<start_of_turn>model
+{assistant response here}<end_of_turn>
 ```
