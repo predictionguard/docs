@@ -7,6 +7,7 @@ groups:
         output:
           location: local-file-system
           path: ../sdks/typescript
+        smart-casing: false
 api:
   specs:
     - openapi: openapi\Prediction-Guard-Prediction-Guard-API-1.0-resolved.yaml

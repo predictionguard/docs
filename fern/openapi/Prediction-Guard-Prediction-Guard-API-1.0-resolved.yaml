@@ -118,7 +118,7 @@ paths:
                 stream_options:
                   type: object
                   description: Extra parameters used when streaming the response.
-                  items:
+                  properties:
                     include_usage:
                       type: boolean
                       description: Whether to include tokens used in the stream response objects.
@@ -528,6 +528,13 @@ paths:
                 stream:
                   type: boolean
                   description: Whether to stream back the model response.
+                stream_options:
+                  type: object
+                  description: Extra parameters used when streaming the response.
+                  properties:
+                    include_usage:
+                      type: boolean
+                      description: Whether to include tokens used in the stream response objects.
                 temperature:
                   type: number
                   description: The temperature parameter for controlling randomness in completions.
