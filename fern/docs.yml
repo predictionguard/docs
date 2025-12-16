@@ -1,6 +1,23 @@
 instances:
   - url: pg-guard.docs.buildwithfern.com
     custom-domain: docs.predictionguard.com
+    headers:
+      # Content Security Policy - Strict configuration
+      - name: Content-Security-Policy
+        value: "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://api.predictionguard.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+      # Anti-clickjacking protection
+      - name: X-Frame-Options
+        value: "DENY"
+      # Remove server version info
+      - name: X-Powered-By
+        value: ""
+      # Additional security headers
+      - name: X-Content-Type-Options
+        value: "nosniff"
+      - name: Referrer-Policy
+        value: "strict-origin-when-cross-origin"
+      - name: Permissions-Policy
+        value: "geolocation=(), microphone=(), camera=()"
 
 title: Prediction Guard | Docs
 
