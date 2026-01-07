@@ -124,7 +124,7 @@ paths:
                       description: Whether to include tokens used in the stream response objects.
                 temperature:
                   type: number
-                  description: The temperature parameter for controlling randomness in completions.
+                  description: The temperature parameter for controlling randomness in completions. Supports a range of 0.0-2.0.
                 tool_choice:
                   oneOf:
                     - type: string
@@ -169,7 +169,7 @@ paths:
                             description: Whether to enable strict schema adherence when generating the function call.
                 top_p:
                   type: number
-                  description: The diversity of the generated text based on nucleus sampling.
+                  description: The diversity of the generated text based on nucleus sampling. Supports a range of 0.0-1.0.
                 top_k:
                   type: integer
                   description: The diversity of the generated text based on top-k sampling.
@@ -537,10 +537,10 @@ paths:
                       description: Whether to include tokens used in the stream response objects.
                 temperature:
                   type: number
-                  description: The temperature parameter for controlling randomness in completions.
+                  description: The temperature parameter for controlling randomness in completions. Supports a range of 0.0-2.0.
                 top_p:
                   type: number
-                  description: The diversity of the generated text based on nucleus sampling.
+                  description: The diversity of the generated text based on nucleus sampling. Supports a range of 0.0-1.0.
                 top_k:
                   type: integer
                   description: The diversity of the generated text based on top-k sampling.
@@ -904,7 +904,7 @@ paths:
                   description: An optional text to guide the model's style or continue a previous audio segment.
                 temperature:
                   type: number
-                  description: The temperature parameter for controlling randomness in transcription.
+                  description: The temperature parameter for controlling randomness in transcription. Supports a range of 0.0-2.0.
                 timestamps_granularities[]:
                   description: Sets whether timestamps are returned and at what granularity.
                   oneOf:
