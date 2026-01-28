@@ -137,8 +137,6 @@ navigation:
             path: ./docs/pages/guides/data-extraction.mdx
           - page: LangChain Integration
             path: ./docs/pages/guides/langchainllm.mdx
-          - page: ManyChat Integration
-            path: ./docs/pages/guides/ManyChat.mdx
           - page: Code Assistant
             path: ./docs/pages/guides/code-assistant.mdx
       - section: Support

@@ -2,7 +2,7 @@
 title: Tool Calling
 subtitle: Invoke external functions from PredictionGuard's `/chat/completions` endpoint
 description: Learn how to define tools, tell the model when to use them, and handle tool-call responses.
-slug: tool-calling
+slug: usingllms/tooling
 ---
 
 <Note>
@@ -51,8 +51,8 @@ Controls how the model decides whether to use tools:
 
 Create a JSON schema describing your function:
 
-```json
-{
+```python
+tool = {
   "type": "function",
   "function": {
     "name": "get_current_weather",
@@ -71,7 +71,7 @@ Create a JSON schema describing your function:
         }
       },
       "required": ["location"],
-      "additionalProperties": false
+      "additional_properties": false
     },
     "strict": false
   }
@@ -86,44 +86,22 @@ Write clear, specific descriptions for both the tool and its parameters. This he
 
 Include your tool definitions in the API request:
 
-```bash
-curl -X POST <Your PG API URL>/chat/completions \
-  -H "Authorization: Bearer $PREDICTIONGUARD_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "{{TEXT_MODEL}}",
-    "messages": [
+```python
+from predictionguard import PredictionGuard
+
+client = PredictionGuard(api_key="<your pg api_key>")
+
+response = client.chat.completions.create(
+    model="{{TEXT_MODEL}}",
+    messages=[
       {
         "role": "user",
         "content": "What'\''s the weather like in San Francisco?"
       }
     ],
-    "tools": [
-      {
-        "type": "function",
-        "function": {
-          "name": "get_current_weather",
-          "description": "Get current weather conditions for a specific location",
-          "parameters": {
-            "type": "object",
-            "properties": {
-              "location": {
-                "type": "string",
-                "description": "City and state, e.g., '\''San Francisco, CA'\''"
-              },
-              "unit": {
-                "type": "string",
-                "enum": ["celsius", "fahrenheit"]
-              }
-            },
-            "required": ["location"]
-          },
-          "strict": false
-        }
-      }
-    ],
-    "tool_choice": "auto"
-  }'
+    tools=tool,
+    tool_choice="auto"
+)
 ```
 
 ### 3. Handle the Tool Call
@@ -159,6 +137,7 @@ Parse the arguments, execute your function, and send back the result:
 ```python
 # Parse the tool call
 import json
+
 tool_call = response["choices"][0]["message"]["tool_calls"][0]
 args = json.loads(tool_call["function"]["arguments"])
 
@@ -219,6 +198,8 @@ The model incorporates the tool result and provides a natural language response:
 Build robust error handling for production use:
 
 ```python
+import asyncio
+
 try:
     # Parse arguments safely
     args = json.loads(tool_call["function"]["arguments"])
@@ -261,7 +242,7 @@ injection_check = client.injection.check(
 
 if injection_check["checks"][0]["probability"] > 0.5:
     # High probability of injection attack
-    return {"error": "Invalid input detected"}
+    print("error: Invalid input detected")
 ```
 
 <Tip>
@@ -271,11 +252,11 @@ PredictionGuard provides a dedicated [Injection API](https://docs.predictionguar
 **Implement access controls**: Verify permissions before execution
 ```python
 if not user_has_permission(user_id, "weather_api"):
-    return {"error": "Access denied"}
+    print("error: Access denied")
 ```
 
 **Never expose sensitive data**: Keep API keys and secrets server-side
-```python
+```json
 # ❌ Don't include in tool results
 {"api_key": "sk-123", "temperature": 72}
 
@@ -378,7 +359,7 @@ tools = [
 
 ## Next Steps
 
-- Explore our [SDK examples](https://github.com/predictionguard/sdk-docs/software-development-kits/sd-ks) for language-specific implementations
+- Explore our [SDK examples](../sdk-docs/software-development-kits/sd-ks) for language-specific implementations
 
 ---
 

@@ -422,25 +422,18 @@ paths:
                           content: "I feel that the world in general is a complex and ever-evolving place. It has its fair share of beauty, challenges, and opportunities. There are moments of joy, connection, and growth, as well as pain, conflict, and loss. The world is a reflection of the people who inhabit it, and it's essential to maintain a balance between appreciating its wonders and working towards making it a better place for all. It's a constant journey of learning, adapting, and striving for a more harmonious existence."
                           reasoning: "User is asking about how I feel about the world. This is a simple question. No tool call needed."
                 Streaming:
+                  description: The final streaming chunk
+                  format: sse
                   value:
-                    - id: "chat-6c8c291f-5a06-46e5-94fa-2b0b1e6444c7"
-                      object: "chat.completion.chunk"
-                      created: 1727796455
-                      model: "{{TEXT_MODEL}}"
-                      choices:
-                        - index: 0
-                          delta: { content: " I" }
-                          generated_text: null
-                          finish_reason: null
-                    - id: "chat-6c8c291f-5a06-46e5-94fa-2b0b1e6444c7"
-                      object: "chat.completion.chunk"
-                      created: 1727796455
-                      model: "{{TEXT_MODEL}}"
-                      choices:
-                        - index: 0
-                          delta: { content: " feel" }
-                          generated_text: null
-                          finish_reason: "length"
+                    id: "chat-6c8c291f-5a06-46e5-94fa-2b0b1e6444c7"
+                    object: "chat.completion.chunk"
+                    created: 1727796455
+                    model: "{{TEXT_MODEL}}"
+                    choices:
+                      - index: 0
+                        delta: { content: " feel" }
+                        generated_text: null
+                        finish_reason: "length"
                 Image Input:
                   value:
                     id: "chat-554c4c24-a1ea-4c9f-b91c-612bbac34f4e"
@@ -678,25 +671,17 @@ paths:
                       - index: 0
                         text: "Most people lose some hair every day. It’s a natural process called shedding. On average, you can lose 50-100 strands of hair a day. However, if you notice an increase in hair loss or if you are experiencing hair loss in large clumps, then it could be a sign of an underlying condition. Hair loss can be triggered by a number of factors such as stress, illness, hormone imbalance, medication, and genetics.\nIf you’re concerned about hair loss, you should consult with a trichologist, a hair and scalp specialist. They can help determine the cause of your hair loss and recommend the appropriate treatment."
                 Streaming:
+                  description: An example of a single streaming chunk
                   value:
-                    - id": "cmpl-4b78eda0a81145b495fc13c2b3da2041"
-                      object: "text_completion"
-                      created: 1750950603
-                      model: "{{TEXT_MODEL}}"
-                      choices:
-                        - index: 0
-                          text: " please"
-                          finish_reason: null
-                          stop_reason: null
-                    - id: "cmpl-4b78eda0a81145b495fc13c2b3da2041"
-                      object: "text_completion"
-                      created: 1750950603
-                      model: "{{TEXT_MODEL}}"
-                      choices:
-                        - index: 0
-                          text: "!\n"
-                          finish_reason: null
-                          stop_reason: null
+                    id": "cmpl-4b78eda0a81145b495fc13c2b3da2041"
+                    object: "text_completion"
+                    created: 1750950603
+                    model: "{{TEXT_MODEL}}"
+                    choices:
+                      - index: 0
+                        text: " please"
+                        finish_reason: null
+                        stop_reason: null
       security:
         - bearerAuth: []
 
@@ -1966,254 +1951,138 @@ paths:
       security:
         - bearerAuth: []
 
-  /models/:
-    get:
-      summary: Models
-      responses:
-        "403":
-          description: Failed auth response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Description of the error.
-              example:
-                error: "api understands the request but refuses to authorize it"
-        "400":
-          description: General error response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Description of the error.
-              example:
-                error: "required fields are missing"
-        "200":
-          description: Successful response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  object:
-                    type: string
-                    description: Type of object (list).
-                  data:
-                    type: array
-                    description: The available models.
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          description: The id of the model.
-                        object:
-                          type: string
-                          description: The object type (model).
-                        created:
-                          type: integer
-                          description: The date the model was added.
-                        owned_by:
-                          type: string
-                          description: The name of the organization that owns the model (from huggingface).
-                        description:
-                          type: string
-                          description: A short description of the model.
-                        max_context_length:
-                          type: integer
-                          description: The max context length of the model.
-                        prompt_format:
-                          type: string
-                          description: The name of the prompt format (if any) the model uses.
-                        capabilities:
-                          type: object
-                          description: The available capabilities of the model.
-                          properties:
-                            chat_completion:
-                              type: boolean
-                            chat_with_image:
-                              type: boolean
-                            completion:
-                              type: boolean
-                            embedding:
-                              type: boolean
-                            embedding_with_image:
-                              type: boolean
-                            tokenize:
-                              type: boolean
-                            detokenize:
-                              type: boolean
-                            rerank:
-                              type: boolean
-                            tool_calling:
-                              type: boolean
-                            reasoning:
-                              type: boolean
-              examples:
-                Basic:
-                  value:
-                    object: "list"
-                    data:
-                      - id: "gpt-oss-120b"
-                        object: "model"
-                        created: 1730332800
-                        owned_by: "OpenAI"
-                        description: "GPT-OSS 120b is an OpenAI model for powerful reasoning, agentic tasks, and high reasoning use cases."
-                        max_context_length: 128000
-                        prompt_format: "none"
-                        capabilities:
-                          chat_completion: true
-                          chat_with_image: false
-                          completion: true
-                          embedding: false
-                          embedding_with_image: false
-                          tokenize: true
-                          detokenize: true
-                          rerank: false
-                          tool_calling: true
-                          reasoning: true
-      security:
-        - bearerAuth: [ ]
-
   /models/{capability}:
-    get:
-      summary: Models
-      parameters:
-        - in: path
-          name: capability
-          required: true
-          schema:
-            type: string
-            description: Optional path variable to allow for sorting by capability. Leave blank to see all models.
-            enum:
-              - chat-completion
-              - chat-with-image
-              - completion
-              - embedding
-              - embedding-with-image
-              - tokenize
-              - detokenize
-              - rerank
-              - tool_calling
-              - reasoning
-      description: Return available models for an endpoint and relevant metadata for them.
-      responses:
-        "403":
-          description: Failed auth response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Description of the error.
-              example:
-                error: "api understands the request but refuses to authorize it"
-        "400":
-          description: General error response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Description of the error.
-              example:
-                error: "required fields are missing"
-        "200":
-          description: Successful response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  object:
-                    type: string
-                    description: Type of object (list).
-                  data:
-                    type: array
-                    description: The available models.
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          description: The id of the model.
-                        object:
-                          type: string
-                          description: The object type (model).
-                        created:
-                          type: integer
-                          description: The date the model was added.
-                        owned_by:
-                          type: string
-                          description: The name of the organization that owns the model (from huggingface).
-                        description:
-                          type: string
-                          description: A short description of the model.
-                        max_context_length:
-                          type: integer
-                          description: The max context length of the model.
-                        prompt_format:
-                          type: string
-                          description: The name of the prompt format (if any) the model uses.
-                        capabilities:
-                          type: object
-                          description: The available capabilities of the model.
-                          properties:
-                            chat_completion:
-                              type: boolean
-                            chat_with_image:
-                              type: boolean
-                            completion:
-                              type: boolean
-                            embedding:
-                              type: boolean
-                            embedding_with_image:
-                              type: boolean
-                            tokenize:
-                              type: boolean
-                            detokenize:
-                              type: boolean
-                            rerank:
-                              type: boolean
-                            tool_calling:
-                              type: boolean
-                            reasoning:
-                              type: boolean
-              examples:
-                Basic:
-                  value:
-                    object: "list"
+      get:
+        summary: Models
+        parameters:
+          - in: path
+            name: capability
+            schema:
+              type: string
+              description: Optional path variable to allow for sorting by capability. Leave blank to see all models.
+              enum:
+                - chat-completion
+                - chat-with-image
+                - completion
+                - embedding
+                - embedding-with-image
+                - tokenize
+                - detokenize
+                - rerank
+                - tool_calling
+                - reasoning
+        description: Return available models for an endpoint and relevant metadata for them.
+        responses:
+          "403":
+            description: Failed auth response.
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      type: string
+                      description: Description of the error.
+                example:
+                  error: "api understands the request but refuses to authorize it"
+          "400":
+            description: General error response.
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      type: string
+                      description: Description of the error.
+                example:
+                  error: "required fields are missing"
+          "200":
+            description: Successful response.
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    object:
+                      type: string
+                      description: Type of object (list).
                     data:
-                      - id: "gpt-oss-120b"
-                        object: "model"
-                        created: 1730332800
-                        owned_by: "OpenAI"
-                        description: "GPT-OSS 120b is an OpenAI model for powerful reasoning, agentic tasks, and high reasoning use cases."
-                        max_context_length: 128000
-                        prompt_format: "none"
-                        capabilities:
-                          chat_completion: true
-                          chat_with_image: false
-                          completion: true
-                          embedding: false
-                          embedding_with_image: false
-                          tokenize: true
-                          detokenize: true
-                          rerank: false
-                          tool_calling: true
-                          reasoning: true
-      security:
-        - bearerAuth: [ ]
+                      type: array
+                      description: The available models.
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            description: The id of the model.
+                          object:
+                            type: string
+                            description: The object type (model).
+                          created:
+                            type: integer
+                            description: The date the model was added.
+                          owned_by:
+                            type: string
+                            description: The name of the organization that owns the model (from huggingface).
+                          description:
+                            type: string
+                            description: A short description of the model.
+                          max_context_length:
+                            type: integer
+                            description: The max context length of the model.
+                          prompt_format:
+                            type: string
+                            description: The name of the prompt format (if any) the model uses.
+                          capabilities:
+                            type: object
+                            description: The available capabilities of the model.
+                            properties:
+                              chat_completion:
+                                type: boolean
+                              chat_with_image:
+                                type: boolean
+                              completion:
+                                type: boolean
+                              embedding:
+                                type: boolean
+                              embedding_with_image:
+                                type: boolean
+                              tokenize:
+                                type: boolean
+                              detokenize:
+                                type: boolean
+                              rerank:
+                                type: boolean
+                              tool_calling:
+                                type: boolean
+                              reasoning:
+                                type: boolean
+                examples:
+                  Basic:
+                    value:
+                      object: "list"
+                      data:
+                        - id: "gpt-oss-120b"
+                          object: "model"
+                          created: 1730332800
+                          owned_by: "OpenAI"
+                          description: "GPT-OSS 120b is an OpenAI model for powerful reasoning, agentic tasks, and high reasoning use cases."
+                          max_context_length: 128000
+                          prompt_format: "none"
+                          capabilities:
+                            chat_completion: true
+                            chat_with_image: false
+                            completion: true
+                            embedding: false
+                            embedding_with_image: false
+                            tokenize: true
+                            detokenize: true
+                            rerank: false
+                            tool_calling: true
+                            reasoning: true
+        security:
+          - bearerAuth: [ ]
 
 components:
   securitySchemes:
