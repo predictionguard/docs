@@ -3,7 +3,10 @@
     "prompting": "Basic Prompting",
     "engineering": "Prompt Engineering",
     "chat": "Chat Completions",
+    "vision": "Chat Completions Vision",
+    "embeddings": "Embeddings",
     "augmentation": "Chaining and Retrieval",
     "agents": "Agents",
-    "streaming": "Streaming"
+    "streaming": "Streaming",
+    "tooling": "Tool Calling"
 }

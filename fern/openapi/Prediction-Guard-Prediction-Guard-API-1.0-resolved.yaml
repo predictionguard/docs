@@ -8,24 +8,7 @@ info:
 servers:
   - url: https://{your-pg.api-domain}.com
 
-paths:
-  "/":
-    get:
-      summary: Check API Health
-      description: A simple endpoint to check if the Prediction Guard API is healthy.
-      responses:
-        "200":
-          description: Successful response with a simple healthy message.
-          content:
-            application/json:
-              schema:
-                type: string
-                items:
-                  type: string
-              examples:
-                basic:
-                  value: "The Prediction Guard API is healthy!"
-                  
+paths:     
   /chat/completions:
     post:
       summary: Chat Completions
@@ -85,7 +68,7 @@ paths:
                   type: number
                   description: A value between -2.0 and 2.0, with positive values increasingly penalizing new tokens based on their frequency so far in order to decrease further occurrences.
                 logit_bias:
-                  type: map
+                  type: object
                   description: Modifies the likelihood of specified tokens appearing in a response.
                   properties:
                     token:
@@ -131,17 +114,15 @@ paths:
                       description: A string representing a tool choice. Options are 'none', 'auto', or 'required'.
                     - type: object
                       description: An object representing the tool to be chosen
-                      items:
-                        type: object
-                        properties:
-                          type:
-                            type: string
-                            description: The type of tool.
-                          function:
-                            type: object
-                            description: An object containing the name of the function
-                            properties:
-                              name: string
+                      properties:
+                        type:
+                          type: string
+                          description: The type of tool.
+                        function:
+                          type: object
+                          description: An object containing the name of the function
+                          properties:
+                            name: string
                 tools:
                   type: array
                   description: The content of the tool call.
@@ -374,6 +355,16 @@ paths:
                         index:
                           type: integer
                           description: The index position in the collection.
+                        delta:
+                          type: object
+                          description: The incremental message delta (streaming only).
+                          properties:
+                            role:
+                              type: string
+                              description: The role of the sender (user or assistant).
+                            content:
+                              type: string
+                              description: The content of the message.
                         message:
                           type: object
                           description: A result choice.
@@ -384,7 +375,7 @@ paths:
                             content:
                               type: string
                               description: The content of the message.
-                            Reasoning:
+                            reasoning:
                               type: string
                               description: The reasoning content of the message.
                             tool_calls:
@@ -409,6 +400,14 @@ paths:
                                       arguments:
                                         type: string
                                         description: The function arguments.
+                        finish_reason:
+                          type: string
+                          nullable: true
+                          description: The reason the generation finished.
+                        generated_text:
+                          type: string
+                          nullable: true
+                          description: The complete generated text.
               examples:
                 Basic:
                   value:
@@ -423,26 +422,18 @@ paths:
                           content: "I feel that the world in general is a complex and ever-evolving place. It has its fair share of beauty, challenges, and opportunities. There are moments of joy, connection, and growth, as well as pain, conflict, and loss. The world is a reflection of the people who inhabit it, and it's essential to maintain a balance between appreciating its wonders and working towards making it a better place for all. It's a constant journey of learning, adapting, and striving for a more harmonious existence."
                           reasoning: "User is asking about how I feel about the world. This is a simple question. No tool call needed."
                 Streaming:
+                  description: The final streaming chunk
                   format: sse
                   value:
-                    - id: "chat-6c8c291f-5a06-46e5-94fa-2b0b1e6444c7"
-                      object: "chat.completion.chunk"
-                      created: 1727796455
-                      model: "{{TEXT_MODEL}}"
-                      choices:
-                        - index: 0
-                          delta: { content: " I" }
-                          generated_text: "null"
-                          finish_reason: "null"
-                    - id: "chat-6c8c291f-5a06-46e5-94fa-2b0b1e6444c7"
-                      object: "chat.completion.chunk"
-                      created: 1727796455
-                      model: "{{TEXT_MODEL}}"
-                      choices:
-                        - index: 0
-                          delta: { content: " feel" }
-                          generated_text: "null"
-                          finish_reason: "length"
+                    id: "chat-6c8c291f-5a06-46e5-94fa-2b0b1e6444c7"
+                    object: "chat.completion.chunk"
+                    created: 1727796455
+                    model: "{{TEXT_MODEL}}"
+                    choices:
+                      - index: 0
+                        delta: { content: " feel" }
+                        generated_text: null
+                        finish_reason: "length"
                 Image Input:
                   value:
                     id: "chat-554c4c24-a1ea-4c9f-b91c-612bbac34f4e"
@@ -504,7 +495,7 @@ paths:
                   type: number
                   description: A value between -2.0 and 2.0, with positive values increasingly penalizing new tokens based on their frequency so far in order to decrease further occurrences.
                 logit_bias:
-                  type: map
+                  type: object
                   description: Modifies the likelihood of specified tokens appearing in a response.
                   properties:
                     token:
@@ -680,25 +671,17 @@ paths:
                       - index: 0
                         text: "Most people lose some hair every day. It’s a natural process called shedding. On average, you can lose 50-100 strands of hair a day. However, if you notice an increase in hair loss or if you are experiencing hair loss in large clumps, then it could be a sign of an underlying condition. Hair loss can be triggered by a number of factors such as stress, illness, hormone imbalance, medication, and genetics.\nIf you’re concerned about hair loss, you should consult with a trichologist, a hair and scalp specialist. They can help determine the cause of your hair loss and recommend the appropriate treatment."
                 Streaming:
+                  description: An example of a single streaming chunk
                   value:
-                    - id": "cmpl-4b78eda0a81145b495fc13c2b3da2041"
-                      object: "text_completion"
-                      created: 1750950603
-                      model: "{{TEXT_MODEL}}"
-                      choices:
-                        - index: 0
-                          text: " please"
-                          finish_reason: null
-                          stop_reason: null
-                    - id: "cmpl-4b78eda0a81145b495fc13c2b3da2041"
-                      object: "text_completion"
-                      created: 1750950603
-                      model: "{{TEXT_MODEL}}"
-                      choices:
-                        - index: 0
-                          text: "!\n"
-                          finish_reason: null
-                          stop_reason: null
+                    id": "cmpl-4b78eda0a81145b495fc13c2b3da2041"
+                    object: "text_completion"
+                    created: 1750950603
+                    model: "{{TEXT_MODEL}}"
+                    choices:
+                      - index: 0
+                        text: " please"
+                        finish_reason: null
+                        stop_reason: null
       security:
         - bearerAuth: []
 
@@ -981,45 +964,52 @@ paths:
                     description: The transcribed audio.
                   task:
                     type: string
-                    description: The task used in the request
+                    description: The task used in the request.
                   language:
                     type: string
-                    description: The language of the audio file
+                    description: The language of the audio file.
+                  duration:
+                    type: number
+                    description: The duration of the audio file in seconds.
                   segments:
                     type: array
-                    description: An array containing objects with segment level data
-                    properties:
-                      id:
-                        type: integer
-                        description: The id of the segment
-                      text:
-                        type: string
-                        description: The text for the segment
-                      start:
-                        type: number
-                        description: The start time of the segment in seconds
-                      end:
-                        type: number
-                        description: The end time of the segment in seconds
-                      speaker:
-                        type: string
-                        description: The speaker of the segment
+                    description: An array containing objects with segment level data.
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: The id of the segment.
+                        text:
+                          type: string
+                          description: The text for the segment.
+                        start:
+                          type: number
+                          description: The start time of the segment in seconds.
+                        end:
+                          type: number
+                          description: The end time of the segment in seconds.
+                        speaker:
+                          type: string
+                          description: The speaker of the segment.
                   words:
                     type: array
-                    description: An array containing objects with word level data
-                    properties:
-                      text:
-                        type: string
-                        description: The text for the word
-                      start:
-                        type: number
-                        description: The start time of the word in seconds
-                      end:
-                        type: number
-                        description: The end time of the word in seconds
-                      speaker:
-                        type: string
-                        description: The speaker of the word
+                    description: An array containing objects with word level data.
+                    items:
+                      type: object
+                      properties:
+                        text:
+                          type: string
+                          description: The text for the word.
+                        start:
+                          type: number
+                          description: The start time of the word in seconds.
+                        end:
+                          type: number
+                          description: The end time of the word in seconds.
+                        speaker:
+                          type: string
+                          description: The speaker of the word.
               examples:
                 Basic:
                   value:
@@ -1103,7 +1093,7 @@ paths:
             items:
               type: string
               description: An entity type that the PII check should ignore.
-          example: "ADDRESS"
+          example: ["ADDRESS"]
         - name: Injection
           in: header
           description: Whether to check the output for a prompt injection.
@@ -1744,8 +1734,8 @@ paths:
                   type: array
                   description: An array of entity types that the PII check should ignore.
                   items:
-                    - type: string
-                      description: An entity type that the PII check should ignore.
+                    type: string
+                    description: An entity type that the PII check should ignore.
             examples:
               replace pii:
                 value:

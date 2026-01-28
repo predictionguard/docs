@@ -6,7 +6,7 @@ This guide demonstrates the extraction of patient information from simulated doc
 
 ## Load the data
 
-Download the data from this [json file](pages/usingllms/transcript_data/transcripts.json). You can then use the code below to load the necessary libraries and the dataset from the above mentioned JSON file. The code converts the data into a Pandas DataFrame and selects the first 5 rows for testing.
+Download the data from this [json file](https://storage.googleapis.com/pg-docs-files-public/transcripts.json). You can then use the code below to load the necessary libraries and the dataset from the above mentioned JSON file. The code converts the data into a Pandas DataFrame and selects the first 5 rows for testing.
 
 ```python copy
 import json
@@ -168,4 +168,4 @@ df.to_csv("answers_with_fact_scores.csv", index=False)
 |   3 | 2966 | "D: Good mo... | The patien...  | The patient, Chris, is experiencing symptoms...    | 0.03648262098                                        | The patient's name is Chris.          | 0.8302355409                            | The symptoms started when Chris exp... | 0.8345838189                             | I'm sorry to hear that Chris is expe...                                        | 0.7252672315                                                                       |
 |   4 | 2438 | "D: Hi Erne... | Ernest visi... | The patient, Ernest, is experiencing bladder...    | 0.149951458                                          | The patient's name is Ernest.         | 0.6766917109                            | The symptoms started when Ernest st... | 0.1891670823                             | Based on the information provided, i...                                        | 0.6463367343                                                                       |
 
-You can also call the factual consistency checking functionality directly using the [`/factuality`](../reference/factuality) endpoint, which will enable you to configure thresholds and score arbitrary inputs.
+You can also call the factual consistency checking functionality directly using the [`/factuality`](/api-reference/api-reference/factuality) endpoint, which will enable you to configure thresholds and score arbitrary inputs.
