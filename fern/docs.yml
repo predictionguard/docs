@@ -17,6 +17,9 @@ tabs:
   development:
     display-name: Development and Integration
     icon: book
+  agent-forge:
+    display-name: Agent Forge
+    icon: fa-solid fa-wand-magic-sparkles
   api:
     display-name: API Reference
     icon: puzzle
@@ -33,6 +36,18 @@ navigation:
             path: ./docs/pages/welcome.mdx
           - page: Security
             path: ./docs/pages/security.mdx
+      - section: Agent Forge
+        contents:
+          - page: Overview
+            path: ./docs/pages/agent-forge/overview.mdx
+          - page: Getting Started
+            path: ./docs/pages/agent-forge/getting-started.mdx
+          - page: Chatting with Agents
+            path: ./docs/pages/agent-forge/chatting.mdx
+          - page: Building Agents
+            path: ./docs/pages/agent-forge/building-agents.mdx
+          - page: Knowledge Base
+            path: ./docs/pages/agent-forge/knowledge-base.mdx
   - tab: deployment
     layout:
       - section: Getting Started
@@ -143,7 +158,22 @@ navigation:
         contents:
           - page: Contact Us
             path: ./docs/pages/support.mdx
-
+  - tab: agent-forge
+    layout:
+      - section: Getting Started
+        contents:
+          - page: Overview
+            path: ./docs/pages/agent-forge/overview.mdx
+          - page: Getting Started
+            path: ./docs/pages/agent-forge/getting-started.mdx
+      - section: Using Agent Forge
+        contents:
+          - page: Chatting with Agents
+            path: ./docs/pages/agent-forge/chatting.mdx
+          - page: Building Agents
+            path: ./docs/pages/agent-forge/building-agents.mdx
+          - page: Knowledge Base
+            path: ./docs/pages/agent-forge/knowledge-base.mdx
   - tab: api
     layout:
       - api: API Reference
