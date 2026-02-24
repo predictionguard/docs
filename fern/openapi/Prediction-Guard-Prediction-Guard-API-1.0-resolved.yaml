@@ -2770,7 +2770,7 @@ paths:
                     items:
                       type: object
                       properties:
-                        id:
+                        server_label:
                           type: string
                           description: The id of the MCP server.
                         object:
@@ -2796,7 +2796,7 @@ paths:
                   value:
                     object: "list"
                     data:
-                      - id: "test_mcp_server"
+                      - server_label: "test_mcp_server"
                         object: "mcp_server"
                         created: 1730332800
                         owned_by: "Prediction Guard"
