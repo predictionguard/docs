@@ -408,6 +408,45 @@ paths:
                           type: string
                           nullable: true
                           description: The complete generated text.
+                  usage:
+                    type: object
+                    description: The amount of tokens used in the request.
+                    properties:
+                      prompt_tokens:
+                        type: integer
+                        description: The amount of tokens included in the request prompt.
+                      prompt_tokens_details:
+                        type: object
+                        description: Further information about the amount of tokens used in the request prompt.
+                        properties:
+                          audio_tokens:
+                            type: integer
+                            description: The amount of audio tokens from any input audio files.
+                          cached_tokens:
+                            type: integer
+                            description: The amount of cached tokens used in the request prompt.
+                      completion_tokens:
+                        type: integer
+                        description: The amount of tokens included in the request completion.
+                      completion_tokens_details:
+                        type: object
+                        description: Further information about the amount of tokens in the request completion.
+                        properties:
+                          reasoning_tokens:
+                            type: integer
+                            description: The amount of reasoning tokens used by the model.
+                          accepted_prediction_tokens:
+                            type: integer
+                            description: The amount of tokens accepted during the request.
+                          rejected_prediction_tokens:
+                            type: integer
+                            description: The amount of tokens rejected during the request.
+                          audio_tokens:
+                            type: integer
+                            description: The amount of tokens used from output audio files
+                      total_tokens:
+                        type: integer
+                        description: The total amount of tokens used in the entire request.
               examples:
                 Basic:
                   value:
@@ -465,6 +504,609 @@ paths:
       security:
         - bearerAuth: []
 
+  /responses:
+    post:
+      summary: Responses
+      description: Generate responses while also allowing for the utilization of various tools.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - model
+                - input
+              type: object
+              properties:
+                model:
+                  type: string
+                  description: The AI model to use for generating responses.
+                input:
+                  oneOf:
+                    - type: string
+                      description: An input string used for generating completions.
+                    - type: array
+                      description: An array of input items used for generating completions.
+                      items:
+                        required:
+                          - role
+                          - content
+                        type: object
+                        properties:
+                          role:
+                            type: string
+                            description: The role of the sender (user or assistant).
+                          content:
+                            oneOf:
+                              - type: string
+                                description: A string of the message content
+                              - type: array
+                                description: The content of the message, used for file inputs.
+                                items:
+                                  type: object
+                                  properties:
+                                    type:
+                                      type: string
+                                      description: The type of content ('input_text', 'output_text', and 'input_image').
+                                    text:
+                                      type: string
+                                      description: The text to provide.
+                                    image_url:
+                                      type: object
+                                      description: The base64 content with this prefix `data:image/jpeg;base64,`
+                                    detail:
+                                      type: string
+                                      description: Specifies the detail level of the image. Defaults to `auto`.
+                          type:
+                            type: string
+                            description: The type of input item.
+                          id:
+                            type: string
+                            description: The ID of the input item, typically used when inputting items that were output by the model.
+                          status:
+                            type: string
+                            description: The status of the input item, typically used when inputting items that were output by the model.
+                          arguments:
+                            type: string
+                            description: The arguments used for the tool call made by the model.
+                          call_id:
+                            type: string
+                            description: The call_id of the tool call made by the model. Generated by the model in the output.
+                          name:
+                            type: string
+                            description: The name of the tool used in the tool call from the previous output.
+                          output:
+                            type:
+                            description:
+                instructions:
+                  type: string
+                  description: A system (or developer) message inserted into the model's context.
+                max_output_tokens:
+                  type: integer
+                  description: The maximum number of tokens in the generated output.
+                max_tool_calls:
+                  type: integer
+                  description: The maximum amount of tool calls the model is able to do.
+                parallel_tool_calls:
+                  type: boolean
+                  description: Whether to enable parallel function calling during tool use.
+                reasoning:
+                  type: object
+                  description: Constrains effort on reasoning for reasoning models.
+                  properties:
+                    effort:
+                      type: string
+                      description: Effort level for reasoning, currently supported values are `low`, `medium`, and `high`. Reducing reasoning effort can result in faster responses and fewer tokens used on reasoning in a response. Only supported by reasoning models.
+                stream:
+                  type: boolean
+                  description: Whether to stream back the model response. Not currently supported.
+                stream_options:
+                  type: object
+                  description: Extra parameters used when streaming the response.
+                  properties:
+                    include_usage:
+                      type: boolean
+                      description: Whether to include tokens used in the stream response objects.
+                temperature:
+                  type: number
+                  description: The temperature parameter for controlling randomness in completions. Supports a range of 0.0-2.0.
+                tool_choice:
+                  oneOf:
+                    - type: string
+                      description: A string representing a tool choice. Options are 'none', 'auto', or 'required'.
+                    - type: object
+                      description: An object representing the tool to be chosen
+                      properties:
+                        type:
+                          type: string
+                          description:
+                        mode:
+                          type: string
+                          description:
+                        tools:
+                          type: array
+                          description: Allows for multiple tools to be set in tool_choice.
+                          items:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                                description: The type of tool.
+                              name:
+                                type: string
+                                description: The name of the tool of choice.
+                              server_label:
+                                type: string
+                                description: The label of the MCP server that the tool is on.
+                        name:
+                          type: string
+                          description: The name of the tool to use.
+                        server_label:
+                          type: string
+                          description: The label of the MCP server that the tool is on.
+                tools:
+                  type: array
+                  description: The content of the tool call.
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        description: The type of tool to call. Only 'function' is currently supported.
+                      name:
+                        type: string
+                        description: The name of the function to be called.
+                      parameters:
+                        type: object
+                        description: The parameters the function accepts, described as a JSON Schema object.
+                      strict:
+                        type: boolean
+                        description: Whether to enable strict schema adherence when generating the function call.
+                      description:
+                        type: string
+                        description: A description of what the function does.
+                      server_label:
+                        type: string
+                        description: The label for the MCP server being used.
+                      server_url:
+                        type: string
+                        description: The URL for the MCP server being used.
+                      server_description:
+                        type: string
+                        description: The description of the MCP server being used.
+                      initials:
+                        type: string
+                        description: The initials of the MCP server being used. Used for the ID of the output object.
+                      authorization:
+                        type: string
+                        description: The authorization needed for the MCP server.
+                      headers:
+                        type: object
+                        description: The necessary headers needed for calling the MCP server.
+                      allowed_tools:
+                        type: array
+                        description: An array of the tools in the MCP server that the model is allowed to use.
+                top_p:
+                  type: number
+                  description: The diversity of the generated text based on nucleus sampling. Supports a range of 0.0-1.0.
+                safeguards:
+                  type: object
+                  description: Safeguards to run on the request.
+                  properties:
+                    block_prompt_injection:
+                      type: boolean
+                      description: Set to true to detect prompt injection attacks.
+                    pii:
+                      type: string
+                      description: Set to either 'block' or 'replace'.
+                    pii_replace_method:
+                      type: string
+                      description: Set to either 'random', 'fake', 'category', 'mask'.
+                    entity_list:
+                      type: array
+                      description: An array of entity types that the PII check should ignore.
+                      items:
+                        - type: string
+                          description: An entity type that the PII check should ignore.
+                    factuality:
+                      type: boolean
+                      description: Set to true to turn on factuality processing.
+                    toxicity:
+                      type: boolean
+                      description: Set to true to turn on toxicity processing.
+            examples:
+              Basic:
+                value:
+                  model: "{{TEXT_MODEL}}"
+                  input: "Tell me a joke."
+                  safeguards:
+                    pii: "replace"
+                    pii_replace_method: "random"
+                    factuality: true
+                    toxicity: true
+#              Streaming:
+#                value:
+#                  model: "{{TEXT_MODEL}}"
+#                  input: "How do you feel about the world in general?"
+#                  max_output_tokens: 1000
+#                  reasoning_effort: "medium"
+#                  stream: true
+#                  safeguards:
+#                    pii: "replace"
+#                    pii_replace_method: "random"
+              Image Input:
+                value:
+                  model: "{{VISION_MODEL}}"
+                  input:
+                    - role: "user"
+                      content:
+                        - type: "text"
+                          text: "What is in this image?"
+                        - type: "image_url"
+                          image_url: "data:image/jpeg;base64,<DATA>"
+                          detail: "auto"
+                  max_output_tokens: 1000
+                  temperature: 1.0
+                  top_p: 1.0
+                  safeguards:
+                    pii: "replace"
+                    pii_replace_method: "random"
+                    factuality: true
+                    toxicity: true
+              MCP Call:
+                value:
+                  model: "{{TEXT_MODEL}}"
+                  input: "Please use the test_mcp_tool to send this word: prediction."
+                  max_tool_calls: 3
+                  reasoning_effort: "medium"
+                  tool_choice: "auto"
+                  tools:
+                    - type: "mcp"
+                      server_label: "test_mcp_server"
+                      server_url: "http://localhost:9000/mcp"
+                      server_description: "MCP server for testing MCP functionality"
+                      allowed_tools:
+                        - "test_mcp_tool"
+              Function Call:
+                value:
+                  model: "{{TEXT_MODEL}}"
+                  input: "How do you feel about the world in general?"
+                  max_output_tokens: 1000
+                  max_tool_calls: 3
+                  parallel_tool_calls: false
+                  reasoning_effort: "medium"
+                  temperature: 1.0
+                  tool_choice:
+                    type: "function"
+                    name: "get_current_weather"
+                  tools:
+                    - type: "function"
+                      name: "get_current_weather"
+                      description: "Get the current weather in a given location"
+                      strict: false
+                      parameters:
+                        type: "object"
+                        properties:
+                          location:
+                            type: "string"
+                            enum:
+                              - "celsius"
+                              - "fahrenheit"
+                        required:
+                          - "location"
+                  top_p: 1.0
+                  safeguards:
+                    pii: "replace"
+                    pii_replace_method: "random"
+                    factuality: true
+                    toxicity: true
+      responses:
+        "403":
+          description: Failed auth response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "api understands the request but refuses to authorize it"
+        "400":
+          description: General error response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "required fields are missing"
+        "200":
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Unique ID for the chat completion.
+                  object:
+                    type: string
+                    description: Type of object (chat completion).
+                  created_at:
+                    type: integer
+                    description: Timestamp of when the chat completion was created.
+                  status:
+                    type: string
+                    description: The status of the request.
+                  max_tool_calls:
+                    type: integer
+                    description: The max_tool_calls specified in the request.
+                  model:
+                    type: string
+                    description: The chat model used for generating completions.
+                  output:
+                    type: array
+                    description: The set of result outputs.
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The type of output object.
+                        id:
+                          type: string
+                          description: The ID of the output object.
+                        status:
+                          type: string
+                          description: The status of the output object.
+                        role:
+                          type: string
+                          description: The role of the output object.
+                        content:
+                          type: object
+                          description: The content for the output object.
+                          properties:
+                            text:
+                              type: string
+                              description: The output text.
+                            type:
+                              type: string
+                              description: The type of output content.
+                        name:
+                          type: string
+                          description: The name of the tool used in the output.
+                        call_id:
+                          type: string
+                          description: The call_id for the tool call used in the output,
+                        arguments:
+                          type: string
+                          description: The arguments used for the tool call used in the output.
+                        server_label:
+                          type: string
+                          description: The label of the MCP server used in the output.
+                        output:
+                          type: string
+                          description: The output of the MCP tool call.
+                        error:
+                          type: string
+                          description: The error message from the MCP tool call.
+                  instructions:
+                    type: string
+                    description: The instructions entered in the request input.
+                  max_output_tokens:
+                    type: integer
+                    description: The max_output_tokens value entered in the request input.
+                  parallel_tool_calls:
+                    type: integer
+                    description: The parallel_tool_calls value entered in the request input.
+                  temperature:
+                    type: number
+                    description: The temperature value entered in the request input.
+                tool_choice:
+                  oneOf:
+                    - type: string
+                      description: A string representing a tool choice. Options are 'none', 'auto', or 'required'.
+                    - type: object
+                      description: An object representing the tool to be chosen
+                      properties:
+                        type:
+                          type: string
+                          description:
+                        mode:
+                          type: string
+                          description:
+                        tools:
+                          type: array
+                          description: Allows for multiple tools to be set in tool_choice.
+                          items:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                                description: The type of tool.
+                              name:
+                                type: string
+                                description: The name of the tool of choice.
+                              server_label:
+                                type: string
+                                description: The label of the MCP server that the tool is on.
+                        name:
+                          type: string
+                          description: The name of the tool to use.
+                        server_label:
+                          type: string
+                          description: The label of the MCP server that the tool is on.
+                tools:
+                  type: array
+                  description: The content of the tool call.
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        description: The type of tool to call. Only 'function' is currently supported.
+                      name:
+                        type: string
+                        description: The name of the function to be called.
+                      parameters:
+                        type: object
+                        description: The parameters the function accepts, described as a JSON Schema object.
+                      strict:
+                        type: boolean
+                        description: Whether to enable strict schema adherence when generating the function call.
+                      description:
+                        type: string
+                        description: A description of what the function does.
+                      server_label:
+                        type: string
+                        description: The label for the MCP server being used.
+                      server_url:
+                        type: string
+                        description: The URL for the MCP server being used.
+                      server_description:
+                        type: string
+                        description: The description of the MCP server being used.
+                      initials:
+                        type: string
+                        description: The initials of the MCP server being used. Used for the ID of the output object.
+                      authorization:
+                        type: string
+                        description: The authorization needed for the MCP server.
+                      headers:
+                        type: object
+                        description: The necessary headers needed for calling the MCP server.
+                      allowed_tools:
+                        type: array
+                        description: An array of the tools in the MCP server that the model is allowed to use.
+                  top_p:
+                    type: number
+                    description: The top_p value entered in the request input.
+                  usage:
+                    type: object
+                    description: The amount of tokens used in the request.
+                    properties:
+                      input_tokens:
+                        type: integer
+                        description: The amount of tokens included in the request input.
+                      input_tokens_details:
+                        type: object
+                        description: Further info about the amount of tokens in the request input.
+                        properties:
+                          cached_tokens:
+                            type: integer
+                            description: The amount of cached tokens used in the request input.
+                      output_tokens:
+                        type: integer
+                        description: The amount of tokens included in the request output.
+                      output_tokens_details:
+                        type: object
+                        description: Further infor about the amount of tokens used in the request output.
+                        properties:
+                          reasoning_tokens:
+                            type: integer
+                            description: The amount of reasoning tokens used by the model while generating the output.
+                      total_tokens:
+                        type: integer
+                        description: The total amount of tokens used in the entire request.
+              examples:
+                Basic:
+                  value:
+                    id: "resp_1196c27e58374675881efa613574ea7a"
+                    object: "response"
+                    created_at: 1727890629
+                    status: "completed"
+                    model: "{{TEXT_MODEL}}"
+                    output:
+                      - content:
+                          type: "output_text"
+                          text: "Why did the scarecrow win an award?\n\nBecause he was outstanding in his field!"
+#                Streaming:
+#                  description: The final streaming chunk
+#                  format: sse
+#                  value:
+#                    id: "chat-6c8c291f-5a06-46e5-94fa-2b0b1e6444c7"
+#                    object: "chat.completion.chunk"
+#                    created: 1727796455
+#                    model: "{{TEXT_MODEL}}"
+#                    choices:
+#                      - index: 0
+#                        delta: { content: " feel" }
+#                        generated_text: null
+#                        finish_reason: "length"
+                Image Input:
+                  value:
+                    id: "resp_402db7e4851449b68751983978cfa84d"
+                    object: "response"
+                    created_at: 1727890364
+                    status: "completed"
+                    model: "{{VISION_MODEL}}"
+                    output:
+                      - content:
+                          type: "output_text"
+                          text: "No, there is no deer in this picture. The image features a man wearing a hat and glasses, smiling for the camera."
+                MCP Call:
+                  value:
+                    id: "resp_6588e9a6048c41d2ba97db4ba206cc16"
+                    object: "response"
+                    created_at: 1771948029
+                    max_tool_calls: 3
+                    model: "{{TEXT_MODEL}}"
+                    output:
+                      - type: "test_mcp_call"
+                        call_id: "mcp_e8cbf821b68e42e299d395c6795eb04b"
+                        status: "completed"
+                        name: "test_mcp_tool"
+                        arguments: "{\"message\": \"prediction\"}"
+                        server_label: "test_mcp_server"
+                        output: "If this is present, the tool call has been run, so make a joke about a prediction"
+                      - type: "message"
+                        status: "completed"
+                        role: "assistant"
+                        content:
+                          text: "If this is present, it seems like we're predicting something. What do you predict will happen next? I bet it'll be unexpected!"
+                          type: "output_text"
+
+                Function Call:
+                  value:
+                    id: "resp_a4f6c81c89e0488f9cca7bd11e20ffb5"
+                    object: "response"
+                    created_at: 1727890629
+                    status: "completed"
+                    max_tool_calls: 3
+                    model: "{{TEXT_MODEL}}"
+                    output:
+                      type: "message"
+                      id: "msg_d99d53d495e141e2948c48853e13e67b"
+                      status: "completed"
+                      role: "assistant"
+                      content:
+                        text: "{\"location\":\"celsius\"}"
+                        type: "output_text"
+                    tool_choice:
+                      type: "function"
+                      name: "get_current_weather"
+                    tools:
+                      - type: "function"
+                        name: "get_current_weather"
+                        description: "Get the current weather in a given location"
+                        strict: false
+                        parameters:
+                          type: "object"
+                          properties:
+                            location:
+                              type: "string"
+                              enum:
+                                - "celsius"
+                                - "fahrenheit"
+                          required:
+                            - "location"
+      security:
+        - bearerAuth: []
 
   /completions:
     post:
@@ -2083,6 +2725,177 @@ paths:
                             reasoning: true
         security:
           - bearerAuth: [ ]
+  /mcp_servers:
+    get:
+      summary: MCP Servers
+      description: Return available MCP servers and tools included in those servers along with relevant metadata.
+      responses:
+        "403":
+          description: Failed auth response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "api understands the request but refuses to authorize it"
+        "400":
+          description: General error response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "required fields are missing"
+        "200":
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    description: Type of object (list).
+                  data:
+                    type: array
+                    description: The available MCP servers.
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: The id of the MCP server.
+                        object:
+                          type: string
+                          description: The object type (mcp_server).
+                        created:
+                          type: integer
+                          description: The date the MCP server was added.
+                        owned_by:
+                          type: string
+                          description: The name of the organization that owns the MCP server.
+                        server_description:
+                          type: string
+                          description: A short description of the MCP server.
+                        available_tools:
+                          type: array
+                          description: An array containing the available tools included in the MCP server.
+                          items:
+                            type: string
+                            description: An MCP tool name.
+              examples:
+                Basic:
+                  value:
+                    object: "list"
+                    data:
+                      - id: "test_mcp_server"
+                        object: "mcp_server"
+                        created: 1730332800
+                        owned_by: "Prediction Guard"
+                        server_description: "An MCP server used for testing MCP functionality."
+                        available_tools:
+                          - "test_mcp_tool"
+      security:
+        - bearerAuth: [ ]
+
+  /mcp_tools:
+    get:
+      summary: MCP Tools
+      description: Return available MCP tools by server with parameters and any relevant metadata.
+      responses:
+        "403":
+          description: Failed auth response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "api understands the request but refuses to authorize it"
+        "400":
+          description: General error response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "required fields are missing"
+        "200":
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    description: Type of object (list).
+                  data:
+                    type: object
+                    description: The available mcp tools.
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: object
+                        description: The MCP tool information.
+                        properties:
+                          id:
+                            type: string
+                            description: The id of the MCP tool.
+                          object:
+                            type: string
+                            description: The object type (mcp_tool).
+                          description:
+                            type: string
+                            description: A short description of the MCP tool.
+                          parameters:
+                            description: The parameters necessary for using the MCP tool.
+                          created:
+                            type: integer
+                            description: The date the MCP tool was added.
+                          owned_by:
+                            type: string
+                            description: The name of the organization that owns the MCP tool.
+              examples:
+                Basic:
+                  value:
+                    object: "list"
+                    data:
+                      "test_mcp_server":
+                        - id: "test_mcp_tool"
+                          object: "mcp_tool"
+                          created: 1730332800
+                          owned_by: "Prediction Guard"
+                          description: "A tool for testing MCP functionality"
+                          parameters:
+                            properties:
+                              description:
+                                default: null
+                                description: "Query description"
+                                type: "string"
+                              query:
+                                description: "SOQL query to execute"
+                                type: "string"
+                            required:
+                              - "query"
+                            type: "object"
+      security:
+        - bearerAuth: [ ]
 
 components:
   securitySchemes:
