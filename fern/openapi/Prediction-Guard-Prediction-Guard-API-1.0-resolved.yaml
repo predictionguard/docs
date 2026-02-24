@@ -739,9 +739,9 @@ paths:
                   input:
                     - role: "user"
                       content:
-                        - type: "text"
+                        - type: "input_text"
                           text: "What is in this image?"
-                        - type: "image_url"
+                        - type: "input_image"
                           image_url: "data:image/jpeg;base64,<DATA>"
                           detail: "auto"
                   max_output_tokens: 1000
