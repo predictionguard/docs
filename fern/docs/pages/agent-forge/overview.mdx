@@ -1,6 +1,6 @@
 ---
 title: Agent Forge Overview
-subtitle: Agent Forge (formerly Agent Studio) is Prediction Guard's intuitive web-based platform for building, managing, and deploying AI agents without writing code. It enables teams to create specialized AI assistants tailored to specific use cases, complete with knowledge bases, security controls, and custom configurations.
+subtitle: Agent Forge is Prediction Guard's intuitive web-based platform for building, managing, and deploying AI agents without writing code. It enables teams to create specialized AI assistants tailored to specific use cases, complete with knowledge bases, MCP tool integrations, security controls, and custom configurations.
 description: Learn about Agent Forge, Prediction Guard's platform for building, managing, and deploying AI agents
 ---
 
@@ -13,6 +13,7 @@ Agent Forge is a comprehensive agent development and management platform that al
 - **Knowledge Base Integration**: Connect agents to organizational knowledge through document uploads and vector search
 - **Enterprise Security**: Built-in PII detection, prompt injection protection, and access controls
 - **Collaborative Platform**: Share agents across your organization and manage team access
+- **MCP Tool Integration**: Connect agents to external tools, APIs, and data sources via native Model Context Protocol support
 - **Production-Ready**: Deploy agents that integrate seamlessly with your Prediction Guard infrastructure
 
 ## Key Capabilities
@@ -24,6 +25,14 @@ Agent Forge provides comprehensive tools for building sophisticated AI agents:
 - **Model Selection**: Choose from available LLMs deployed in your Prediction Guard instance
 - **System Prompts**: Define agent behavior, personality, and expertise with detailed instructions
 - **Advanced Generation Settings**: Fine-tune temperature, Top P, Top K, and max output tokens for optimal responses
+
+### MCP Tool Integration
+
+Extend agent capabilities beyond language generation with native Model Context Protocol (MCP) support:
+
+- **Organization-Level MCP**: Administrators can configure shared MCP servers available to all agents
+- **Agent-Level MCP**: Individual agents can connect to custom MCP servers for specialized needs
+- **Live Data Access**: Query databases, APIs, and external services in real-time
 
 ### Knowledge Base Management
 
@@ -78,9 +87,10 @@ Getting started with Agent Forge is simple:
 2. **Create Account**: Sign up with your email and create a secure password
 3. **Explore Shared Agents**: Start by chatting with agents shared by your organization
 4. **Build Your First Agent**: Click "Create New Agent" and configure your custom agent ('Member' level and above)
-5. **Add Knowledge**: Upload relevant documents to create a knowledge base
-6. **Test & Iterate**: Chat with your agent and refine its configuration
-7. **Share with Team**: Enable organization sharing when ready for team use
+5. **Connect MCP Tools**: Attach organization or custom MCP servers to extend your agent's capabilities
+6. **Add Knowledge**: Upload relevant documents to create a knowledge base
+7. **Test & Iterate**: Chat with your agent and refine its configuration
+8. **Share with Team**: Enable organization sharing when ready for team use
 
 ## Benefits
 
@@ -107,4 +117,5 @@ Ready to get started? Continue with:
 - [Getting Started](/agent-forge/getting-started/getting-started) - Account setup and first login
 - [Chatting with Agents](/agent-forge/using-agent-forge/chatting-with-agents) - Learn the chat interface
 - [Building Agents](/agent-forge/using-agent-forge/building-agents) - Create your first agent
+- [MCP Integration](/agent-forge/using-agent-forge/mcp) - Connect agents to external tools and data sources
 - [Knowledge Base](/agent-forge/using-agent-forge/knowledge-base) - Add RAG-based knowledge base to agents

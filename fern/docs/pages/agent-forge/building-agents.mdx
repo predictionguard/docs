@@ -199,6 +199,11 @@ When explaining code vulnerabilities, provide:
 - ✅ API integrations
 - ✅ Batch processing
 - ✅ When complete response needed before action
+- ✅ When using MCP tool calls
+
+<Callout intent="info">
+**MCP requires "Non-streaming (with MCP capabilities)" mode**: If you plan to connect your agent to external tools via [MCP Integration](/agent-forge/using-agent-forge/mcp), make sure you choose the right mode. MCP tool calls execute in real-time and stream results back as they arrive.
+</Callout>
 
 ## Generation Settings (Advanced Settings)
 
@@ -447,5 +452,6 @@ After creation, thoroughly test your agent:
 
 Now that you can build agents:
 
-1. **[Create Knowledge Bases](/agent-forge/using-agent-forge/knowledge-base)** - Add organizational knowledge to your agents
-2. **[Share with Team](/agent-forge/using-agent-forge/chatting-with-agents)** - Enable organization sharing and collaborate
+1. **[Configure MCP](/agent-forge/using-agent-forge/mcp)** - Connect your agent to external tools and live data sources
+2. **[Create Knowledge Bases](/agent-forge/using-agent-forge/knowledge-base)** - Add organizational knowledge to your agents
+3. **[Share with Team](/agent-forge/using-agent-forge/chatting-with-agents)** - Enable organization sharing and collaborate

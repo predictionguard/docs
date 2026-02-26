@@ -48,6 +48,8 @@ navigation:
             path: ./docs/pages/agent-forge/building-agents.mdx
           - page: Knowledge Base
             path: ./docs/pages/agent-forge/knowledge-base.mdx
+          - page: MCP Integration
+            path: ./docs/pages/agent-forge/mcp.mdx
   - tab: deployment
     layout:
       - section: Getting Started
@@ -174,6 +176,8 @@ navigation:
             path: ./docs/pages/agent-forge/building-agents.mdx
           - page: Knowledge Base
             path: ./docs/pages/agent-forge/knowledge-base.mdx
+          - page: MCP Integration
+            path: ./docs/pages/agent-forge/mcp.mdx
   - tab: api
     layout:
       - api: API Reference
