@@ -10,8 +10,8 @@ groups:
         smart-casing: false
 api:
   specs:
-    - openapi: openapi\Prediction-Guard-Prediction-Guard-API-1.0-resolved.yaml
-      settings:
+    - openapi: openapi/responses.yaml
+      settings: &shared-settings
         title-as-schema-name: true
         type-dates-as-strings: true
         object-query-parameters: false
@@ -21,3 +21,23 @@ api:
         coerce-optional-schemas-to-nullable: true
         inline-path-parameters: false
         coerce-enums-to-literals: true
+    - openapi: openapi/chat-completions.yaml
+      settings: *shared-settings
+    - openapi: openapi/completions.yaml
+      settings: *shared-settings
+    - openapi: openapi/embeddings.yaml
+      settings: *shared-settings
+    - openapi: openapi/audio.yaml
+      settings: *shared-settings
+    - openapi: openapi/documents.yaml
+      settings: *shared-settings
+    - openapi: openapi/rerank.yaml
+      settings: *shared-settings
+    - openapi: openapi/tokenization.yaml
+      settings: *shared-settings
+    - openapi: openapi/safety.yaml
+      settings: *shared-settings
+    - openapi: openapi/models.yaml
+      settings: *shared-settings
+    - openapi: openapi/mcp.yaml
+      settings: *shared-settings

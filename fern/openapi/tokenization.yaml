@@ -1,0 +1,232 @@
+openapi: 3.1.0
+
+info:
+  title: Prediction Guard API
+  description: "This is the Prediction Guard API, designed to provide various language-related services and checks."
+  version: "1.2"
+
+servers:
+  - url: https://{your-pg.api-domain}.com
+
+paths:
+  /tokenize:
+    post:
+      summary: Tokenize
+      description: Generates tokens for a string using a model's tokenizer.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - model
+                - input
+              type: object
+              properties:
+                model:
+                  type: string
+                  description: The name of the model to use for tokenization.
+                input:
+                  type: string
+                  description: The text to tokenize.
+            examples:
+              Basic:
+                value:
+                  model: "{{TEXT_MODEL}}"
+                  input: "Tell me a joke."
+      responses:
+        "403":
+          description: Failed auth response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "api understands the request but refuses to authorize it"
+        "400":
+          description: General error response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "required fields are missing"
+        "200":
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Unique ID for the token.
+                  object:
+                    type: string
+                    description: Type of object (tokens).
+                  created:
+                    type: integer
+                    description: Timestamp of when the tokens were generated.
+                  model:
+                    type: string
+                    description: The name of the model used.
+                  tokens:
+                    type: array
+                    description: An array of token data.
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: The converted token.
+                        start:
+                          type: integer
+                          description: The index the token starts at.
+                        stop:
+                          type: integer
+                          description: The index the token ends at.
+                        text:
+                          type: string
+                          description: The token as text.
+              examples:
+                Basic:
+                  value:
+                    id: "token-ab046fcf-945f-421c-b9f0-1c75ff355203"
+                    object: "tokens"
+                    created: 1729871708
+                    model: "{{TEXT_MODEL}}"
+                    tokens:
+                      - id: 1
+                        start: 0
+                        stop: 0
+                        text: ""
+                      - id: 851
+                        start: 0
+                        stop: 4
+                        text: "This"
+                      - id: 349
+                        start: 4
+                        stop: 7
+                        text: " is"
+                      - id: 264
+                        start: 7
+                        stop: 9
+                        text: " a"
+                      - id: 6029
+                        start: 9
+                        stop: 15
+                        text: " token"
+                      - id: 653
+                        start: 15
+                        stop: 18
+                        text: "ize"
+                      - id: 2757
+                        start: 18
+                        stop: 26
+                        text: " example"
+                      - id: 28723
+                        start: 26
+                        stop: 27
+                        text: "."
+      security:
+        - bearerAuth: []
+
+  /detokenize:
+    post:
+      summary: Detokenize
+      description: Generates text from tokens using a model's tokenizer.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - model
+                - tokens
+              type: object
+              properties:
+                model:
+                  type: string
+                  description: The name of the model to use for detokenization.
+                tokens:
+                  type: array
+                  description: The tokens to turn into text.
+                  items:
+                    type: integer
+            examples:
+              Basic:
+                value:
+                  model: "{{TEXT_MODEL}}"
+                  tokens: [1, 851, 349, 264, 6029, 653, 2757, 28723]
+      responses:
+        "403":
+          description: Failed auth response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "api understands the request but refuses to authorize it"
+        "400":
+          description: General error response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "required fields are missing"
+        "200":
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Unique ID for the token.
+                  object:
+                    type: string
+                    description: Type of object (tokens).
+                  created:
+                    type: integer
+                    description: Timestamp of when the tokens were generated.
+                  model:
+                    type: string
+                    description: The name of the model used.
+                  text:
+                    type: string
+                    description: The converted tokens
+              examples:
+                Basic:
+                  value:
+                    id: "token-ab046fcf-945f-421c-b9f0-1c75ff355203"
+                    object: "tokens"
+                    created: 1729871708
+                    model: "{{TEXT_MODEL}}"
+                    text: "This is a tokenize example."
+      security:
+        - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      in: header
+  schemas:
