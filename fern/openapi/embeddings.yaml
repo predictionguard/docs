@@ -1,0 +1,160 @@
+openapi: 3.1.0
+
+info:
+  title: Prediction Guard API
+  description: "This is the Prediction Guard API, designed to provide various language-related services and checks."
+  version: "1.2"
+
+servers:
+  - url: https://{your-pg.api-domain}.com
+
+paths:
+  /embeddings:
+    post:
+      summary: Embeddings
+      description: Generate vector data points from text and images.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - model
+                - input
+              type: object
+              properties:
+                model:
+                  type: string
+                  description: The model to use for generating vectors.
+                input:
+                  oneOf:
+                    - type: string
+                      description: A string of text to be embedded.
+                    - type: array
+                      description: An array of strings or objects containing the text and/or images to be embedded.
+                      items:
+                        oneOf:
+                          - type: string
+                            description: A string of text to be embedded.
+                          - type: integer
+                            description: A token to be embedded.
+                          - type: array
+                            description: An array of tokens to be embedded.
+                            items:
+                              type: integer
+                              description: A token to be embedded.
+                          - type: object
+                            description: Use this option for multimodal input.
+                            properties:
+                              text:
+                                type: string
+                                description: The text to embed. You can choose to provide this or not.
+                              image:
+                                type: string
+                                description: The base64 encoding of an image. You can choose to provide this or not.
+                truncate:
+                  type: boolean
+                  description: Boolean setting whether to truncate inputs. Not supported by bridgetower.
+                truncation_direction:
+                  type: string
+                  description: Which direction to truncate, "Left" or "Right". Not supported by bridgetower.
+            examples:
+              Basic:
+                value:
+                  model: "{{TEXT_EMBED}}"
+                  input: "A person is ironing something while standing on the back of a taxi."
+                  truncate: true
+                  truncation_direction: "Right"
+              Image Input:
+                value:
+                  model: "{{IMAGE_EMBED}}"
+                  input:
+                    - text: "A person is ironing something while standing on the back of a taxi."
+                      image: "<base64 encoded image>"
+      responses:
+        "403":
+          description: Failed auth response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "api understands the request but refuses to authorize it"
+        "400":
+          description: General error response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "required fields are missing"
+        "200":
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Unique ID for the embeddings.
+                  object:
+                    type: string
+                    description: Type of object (list).
+                  created:
+                    type: integer
+                    description: Timestamp of when the embeddings was created.
+                  model:
+                    type: string
+                    description: The embeddings model used.
+                  data:
+                    type: array
+                    description: The set of vectorized data.
+                    items:
+                      type: object
+                      properties:
+                        index:
+                          type: integer
+                          description: The index position in the collection.
+                        embedding:
+                          type: array
+                          description: The array of vector values.
+                          items:
+                            type: number
+              examples:
+                Basic:
+                  value:
+                    id: "emb-5b310173-3cc9-4470-aa3b-7503aacb4f38"
+                    object: "list"
+                    created: 1729115349
+                    model: "{{TEXT_EMBED}}"
+                    data:
+                      - index: 0
+                        embedding: [0.0150606595, 0.04376322]
+                Image Input:
+                  value:
+                    id: "emb-5b310173-3cc9-4470-aa3b-7503aacb4f38"
+                    object: "list"
+                    created: 1729115349
+                    model: "{{IMAGE_EMBED}}"
+                    data:
+                      - index: 0
+                        embedding: [ 0.0150606595, 0.04376322 ]
+      security:
+        - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      in: header
+  schemas:

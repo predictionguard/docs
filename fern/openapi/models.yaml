@@ -1,0 +1,152 @@
+openapi: 3.1.0
+
+info:
+  title: Prediction Guard API
+  description: "This is the Prediction Guard API, designed to provide various language-related services and checks."
+  version: "1.2"
+
+servers:
+  - url: https://{your-pg.api-domain}.com
+
+paths:
+  /models/{capability}:
+      get:
+        summary: Models
+        parameters:
+          - in: path
+            name: capability
+            schema:
+              type: string
+              description: Optional path variable to allow for sorting by capability. Leave blank to see all models.
+              enum:
+                - chat-completion
+                - chat-with-image
+                - completion
+                - embedding
+                - embedding-with-image
+                - tokenize
+                - detokenize
+                - rerank
+                - tool_calling
+                - reasoning
+        description: Return available models for an endpoint and relevant metadata for them.
+        responses:
+          "403":
+            description: Failed auth response.
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      type: string
+                      description: Description of the error.
+                example:
+                  error: "api understands the request but refuses to authorize it"
+          "400":
+            description: General error response.
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      type: string
+                      description: Description of the error.
+                example:
+                  error: "required fields are missing"
+          "200":
+            description: Successful response.
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    object:
+                      type: string
+                      description: Type of object (list).
+                    data:
+                      type: array
+                      description: The available models.
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            description: The id of the model.
+                          object:
+                            type: string
+                            description: The object type (model).
+                          created:
+                            type: integer
+                            description: The date the model was added.
+                          owned_by:
+                            type: string
+                            description: The name of the organization that owns the model (from huggingface).
+                          description:
+                            type: string
+                            description: A short description of the model.
+                          max_context_length:
+                            type: integer
+                            description: The max context length of the model.
+                          prompt_format:
+                            type: string
+                            description: The name of the prompt format (if any) the model uses.
+                          capabilities:
+                            type: object
+                            description: The available capabilities of the model.
+                            properties:
+                              chat_completion:
+                                type: boolean
+                              chat_with_image:
+                                type: boolean
+                              completion:
+                                type: boolean
+                              embedding:
+                                type: boolean
+                              embedding_with_image:
+                                type: boolean
+                              tokenize:
+                                type: boolean
+                              detokenize:
+                                type: boolean
+                              rerank:
+                                type: boolean
+                              tool_calling:
+                                type: boolean
+                              reasoning:
+                                type: boolean
+                examples:
+                  Basic:
+                    value:
+                      object: "list"
+                      data:
+                        - id: "gpt-oss-120b"
+                          object: "model"
+                          created: 1730332800
+                          owned_by: "OpenAI"
+                          description: "GPT-OSS 120b is an OpenAI model for powerful reasoning, agentic tasks, and high reasoning use cases."
+                          max_context_length: 128000
+                          prompt_format: "none"
+                          capabilities:
+                            chat_completion: true
+                            chat_with_image: false
+                            completion: true
+                            embedding: false
+                            embedding_with_image: false
+                            tokenize: true
+                            detokenize: true
+                            rerank: false
+                            tool_calling: true
+                            reasoning: true
+        security:
+          - bearerAuth: [ ]
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      in: header
+  schemas:
