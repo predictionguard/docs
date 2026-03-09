@@ -1,0 +1,254 @@
+openapi: 3.1.0
+
+info:
+  title: Prediction Guard API
+  description: "This is the Prediction Guard API, designed to provide various language-related services and checks."
+  version: "1.2"
+
+servers:
+  - url: https://{your-pg.api-domain}.com
+
+paths:
+  /audio/transcriptions:
+    post:
+      summary: Audio Transcription
+      description: This endpoint allows you to transcribe audio.
+      parameters:
+        - name: Toxicity
+          in: header
+          description: Whether to check the output for toxicity.
+          schema:
+            type: boolean
+          example: false
+        - name: Pii
+          in: header
+          description: Whether to check the output for Pii, and what to do if found. Supported values are 'replace' and 'block'.
+          schema:
+            type: string
+          example: ""
+        - name: Replace-Method
+          in: header
+          description: Method to replace any found PII. Supported values are 'category', 'fake', 'mask', and 'random'.
+          schema:
+            type: string
+          example: ""
+        - name: Entity-List
+          in: header
+          description: An array of entity types that the PII check should ignore.
+          schema:
+            type: array
+            items:
+              type: string
+              description: An entity type that the PII check should ignore.
+          example: ["ADDRESS"]
+        - name: Injection
+          in: header
+          description: Whether to check the output for a prompt injection.
+          schema:
+            type: boolean
+          example: false
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                model:
+                  type: string
+                  description: The transcription model to use.
+                file:
+                  type: string
+                  format: binary
+                  description: The audio file to upload.
+                language:
+                  type: string
+                  description: The language the audio is in.
+                prompt:
+                  type: string
+                  description: An optional text to guide the model's style or continue a previous audio segment.
+                temperature:
+                  type: number
+                  description: The temperature parameter for controlling randomness in transcription. Supports a range of 0.0-2.0.
+                timestamps_granularities[]:
+                  description: Sets whether timestamps are returned and at what granularity.
+                  oneOf:
+                    - type: string
+                      description: The timestamp granularity to populate for this transcription. Values can be "word" or "segment".
+                    - type: array
+                      description: The timestamp granularities to populate for this transcription. Values can be "word" and/or "segment".
+                diarization:
+                  type: boolean
+                  description: Whether to diarize the audio and return speaker turns. Not currently supported in multi-tenant environments.
+                response_format:
+                  type: string
+                  description: The format for the response object. Defaults to "json" and must be set to "verbose_json" when using diarization or timestamp granularities.
+              required:
+                - file
+                - model
+            examples:
+              Basic:
+                value:
+                  model: "{{AUDIO_MODEL}}"
+                  file: "jfk.wav"
+              Word Timestamps:
+                value:
+                  model: "{{AUDIO_MODEL}}"
+                  file: "jfk.wav"
+                  timestamps_granularities[]: "word"
+                  response_format: "verbose_json"
+              Segment Timestamps:
+                value:
+                  model: "{{AUDIO_MODEL}}"
+                  file: "jsf.wav"
+                  timestamp_granularities[]: "segment"
+                  response_format: "verbose_json"
+              Diarization:
+                value:
+                  model: "{{AUDIO_MODEL}}"
+                  file: "jfk.wav"
+                  diarization: true
+                  response_format: "verbose_json"
+      responses:
+        "403":
+          description: Failed auth response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "api understands the request but refuses to authorize it"
+        "400":
+          description: General error response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "required fields are missing"
+        "200":
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  text:
+                    type: string
+                    description: The transcribed audio.
+                  task:
+                    type: string
+                    description: The task used in the request.
+                  language:
+                    type: string
+                    description: The language of the audio file.
+                  duration:
+                    type: number
+                    description: The duration of the audio file in seconds.
+                  segments:
+                    type: array
+                    description: An array containing objects with segment level data.
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: The id of the segment.
+                        text:
+                          type: string
+                          description: The text for the segment.
+                        start:
+                          type: number
+                          description: The start time of the segment in seconds.
+                        end:
+                          type: number
+                          description: The end time of the segment in seconds.
+                        speaker:
+                          type: string
+                          description: The speaker of the segment.
+                  words:
+                    type: array
+                    description: An array containing objects with word level data.
+                    items:
+                      type: object
+                      properties:
+                        text:
+                          type: string
+                          description: The text for the word.
+                        start:
+                          type: number
+                          description: The start time of the word in seconds.
+                        end:
+                          type: number
+                          description: The end time of the word in seconds.
+                        speaker:
+                          type: string
+                          description: The speaker of the word.
+              examples:
+                Basic:
+                  value:
+                    text: "And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country."
+                Word Timestamps:
+                  value:
+                    text: "And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country."
+                    task: "transcribe"
+                    language: "en"
+                    duration: 8.7
+                    words:
+                      - text: "And"
+                        start: 0.0
+                        end: 0.1
+                      - text: "so"
+                        start: 0.11
+                        end: 0.2
+                Segment Timestamps:
+                  value:
+                    text: "And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country."
+                    task: "transcribe"
+                    language: "en"
+                    duration: 8.7
+                    segments:
+                      - id: 0
+                        text: "And so my fellow Americans,"
+                        start: 0.0
+                        end: 2.13
+                      - id: 1
+                        text: "ask not what your country can do for you,"
+                        start: 2.14
+                        end: 5.4
+                Diarization:
+                  value:
+                    text: "And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country."
+                    task: "transcribe"
+                    language: "en"
+                    duration: 8.7
+                    segments:
+                      - id: 0
+                        text: "And so my fellow Americans,"
+                        start: 0.0
+                        end: 2.13
+                        speaker: "SPEAKER_00"
+                      - id: 1
+                        text: "ask not what your country can do for you,"
+                        start: 2.14
+                        end: 5.4
+                        speaker: "SPEAKER_00"
+      security:
+        - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      in: header
+  schemas:

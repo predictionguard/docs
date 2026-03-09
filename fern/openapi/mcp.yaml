@@ -1,0 +1,191 @@
+openapi: 3.1.0
+
+info:
+  title: Prediction Guard API
+  description: "This is the Prediction Guard API, designed to provide various language-related services and checks."
+  version: "1.2"
+
+servers:
+  - url: https://{your-pg.api-domain}.com
+
+paths:
+  /mcp_servers:
+    get:
+      summary: MCP Servers
+      description: Return available MCP servers and tools included in those servers along with relevant metadata.
+      responses:
+        "403":
+          description: Failed auth response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "api understands the request but refuses to authorize it"
+        "400":
+          description: General error response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "required fields are missing"
+        "200":
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    description: Type of object (list).
+                  data:
+                    type: array
+                    description: The available MCP servers.
+                    items:
+                      type: object
+                      properties:
+                        server_label:
+                          type: string
+                          description: The id of the MCP server.
+                        object:
+                          type: string
+                          description: The object type (mcp_server).
+                        created:
+                          type: integer
+                          description: The date the MCP server was added.
+                        owned_by:
+                          type: string
+                          description: The name of the organization that owns the MCP server.
+                        server_description:
+                          type: string
+                          description: A short description of the MCP server.
+                        available_tools:
+                          type: array
+                          description: An array containing the available tools included in the MCP server.
+                          items:
+                            type: string
+                            description: An MCP tool name.
+              examples:
+                Basic:
+                  value:
+                    object: "list"
+                    data:
+                      - server_label: "test_mcp_server"
+                        object: "mcp_server"
+                        created: 1730332800
+                        owned_by: "Prediction Guard"
+                        server_description: "An MCP server used for testing MCP functionality."
+                        available_tools:
+                          - "test_mcp_tool"
+      security:
+        - bearerAuth: [ ]
+
+  /mcp_tools:
+    get:
+      summary: MCP Tools
+      description: Return available MCP tools by server with parameters and any relevant metadata.
+      responses:
+        "403":
+          description: Failed auth response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "api understands the request but refuses to authorize it"
+        "400":
+          description: General error response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Description of the error.
+              example:
+                error: "required fields are missing"
+        "200":
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    description: Type of object (list).
+                  data:
+                    type: object
+                    description: The available mcp tools.
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: object
+                        description: The MCP tool information.
+                        properties:
+                          id:
+                            type: string
+                            description: The id of the MCP tool.
+                          object:
+                            type: string
+                            description: The object type (mcp_tool).
+                          description:
+                            type: string
+                            description: A short description of the MCP tool.
+                          parameters:
+                            description: The parameters necessary for using the MCP tool.
+                          created:
+                            type: integer
+                            description: The date the MCP tool was added.
+                          owned_by:
+                            type: string
+                            description: The name of the organization that owns the MCP tool.
+              examples:
+                Basic:
+                  value:
+                    object: "list"
+                    data:
+                      "test_mcp_server":
+                        - id: "test_mcp_tool"
+                          object: "mcp_tool"
+                          created: 1730332800
+                          owned_by: "Prediction Guard"
+                          description: "A tool for testing MCP functionality"
+                          parameters:
+                            properties:
+                              description:
+                                default: null
+                                description: "Query description"
+                                type: "string"
+                              query:
+                                description: "SOQL query to execute"
+                                type: "string"
+                            required:
+                              - "query"
+                            type: "object"
+      security:
+        - bearerAuth: [ ]
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      in: header
+  schemas:
