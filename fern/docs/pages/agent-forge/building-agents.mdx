@@ -209,13 +209,13 @@ Fine-tune how your agent generates responses.
 
 ### Temperature
 
-**Range**: 0.0 to 1.0
+**Range**: 0.0 to 2.0
 
 **Purpose**: Controls randomness and creativity in responses
 
 **Scale**:
 ```
-0.0 ←────────────────────→ 1.0
+0.0 ←────────────────────→ 2.0
 More Deterministic    More Creative
 ```
 
@@ -223,12 +223,12 @@ More Deterministic    More Creative
 
 | Use Case | Temperature | Reasoning |
 |----------|-------------|-----------|
+| Data extraction | 0.0 - 0.2 | Strict adherence to format |
 | Code generation | 0.1 - 0.3 | Need precise, correct syntax |
 | Technical documentation | 0.2 - 0.4 | Accuracy over creativity |
-| Customer support | 0.3 - 0.5 | Balanced responses |
-| Creative writing | 0.7 - 0.9 | Encourage variety |
-| Brainstorming | 0.8 - 1.0 | Maximum diversity |
-| Data extraction | 0.0 - 0.2 | Strict adherence to format |
+| Customer support | 0.3 - 0.6 | Balanced responses |
+| Creative writing | 0.7 - 1.2 | Encourage variety and originality |
+| Brainstorming | above 1.2 | High diversity of ideas (may lead to incoherence or hallucinations)|
 
 <Callout intent="warning">
 **Important**: For factual, compliance, or safety-critical applications, use **lower temperature** (0.0-0.3) to ensure consistent, accurate responses.
