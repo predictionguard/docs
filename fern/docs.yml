@@ -12,7 +12,7 @@ tabs:
     display-name: Home
     icon: home
   deployment:
-    display-name: Deployment & Administration
+    display-name: Unified CX
     icon: server
   development:
     display-name: Development and Integration
@@ -78,11 +78,14 @@ navigation:
                 path: ./docs/pages/deployment/air-gapped.mdx
       - section: Administration
         contents:
-          - page: Admin Panel
+          - page: Unified CX
             path: ./docs/pages/deployment/admin-panel.mdx
-          - page: Clusters
+          - page: Create an AI System
+            path: ./docs/pages/deployment/custom_system.mdx
+          - page: AI System Management
             path: ./docs/pages/deployment/cluster-management.mdx
-          - page: Models
+
+          - page: Model Management
             path: ./docs/pages/deployment/model-management.mdx
           - page: API Keys
             path: ./docs/pages/deployment/api-keys.mdx

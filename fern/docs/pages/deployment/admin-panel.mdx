@@ -1,120 +1,131 @@
-# Admin Panel
+---
+title: Unified CX Admin Console
+subtitle: Central control plane for managing your sovereign AI systems
+description: Overview of the Unified CX admin console — manage systems, models, API keys, governance policies, and monitor activity across your infrastructure
+---
 
-The Prediction Guard admin panel is your central command center for managing your entire Prediction Guard platform. From here, you can create and manage multiple clusters, deploy any open model, configure security settings, and monitor all activity across your infrastructure.
+The Prediction Guard Unified CX is your central control plane for managing your sovereign AI systems. From here, you can create and manage multiple systems, deploy any open model, manage API keys, configure MCP servers, apply governance policies, and monitor all activity across your infrastructure.
 
-## Accessing the Admin Panel
+## Accessing the Unified CX
 
-Once your Prediction Guard instance is deployed, you can access the admin panel at:
+Once deployed, access the Unified CX at your deployment's URL (e.g. [admin.predictionguard.com](https://admin.predictionguard.com)) and log in with your admin credentials.
 
-```
-https://admin.predictionguard.com
-```
+## Navigation
 
-The admin panel is centrally managed by Prediction Guard, providing you with access to manage your clusters and deployments.
+The Unified CX sidebar is organized into three groups:
 
-### Initial Setup
+**Systems**
+- **Manage** — Create, view, and manage all your AI systems
 
-1. **Login** with your admin credentials
-2. **Configure basic settings** (organization name, timezone, etc.)
-3. **Set up your first API key** for testing
-4. **Deploy your first model** from the model library
+**Security**
+- **Analyze** — Analyze AI interactions for security and compliance signals
+- **Monitor** — Real-time monitoring of system usage and performance
+- **Govern** — Configure and apply AI governance policies
+- **Audit** — Review audit logs and compliance reports
 
-## Key Features
+**Settings**
+- **Users** — Manage user accounts and access
+- **Organizations** — Manage organizational settings and structure
 
-### Dashboard
-![Admin Panel Dashboard](./admin-panel-dashboard.png)
+## Systems: Manage
 
-The dashboard provides a comprehensive overview of your Prediction Guard platform:
-- **Multi-cluster overview** with health status across all clusters
-- **Real-time usage statistics** and performance metrics
-- **Security alerts** and system notifications
-- **Quick actions** for common administrative tasks
-- **Resource utilization** across your infrastructure
+The Systems page is your starting point — a unified view of all AI systems in your Prediction Guard deployment.
 
-### Model Management
-- **Browse available models** from Hugging Face
-- **Deploy custom models** from your own repositories
-- **Configure model settings** (temperature, max tokens, etc.)
-- **Monitor model performance** and usage
+![Systems Page](./ux-screenshots/01-systems.png)
 
-### API Key Management
-- **Create and manage** API keys
-- **Set permissions** and rate limits
-- **Track usage** per API key
-- **Revoke access** when needed
+Each system card shows:
+- **Status**: Health state (Healthy, Never Connected, Degraded)
+- **API Keys**: Number of active API keys
+- **Models**: Number of deployed models
+- **MCP Servers**: Number of connected MCP servers
+- **Location**: Deployment environment (e.g. `kubernetes`, `staging`)
+- **Last Update**: Time of last heartbeat from the system
 
-### System Configuration
-- **Security settings** and policies
-- **Resource allocation** and limits
-- **Backup and recovery** options
-- **Update management** and versioning
+Click **Manage** on any system card to open its management dashboard, where you can configure API keys, models, MCP servers, and advanced settings. Click **Create System** to add a new system.
 
-## Platform Workflow
+## Security: Analyze
 
-### After Deployment
-Once you've deployed your Prediction Guard cluster, the admin panel becomes your central management hub:
+The Analyze section gives you visibility into the safety and composition of all AI models across your systems. It has two tabs: **Scans** and **BOMs**.
 
-1. **Cluster Management**: Monitor and manage your deployed clusters
-2. **Model Deployment**: Deploy models from Hugging Face or upload custom models
-3. **API Key Management**: Create and manage API keys for application access
-4. **Security Configuration**: Set up security policies and monitoring
-5. **Monitoring**: Track usage, performance, and security across your platform
+### Scans
 
-### Integration with Deployment Process
-The admin panel integrates seamlessly with your deployment:
+![Analyze - Scans](./ux-screenshots/analyze-page-scans.png)
 
-- **Cluster Status**: View health and status of all deployed clusters
-- **Resource Monitoring**: Track CPU, GPU, and memory usage across clusters
-- **Model Management**: Deploy and configure models on your clusters
-- **API Access**: Create keys for applications to access your deployed models
-- **Security Management**: Configure and monitor security across your platform
+The Scans tab shows safety and security scores for every AI model in your deployment. At a glance you can see:
 
-## Quick Start Guide
+- **Models Scanned**: Total number of models that have been analyzed
+- **Avg. General Safety Score**: Average safety score across all scanned models (0–100)
+- **Avg. Prompt Injection Refusal Rate**: How reliably models resist prompt injection attempts on average
 
-### 1. Deploy Your First Model
+The model table breaks this down per model, showing **Provider**, **Type**, **General Safety Score**, **Prompt Injection Refusal Rate**, and **Last Scan** date. Use this to compare models, identify weaker performers, and make informed decisions about which models to deploy in sensitive environments.
 
-1. Navigate to **Models** → **Browse Library**
-2. Search for a model (e.g., "llama-2-7b-chat")
-3. Click **Deploy** and configure settings
-4. Wait for deployment to complete
-5. Test the model via API
+### BOMs (Bill of Materials)
 
-### 2. Create an API Key
+![Analyze - BOMs](./ux-screenshots/analyze-page-bom.png)
 
-1. Go to **API Keys** → **Create New**
-2. Set a name and description
-3. Configure permissions and rate limits
-4. Copy the generated key securely
-5. Test with a simple API call
+The BOMs tab provides a Bill of Materials for each AI system — a full inventory of everything running in that system:
 
-### 3. Configure Security
+- **Private Models**: Models you have deployed from your own repositories
+- **Managed Models**: Models managed and maintained by Prediction Guard
+- **External Models**: Third-party models connected to your system
+- **MCP Servers**: Connected Model Context Protocol servers
 
-1. Review **Security** → **Policies**
-2. Enable input/output filtering as needed
-3. Set up PII detection rules
-4. Configure injection prevention
-5. Test security features
+See [Model Management](/unified-cx/administration/model-management) for a full guide to deploying all three model types.
 
-## Best Practices
+Each system has an **Export BOM** button to download a full inventory report — useful for compliance audits, vendor assessments, and internal governance reviews.
 
-### Security
-- **Use strong passwords** for admin accounts
-- **Enable two-factor authentication** if available
-- **Regularly rotate API keys**
-- **Monitor access logs** for suspicious activity
+## Security: Monitor
 
-### Model Management
-- **Start with smaller models** for testing
-- **Monitor resource usage** during deployment
-- **Keep models updated** for security patches
-- **Document model configurations** for team members
+The Monitor section provides real-time observability into your AI systems — tracking request volumes, latency, model performance, and resource utilization. Use this to detect anomalies, track usage trends, and ensure your systems are operating within expected parameters.
 
-### Monitoring
-- **Set up alerts** for system health
-- **Monitor API usage** and performance
-- **Track model inference** metrics
-- **Review logs** regularly for issues
+## Security: Govern
+
+The Govern section is where you configure and apply AI governance policies system-wide. Policies set here are enforced across all agents and models within your systems without requiring per-agent configuration.
+
+### Governance Baselines
+
+![Govern - Standards](./ux-screenshots/govern-page-standards.png)
+
+Prediction Guard ships with four pre-built governance baselines you can apply with a single click:
+
+| Baseline | Description |
+|----------|-------------|
+| **NIST AI RMF** | The NIST AI Risk Management Framework. Sets recommended thresholds for PII protection, prompt injection detection, toxicity filtering, and factuality checks aligned with NIST's trustworthy AI principles. |
+| **NIST 600-1** | The Generative AI Profile of the AI RMF, focused on risks specific to large language models. Tunes factuality, toxicity, and PII policies to stricter thresholds recommended for generative AI deployments. |
+| **OWASP** | Based on the OWASP Top 10 for LLM Applications. Directly addresses prompt injection, sensitive data exposure, and toxic or harmful outputs. |
+| **OMB M-26-04** | The Office of Management and Budget Memorandum M-26-04, which sets federal requirements for responsible AI use. Enforces PII protections, prompt injection defenses, and factuality/toxicity policies at federally recommended thresholds. |
+
+Click **Apply Configuration** on any baseline to apply it as your system-wide governance policy.
+
+### Custom Governance Configuration
+
+![Govern - Custom Configuration](./ux-screenshots/govern-page-custom-config.png)
+
+Below the baselines, the **Governance Configuration** section lets you fine-tune individual policies. Each policy can be independently enabled or disabled, and configured with specific actions:
+
+| Policy | Purpose | Available Actions |
+|--------|---------|-------------------|
+| **PII Policy** | Prevent unauthorized disclosure, storage, or processing of PII within your AI systems | Block, Log Events |
+| **Prompt Injection Policy** | Prevent jailbreaking or manipulation of AI instructions to bypass safety filters or access restricted data | Block, Log Events |
+| **Toxicity Policy** | Ensure AI outputs remain professional, inclusive, and free from harmful or discriminatory content | Block, Log Events |
+| **Factuality Policy** | Mitigate hallucinations and ensure AI-generated information is verifiable | Block |
+
+<Callout intent="info">
+Applying a governance baseline will pre-configure these toggles to the recommended settings for that standard. You can then adjust individual policies from the custom configuration below.
+</Callout>
+
+## Security: Audit
+
+The Audit section provides a tamper-evident log of all significant actions and interactions across your Unified CX — including system changes, model deployments, API key activity, and user actions. Use this for compliance reporting, incident investigation, and access reviews.
+
+## Settings: Users
+
+Manage user accounts that have access to the Unified CX. From here you can invite new administrators, update roles, and revoke access.
+
+## Settings: Organizations
+
+Configure organizational settings including your organization's name, structure, and any organization-wide defaults that apply across all systems.
 
 ---
 
-**Complete documentation coming soon** - Detailed guides for each admin panel feature are being developed.
+**Need help?** Contact our support team or join our Discord community for assistance.
