@@ -1,74 +1,58 @@
-# Cluster Management
+---
+title: System Management
+subtitle: Create and manage sovereign AI systems in the Unified CX
+description: Guide to creating, deploying, and managing AI systems in the Prediction Guard Unified CX
+---
 
-Create and manage multiple clusters in your Prediction Guard platform to organize your infrastructure based on teams, environments, or use cases.
+The **Systems** page is your central view of all AI systems in your Prediction Guard deployment. From here you can create new systems, monitor their health, and manage their configuration.
 
-## Creating a New Cluster
+![Systems Page](./ux-screenshots/01-systems.png)
 
-![Create Cluster Page](./create-cluster-admin.png)
+Each system card displays:
+- **Status**: Health state (Healthy, Never Connected, Degraded)
+- **API Keys**: Number of active API keys
+- **Models**: Number of deployed models
+- **MCP Servers**: Number of connected MCP servers
+- **Location**: Deployment environment (e.g. `kubernetes`, `staging`)
+- **Last Update / Created**: Timestamps for the system
 
-### General Settings
+## Creating a System
 
-When creating a new cluster, configure these basic settings:
+Click **Create System** in the top-right corner. You'll be prompted to choose a configuration mode:
 
-- **Cluster Name**: A descriptive name for your cluster (required)
-- **Air-Gapped Cluster**: Enable for offline deployments
-- **Image Registry**: Docker registry for container images
-- **Hugging Face API Token**: Token for accessing Hugging Face models
-- **Enable Ingress**: Enable external API access
+![Create System - Choose Mode](./ux-screenshots/02-CreateSystem-QuickStart.png)
 
-### Core Components
+| Mode | Best For |
+|------|---------|
+| **Quick Start** | Standard deployments — simplified setup with sensible defaults |
+| **Custom** | Full infrastructure control, air-gapped environments, or advanced configuration |
 
-#### Namespace Configuration
-- **Create Namespaces**: Automatically create required namespaces
-- **Custom Namespaces**: Use existing namespaces if disabled
+For Quick Start, provide a **System Name** and optionally configure a **Public API Endpoint** for external access. See the [Quick Start guide](/unified-cx/getting-started/quick-start) for the full walkthrough.
 
-#### Inside Component
-- **Use Default Inside Image**: Use standard Prediction Guard image
-- **Custom Image**: Configure custom container image
-- **Service Account**: Enable automatic service account creation
-- **Service Account Name**: Name for the service account
+For Custom configuration, see the [Create an AI System](/unified-cx/administration/create-an-ai-system) guide.
 
-### Advanced Configuration
+## Managing a System
 
-The cluster creation interface includes additional configuration sections:
+Click **Manage** on any system card to open its management dashboard.
 
-- **Redis**: Cache and session storage configuration
-- **API v2 Auth**: Authentication service settings
-- **API v2 LLM**: Language model API configuration
-- **Nginx**: Web server and load balancer settings
-- **Pre-Processing**: Input processing pipeline
-- **Post-Processing**: Output processing pipeline
-- **Document Processing**: Document handling capabilities
-- **Audio Processing**: Audio model support
-- **OpenTelemetry**: Monitoring and observability
-- **Cert Manager**: SSL certificate management
-- **Advanced Scheduling**: Kubernetes scheduling options
+![System Management Dashboard](./ux-screenshots/06-system-deployed-manage-screen.png)
 
-## Managing Existing Clusters
+From the dashboard you can:
 
-### Cluster Overview
-- **Health Status**: Monitor cluster health and performance
-- **Resource Usage**: Track CPU, memory, and GPU utilization
-- **Model Status**: View deployed models and their status
-- **Activity Logs**: Review recent cluster activity
+- **API Keys**: Create and manage API keys for secure access to your system's endpoints
+- **Models**: Deploy private, managed, or external models — see [Model Management](/unified-cx/administration/model-management)
+- **MCP Servers**: Configure Model Context Protocol servers and connections
+- **Advanced Settings**: Update system settings, resource limits, networking, and cluster-specific options
 
-### Basic Operations
-- **View Clusters**: See all your clusters and their status
-- **Edit Configuration**: Modify cluster settings
-- **Scale Resources**: Adjust resource allocation
-- **Deploy Models**: Add models to the cluster
-- **Monitor Usage**: Track performance and costs
+To update a system's configuration, click **Edit** from the system management page. To get the deployment command for a system, click **Deploy**.
 
-## Best Practices
+## Deploying a System
 
-### Cluster Organization
-- **Naming Convention**: Use descriptive names for easy identification
-- **Environment Separation**: Keep development and production separate
-- **Resource Planning**: Plan resources based on expected workloads
-- **Documentation**: Document cluster purposes and configurations
+Once created, a system needs to be deployed to your infrastructure. Click the **Deploy** button on the system management page to get the installation command, then follow the guide for your environment:
 
-### Security
-- **Access Control**: Implement proper access controls
-- **Network Security**: Use secure network configurations
-- **Regular Updates**: Keep clusters updated with latest versions
-- **Monitoring**: Set up comprehensive monitoring and alerting
+- [Kubernetes](/unified-cx/installation/on-premises/kubernetes)
+- [AWS](/unified-cx/installation/cloud/aws)
+- [Azure](/unified-cx/installation/cloud/azure)
+- [GCP](/unified-cx/installation/cloud/gcp)
+- [Zero Dependency Binary](/unified-cx/installation/on-premises/binary)
+- [Air Gapped](/unified-cx/installation/air-gapped/air-gapped)
