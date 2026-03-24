@@ -12,7 +12,8 @@ tabs:
     display-name: Home
     icon: home
   deployment:
-    display-name: Unified CX
+    display-name: Administration & Governance
+    slug: admin
     icon: server
   development:
     display-name: Development and Integration
@@ -58,27 +59,27 @@ navigation:
             path: ./docs/pages/deployment/overview.mdx
       - section: Installation
         contents:
+          - section: Cloud
+            contents:
+              - page: GCP
+                path: ./docs/pages/deployment/gcp.mdx
+              - page: Azure
+                path: ./docs/pages/deployment/azure.mdx
+              - page: AWS
+                path: ./docs/pages/deployment/aws.mdx
+          - section: Air Gapped
+            contents:
+              - page: Air Gapped
+                path: ./docs/pages/deployment/air-gapped.mdx
           - section: On-Premises
             contents:
               - page: Kubernetes
                 path: ./docs/pages/deployment/kubernetes.mdx
               - page: Zero Dependency Binary
                 path: ./docs/pages/deployment/binary.mdx
-          - section: Cloud
-            contents:
-              - page: AWS
-                path: ./docs/pages/deployment/aws.mdx
-              - page: Azure
-                path: ./docs/pages/deployment/azure.mdx
-              - page: GCP
-                path: ./docs/pages/deployment/gcp.mdx
-          - section: Air Gapped
-            contents:
-              - page: Air Gapped
-                path: ./docs/pages/deployment/air-gapped.mdx
       - section: Administration
         contents:
-          - page: Unified CX
+          - page: Admin Console
             path: ./docs/pages/deployment/admin-panel.mdx
           - page: Create an AI System
             path: ./docs/pages/deployment/custom_system.mdx

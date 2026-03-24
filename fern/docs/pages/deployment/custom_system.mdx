@@ -1,10 +1,10 @@
 ---
 title: Create an AI System
 subtitle: Build your sovereign AI system with custom configurations
-description: Create and configure your own sovereign AI system in the Unified CX admin console with custom settings for your specific use case and environment.
+description: Create and configure your own sovereign AI system in the Admin Console admin console with custom settings for your specific use case and environment.
 ---
 
-# Create Custom AI System in Unified CX
+# Create Custom AI System in Admin Console
 
 1. Click **"Create System"** from the dashboard
 2. Select **"Custom"** mode for full configuration
@@ -47,6 +47,10 @@ Use Default for all resources for standard deployment.
 
 ![Operations](./ux-screenshots/custom_system_operations.png)
 - **Cert Manager**: Enter your Cert Manager configurations to automate the provisioning and renewal of SSL/TLS certificates for your system. It integrates with certificate authorities like Let's Encrypt to ensure secure HTTPS connections without manual certificate management.
+
+<Callout intent="warn">
+If you enabled a **Public API Endpoint** with TLS hosts in the Ingress section, make sure your DNS records for those hostnames point to the NGINX ingress IP address on your cluster. Without this, external traffic will not route correctly to your AI system.
+</Callout>
 
 ## Review
 

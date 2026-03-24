@@ -1,18 +1,23 @@
 ---
 title: Quick Start
-subtitle: Compose your sovereign AI systems without compromising security via Prediction Guard's Unified CX
-description: Build and govern sovereign AI systems across any infrastructure without compromising security, using Prediction Guard's Unified CX.
+subtitle: Compose your sovereign AI systems without compromising security via Prediction Guard's Admin Console
+description: Build and govern sovereign AI systems across any infrastructure without compromising security, using Prediction Guard's Admin Console.
 ---
 
-**Manage** and control your AI security by composing sovereign AI systems that contain internal and external models, MCP servers, and connections to applications.
+**Manage** and control your AI security by composing sovereign AI Systems that contain internal and external models, MCP servers, and connections to applications.
 
 **Govern**, monitor and audit your AI systems by applying AI governance policies that aligns to NIST, OWASP and OMB out of the box.
 
 **Deploy** AI agents that automatically inherit your system-wide governance and integrate directly with your sovereign AI systems.
 
-## Deployment Options
 
-Prediction Guard's Unified CX supports flexible AI System deployment across different environments:
+<Callout intent="info">
+An **AI System** is a self-contained deployment that bundles your models, API keys, MCP servers, governance policies, and integrations into a single composable unit. Each system runs independently on your infrastructure and is managed through the Admin Console.
+</Callout>
+
+## AI System Deployment Options
+
+Prediction Guard supports flexible AI System deployment across different environments:
 
 - **On-Premises**: Deploy in your own data center with Kubernetes or single-node binary
 - **Cloud**: Deploy on AWS, Azure, or Google Cloud with managed Kubernetes
@@ -22,7 +27,7 @@ Prediction Guard's Unified CX supports flexible AI System deployment across diff
 
 Your deployed Prediction Guard platform provides:
 
-- **Model Management**: Deploy curated, scanned and tested models from Hugging Face
+- **Model Management**: Deploy [private models](/admin/administration/model-management#private-models), connect to Prediction Guard's [managed models](/admin/administration/model-management#managed-models), or integrate [external models](/admin/administration/model-management#external-models) such as Azure Foundry, AWS Bedrock, Google Vertex, OpenAI, Anthropic and more
 - **System Management**: Create and manage multiple systems across environments
 - **Security & Compliance**: Built-in security scanning, audit logs, and compliance features
 - **API Management**: Create and manage API keys with granular permissions
@@ -34,11 +39,11 @@ Your deployed Prediction Guard platform provides:
 
 <Steps toc={true}>
 
-### Create your first sovereign AI system in the Unified CX
+### Create your first sovereign AI system in the Admin Console
 
-Start by creating your system in the Unified CX:
+Start by creating your system in the Admin Console:
 
-1. **Navigate to your Unified CX instance (e.g. [admin.predictionguard.com](https://admin.predictionguard.com))** and log in
+1. **Navigate to your Admin Console (e.g. [admin.predictionguard.com](https://admin.predictionguard.com))** and log in
 
 2. **Go to Systems → Manage** and click **"Create System"** in the top-right corner
 
@@ -62,75 +67,48 @@ Prediction Guard can be deployed anywhere that fits your needs. Choose the deplo
 
 #### On-Premises
 Deploy in your own data center:
-- [Kubernetes Cluster](/unified-cx/installation/on-premises/kubernetes) - Full Kubernetes deployment
-- [Zero Dependency Binary](/unified-cx/installation/on-premises/binary) - Single node binary installation
+- [Kubernetes Cluster](/admin/installation/on-premises/kubernetes) - Full Kubernetes deployment
+- [Zero Dependency Binary](/admin/installation/on-premises/binary) - Single node binary installation
 
 #### Cloud Deployment
 Deploy on major cloud providers:
-- [AWS Deployment](/unified-cx/installation/cloud/aws) - Amazon Web Services
-- [Azure Deployment](/unified-cx/installation/cloud/azure) - Microsoft Azure
-- [GCP Deployment](/unified-cx/installation/cloud/gcp) - Google Cloud Platform
+- [AWS Deployment](/admin/installation/cloud/aws) - Amazon Web Services
+- [Azure Deployment](/admin/installation/cloud/azure) - Microsoft Azure
+- [GCP Deployment](/admin/installation/cloud/gcp) - Google Cloud Platform
 
 #### Air Gapped
 Deploy in isolated environments. Note that air-gapped deployment requires **Custom** configuration instead of Quick Start during system creation:
-- [Air Gapped Deployment](/unified-cx/installation/air-gapped/air-gapped) - Offline deployment guide
+- [Air Gapped Deployment](/admin/installation/air-gapped/air-gapped) - Offline deployment guide
 
 ### Deploy your AI system
 
-Follow the specific deployment guide for your chosen environment. When ready, click the **Deploy** button on your system in the Unified CX to get the installation command.
+Follow the specific deployment guide for your chosen environment. When ready, click the **Deploy** button on your system in the Admin Console to get the installation command.
 
 ![Deploy Command](./ux-screenshots/04-deploy-kubectl.png)
 
 The deployment process will:
 
-1. **Generate an installation command** scoped to your system from the Unified CX
+1. **Generate an installation command** scoped to your system from the Admin Console
 2. **Run the command** on a machine with `kubectl` access to your cluster
 3. **Bootstrap your system** — Prediction Guard services will start up in the `predictionguard` namespace
-4. **Verify the deployment** — your system will show as **Healthy** in the Unified CX once complete
 
-### Access your Unified CX dashboard
+![Healthy AI System](./ux-screenshots/06-system-deployed-healthy.png)
+4. **Verify the deployment** — your system will show as **Healthy** in the Admin Console once complete
 
-Once deployed, your system is fully manageable from the Unified CX dashboard.
+### Connect an AI model to your system
 
-![Unified CX Dashboard](./ux-screenshots/06-system-deployed-manage-screen.png)
+Once your system is healthy, connect AI models to start building:
 
-From here you can manage API keys, deploy models, configure MCP servers, apply governance policies, and monitor your system.
-
-### Deploy your first model
-
-From your system's management dashboard, navigate to **Models** and click **Add Private Model**.
-
-![Models Page](./ux-screenshots/08-models-private-models-1.png)
-
-Browse the model catalog and click **Select** on the model you want to deploy.
-
-![Select a Model](./ux-screenshots/08-models-private-models-select-models-2.png)
-
-Configure the model's **General Settings** — name, replicas, and container image details.
-
-![Configure Model - General Settings](./ux-screenshots/08-models-private-models-configure-gen-settings.png)
-
-The **Model Parameters** have been tested and preconfigured according to the model card — CPU, memory, accelerator cards, token limits, and capabilities. Make sure your node is sized appropriately for the model you've selected.
-
-![Configure Model - Parameters](./ux-screenshots/08-models-private-models-configure-model-params-makesureyournodeissizedtothis.png)
-
-Click **Create Private Model** to deploy. Once running, test it via API calls using one of your API keys.
-
-<Callout intent="info">
-Prediction Guard also supports **Managed Models** (hosted by Prediction Guard with additional Managed Model license but no setup required) and **External Models** (connect to OpenAI, Anthropic, Google, AWS, Azure, and more). All three types inherit your system's governance policies and safeguards automatically. See the full [Model Management](/unified-cx/administration/model-management) guide.
-</Callout>
-
-### Create API keys and start building
-
-Set up access for your applications:
-
-1. **Create API keys** with appropriate permissions
-2. **Configure rate limits** and usage quotas
-3. **Test API access** with your deployed models
-4. **Start building** secure, compliant AI applications
+1. **External or Managed Models** — Connect to [external models](/admin/administration/model-management#external-models) (e.g. Azure Foundry, AWS Bedrock, Google Vertex, OpenAI, Anthropic, and more) or Prediction Guard's [managed models](/admin/administration/model-management#managed-models) (if available) with no additional infrastructure required.
+2. **Private Models** — If you need models running on your own infrastructure, deploy and connect them as [private models](/admin/administration/model-management#private-models).
 
 </Steps>
 
-<Callout type="info" emoji="ℹ️">
-  Need help with deployment? Contact our support team or join our Discord community for assistance.
-</Callout>
+## Next Steps
+
+Once your system is deployed and healthy, you can configure it further:
+
+- **Deploy models** — Add private, managed, or external models to your system. See the [Model Management](/admin/administration/model-management) guide for details on all three model types.
+- **Set up governance** — Apply AI governance policies aligned with NIST, OWASP, and OMB standards. See the [Governance](/admin/administration/admin-console#security-govern) section of the Admin Console guide.
+- **Create API keys** — Set up API keys with appropriate permissions for your applications. See the [API Keys](/admin/administration/api-keys) guide.
+- **Explore the Admin Console** — Manage systems, monitor activity, and review audit logs. See the full [Admin Console](/admin/administration/admin-console) overview.

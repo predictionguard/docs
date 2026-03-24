@@ -12,7 +12,7 @@ description: Step-by-step guide to deploying Prediction Guard in an air-gapped e
 - **Docker** pre-installed or installation package
 - **No internet access** required after initial setup
 
-## Create Your System in the Unified CX
+## Create Your System in the Admin Console
 
 1. Navigate and login to admin.predictionguard.com
 2. View the *Systems* page and click on **+ Create System** in the top-right.
@@ -49,6 +49,6 @@ sudo ./prediction-guard-air-gapped shell
 docker ps | grep predictionguard
 ```
 
-You should see running services, including `pg-inside` indicating that the system has been successfully installed. The system should also show as **Healthy** in the Unified CX.
+You should see running services, including `pg-inside` indicating that the system has been successfully installed. The system should also show as **Healthy** in the Admin Console.
 
-7. Deploy any desired AI models from the Models page in the Unified CX. Only **Private Models** can be deployed in air-gapped environments — Managed Models and External Models require internet access and are not available.
+7. Deploy any desired AI models from the Models page in the Admin Console. Only **Private Models** can be deployed in air-gapped environments — Managed Models and External Models require internet access and are not available.

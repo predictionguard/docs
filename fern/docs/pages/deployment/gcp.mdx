@@ -9,7 +9,7 @@ description: Step-by-step guide to deploying Prediction Guard on GCP with GKE, i
 - **Google Cloud Project** with billing enabled
 - **gcloud CLI** installed and configured
 - **kubectl** configured for your GKE cluster
-- **Access to Unified CX** Admin Console
+- **Access to Admin Console** Admin Console
 
 ## Deployment Process
 
@@ -22,7 +22,7 @@ First, create a Google Kubernetes Engine cluster:
 export PROJECT_ID=your-project-id
 gcloud config set project $PROJECT_ID
 
-# Set your cluster name that reflects the AI system on the Unified CX
+# Set your cluster name that reflects the AI system on the Admin Console
 export CLUSTER_NAME=<your-ai-system-name>
 
 # Create GKE cluster
@@ -51,13 +51,13 @@ kubectl get nodes
 - **Load Balancer**: Configure Google Cloud Load Balancer for ingress
 - **VPC**: Specify your VPC and subnet configuration
 
-### 4. Create an AI System in the Unified CX
+### 4. Create an AI System in the Admin Console
 
-If you have not already created your AI system in the Unified CX, follow the [Quick Start](/unified-cx/getting-started/quick-start) or the [Custom System](/unified-cx/administration/create-an-ai-system) guide to create your system and generate the installation command.
+If you have not already created your AI system in the Admin Console, follow the [Quick Start](/admin/getting-started/quick-start) or the [Custom System](/admin/administration/create-an-ai-system) guide to create your system and generate the installation command.
 
 ### 5. Get the Deployment Command
 
-Navigate to your system in the Unified CX and click the **Deploy** button in the top-right corner of the system management page.
+Navigate to your system in the Admin Console and click the **Deploy** button in the top-right corner of the system management page.
 
 ![System Management - Deploy Button](./ux-screenshots/03-quicksystem-deploy.png)
 
@@ -77,9 +77,9 @@ After a few minutes, verify the installation by checking the running pods:
 kubectl get pods -n predictionguard
 ```
 
-You should see running pods including `pg-inside`, indicating the system has been successfully installed. The system will also show as **Healthy** in the Unified CX.
+You should see running pods including `pg-inside`, indicating the system has been successfully installed. The system will also show as **Healthy** in the Admin Console.
 
-![System Healthy in Unified CX](./ux-screenshots/06-system-deployed-healthy.png)
+![System Healthy in Admin Console](./ux-screenshots/06-system-deployed-healthy.png)
 
 ## Configuring Ingress and Reverse Proxy
 
@@ -89,7 +89,7 @@ Prediction Guard comes preconfigured for NGINX and a default Ingress which can b
 
 ### Access Your AI System
 
-Once deployed, your AI system is accessible and manageable from the Unified CX.
+Once deployed, your AI system is accessible and manageable from the Admin Console.
 
 ![System Management Dashboard](./ux-screenshots/06-system-deployed-manage-screen.png)
 

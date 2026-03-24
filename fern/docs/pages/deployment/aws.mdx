@@ -9,7 +9,7 @@ description: Step-by-step guide to deploying Prediction Guard on AWS with EKS, i
 - **AWS Account** with appropriate permissions
 - **AWS CLI** configured with your credentials
 - **kubectl** configured for your EKS cluster
-- **Access to Unified CX** at admin.predictionguard.com
+- **Access to Admin Console** at admin.predictionguard.com
 
 ## Deployment Process
 
@@ -18,7 +18,7 @@ description: Step-by-step guide to deploying Prediction Guard on AWS with EKS, i
 Create an Amazon EKS cluster in your AWS account:
 
 ```bash
-# Set your cluster name that reflects the AI system on the Unified CX
+# Set your cluster name that reflects the AI system on the Admin Console
 export CLUSTER_NAME=<your-ai-system-name>
 
 eksctl create cluster \
@@ -47,13 +47,13 @@ kubectl get nodes
 - **Load Balancer**: Configure ALB or NLB for ingress
 - **VPC**: Specify your VPC and subnet configuration
 
-### 4. Create an AI System in the Unified CX
+### 4. Create an AI System in the Admin Console
 
-If you have not already created your AI system in the Unified CX, follow the [Quick Start](/unified-cx/getting-started/quick-start) or the [Custom System](/unified-cx/administration/create-an-ai-system) guide to create your system and generate the installation command.
+If you have not already created your AI system in the Admin Console, follow the [Quick Start](/admin/getting-started/quick-start) or the [Custom System](/admin/administration/create-an-ai-system) guide to create your system and generate the installation command.
 
 ### 5. Get the Deployment Command
 
-Navigate to your system in the Unified CX and click the **Deploy** button in the top-right corner of the system management page.
+Navigate to your system in the Admin Console and click the **Deploy** button in the top-right corner of the system management page.
 
 ![System Management - Deploy Button](./ux-screenshots/03-quicksystem-deploy.png)
 
@@ -73,9 +73,9 @@ After a few minutes, verify the installation:
 kubectl get pods -n predictionguard
 ```
 
-You should see running pods including `pg-inside`, indicating the system has been successfully installed. The system will also show as **Healthy** in the Unified CX.
+You should see running pods including `pg-inside`, indicating the system has been successfully installed. The system will also show as **Healthy** in the Admin Console.
 
-![System Healthy in Unified CX](./ux-screenshots/06-system-deployed-healthy.png)
+![System Healthy in Admin Console](./ux-screenshots/06-system-deployed-healthy.png)
 
 ## Configuring Ingress and Reverse Proxy
 
@@ -83,14 +83,14 @@ Prediction Guard comes preconfigured for NGINX and a default Ingress which can b
 
 ## Post-Deployment
 
-Once deployed, your system is fully manageable from the Unified CX dashboard.
+Once deployed, your system is fully manageable from the Admin Console dashboard.
 
-![Unified CX Dashboard](./ux-screenshots/06-system-deployed-manage-screen.png)
+![Admin Console Dashboard](./ux-screenshots/06-system-deployed-manage-screen.png)
 
 From here you can:
 
 - **API Keys**: Manage API keys for secure access to your system endpoints
-- **Models**: Deploy [private, managed, or external models](/unified-cx/administration/model-management) and their configurations
+- **Models**: Deploy [private, managed, or external models](/admin/administration/model-management) and their configurations
 - **MCP Servers**: Configure Model Context Protocol servers and their connections
 - **Advanced Settings**: Configure system settings, resource limits, networking, and cluster-specific options
 

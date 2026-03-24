@@ -1,7 +1,7 @@
 ---
 title: Zero Dependency Binary
 description: Deploy and manage your own Prediction Guard platform
-slug: unified-cx/installation/on-premises/binary
+slug: admin/installation/on-premises/binary
 ---
 
 # Zero Dependency Binary
@@ -18,7 +18,7 @@ These are the minimum recommended specifications for a Prediction Guard single-n
 - 1 NVIDIA GPU of a supported type: (L4, L40S, A10, A100, H100/200, B100/200) with installed drivers on host
 - Ubuntu or Debian Linux (LTS or newer)
 
-## Create Your System in the Unified CX
+## Create Your System in the Admin Console
 
 1. Navigate and login to admin.predictionguard.com
 2. View the *Systems* page and click on **+ Create System** in the top-right.
@@ -66,9 +66,9 @@ sudo ./prediction-guard-platform shell
 kubectl get pods -n predictionguard
 ```
 
-You should see running pods in the namespace, including `pg-inside` indicating that the system has been successfully installed. The system should also show as **Healthy** in the Unified CX.
+You should see running pods in the namespace, including `pg-inside` indicating that the system has been successfully installed. The system should also show as **Healthy** in the Admin Console.
 
-7. Deploy any desired AI models from the Models page in the Unified CX. Pay attention to any settings around number of AI accelerators, CPU and memory allocation to the model and ensure it fits within your VM/machine.
+7. Deploy any desired AI models from the Models page in the Admin Console. Pay attention to any settings around number of AI accelerators, CPU and memory allocation to the model and ensure it fits within your VM/machine.
 
 ## Configuring Ingress and Reverse Proxy
 

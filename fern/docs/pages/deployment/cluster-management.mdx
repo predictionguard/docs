@@ -1,7 +1,7 @@
 ---
 title: System Management
-subtitle: Create and manage sovereign AI systems in the Unified CX
-description: Guide to creating, deploying, and managing AI systems in the Prediction Guard Unified CX
+subtitle: Create and manage sovereign AI systems in the Admin Console
+description: Guide to creating, deploying, and managing AI systems in the Prediction Guard Admin Console
 ---
 
 The **Systems** page is your central view of all AI systems in your Prediction Guard deployment. From here you can create new systems, monitor their health, and manage their configuration.
@@ -27,9 +27,9 @@ Click **Create System** in the top-right corner. You'll be prompted to choose a 
 | **Quick Start** | Standard deployments — simplified setup with sensible defaults |
 | **Custom** | Full infrastructure control, air-gapped environments, or advanced configuration |
 
-For Quick Start, provide a **System Name** and optionally configure a **Public API Endpoint** for external access. See the [Quick Start guide](/unified-cx/getting-started/quick-start) for the full walkthrough.
+For Quick Start, provide a **System Name** and optionally configure a **Public API Endpoint** for external access. See the [Quick Start guide](/admin/getting-started/quick-start) for the full walkthrough.
 
-For Custom configuration, see the [Create an AI System](/unified-cx/administration/create-an-ai-system) guide.
+For Custom configuration, see the [Create an AI System](/admin/administration/create-an-ai-system) guide.
 
 ## Managing a System
 
@@ -40,7 +40,7 @@ Click **Manage** on any system card to open its management dashboard.
 From the dashboard you can:
 
 - **API Keys**: Create and manage API keys for secure access to your system's endpoints
-- **Models**: Deploy private, managed, or external models — see [Model Management](/unified-cx/administration/model-management)
+- **Models**: Deploy private, managed, or external models — see [Model Management](/admin/administration/model-management)
 - **MCP Servers**: Configure Model Context Protocol servers and connections
 - **Advanced Settings**: Update system settings, resource limits, networking, and cluster-specific options
 
@@ -50,9 +50,9 @@ To update a system's configuration, click **Edit** from the system management pa
 
 Once created, a system needs to be deployed to your infrastructure. Click the **Deploy** button on the system management page to get the installation command, then follow the guide for your environment:
 
-- [Kubernetes](/unified-cx/installation/on-premises/kubernetes)
-- [AWS](/unified-cx/installation/cloud/aws)
-- [Azure](/unified-cx/installation/cloud/azure)
-- [GCP](/unified-cx/installation/cloud/gcp)
-- [Zero Dependency Binary](/unified-cx/installation/on-premises/binary)
-- [Air Gapped](/unified-cx/installation/air-gapped/air-gapped)
+- [GCP](/admin/installation/cloud/gcp)
+- [Azure](/admin/installation/cloud/azure)
+- [AWS](/admin/installation/cloud/aws)
+- [Air Gapped](/admin/installation/air-gapped/air-gapped)
+- [Kubernetes](/admin/installation/on-premises/kubernetes)
+- [Zero Dependency Binary](/admin/installation/on-premises/binary)
