@@ -49,7 +49,7 @@ Use Default for all resources for standard deployment.
 - **Cert Manager**: Enter your Cert Manager configurations to automate the provisioning and renewal of SSL/TLS certificates for your system. It integrates with certificate authorities like Let's Encrypt to ensure secure HTTPS connections without manual certificate management.
 
 <Callout intent="warn">
-If you enabled a **Public API Endpoint** with TLS hosts in the Ingress section, make sure your DNS records for those hostnames point to the NGINX ingress IP address on your cluster. Without this, external traffic will not route correctly to your AI system.
+If you enabled a **Public API Endpoint** with TLS hosts in the Ingress section, make sure your DNS records for those hostnames point to the NGINX ingress IP address on your cluster. Without this, external traffic will not route correctly to your AI system. To do this, you can run `kubectl get service ingress-nginx-controller -n predictionguard` to get the external IP address of the NGINX ingress controller and then update your DNS records accordingly.
 </Callout>
 
 ## Review
