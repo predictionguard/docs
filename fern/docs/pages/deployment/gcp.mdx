@@ -1,13 +1,15 @@
-# GCP Deployment
-
-Deploy Prediction Guard on Google Cloud Platform using our managed Kubernetes deployment.
+---
+title: GCP Deployment
+subtitle: Deploy Prediction Guard on Google Cloud Platform using a managed Kubernetes deployment
+description: Step-by-step guide to deploying Prediction Guard on GCP with GKE, including cluster setup, system installation, and ingress configuration
+---
 
 ## Prerequisites
 
 - **Google Cloud Project** with billing enabled
 - **gcloud CLI** installed and configured
 - **kubectl** configured for your GKE cluster
-- **Access to admin panel** at admin.predictionguard.com
+- **Access to Admin Console** Admin Console
 
 ## Deployment Process
 
@@ -20,8 +22,11 @@ First, create a Google Kubernetes Engine cluster:
 export PROJECT_ID=your-project-id
 gcloud config set project $PROJECT_ID
 
+# Set your cluster name that reflects the AI system on the Admin Console
+export CLUSTER_NAME=<your-ai-system-name>
+
 # Create GKE cluster
-gcloud container clusters create predictionguard-cluster \
+gcloud container clusters create $CLUSTER_NAME \
     --zone us-central1-a \
     --num-nodes 3 \
     --machine-type e2-standard-2 \
@@ -34,69 +39,71 @@ gcloud container clusters create predictionguard-cluster \
 
 ```bash
 # Get credentials
-gcloud container clusters get-credentials predictionguard-cluster --zone us-central1-a
+gcloud container clusters get-credentials $CLUSTER_NAME --zone us-central1-a
 
 # Verify connection
 kubectl get nodes
 ```
 
-### 3. Access Admin Panel
-
-Navigate to [admin.predictionguard.com](https://admin.predictionguard.com) and log in with your credentials.
-
-### 4. Create Cluster in Admin Panel
-
-1. Click **"Create Cluster"** from the dashboard
-2. Select **"Advanced"** mode for full configuration
-3. Configure your cluster settings:
-
-#### General Settings
-- **Cluster Name**: Choose a unique name (e.g., `gcp-production-cluster`)
-- **Air-Gapped Cluster**: Leave disabled for cloud deployment
-- **Image Registry**: Use Google Container Registry or your preferred registry
-- **Hugging Face API Token**: Provide your token for model access
-- **Enable Ingress**: Enable for external API access
-
-#### GCP-Specific Configuration
+### 3. Set GCP-Specific Configuration
 - **Node Pools**: Configure your GKE node pools
 - **Storage Classes**: Use Google Persistent Disk CSI driver for persistent volumes
 - **Load Balancer**: Configure Google Cloud Load Balancer for ingress
 - **VPC**: Specify your VPC and subnet configuration
 
+### 4. Create an AI System in the Admin Console
 
-### 5. Copy the Install command
-Copy the Kubernetes installation command from your Prediction Guard Admin portal using the Deploy button on the Clusters page.
+If you have not already created your AI system in the Admin Console, follow the [Quick Start](/admin/getting-started/quick-start) or the [Custom System](/admin/administration/create-an-ai-system) guide to create your system and generate the installation command.
 
-### 6. Execute the install
-Paste and run the command on a machine that can connect to your Kubernetes cluster API via `kubectl`.This will install your authentication token and begin the initial bootstrapping of Prediction Guard services. After a few minutes, feel free to check the installation by checking the running pods in the `predictionguard` namespace:
+### 5. Get the Deployment Command
+
+Navigate to your system in the Admin Console and click the **Deploy** button in the top-right corner of the system management page.
+
+![System Management - Deploy Button](./ux-screenshots/03-quicksystem-deploy.png)
+
+This opens the **Deploy Command** modal. Select **kubectl** as the deployment method, then click **Copy** to copy the generated installation command.
+
+![Deploy Command Modal](./ux-screenshots/04-deploy-kubectl.png)
+
+### 6. Execute the Installation on Your Cluster
+
+Paste and run the copied command on a machine that has `kubectl` access to your GKE cluster. The command authenticates with your Prediction Guard instance and bootstraps all services into the `predictionguard` namespace.
+
+![Running the Installation Command](./ux-screenshots/05-deploy-system-cli.png)
+
+After a few minutes, verify the installation by checking the running pods:
 
 ```bash
 kubectl get pods -n predictionguard
 ```
 
-You should see running pods in the namespace, including `pg-inside` indicating that the cluster has been successfully installed. The cluster should also show as **Healthy** in the Prediction Guard admin.
+You should see running pods including `pg-inside`, indicating the system has been successfully installed. The system will also show as **Healthy** in the Admin Console.
 
-### 7. Deploy any desired AI models 
-Select desired models from the Models page in the Prediction Guard admin. Pay attention to any settings around number of AI accelerators, CPU and memory allocation to the model and ensure it fits within your Kubernetes cluster resources.
+![System Healthy in Admin Console](./ux-screenshots/06-system-deployed-healthy.png)
 
 ## Configuring Ingress and Reverse Proxy
 
-Prediction Guard comes preconfigured for NGINX and a default Ingress which can be enabled on the cluster within the **Edit** section of the Clusters page. Here you can configure the desired domain names and have NGINX deploy into the `predictionguard` namespace with preconfigured settings for the Prediction Guard API. Then, simply ensure that your DNS entry is routable to the ingress IP on your Kubernetes cluster or load balancer in GCP.
-
+Prediction Guard comes preconfigured for NGINX and a default Ingress which can be enabled on the system within the **Edit** section of the Systems page. Here you can configure the desired domain names and have NGINX deploy into the `predictionguard` namespace with preconfigured settings for the Prediction Guard API. Then, simply ensure that your DNS entry is routable to the ingress IP on your Kubernetes cluster or load balancer in GCP.
 
 ## Post-Deployment
 
-### Access Your Cluster
+### Access Your AI System
 
-Once deployed, your cluster will be accessible through:
+Once deployed, your AI system is accessible and manageable from the Admin Console.
 
-- **Admin Panel**: Monitor and manage from admin.predictionguard.com
-- **API Endpoints**: Access your deployed models via the configured endpoints
-- **Kubernetes Dashboard**: Use kubectl to manage cluster resources
+![System Management Dashboard](./ux-screenshots/06-system-deployed-manage-screen.png)
+
+From here you can:
+
+- **API Keys**: Manage API keys for secure access to your system endpoints
+- **Models**: Deploy private, managed, or external models and their configurations
+- **MCP Servers**: Configure Model Context Protocol servers and their connections
+- **Advanced Settings**: Configure system settings, resource limits, networking, and cluster-specific options
+- **Kubernetes Dashboard**: Use `kubectl` to manage cluster resources directly
 
 ### GCP Integration
 
-Your deployment will automatically integrate with:
+Your deployment automatically integrates with:
 
 - **Google Persistent Disk**: Persistent storage for models and data
 - **Google Cloud Load Balancer**: Load balancing for high availability

@@ -1,6 +1,8 @@
-# Air Gapped Deployment
-
-Deploy Prediction Guard in completely isolated environments with no external internet access.
+---
+title: Air Gapped Deployment
+subtitle: Deploy Prediction Guard in completely isolated environments with no external internet access
+description: Step-by-step guide to deploying Prediction Guard in an air-gapped environment using offline installation packages
+---
 
 ## Prerequisites
 
@@ -10,13 +12,13 @@ Deploy Prediction Guard in completely isolated environments with no external int
 - **Docker** pre-installed or installation package
 - **No internet access** required after initial setup
 
-## Create Your Cluster in the Prediction Guard Admin
+## Create Your System in the Admin Console
 
 1. Navigate and login to admin.predictionguard.com
-2. View the *Clusters* page and click on **+ Create Cluster** in the top-right.
-3. Provide a Cluster Name
-4. Enable **Air-Gapped Cluster** option
-5. Click **Create Cluster.**
+2. View the *Systems* page and click on **+ Create System** in the top-right.
+3. Provide a System Name
+4. Enable **Air-Gapped System** option
+5. Click **Create System.**
 
 ## Installation Instructions
 
@@ -32,22 +34,21 @@ tar xvzf prediction-guard-air-gapped.tgz
 sudo ./prediction-guard-air-gapped install --license license.yaml
 ```
 
-Provide a password for the local admin console. This is rarely used, but can be helpful for updating certain fields for offline clusters. The installer will run through a series of pre-flight checks to ensure compatibility. If any of the pre-flight checks fail, a message will be displayed regarding which checks are failing. Either attempt to address and resolve the issue (some are related to available disk space, performance, etc.) or reach out to your Prediction Guard account representative for assistance. Once the installer has completed, proceed to step 4.
+Provide a password for the local admin console. This is rarely used, but can be helpful for updating certain fields for offline systems. The installer will run through a series of pre-flight checks to ensure compatibility. If any of the pre-flight checks fail, a message will be displayed regarding which checks are failing. Either attempt to address and resolve the issue (some are related to available disk space, performance, etc.) or reach out to your Prediction Guard account representative for assistance. Once the installer has completed, proceed to step 4.
 
-4. Shell into the cluster to run the bootstrap command:
+4. Shell into the system to run the bootstrap command:
 ```bash
 sudo ./prediction-guard-air-gapped shell
 ```
 
-5. Retrieve the bootstrap command from [admin.predictionguard.com](https://admin.predictionguard.com) by navigating to Clusters, then clicking the **Deploy** button in the row of the cluster you wish to deploy. Click the **Copy** button above the deploy command and proceed to step 6.
+5. Retrieve the bootstrap command from [admin.predictionguard.com](https://admin.predictionguard.com) by navigating to Systems, then clicking the **Deploy** button in the row of the system you wish to deploy. Click the **Copy** button above the deploy command and proceed to step 6.
 
-6. Paste the bootstrap command into the terminal where you are shelled into the cluster. This will install your authentication token and begin the initial bootstrapping of Prediction Guard services. After a few minutes, feel free to check the installation by checking the running services:
+6. Paste the bootstrap command into the terminal where you are shelled into the system. This will install your authentication token and begin the initial bootstrapping of Prediction Guard services. After a few minutes, feel free to check the installation by checking the running services:
 
 ```bash
 docker ps | grep predictionguard
 ```
 
-You should see running services, including `pg-inside` indicating that the cluster has been successfully installed. The cluster should also show as **Healthy** in the Prediction Guard admin.
+You should see running services, including `pg-inside` indicating that the system has been successfully installed. The system should also show as **Healthy** in the Admin Console.
 
-7. Deploy any desired AI models from the Models page in the Prediction Guard admin. Pay attention to any settings around number of AI accelerators, CPU and memory allocation to the model and ensure it fits within your air-gapped environment.
-
+7. Deploy any desired AI models from the Models page in the Admin Console. Only **Private Models** can be deployed in air-gapped environments — Managed Models and External Models require internet access and are not available.
