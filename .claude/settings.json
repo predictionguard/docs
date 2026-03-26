@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.stainless.com)",
+      "Bash(pip3 install:*)",
+      "Bash(python3 .stainless/merge_specs.py)",
+      "Bash(stl projects:*)",
+      "Bash(find /Users/edwardmcquinn/Documents/GitHub/docs/.stainless -name *.py -maxdepth 4)",
+      "Bash(stl builds:diagnostics list --project prediction-guard)",
+      "Bash(stl builds:*)",
+      "Bash(stl builds:diagnostics list --build-id bui_0cmn7qr71f000039s635zngmxw --severity error --format json)"
+    ]
+  }
+}

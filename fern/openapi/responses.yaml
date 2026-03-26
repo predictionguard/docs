@@ -80,8 +80,8 @@ paths:
                             type: string
                             description: The name of the tool used in the tool call from the previous output.
                           output:
-                            type:
-                            description:
+                            type: string
+                            description: The output of the tool call.
                 instructions:
                   type: string
                   description: A system (or developer) message inserted into the model's context.
@@ -123,10 +123,10 @@ paths:
                       properties:
                         type:
                           type: string
-                          description:
+                          description: The type of tool choice.
                         mode:
                           type: string
-                          description:
+                          description: The mode of the tool choice.
                         tools:
                           type: array
                           description: Allows for multiple tools to be set in tool_choice.
@@ -421,10 +421,10 @@ paths:
                       properties:
                         type:
                           type: string
-                          description:
+                          description: The type of tool choice.
                         mode:
                           type: string
-                          description:
+                          description: The mode of the tool choice.
                         tools:
                           type: array
                           description: Allows for multiple tools to be set in tool_choice.
