@@ -1,0 +1,4 @@
+configured_endpoints: 16
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/prediction-guard%2Fprediction-guard-4e465c96f4af8e9c55f378291fab71b9c417ce4ae5687ea34e70cd580c3ac127.yml
+openapi_spec_hash: d76d6d40c24643d314272688d5e89258
+config_hash: 3bbcf4b59d33faf8f7ccf8dce42b79b6
